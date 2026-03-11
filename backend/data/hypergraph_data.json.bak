@@ -1,0 +1,7886 @@
+{
+  "nodes": [
+    {
+      "id": "proj_3264d357",
+      "type": "Project",
+      "label": "Go2重塑入境游",
+      "properties": {
+        "industry": "文化旅游",
+        "source": "科技创新类2",
+        "technologies": [
+          "强化学习",
+          "大数据",
+          "AR",
+          "SoC"
+        ],
+        "biz_model": [
+          "商业模式",
+          "平台"
+        ],
+        "moat": [
+          "核心技术",
+          "EI",
+          "壁垒"
+        ],
+        "problem": "当前中国入境旅游行业正面临显著的供需结构性矛盾，外籍游客需求持续",
+        "solution": "",
+        "market_size": "",
+        "biz_detail": ".......................................................15",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [],
+        "failure_risks": [
+          "未提供市场规模数据"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "proj_b7a0e0af",
+      "type": "Project",
+      "label": "非物质文化遗产的商业_与保护策略",
+      "properties": {
+        "industry": "文化旅游",
+        "source": "科技创新类2",
+        "technologies": [
+          "AR"
+        ],
+        "biz_model": [
+          "平台"
+        ],
+        "moat": []
+      }
+    },
+    {
+      "id": "proj_78f2d606",
+      "type": "Project",
+      "label": "基于人工智能的雷达微弱目标检测",
+      "properties": {
+        "industry": "通用",
+        "source": "科技创新类2",
+        "technologies": [
+          "光学",
+          "目标检测",
+          "AR",
+          "多模态",
+          "计算机视觉",
+          "红外",
+          "无人机"
+        ],
+        "biz_model": [],
+        "moat": [
+          "EI",
+          "SCI"
+        ]
+      }
+    },
+    {
+      "id": "proj_68515984",
+      "type": "Project",
+      "label": "基于YOLO的AI视_能感知系统",
+      "properties": {
+        "industry": "通用",
+        "source": "科技创新类2",
+        "technologies": [
+          "YOLO",
+          "光学",
+          "目标检测",
+          "深度学习",
+          "神经网络",
+          "AR",
+          "卷积神经网络",
+          "图像识别"
+        ],
+        "biz_model": [
+          "API",
+          "平台"
+        ],
+        "moat": [
+          "核心技术",
+          "EI"
+        ]
+      }
+    },
+    {
+      "id": "proj_bfdfddb2",
+      "type": "Project",
+      "label": "星眸智析--多模态卫_来推演系统",
+      "properties": {
+        "industry": "通用",
+        "source": "科技创新类2",
+        "technologies": [
+          "注意力机制",
+          "RNN",
+          "神经网络",
+          "AR",
+          "卷积神经网络",
+          "多模态",
+          "预训练",
+          "LLM"
+        ],
+        "biz_model": [
+          "商业模式",
+          "营收"
+        ],
+        "moat": [
+          "核心技术",
+          "发明专利",
+          "专利",
+          "软著",
+          "论文"
+        ]
+      }
+    },
+    {
+      "id": "proj_da4802e7",
+      "type": "Project",
+      "label": "“预行智控”——面向_智能机器人",
+      "properties": {
+        "industry": "通用",
+        "source": "科技创新类2",
+        "technologies": [
+          "强化学习",
+          "YOLO",
+          "SLAM",
+          "激光雷达",
+          "AR",
+          "多模态",
+          "预训练",
+          "VR"
+        ],
+        "biz_model": [
+          "平台"
+        ],
+        "moat": []
+      }
+    },
+    {
+      "id": "proj_b47acad4",
+      "type": "Project",
+      "label": "极端气象下电力系统韧_性解决方案",
+      "properties": {
+        "industry": "通用",
+        "source": "科技创新类2",
+        "technologies": [
+          "数字孪生",
+          "碳中和",
+          "多模态",
+          "LLM",
+          "GPT",
+          "新能源",
+          "大模型",
+          "大数据"
+        ],
+        "biz_model": [
+          "平台"
+        ],
+        "moat": [
+          "发明专利",
+          "专利",
+          "软著",
+          "论文"
+        ]
+      }
+    },
+    {
+      "id": "proj_a85743aa",
+      "type": "Project",
+      "label": "多场感知，孪生驱动—_技术引领者",
+      "properties": {
+        "industry": "通用",
+        "source": "科技创新类2",
+        "technologies": [
+          "数字孪生",
+          "深度学习",
+          "神经网络",
+          "卷积神经网络",
+          "超声",
+          "LSTM",
+          "GAN",
+          "红外"
+        ],
+        "biz_model": [
+          "平台"
+        ],
+        "moat": [
+          "知识产权",
+          "核心技术",
+          "SCI",
+          "发明专利",
+          "专利"
+        ]
+      }
+    },
+    {
+      "id": "proj_8b88aaad",
+      "type": "Project",
+      "label": "鲲澜芯动：多模态水下_能决策方案",
+      "properties": {
+        "industry": "通用",
+        "source": "科技创新类2",
+        "technologies": [
+          "强化学习",
+          "光学",
+          "目标检测",
+          "深度学习",
+          "芯片",
+          "AR",
+          "多模态",
+          "预训练"
+        ],
+        "biz_model": [
+          "平台"
+        ],
+        "moat": [
+          "核心技术",
+          "发明专利",
+          "专利",
+          "论文",
+          "壁垒"
+        ]
+      }
+    },
+    {
+      "id": "proj_30115f05",
+      "type": "Project",
+      "label": "EvoRobo：下一_智能机器人",
+      "properties": {
+        "industry": "通用",
+        "source": "科技创新类2",
+        "technologies": [
+          "强化学习",
+          "AR",
+          "多模态",
+          "预训练",
+          "VR",
+          "智能制造",
+          "大模型",
+          "SoC"
+        ],
+        "biz_model": [
+          "API",
+          "平台"
+        ],
+        "moat": [
+          "核心技术",
+          "EI",
+          "SCI",
+          "专利",
+          "论文"
+        ]
+      }
+    },
+    {
+      "id": "proj_a9941030",
+      "type": "Project",
+      "label": "脉语智鉴——结合视触_能脉诊系统",
+      "properties": {
+        "industry": "医疗健康",
+        "source": "科技创新类2",
+        "technologies": [
+          "图像识别",
+          "传感器",
+          "大模型"
+        ],
+        "biz_model": [
+          "平台"
+        ],
+        "moat": [
+          "核心技术",
+          "发明专利",
+          "专利",
+          "SCI",
+          "论文"
+        ],
+        "problem": "",
+        "solution": "",
+        "market_size": "",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [
+          "有用户验证"
+        ],
+        "failure_risks": [
+          "未提供市场规模数据"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "proj_8c46705e",
+      "type": "Project",
+      "label": "臻视赋医——面向真实_强算法研究",
+      "properties": {
+        "industry": "医疗健康",
+        "source": "科技创新类2",
+        "technologies": [
+          "注意力机制",
+          "光学",
+          "生成对抗",
+          "深度学习",
+          "神经网络",
+          "AR",
+          "卷积神经网络",
+          "多模态"
+        ],
+        "biz_model": [
+          "授权"
+        ],
+        "moat": [
+          "SCI",
+          "EI",
+          "发明专利",
+          "专利"
+        ]
+      }
+    },
+    {
+      "id": "proj_66045892",
+      "type": "Project",
+      "label": "慧警康策——智能疾病_助诊断系统",
+      "properties": {
+        "industry": "医疗健康",
+        "source": "科技创新类2",
+        "technologies": [
+          "生成对抗",
+          "神经网络",
+          "迁移学习",
+          "卷积神经网络",
+          "AR",
+          "多模态",
+          "BERT",
+          "云计算"
+        ],
+        "biz_model": [
+          "授权",
+          "平台"
+        ],
+        "moat": [
+          "核心技术",
+          "论文",
+          "专利"
+        ]
+      }
+    },
+    {
+      "id": "proj_5323f05f",
+      "type": "Project",
+      "label": "析光知理——快速脑瘤_能分析系统",
+      "properties": {
+        "industry": "医疗健康",
+        "source": "科技创新类2",
+        "technologies": [
+          "YOLO",
+          "光学",
+          "目标检测",
+          "深度学习",
+          "神经网络",
+          "AR",
+          "多模态",
+          "超声"
+        ],
+        "biz_model": [],
+        "moat": [
+          "EI",
+          "SCI"
+        ]
+      }
+    },
+    {
+      "id": "proj_f05baed2",
+      "type": "Project",
+      "label": "灵眼守护——基于rP_警移动平台",
+      "properties": {
+        "industry": "医疗健康",
+        "source": "科技创新类2",
+        "technologies": [
+          "深度学习",
+          "RNN",
+          "SLAM",
+          "神经网络",
+          "多模态",
+          "物联网",
+          "云计算",
+          "LSTM"
+        ],
+        "biz_model": [
+          "授权",
+          "API",
+          "平台"
+        ],
+        "moat": [
+          "核心技术",
+          "发明专利",
+          "专利",
+          "SCI",
+          "论文"
+        ]
+      }
+    },
+    {
+      "id": "proj_b4230f04",
+      "type": "Project",
+      "label": "超晰视界——手持超声_域增强技术",
+      "properties": {
+        "industry": "医疗健康",
+        "source": "科技创新类2",
+        "technologies": [
+          "注意力机制",
+          "生成对抗",
+          "深度学习",
+          "AR",
+          "计算机视觉",
+          "超声",
+          "GAN",
+          "传感器"
+        ],
+        "biz_model": [],
+        "moat": [
+          "EI"
+        ]
+      }
+    },
+    {
+      "id": "proj_e86f23f2",
+      "type": "Project",
+      "label": "智眸明析——眼底临床_准化大模型",
+      "properties": {
+        "industry": "医疗健康",
+        "source": "科技创新类2",
+        "technologies": [
+          "大模型",
+          "自然语言处理",
+          "光学",
+          "数据挖掘",
+          "数据湖",
+          "LLM",
+          "GPT",
+          "MR"
+        ],
+        "biz_model": [],
+        "moat": [
+          "论文"
+        ]
+      }
+    },
+    {
+      "id": "proj_aea25081",
+      "type": "Project",
+      "label": "明眸智芯-眼部智能软_监测开拓者",
+      "properties": {
+        "industry": "医疗健康",
+        "source": "科技创新类2",
+        "technologies": [
+          "芯片",
+          "超声",
+          "传感器",
+          "MEMS",
+          "联邦学习",
+          "纳米"
+        ],
+        "biz_model": [
+          "平台"
+        ],
+        "moat": [
+          "核心技术",
+          "SCI",
+          "专利",
+          "首创",
+          "论文"
+        ]
+      }
+    },
+    {
+      "id": "proj_5fd1180b",
+      "type": "Project",
+      "label": "智能纳米光学偏振内窥镜胶囊",
+      "properties": {
+        "industry": "医疗健康",
+        "source": "科技创新类2",
+        "technologies": [
+          "光学",
+          "激光雷达",
+          "神经网络",
+          "AR",
+          "卷积神经网络",
+          "SoC",
+          "VR",
+          "内窥镜"
+        ],
+        "biz_model": [
+          "直销",
+          "盈利模式",
+          "广告",
+          "商业模式",
+          "授权"
+        ],
+        "moat": [
+          "核心技术",
+          "论文"
+        ]
+      }
+    },
+    {
+      "id": "proj_98bb8d5c",
+      "type": "Project",
+      "label": "稳定不倒——非同轴两_衡控制技术",
+      "properties": {
+        "industry": "交通运输",
+        "source": "科技创新类2",
+        "technologies": [
+          "AR",
+          "单片机",
+          "机器人",
+          "传感器",
+          "无人机",
+          "无人车"
+        ],
+        "biz_model": [
+          "平台"
+        ],
+        "moat": [
+          "算法优势",
+          "EI"
+        ]
+      }
+    },
+    {
+      "id": "proj_ea85a5d3",
+      "type": "Project",
+      "label": "面向低空经济的人工智_感知与应用",
+      "properties": {
+        "industry": "交通运输",
+        "source": "科技创新类2",
+        "technologies": [
+          "数字孪生",
+          "神经网络",
+          "AR",
+          "卷积神经网络",
+          "GAN",
+          "嵌入式",
+          "CNN",
+          "智能制造"
+        ],
+        "biz_model": [
+          "授权",
+          "广告",
+          "平台"
+        ],
+        "moat": [
+          "核心技术",
+          "自主研发",
+          "专利"
+        ]
+      }
+    },
+    {
+      "id": "proj_464de40f",
+      "type": "Project",
+      "label": "“充”出新天地，“智_站决策优化",
+      "properties": {
+        "industry": "交通运输",
+        "source": "科技创新类2",
+        "technologies": [
+          "碳中和",
+          "AR",
+          "计算机视觉",
+          "新能源",
+          "低碳",
+          "机器学习"
+        ],
+        "biz_model": [
+          "授权",
+          "平台",
+          "增值服务"
+        ],
+        "moat": [
+          "核心技术"
+        ]
+      }
+    },
+    {
+      "id": "proj_ddac4c3d",
+      "type": "Project",
+      "label": "视界智通--交通长时_时分析系统",
+      "properties": {
+        "industry": "交通运输",
+        "source": "科技创新类2",
+        "technologies": [
+          "注意力机制",
+          "YOLO",
+          "自然语言处理",
+          "目标检测",
+          "深度学习",
+          "NLP",
+          "自动驾驶",
+          "AR"
+        ],
+        "biz_model": [
+          "代理"
+        ],
+        "moat": [
+          "核心技术",
+          "EI",
+          "专利",
+          "知识产权"
+        ]
+      }
+    },
+    {
+      "id": "proj_da1b321e",
+      "type": "Project",
+      "label": "低空智驭——大小模型_群智控系统",
+      "properties": {
+        "industry": "交通运输",
+        "source": "科技创新类2",
+        "technologies": [
+          "强化学习",
+          "神经网络",
+          "AR",
+          "多模态",
+          "边缘计算",
+          "大模型",
+          "传感器",
+          "LiDAR"
+        ],
+        "biz_model": [
+          "API"
+        ],
+        "moat": [
+          "核心技术",
+          "EI",
+          "SCI"
+        ],
+        "problem": "传统技术瓶颈，为低空经济的军事、民用与应急领域提供高效解决方案，助力",
+        "solution": "",
+        "market_size": "",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [],
+        "failure_risks": [
+          "盈利模式不清晰",
+          "未提供市场规模数据"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "proj_584b627f",
+      "type": "Project",
+      "label": "智卫天穹——面向复杂_机检测系统",
+      "properties": {
+        "industry": "交通运输",
+        "source": "科技创新类2",
+        "technologies": [
+          "注意力机制",
+          "光学",
+          "目标检测",
+          "深度学习",
+          "SoC",
+          "神经网络",
+          "AR",
+          "多模态"
+        ],
+        "biz_model": [
+          "授权",
+          "API",
+          "平台"
+        ],
+        "moat": [
+          "EI",
+          "发明专利",
+          "专利",
+          "SCI",
+          "论文"
+        ],
+        "problem": "",
+        "solution": "",
+        "market_size": "3.5万亿",
+        "biz_detail": "",
+        "patent_count": 10,
+        "paper_count": 2,
+        "team_backgrounds": [],
+        "success_factors": [
+          "拥有10项专利",
+          "发表2篇论文",
+          "市场规模3.5万亿"
+        ],
+        "failure_risks": [],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "proj_36ccff73",
+      "type": "Project",
+      "label": "极野智驭-驾驭荒野，_作业新时代",
+      "properties": {
+        "industry": "交通运输",
+        "source": "科技创新类2",
+        "technologies": [
+          "激光雷达",
+          "神经网络",
+          "AR",
+          "多模态",
+          "智能制造",
+          "机器人",
+          "传感器"
+        ],
+        "biz_model": [
+          "授权"
+        ],
+        "moat": [
+          "核心技术",
+          "论文",
+          "专利",
+          "SCI"
+        ]
+      }
+    },
+    {
+      "id": "proj_62456949",
+      "type": "Project",
+      "label": "深海幽灵-面向海洋强_无人航行器",
+      "properties": {
+        "industry": "交通运输",
+        "source": "科技创新类2",
+        "technologies": [
+          "神经网络",
+          "AR",
+          "GAN",
+          "机器人",
+          "传感器",
+          "机器学习"
+        ],
+        "biz_model": [
+          "平台"
+        ],
+        "moat": []
+      }
+    },
+    {
+      "id": "proj_425716be",
+      "type": "Project",
+      "label": "智禾——以“小白菜”_态监测系统",
+      "properties": {
+        "industry": "农业发展",
+        "source": "科技创新类2",
+        "technologies": [
+          "YOLO",
+          "深度学习",
+          "迁移学习",
+          "AR",
+          "IoT"
+        ],
+        "biz_model": [],
+        "moat": [
+          "EI",
+          "论文"
+        ],
+        "problem": "",
+        "solution": "",
+        "market_size": "",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 4,
+        "team_backgrounds": [],
+        "success_factors": [
+          "发表4篇论文"
+        ],
+        "failure_risks": [
+          "盈利模式不清晰",
+          "缺乏明确技术壁垒",
+          "未提供市场规模数据"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "proj_030fe1e4",
+      "type": "Project",
+      "label": "千帆助农：AI农业灾_警决策助手",
+      "properties": {
+        "industry": "农业发展",
+        "source": "科技创新类2",
+        "technologies": [
+          "图像识别"
+        ],
+        "biz_model": [
+          "API"
+        ],
+        "moat": [
+          "论文"
+        ],
+        "problem": "",
+        "solution": "",
+        "market_size": "",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 1,
+        "team_backgrounds": [],
+        "success_factors": [
+          "发表1篇论文",
+          "有用户验证"
+        ],
+        "failure_risks": [
+          "缺乏明确技术壁垒",
+          "未提供市场规模数据"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "proj_fdf41c66",
+      "type": "Project",
+      "label": "赛道AGRO-AIO_能农业系统",
+      "properties": {
+        "industry": "农业发展",
+        "source": "科技创新类2",
+        "technologies": [
+          "AR",
+          "YOLO",
+          "SoC",
+          "CNN"
+        ],
+        "biz_model": [
+          "API"
+        ],
+        "moat": [
+          "EI",
+          "SCI"
+        ]
+      }
+    },
+    {
+      "id": "proj_45e6b8d1",
+      "type": "Project",
+      "label": "献计献“策”：云计策_化解决方案",
+      "properties": {
+        "industry": "农业发展",
+        "source": "科技创新类2",
+        "technologies": [],
+        "biz_model": [],
+        "moat": []
+      }
+    },
+    {
+      "id": "proj_15e82e24",
+      "type": "Project",
+      "label": "农夜智巡——AI夜视_植保新篇章",
+      "properties": {
+        "industry": "农业发展",
+        "source": "科技创新类2",
+        "technologies": [
+          "深度学习",
+          "计算机视觉",
+          "超声",
+          "物联网",
+          "5G",
+          "边缘计算",
+          "红外",
+          "传感器"
+        ],
+        "biz_model": [
+          "平台",
+          "技术服务"
+        ],
+        "moat": [
+          "核心技术",
+          "SCI",
+          "技术门槛",
+          "发明专利",
+          "专利"
+        ]
+      }
+    },
+    {
+      "id": "proj_89ef2bce",
+      "type": "Project",
+      "label": "面向南南合作国家的智_稻种植系统",
+      "properties": {
+        "industry": "农业发展",
+        "source": "科技创新类2",
+        "technologies": [
+          "AR",
+          "低碳",
+          "无人机"
+        ],
+        "biz_model": [],
+        "moat": [
+          "EI",
+          "专利"
+        ]
+      }
+    },
+    {
+      "id": "proj_032fa339",
+      "type": "Project",
+      "label": "零碳智汇-适用多行业_化评价系统",
+      "properties": {
+        "industry": "环境保护",
+        "source": "科技创新类2",
+        "technologies": [
+          "自然语言处理",
+          "碳中和",
+          "深度学习",
+          "NLP",
+          "神经网络",
+          "AR",
+          "LSTM",
+          "GPT"
+        ],
+        "biz_model": [
+          "商业模式",
+          "平台"
+        ],
+        "moat": [
+          "核心技术",
+          "发明专利",
+          "专利",
+          "SCI",
+          "论文"
+        ]
+      }
+    },
+    {
+      "id": "proj_db8b8b77",
+      "type": "Project",
+      "label": "碳索未来—智能化CO_技术与装备",
+      "properties": {
+        "industry": "环境保护",
+        "source": "科技创新类2",
+        "technologies": [
+          "GAN",
+          "AR",
+          "机器学习"
+        ],
+        "biz_model": [
+          "授权",
+          "商业模式",
+          "盈利模式"
+        ],
+        "moat": [
+          "核心技术",
+          "EI",
+          "SCI",
+          "专利",
+          "论文"
+        ],
+        "problem": "",
+        "solution": "",
+        "market_size": "",
+        "biz_detail": "..................................................................................................................................28",
+        "patent_count": 0,
+        "paper_count": 15,
+        "team_backgrounds": [],
+        "success_factors": [
+          "发表15篇论文"
+        ],
+        "failure_risks": [
+          "未提供市场规模数据"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "proj_007b2ce8",
+      "type": "Project",
+      "label": "碳智通：AI驱动的减_同优化平台",
+      "properties": {
+        "industry": "环境保护",
+        "source": "科技创新类2",
+        "technologies": [
+          "碳中和",
+          "低碳",
+          "NLP",
+          "AR",
+          "LLM",
+          "大模型",
+          "SoC",
+          "知识图谱"
+        ],
+        "biz_model": [
+          "API",
+          "平台"
+        ],
+        "moat": [
+          "SCI",
+          "论文"
+        ]
+      }
+    },
+    {
+      "id": "proj_f4d1c138",
+      "type": "Project",
+      "label": "'智防·星火'——基_灾预警系统",
+      "properties": {
+        "industry": "环境保护",
+        "source": "科技创新类2",
+        "technologies": [
+          "自然语言处理",
+          "深度学习",
+          "AR",
+          "数据挖掘",
+          "IoT",
+          "嵌入式",
+          "大模型",
+          "传感器"
+        ],
+        "biz_model": [
+          "商业模式"
+        ],
+        "moat": [
+          "EI"
+        ],
+        "problem": "",
+        "solution": "",
+        "market_size": "",
+        "biz_detail": "与实施方案....................................................................................................................32",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [],
+        "failure_risks": [
+          "盈利模式不清晰",
+          "缺乏明确技术壁垒",
+          "未提供市场规模数据"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "proj_169abfde",
+      "type": "Project",
+      "label": "面向湿地生态监测的多_能解译技术",
+      "properties": {
+        "industry": "环境保护",
+        "source": "科技创新类2",
+        "technologies": [
+          "光学",
+          "深度学习",
+          "激光雷达",
+          "神经网络",
+          "AR",
+          "卷积神经网络",
+          "多模态",
+          "红外"
+        ],
+        "biz_model": [],
+        "moat": [
+          "EI",
+          "论文"
+        ]
+      }
+    },
+    {
+      "id": "proj_5712b727",
+      "type": "Project",
+      "label": "京芯智水——智慧赋能_统创新力量",
+      "properties": {
+        "industry": "环境保护",
+        "source": "科技创新类2",
+        "technologies": [
+          "注意力机制",
+          "光学",
+          "芯片",
+          "深度学习",
+          "神经网络",
+          "AR",
+          "图像识别",
+          "GAN"
+        ],
+        "biz_model": [
+          "授权",
+          "API"
+        ],
+        "moat": [
+          "核心技术",
+          "EI",
+          "SCI",
+          "发明专利",
+          "专利"
+        ]
+      }
+    },
+    {
+      "id": "proj_76e96798",
+      "type": "Project",
+      "label": "LectūraAgents",
+      "properties": {
+        "industry": "教育教学",
+        "source": "科技创新类2",
+        "technologies": [
+          "AR",
+          "多模态",
+          "LLM",
+          "GPT",
+          "语音合成",
+          "大模型"
+        ],
+        "biz_model": [
+          "API",
+          "SaaS",
+          "平台"
+        ],
+        "moat": [
+          "EI"
+        ]
+      }
+    },
+    {
+      "id": "proj_82349079",
+      "type": "Project",
+      "label": "育见先贤—基于多模态_式教育系统",
+      "properties": {
+        "industry": "教育教学",
+        "source": "科技创新类2",
+        "technologies": [
+          "自然语言处理",
+          "AR",
+          "渲染",
+          "MR",
+          "注意力机制",
+          "神经网络",
+          "LSTM",
+          "大模型"
+        ],
+        "biz_model": [],
+        "moat": [
+          "核心技术",
+          "EI",
+          "论文",
+          "SCI"
+        ],
+        "problem": "",
+        "solution": "",
+        "market_size": "",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [
+          "工程师"
+        ],
+        "success_factors": [
+          "团队包含工程师"
+        ],
+        "failure_risks": [
+          "盈利模式不清晰",
+          "未提供市场规模数据"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "proj_9ab84361",
+      "type": "Project",
+      "label": "华宸AI智评系统",
+      "properties": {
+        "industry": "教育教学",
+        "source": "科技创新类2",
+        "technologies": [
+          "强化学习",
+          "NLP",
+          "AR",
+          "多模态",
+          "AIGC",
+          "知识图谱"
+        ],
+        "biz_model": [
+          "平台"
+        ],
+        "moat": [
+          "核心技术",
+          "论文",
+          "首创",
+          "护城河"
+        ]
+      }
+    },
+    {
+      "id": "proj_53fc061a",
+      "type": "Project",
+      "label": "“声”动学堂--个性_能教学助手",
+      "properties": {
+        "industry": "教育教学",
+        "source": "科技创新类2",
+        "technologies": [
+          "自然语言处理",
+          "深度学习",
+          "AR",
+          "多模态",
+          "计算机视觉",
+          "LLM",
+          "GAN",
+          "GPT"
+        ],
+        "biz_model": [
+          "授权",
+          "API",
+          "平台"
+        ],
+        "moat": [
+          "SCI",
+          "EI",
+          "论文",
+          "壁垒"
+        ]
+      }
+    },
+    {
+      "id": "proj_77caca55",
+      "type": "Project",
+      "label": "基于虚实结合视觉伺服_习平台设计",
+      "properties": {
+        "industry": "教育教学",
+        "source": "科技创新类2",
+        "technologies": [
+          "强化学习",
+          "深度学习",
+          "RNN",
+          "神经网络",
+          "AR",
+          "多模态",
+          "边缘计算",
+          "嵌入式"
+        ],
+        "biz_model": [
+          "代理",
+          "API",
+          "平台"
+        ],
+        "moat": [
+          "核心技术"
+        ]
+      }
+    },
+    {
+      "id": "proj_0e6feb68",
+      "type": "Project",
+      "label": "人工智能赋能教学解决_教育大模型",
+      "properties": {
+        "industry": "教育教学",
+        "source": "科技创新类2",
+        "technologies": [
+          "注意力机制",
+          "AR",
+          "LLM",
+          "大模型"
+        ],
+        "biz_model": [
+          "平台"
+        ],
+        "moat": [
+          "EI",
+          "论文",
+          "专利"
+        ]
+      }
+    },
+    {
+      "id": "proj_30ec7a4f",
+      "type": "Project",
+      "label": "飞创智教——SIGM_济教培工坊",
+      "properties": {
+        "industry": "教育教学",
+        "source": "科技创新类2",
+        "technologies": [
+          "强化学习",
+          "数字孪生",
+          "AR",
+          "物联网",
+          "5G",
+          "边缘计算",
+          "渲染",
+          "大模型"
+        ],
+        "biz_model": [
+          "商业模式",
+          "平台",
+          "盈利模式",
+          "技术服务"
+        ],
+        "moat": [
+          "知识产权"
+        ]
+      }
+    },
+    {
+      "id": "proj_d70fc4ee",
+      "type": "Project",
+      "label": "“仪探究净”基于深度_损检测系统",
+      "properties": {
+        "industry": "工业制造",
+        "source": "科技创新类2",
+        "technologies": [
+          "低碳",
+          "红外",
+          "深度学习",
+          "智能制造"
+        ],
+        "biz_model": [
+          "平台"
+        ],
+        "moat": [
+          "论文",
+          "专利"
+        ],
+        "problem": "",
+        "solution": "团队设计开发了一款可靠性强，操作简单，支持实时检测的基于深度学习",
+        "market_size": "",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [
+          "教授"
+        ],
+        "success_factors": [
+          "团队包含教授"
+        ],
+        "failure_risks": [
+          "未提供市场规模数据"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "proj_b4180a0f",
+      "type": "Project",
+      "label": "AI赋能空天地海一体_体天线设计",
+      "properties": {
+        "industry": "工业制造",
+        "source": "科技创新类2",
+        "technologies": [
+          "注意力机制",
+          "自然语言处理",
+          "深度学习",
+          "神经网络",
+          "AR",
+          "图像识别",
+          "毫米波",
+          "3D打印"
+        ],
+        "biz_model": [
+          "代理",
+          "API",
+          "平台"
+        ],
+        "moat": [
+          "知识产权",
+          "核心技术",
+          "EI",
+          "发明专利",
+          "专利"
+        ]
+      }
+    },
+    {
+      "id": "proj_de7f6865",
+      "type": "Project",
+      "label": "灵嗅智探—氢能厂站A_能巡检系统",
+      "properties": {
+        "industry": "工业制造",
+        "source": "科技创新类2",
+        "technologies": [
+          "YOLO",
+          "光学",
+          "激光雷达",
+          "AR",
+          "氢能",
+          "红外",
+          "CNN",
+          "机器人"
+        ],
+        "biz_model": [],
+        "moat": []
+      }
+    },
+    {
+      "id": "proj_5a2dedef",
+      "type": "Project",
+      "label": "燃煤电厂湿法脱硫节能_能控制系统",
+      "properties": {
+        "industry": "工业制造",
+        "source": "科技创新类2",
+        "technologies": [
+          "强化学习",
+          "数字孪生",
+          "深度学习",
+          "碳中和",
+          "低碳",
+          "神经网络",
+          "AR",
+          "数据挖掘"
+        ],
+        "biz_model": [],
+        "moat": [
+          "EI",
+          "SCI",
+          "专利"
+        ]
+      }
+    },
+    {
+      "id": "proj_24ce12b6",
+      "type": "Project",
+      "label": "听危声防——基于光纤_安全守护者",
+      "properties": {
+        "industry": "工业制造",
+        "source": "科技创新类2",
+        "technologies": [
+          "深度学习",
+          "神经网络",
+          "迁移学习",
+          "卷积神经网络",
+          "AR",
+          "多模态",
+          "5G",
+          "LSTM"
+        ],
+        "biz_model": [
+          "平台",
+          "营收"
+        ],
+        "moat": [
+          "核心技术"
+        ]
+      }
+    },
+    {
+      "id": "proj_8c2ff2c8",
+      "type": "Project",
+      "label": "闻声识障——特殊地形_巡检守护者",
+      "properties": {
+        "industry": "工业制造",
+        "source": "科技创新类2",
+        "technologies": [
+          "深度学习",
+          "神经网络",
+          "多模态",
+          "边缘计算",
+          "单片机",
+          "MEMS",
+          "CNN",
+          "机器人"
+        ],
+        "biz_model": [],
+        "moat": [
+          "专利",
+          "壁垒"
+        ]
+      }
+    },
+    {
+      "id": "proj_fa9eb484",
+      "type": "Project",
+      "label": "智链图谱——工业机器_I决策系统",
+      "properties": {
+        "industry": "工业制造",
+        "source": "科技创新类2",
+        "technologies": [
+          "AR",
+          "预训练",
+          "LLM",
+          "CNN",
+          "智能制造",
+          "Transformer",
+          "机器人",
+          "知识图谱"
+        ],
+        "biz_model": [
+          "平台"
+        ],
+        "moat": [
+          "核心技术",
+          "EI",
+          "发明专利",
+          "专利",
+          "论文"
+        ]
+      }
+    },
+    {
+      "id": "proj_80c57f7b",
+      "type": "Project",
+      "label": "广寒天工——月基装备_人作业系统",
+      "properties": {
+        "industry": "工业制造",
+        "source": "科技创新类2",
+        "technologies": [
+          "强化学习",
+          "传感器",
+          "AR"
+        ],
+        "biz_model": [
+          "授权",
+          "平台"
+        ],
+        "moat": [
+          "核心技术",
+          "EI",
+          "发明专利",
+          "专利",
+          "SCI"
+        ],
+        "problem": "亟需突破感知与导航、规划与决策等基础理论与关",
+        "solution": "",
+        "market_size": "",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [
+          "院士"
+        ],
+        "success_factors": [
+          "团队包含院士"
+        ],
+        "failure_risks": [
+          "未提供市场规模数据"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "proj_6449bc5b",
+      "type": "Project",
+      "label": "极端环境勘测革新——_主巡检系统",
+      "properties": {
+        "industry": "工业制造",
+        "source": "科技创新类2",
+        "technologies": [
+          "强化学习",
+          "目标检测",
+          "深度学习",
+          "SLAM",
+          "激光雷达",
+          "AR",
+          "多模态",
+          "计算机视觉"
+        ],
+        "biz_model": [
+          "代理",
+          "平台"
+        ],
+        "moat": [
+          "SCI",
+          "EI",
+          "论文",
+          "专利"
+        ]
+      }
+    },
+    {
+      "id": "proj_db0dd5e1",
+      "type": "Project",
+      "label": "讯海智航——全流程新_机协作平台",
+      "properties": {
+        "industry": "政务管理",
+        "source": "科技创新类2",
+        "technologies": [
+          "AR",
+          "GAN",
+          "大模型",
+          "SoC",
+          "大数据"
+        ],
+        "biz_model": [
+          "API",
+          "平台"
+        ],
+        "moat": [
+          "核心技术",
+          "EI",
+          "SCI",
+          "论文",
+          "壁垒"
+        ]
+      }
+    },
+    {
+      "id": "proj_4b72d252",
+      "type": "Project",
+      "label": "智擎风控——跨平台多_同治理平台",
+      "properties": {
+        "industry": "政务管理",
+        "source": "科技创新类2",
+        "technologies": [
+          "深度学习",
+          "SoC",
+          "AR",
+          "LSTM",
+          "大模型",
+          "Transformer"
+        ],
+        "biz_model": [
+          "API",
+          "平台"
+        ],
+        "moat": [
+          "EI"
+        ]
+      }
+    },
+    {
+      "id": "proj_4a60c8e0",
+      "type": "Project",
+      "label": "物衡智判——基于DS_能推理系统",
+      "properties": {
+        "industry": "政务管理",
+        "source": "科技创新类2",
+        "technologies": [
+          "大模型",
+          "多模态",
+          "图像识别",
+          "语音识别",
+          "知识图谱"
+        ],
+        "biz_model": [],
+        "moat": [],
+        "problem": "",
+        "solution": "",
+        "market_size": "",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [
+          "有用户验证"
+        ],
+        "failure_risks": [
+          "缺乏明确技术壁垒",
+          "存在合规/隐私风险需评估",
+          "未提供市场规模数据"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "proj_52142b98",
+      "type": "Project",
+      "label": "图盾智控——图计算赋_能防控系统",
+      "properties": {
+        "industry": "政务管理",
+        "source": "科技创新类2",
+        "technologies": [
+          "神经网络",
+          "BERT",
+          "图计算",
+          "GNN",
+          "大模型",
+          "图神经网络",
+          "大数据",
+          "知识图谱"
+        ],
+        "biz_model": [
+          "授权"
+        ],
+        "moat": [
+          "SCI",
+          "发明专利",
+          "专利",
+          "论文"
+        ]
+      }
+    },
+    {
+      "id": "proj_0c15a722",
+      "type": "Project",
+      "label": "数湖启智——多源异构_湖智算系统",
+      "properties": {
+        "industry": "政务管理",
+        "source": "科技创新类2",
+        "technologies": [
+          "自动驾驶",
+          "深度学习",
+          "多模态",
+          "数据湖",
+          "物联网",
+          "云计算",
+          "GPT",
+          "大模型"
+        ],
+        "biz_model": [
+          "API"
+        ],
+        "moat": [
+          "知识产权",
+          "核心技术",
+          "SCI",
+          "发明专利",
+          "专利"
+        ]
+      }
+    },
+    {
+      "id": "proj_7565890d",
+      "type": "Project",
+      "label": "文思智铠——生成式大_全优化模块",
+      "properties": {
+        "industry": "政务管理",
+        "source": "科技创新类2",
+        "technologies": [
+          "芯片",
+          "深度学习",
+          "AR",
+          "多模态",
+          "图像识别",
+          "LLM",
+          "GPT",
+          "CNN"
+        ],
+        "biz_model": [],
+        "moat": [
+          "核心技术",
+          "专利"
+        ]
+      }
+    },
+    {
+      "id": "proj_ec67fd58",
+      "type": "Project",
+      "label": "“慧心晰影”",
+      "properties": {
+        "industry": "通用",
+        "source": "创新创业赛",
+        "technologies": [
+          "自然语言处理",
+          "深度学习",
+          "MR",
+          "多模态",
+          "预训练",
+          "云计算",
+          "大模型",
+          "Transformer"
+        ],
+        "biz_model": [
+          "平台"
+        ],
+        "moat": [
+          "核心技术"
+        ]
+      }
+    },
+    {
+      "id": "proj_f654c4c6",
+      "type": "Project",
+      "label": "星哨科技",
+      "properties": {
+        "industry": "通用",
+        "source": "创新创业赛",
+        "technologies": [
+          "AR",
+          "芯片",
+          "FPGA"
+        ],
+        "biz_model": [
+          "B2B",
+          "营收",
+          "代理",
+          "广告",
+          "商业模式"
+        ],
+        "moat": [
+          "知识产权",
+          "核心技术",
+          "技术门槛",
+          "发明专利",
+          "专利"
+        ]
+      }
+    },
+    {
+      "id": "proj_62995efb",
+      "type": "Project",
+      "label": "“挑战杯”",
+      "properties": {
+        "industry": "通用",
+        "source": "创新创业赛",
+        "technologies": [
+          "数字孪生",
+          "5G"
+        ],
+        "biz_model": [
+          "B2B",
+          "技术服务",
+          "商业模式",
+          "授权",
+          "平台"
+        ],
+        "moat": [
+          "核心技术",
+          "发明专利",
+          "专利",
+          "软著",
+          "论文"
+        ]
+      }
+    },
+    {
+      "id": "proj_bef4e3a0",
+      "type": "Project",
+      "label": "云游灵境-云交互空间实时生成技术引领者-网评-挑战杯",
+      "properties": {
+        "industry": "通用",
+        "source": "创新创业赛",
+        "technologies": [
+          "数字孪生",
+          "实时渲染",
+          "AR",
+          "VR",
+          "边缘计算",
+          "渲染",
+          "元宇宙"
+        ],
+        "biz_model": [
+          "技术服务",
+          "代理",
+          "商业模式",
+          "授权",
+          "平台"
+        ],
+        "moat": [
+          "知识产权",
+          "核心技术",
+          "发明专利",
+          "专利",
+          "首创"
+        ]
+      }
+    },
+    {
+      "id": "proj_5ea0860e",
+      "type": "Project",
+      "label": "京工智演 —— 数字表演产业化的领航者",
+      "properties": {
+        "industry": "通用",
+        "source": "创新创业赛",
+        "technologies": [
+          "光学",
+          "数字孪生",
+          "实时渲染",
+          "云计算",
+          "渲染",
+          "大数据"
+        ],
+        "biz_model": [
+          "商业模式",
+          "平台",
+          "盈利模式",
+          "技术服务"
+        ],
+        "moat": [
+          "核心技术",
+          "自主研发",
+          "专利",
+          "首创",
+          "软著"
+        ]
+      }
+    },
+    {
+      "id": "proj_2270f15b",
+      "type": "Project",
+      "label": "元界创生——云上交互空间智能生成技术领跑者_计划书",
+      "properties": {
+        "industry": "通用",
+        "source": "创新创业赛",
+        "technologies": [
+          "数字孪生",
+          "实时渲染",
+          "芯片",
+          "AR",
+          "多模态",
+          "计算机视觉",
+          "VR",
+          "5G"
+        ],
+        "biz_model": [
+          "商业模式",
+          "平台",
+          "盈利模式",
+          "营收"
+        ],
+        "moat": [
+          "独创",
+          "核心技术",
+          "自主研发",
+          "发明专利",
+          "专利"
+        ]
+      }
+    },
+    {
+      "id": "proj_5b849f1d",
+      "type": "Project",
+      "label": "商业计划书-讯海智航——全流程新闻写作AI辅助平台.pdf",
+      "properties": {
+        "industry": "通用",
+        "source": "创新创业赛",
+        "technologies": [
+          "自然语言处理",
+          "NLP",
+          "多模态",
+          "BERT",
+          "边缘计算",
+          "大模型",
+          "大数据"
+        ],
+        "biz_model": [
+          "商业模式",
+          "平台",
+          "盈利模式",
+          "收入来源"
+        ],
+        "moat": [
+          "专利",
+          "独创",
+          "知识产权"
+        ]
+      }
+    },
+    {
+      "id": "proj_81af83ec",
+      "type": "Project",
+      "label": "元界创生云上交互空间智能生成技术领跑者_计划书",
+      "properties": {
+        "industry": "通用",
+        "source": "创新创业赛",
+        "technologies": [
+          "数字孪生",
+          "实时渲染",
+          "芯片",
+          "AR",
+          "多模态",
+          "计算机视觉",
+          "VR",
+          "5G"
+        ],
+        "biz_model": [
+          "商业模式",
+          "平台",
+          "盈利模式",
+          "营收"
+        ],
+        "moat": [
+          "独创",
+          "核心技术",
+          "自主研发",
+          "发明专利",
+          "专利"
+        ]
+      }
+    },
+    {
+      "id": "proj_44aa5890",
+      "type": "Project",
+      "label": "夜视鹰瞳项目",
+      "properties": {
+        "industry": "通用",
+        "source": "创新创业赛",
+        "technologies": [
+          "自动驾驶",
+          "自然语言处理",
+          "数据挖掘",
+          "计算机视觉",
+          "三维重建",
+          "红外",
+          "智能制造",
+          "大数据"
+        ],
+        "biz_model": [
+          "技术服务",
+          "营收",
+          "代理",
+          "商业模式",
+          "授权"
+        ],
+        "moat": [
+          "知识产权",
+          "核心技术",
+          "EI",
+          "自主研发",
+          "发明专利"
+        ]
+      }
+    },
+    {
+      "id": "proj_4a5d64aa",
+      "type": "Project",
+      "label": "推送家2020Q2",
+      "properties": {
+        "industry": "通用",
+        "source": "创新创业赛",
+        "technologies": [
+          "神经网络",
+          "图像识别",
+          "云计算",
+          "LSTM",
+          "机器学习"
+        ],
+        "biz_model": [
+          "订阅",
+          "平台",
+          "商业模式",
+          "会员"
+        ],
+        "moat": []
+      }
+    },
+    {
+      "id": "proj_b9e8e5d3",
+      "type": "Project",
+      "label": "推送家",
+      "properties": {
+        "industry": "通用",
+        "source": "创新创业赛",
+        "technologies": [
+          "自然语言处理",
+          "神经网络",
+          "AR",
+          "图像识别",
+          "云计算",
+          "5G",
+          "GAN",
+          "区块链"
+        ],
+        "biz_model": [
+          "盈利模式",
+          "代理",
+          "广告",
+          "商业模式",
+          "会员"
+        ],
+        "moat": [
+          "知识产权",
+          "核心技术",
+          "EI",
+          "发明专利",
+          "专利"
+        ]
+      }
+    },
+    {
+      "id": "proj_cf0f1605",
+      "type": "Project",
+      "label": "溯源：国内首创呼吸道病原拉曼检测仪",
+      "properties": {
+        "industry": "通用",
+        "source": "创新创业赛",
+        "technologies": [
+          "AR",
+          "红外",
+          "大数据",
+          "纳米",
+          "拉曼光谱"
+        ],
+        "biz_model": [
+          "授权",
+          "商业模式",
+          "盈利模式",
+          "代理"
+        ],
+        "moat": [
+          "专利",
+          "知识产权",
+          "首创"
+        ]
+      }
+    },
+    {
+      "id": "proj_fb6c9c33",
+      "type": "Project",
+      "label": "星哨科技--新一代卫星互联网应用系统，开启全域全时快响预警新时代",
+      "properties": {
+        "industry": "通用",
+        "source": "创新创业赛",
+        "technologies": [
+          "FPGA"
+        ],
+        "biz_model": [
+          "授权",
+          "平台"
+        ],
+        "moat": [
+          "独创",
+          "知识产权",
+          "发明专利",
+          "专利",
+          "首创"
+        ]
+      }
+    },
+    {
+      "id": "proj_c5de69af",
+      "type": "Project",
+      "label": "精微智控--面向智能_环调控系统",
+      "properties": {
+        "industry": "通用",
+        "source": "科技创新类1",
+        "technologies": [
+          "光学",
+          "芯片",
+          "AR",
+          "偏振",
+          "量子",
+          "红外",
+          "增材制造",
+          "新能源"
+        ],
+        "biz_model": [
+          "平台"
+        ],
+        "moat": [
+          "核心技术",
+          "SCI"
+        ]
+      }
+    },
+    {
+      "id": "proj_4d9da4f3",
+      "type": "Project",
+      "label": "银构芯生——3D异质_连材料技术",
+      "properties": {
+        "industry": "通用",
+        "source": "科技创新类1",
+        "technologies": [
+          "芯片",
+          "纳米",
+          "FPGA"
+        ],
+        "biz_model": [],
+        "moat": [
+          "知识产权",
+          "EI",
+          "发明专利",
+          "专利",
+          "论文"
+        ]
+      }
+    },
+    {
+      "id": "proj_8c2f4b96",
+      "type": "Project",
+      "label": "灵枢微创--人体自然_手术机器人",
+      "properties": {
+        "industry": "通用",
+        "source": "科技创新类1",
+        "technologies": [
+          "内窥镜",
+          "AR",
+          "VR",
+          "5G",
+          "SoC",
+          "机器人"
+        ],
+        "biz_model": [
+          "平台"
+        ],
+        "moat": [
+          "核心技术",
+          "EI",
+          "论文",
+          "专利"
+        ]
+      }
+    },
+    {
+      "id": "proj_37d3d154",
+      "type": "Project",
+      "label": "医联农村，e路助农—_化路径研究",
+      "properties": {
+        "industry": "通用",
+        "source": "科技创新类1",
+        "technologies": [
+          "数字孪生",
+          "物联网",
+          "大模型"
+        ],
+        "biz_model": [
+          "平台"
+        ],
+        "moat": [
+          "论文",
+          "壁垒"
+        ]
+      }
+    },
+    {
+      "id": "proj_9a2fbaa3",
+      "type": "Project",
+      "label": "千钧问鼎——尖端超高_自主化研制",
+      "properties": {
+        "industry": "通用",
+        "source": "科技创新类1",
+        "technologies": [
+          "光学",
+          "YOLO",
+          "芯片",
+          "AR",
+          "多模态",
+          "VR",
+          "量子",
+          "新能源"
+        ],
+        "biz_model": [
+          "平台"
+        ],
+        "moat": [
+          "核心技术",
+          "EI",
+          "SCI",
+          "发明专利",
+          "专利"
+        ]
+      }
+    },
+    {
+      "id": "proj_bf910931",
+      "type": "Project",
+      "label": "禾光智能--精准制导_机器人系统",
+      "properties": {
+        "industry": "通用",
+        "source": "科技创新类1",
+        "technologies": [
+          "目标检测",
+          "AR",
+          "图像识别",
+          "计算机视觉",
+          "机器学习",
+          "新能源",
+          "Transformer",
+          "机器人"
+        ],
+        "biz_model": [
+          "授权"
+        ],
+        "moat": [
+          "EI",
+          "自主研发",
+          "发明专利",
+          "专利",
+          "SCI"
+        ]
+      }
+    },
+    {
+      "id": "proj_bad6ae35",
+      "type": "Project",
+      "label": "数湖启智-项目书0410",
+      "properties": {
+        "industry": "通用",
+        "source": "科技创新类1",
+        "technologies": [
+          "自动驾驶",
+          "AR",
+          "MR",
+          "知识图谱",
+          "IoT",
+          "数据湖",
+          "大模型",
+          "多模态"
+        ],
+        "biz_model": [
+          "数据服务",
+          "API",
+          "平台"
+        ],
+        "moat": [
+          "知识产权",
+          "SCI",
+          "发明专利",
+          "专利",
+          "论文"
+        ],
+        "problem": "当前核心瓶颈在于人工与自动化清洗的双重局限性形成治理真空：人工清洗需要投入大量专业人力进行重复性标注与规则制定，在面对海量异构数据时效率难以保证；而AI驱动的自动化清洗虽能缓解人力瓶颈，却受场景泛化能力，针对特定领域优化的算法在迁移至其他领域时时，因数据模态差异与业务逻辑断层，往往产生误判或过度清洗，迫使企业为",
+        "solution": "本项目提出的技术能够有效应对多源异构数据湖所带来的挑战，并高质量完成数据管理任务。本项目研制了基于多源异构数据湖的数据智算平台。该系统综合运用前述研究成果，包括任务感知的关系透视、人机协作的数据提质、数据优选的模型提效，旨在真实贴近用户需求，广泛适应多个应用场景。系统为用户提供自助式数据发现，数据清洗融合以及高效模型训练功能。",
+        "market_size": "",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [
+          "教授",
+          "院士"
+        ],
+        "success_factors": [
+          "有用户验证",
+          "团队包含教授、院士"
+        ],
+        "failure_risks": [
+          "存在合规/隐私风险需评估",
+          "未提供市场规模数据"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "proj_30972c83",
+      "type": "Project",
+      "label": "禾光智能——智能激光除草机器人系统",
+      "properties": {
+        "industry": "通用",
+        "source": "科技创新类1",
+        "technologies": [
+          "自动驾驶",
+          "芯片",
+          "AR",
+          "图像识别",
+          "CNN",
+          "神经网络",
+          "IoT",
+          "边缘计算"
+        ],
+        "biz_model": [
+          "数据服务",
+          "平台"
+        ],
+        "moat": [
+          "EI",
+          "论文",
+          "技术门槛"
+        ]
+      }
+    },
+    {
+      "id": "tech_6964a395",
+      "type": "Technology",
+      "label": "强化学习",
+      "properties": {
+        "usage_count": 11
+      }
+    },
+    {
+      "id": "tech_2c657e7d",
+      "type": "Technology",
+      "label": "大数据",
+      "properties": {
+        "usage_count": 23
+      }
+    },
+    {
+      "id": "tech_5b61a1b2",
+      "type": "Technology",
+      "label": "AR",
+      "properties": {
+        "usage_count": 59
+      }
+    },
+    {
+      "id": "tech_a5cad1b3",
+      "type": "Technology",
+      "label": "SoC",
+      "properties": {
+        "usage_count": 11
+      }
+    },
+    {
+      "id": "tech_ad6a23ef",
+      "type": "Technology",
+      "label": "光学",
+      "properties": {
+        "usage_count": 14
+      }
+    },
+    {
+      "id": "tech_7692bbdb",
+      "type": "Technology",
+      "label": "目标检测",
+      "properties": {
+        "usage_count": 8
+      }
+    },
+    {
+      "id": "tech_37acc94c",
+      "type": "Technology",
+      "label": "多模态",
+      "properties": {
+        "usage_count": 33
+      }
+    },
+    {
+      "id": "tech_ffb93bb5",
+      "type": "Technology",
+      "label": "计算机视觉",
+      "properties": {
+        "usage_count": 12
+      }
+    },
+    {
+      "id": "tech_b8c7cd66",
+      "type": "Technology",
+      "label": "红外",
+      "properties": {
+        "usage_count": 12
+      }
+    },
+    {
+      "id": "tech_fce4b7d0",
+      "type": "Technology",
+      "label": "无人机",
+      "properties": {
+        "usage_count": 14
+      }
+    },
+    {
+      "id": "tech_2d664feb",
+      "type": "Technology",
+      "label": "YOLO",
+      "properties": {
+        "usage_count": 8
+      }
+    },
+    {
+      "id": "tech_8c5f70f8",
+      "type": "Technology",
+      "label": "深度学习",
+      "properties": {
+        "usage_count": 29
+      }
+    },
+    {
+      "id": "tech_40850cca",
+      "type": "Technology",
+      "label": "神经网络",
+      "properties": {
+        "usage_count": 26
+      }
+    },
+    {
+      "id": "tech_1121be28",
+      "type": "Technology",
+      "label": "卷积神经网络",
+      "properties": {
+        "usage_count": 9
+      }
+    },
+    {
+      "id": "tech_7ab147fc",
+      "type": "Technology",
+      "label": "图像识别",
+      "properties": {
+        "usage_count": 11
+      }
+    },
+    {
+      "id": "tech_8dd4d769",
+      "type": "Technology",
+      "label": "边缘计算",
+      "properties": {
+        "usage_count": 13
+      }
+    },
+    {
+      "id": "tech_62f8a8e2",
+      "type": "Technology",
+      "label": "嵌入式",
+      "properties": {
+        "usage_count": 7
+      }
+    },
+    {
+      "id": "tech_e8308900",
+      "type": "Technology",
+      "label": "渲染",
+      "properties": {
+        "usage_count": 9
+      }
+    },
+    {
+      "id": "tech_2435a45b",
+      "type": "Technology",
+      "label": "CNN",
+      "properties": {
+        "usage_count": 15
+      }
+    },
+    {
+      "id": "tech_7b4e730d",
+      "type": "Technology",
+      "label": "注意力机制",
+      "properties": {
+        "usage_count": 9
+      }
+    },
+    {
+      "id": "tech_07e3288e",
+      "type": "Technology",
+      "label": "RNN",
+      "properties": {
+        "usage_count": 3
+      }
+    },
+    {
+      "id": "tech_40decf73",
+      "type": "Technology",
+      "label": "预训练",
+      "properties": {
+        "usage_count": 9
+      }
+    },
+    {
+      "id": "tech_b8cc08c1",
+      "type": "Technology",
+      "label": "LLM",
+      "properties": {
+        "usage_count": 11
+      }
+    },
+    {
+      "id": "tech_2dc9b4e0",
+      "type": "Technology",
+      "label": "大模型",
+      "properties": {
+        "usage_count": 28
+      }
+    },
+    {
+      "id": "tech_bbca2718",
+      "type": "Technology",
+      "label": "Transformer",
+      "properties": {
+        "usage_count": 15
+      }
+    },
+    {
+      "id": "tech_481d5b5c",
+      "type": "Technology",
+      "label": "扩散模型",
+      "properties": {
+        "usage_count": 5
+      }
+    },
+    {
+      "id": "tech_d30881ac",
+      "type": "Technology",
+      "label": "SLAM",
+      "properties": {
+        "usage_count": 3
+      }
+    },
+    {
+      "id": "tech_06de0925",
+      "type": "Technology",
+      "label": "激光雷达",
+      "properties": {
+        "usage_count": 6
+      }
+    },
+    {
+      "id": "tech_ef8a9f75",
+      "type": "Technology",
+      "label": "VR",
+      "properties": {
+        "usage_count": 8
+      }
+    },
+    {
+      "id": "tech_1703f91c",
+      "type": "Technology",
+      "label": "GPT",
+      "properties": {
+        "usage_count": 10
+      }
+    },
+    {
+      "id": "tech_0f4aae79",
+      "type": "Technology",
+      "label": "智能制造",
+      "properties": {
+        "usage_count": 10
+      }
+    },
+    {
+      "id": "tech_1f097591",
+      "type": "Technology",
+      "label": "机器人",
+      "properties": {
+        "usage_count": 20
+      }
+    },
+    {
+      "id": "tech_4d9b6b90",
+      "type": "Technology",
+      "label": "传感器",
+      "properties": {
+        "usage_count": 28
+      }
+    },
+    {
+      "id": "tech_ca9b9562",
+      "type": "Technology",
+      "label": "LiDAR",
+      "properties": {
+        "usage_count": 3
+      }
+    },
+    {
+      "id": "tech_cf85a8cb",
+      "type": "Technology",
+      "label": "点云",
+      "properties": {
+        "usage_count": 4
+      }
+    },
+    {
+      "id": "tech_01a78881",
+      "type": "Technology",
+      "label": "数字孪生",
+      "properties": {
+        "usage_count": 11
+      }
+    },
+    {
+      "id": "tech_56fe4930",
+      "type": "Technology",
+      "label": "碳中和",
+      "properties": {
+        "usage_count": 5
+      }
+    },
+    {
+      "id": "tech_8a68be7b",
+      "type": "Technology",
+      "label": "新能源",
+      "properties": {
+        "usage_count": 6
+      }
+    },
+    {
+      "id": "tech_fb2353f9",
+      "type": "Technology",
+      "label": "超声",
+      "properties": {
+        "usage_count": 6
+      }
+    },
+    {
+      "id": "tech_eca9158c",
+      "type": "Technology",
+      "label": "LSTM",
+      "properties": {
+        "usage_count": 7
+      }
+    },
+    {
+      "id": "tech_787700a5",
+      "type": "Technology",
+      "label": "GAN",
+      "properties": {
+        "usage_count": 13
+      }
+    },
+    {
+      "id": "tech_ec71b9d7",
+      "type": "Technology",
+      "label": "氢能",
+      "properties": {
+        "usage_count": 2
+      }
+    },
+    {
+      "id": "tech_61bb1751",
+      "type": "Technology",
+      "label": "机器学习",
+      "properties": {
+        "usage_count": 14
+      }
+    },
+    {
+      "id": "tech_1088e767",
+      "type": "Technology",
+      "label": "芯片",
+      "properties": {
+        "usage_count": 11
+      }
+    },
+    {
+      "id": "tech_068f6874",
+      "type": "Technology",
+      "label": "生成对抗",
+      "properties": {
+        "usage_count": 5
+      }
+    },
+    {
+      "id": "tech_eb8dc8ec",
+      "type": "Technology",
+      "label": "量子",
+      "properties": {
+        "usage_count": 3
+      }
+    },
+    {
+      "id": "tech_d5c44258",
+      "type": "Technology",
+      "label": "MR",
+      "properties": {
+        "usage_count": 11
+      }
+    },
+    {
+      "id": "tech_70fa887f",
+      "type": "Technology",
+      "label": "迁移学习",
+      "properties": {
+        "usage_count": 3
+      }
+    },
+    {
+      "id": "tech_221c3eff",
+      "type": "Technology",
+      "label": "BERT",
+      "properties": {
+        "usage_count": 6
+      }
+    },
+    {
+      "id": "tech_1fefd5a9",
+      "type": "Technology",
+      "label": "云计算",
+      "properties": {
+        "usage_count": 7
+      }
+    },
+    {
+      "id": "tech_fa264930",
+      "type": "Technology",
+      "label": "5G",
+      "properties": {
+        "usage_count": 9
+      }
+    },
+    {
+      "id": "tech_75d8fafb",
+      "type": "Technology",
+      "label": "区块链",
+      "properties": {
+        "usage_count": 4
+      }
+    },
+    {
+      "id": "tech_bb481825",
+      "type": "Technology",
+      "label": "知识图谱",
+      "properties": {
+        "usage_count": 9
+      }
+    },
+    {
+      "id": "tech_733252b8",
+      "type": "Technology",
+      "label": "三维重建",
+      "properties": {
+        "usage_count": 2
+      }
+    },
+    {
+      "id": "tech_8bf07aa8",
+      "type": "Technology",
+      "label": "纳米",
+      "properties": {
+        "usage_count": 7
+      }
+    },
+    {
+      "id": "tech_3d13e1c0",
+      "type": "Technology",
+      "label": "物联网",
+      "properties": {
+        "usage_count": 7
+      }
+    },
+    {
+      "id": "tech_166c215f",
+      "type": "Technology",
+      "label": "联邦学习",
+      "properties": {
+        "usage_count": 7
+      }
+    },
+    {
+      "id": "tech_f48c43f5",
+      "type": "Technology",
+      "label": "自然语言处理",
+      "properties": {
+        "usage_count": 11
+      }
+    },
+    {
+      "id": "tech_2e2004ef",
+      "type": "Technology",
+      "label": "数据挖掘",
+      "properties": {
+        "usage_count": 4
+      }
+    },
+    {
+      "id": "tech_68368d8b",
+      "type": "Technology",
+      "label": "数据湖",
+      "properties": {
+        "usage_count": 3
+      }
+    },
+    {
+      "id": "tech_22d26052",
+      "type": "Technology",
+      "label": "MEMS",
+      "properties": {
+        "usage_count": 2
+      }
+    },
+    {
+      "id": "tech_f86ba531",
+      "type": "Technology",
+      "label": "内窥镜",
+      "properties": {
+        "usage_count": 2
+      }
+    },
+    {
+      "id": "tech_6470d266",
+      "type": "Technology",
+      "label": "偏振",
+      "properties": {
+        "usage_count": 2
+      }
+    },
+    {
+      "id": "tech_d1f314cc",
+      "type": "Technology",
+      "label": "单片机",
+      "properties": {
+        "usage_count": 2
+      }
+    },
+    {
+      "id": "tech_fddfe09e",
+      "type": "Technology",
+      "label": "低碳",
+      "properties": {
+        "usage_count": 5
+      }
+    },
+    {
+      "id": "tech_85587c49",
+      "type": "Technology",
+      "label": "NLP",
+      "properties": {
+        "usage_count": 5
+      }
+    },
+    {
+      "id": "tech_f64736b9",
+      "type": "Technology",
+      "label": "自动驾驶",
+      "properties": {
+        "usage_count": 5
+      }
+    },
+    {
+      "id": "tech_589f8ced",
+      "type": "Technology",
+      "label": "IoT",
+      "properties": {
+        "usage_count": 4
+      }
+    },
+    {
+      "id": "tech_824d97b2",
+      "type": "Technology",
+      "label": "碳交易",
+      "properties": {
+        "usage_count": 2
+      }
+    },
+    {
+      "id": "tech_d9c9cfab",
+      "type": "Technology",
+      "label": "语音合成",
+      "properties": {
+        "usage_count": 3
+      }
+    },
+    {
+      "id": "tech_7c306e88",
+      "type": "Technology",
+      "label": "语音识别",
+      "properties": {
+        "usage_count": 2
+      }
+    },
+    {
+      "id": "tech_8f5a5dfc",
+      "type": "Technology",
+      "label": "AIGC",
+      "properties": {
+        "usage_count": 3
+      }
+    },
+    {
+      "id": "tech_3e86ca88",
+      "type": "Technology",
+      "label": "元宇宙",
+      "properties": {
+        "usage_count": 4
+      }
+    },
+    {
+      "id": "tech_345903e2",
+      "type": "Technology",
+      "label": "工业互联网",
+      "properties": {
+        "usage_count": 2
+      }
+    },
+    {
+      "id": "tech_a1b5c56e",
+      "type": "Technology",
+      "label": "FPGA",
+      "properties": {
+        "usage_count": 3
+      }
+    },
+    {
+      "id": "tech_3f39d677",
+      "type": "Technology",
+      "label": "实时渲染",
+      "properties": {
+        "usage_count": 4
+      }
+    },
+    {
+      "id": "mkt_f55b5c48",
+      "type": "Market",
+      "label": "交通运输",
+      "properties": {}
+    },
+    {
+      "id": "mkt_8a964c7a",
+      "type": "Market",
+      "label": "农业发展",
+      "properties": {}
+    },
+    {
+      "id": "mkt_daf8ab76",
+      "type": "Market",
+      "label": "工业制造",
+      "properties": {}
+    },
+    {
+      "id": "mkt_a5f2e466",
+      "type": "Market",
+      "label": "文化旅游",
+      "properties": {}
+    },
+    {
+      "id": "mkt_3ae60528",
+      "type": "Market",
+      "label": "教育教学",
+      "properties": {}
+    },
+    {
+      "id": "mkt_aa05fd09",
+      "type": "Market",
+      "label": "通用",
+      "properties": {}
+    },
+    {
+      "id": "mkt_d1c2b24c",
+      "type": "Market",
+      "label": "医疗健康",
+      "properties": {}
+    },
+    {
+      "id": "mkt_131e4e3b",
+      "type": "Market",
+      "label": "环境保护",
+      "properties": {}
+    },
+    {
+      "id": "mkt_7fbf2e97",
+      "type": "Market",
+      "label": "政务管理",
+      "properties": {}
+    },
+    {
+      "id": "concept_PMF",
+      "type": "Concept",
+      "label": "产品市场契合",
+      "properties": {
+        "en": "PMF"
+      }
+    },
+    {
+      "id": "concept_TAM",
+      "type": "Concept",
+      "label": "总可用市场",
+      "properties": {
+        "en": "TAM"
+      }
+    },
+    {
+      "id": "concept_SAM",
+      "type": "Concept",
+      "label": "可服务市场",
+      "properties": {
+        "en": "SAM"
+      }
+    },
+    {
+      "id": "concept_SOM",
+      "type": "Concept",
+      "label": "可获得市场",
+      "properties": {
+        "en": "SOM"
+      }
+    },
+    {
+      "id": "concept_Value_Proposition",
+      "type": "Concept",
+      "label": "价值主张",
+      "properties": {
+        "en": "Value_Proposition"
+      }
+    },
+    {
+      "id": "concept_Moat",
+      "type": "Concept",
+      "label": "护城河",
+      "properties": {
+        "en": "Moat"
+      }
+    },
+    {
+      "id": "concept_Pricing",
+      "type": "Concept",
+      "label": "定价策略",
+      "properties": {
+        "en": "Pricing"
+      }
+    },
+    {
+      "id": "concept_Lean_Canvas",
+      "type": "Concept",
+      "label": "精益画布",
+      "properties": {
+        "en": "Lean_Canvas"
+      }
+    },
+    {
+      "id": "concept_JTBD",
+      "type": "Concept",
+      "label": "待办任务",
+      "properties": {
+        "en": "JTBD"
+      }
+    },
+    {
+      "id": "concept_AARRR",
+      "type": "Concept",
+      "label": "海盗指标",
+      "properties": {
+        "en": "AARRR"
+      }
+    },
+    {
+      "id": "concept_SWOT",
+      "type": "Concept",
+      "label": "SWOT分析",
+      "properties": {
+        "en": "SWOT"
+      }
+    },
+    {
+      "id": "concept_BCG",
+      "type": "Concept",
+      "label": "BCG矩阵",
+      "properties": {
+        "en": "BCG"
+      }
+    },
+    {
+      "id": "concept_CAC",
+      "type": "Concept",
+      "label": "获客成本",
+      "properties": {
+        "en": "CAC"
+      }
+    },
+    {
+      "id": "concept_LTV",
+      "type": "Concept",
+      "label": "用户终身价值",
+      "properties": {
+        "en": "LTV"
+      }
+    },
+    {
+      "id": "concept_BEP",
+      "type": "Concept",
+      "label": "盈亏平衡点",
+      "properties": {
+        "en": "BEP"
+      }
+    },
+    {
+      "id": "concept_MVP",
+      "type": "Concept",
+      "label": "最小可行产品",
+      "properties": {
+        "en": "MVP"
+      }
+    },
+    {
+      "id": "concept_User_Interview",
+      "type": "Concept",
+      "label": "用户访谈",
+      "properties": {
+        "en": "User_Interview"
+      }
+    },
+    {
+      "id": "concept_Business_Plan",
+      "type": "Concept",
+      "label": "商业计划书",
+      "properties": {
+        "en": "Business_Plan"
+      }
+    },
+    {
+      "id": "concept_Pitch_Deck",
+      "type": "Concept",
+      "label": "路演材料",
+      "properties": {
+        "en": "Pitch_Deck"
+      }
+    },
+    {
+      "id": "risk_cac_high",
+      "type": "RiskPattern",
+      "label": "获客成本过高",
+      "properties": {
+        "dimension": "商业建模",
+        "severity": "high"
+      }
+    },
+    {
+      "id": "risk_no_moat",
+      "type": "RiskPattern",
+      "label": "缺乏技术壁垒",
+      "properties": {
+        "dimension": "方案策划",
+        "severity": "high"
+      }
+    },
+    {
+      "id": "risk_no_evidence",
+      "type": "RiskPattern",
+      "label": "需求验证不足",
+      "properties": {
+        "dimension": "痛点发现",
+        "severity": "high"
+      }
+    },
+    {
+      "id": "risk_market_inflate",
+      "type": "RiskPattern",
+      "label": "市场规模虚高",
+      "properties": {
+        "dimension": "商业建模",
+        "severity": "medium"
+      }
+    },
+    {
+      "id": "risk_team_mismatch",
+      "type": "RiskPattern",
+      "label": "团队能力不匹配",
+      "properties": {
+        "dimension": "资源杠杆",
+        "severity": "medium"
+      }
+    },
+    {
+      "id": "risk_compliance",
+      "type": "RiskPattern",
+      "label": "合规风险",
+      "properties": {
+        "dimension": "商业建模",
+        "severity": "high"
+      }
+    },
+    {
+      "id": "risk_tech_infeasible",
+      "type": "RiskPattern",
+      "label": "技术路线不可行",
+      "properties": {
+        "dimension": "方案策划",
+        "severity": "high"
+      }
+    },
+    {
+      "id": "risk_biz_unclear",
+      "type": "RiskPattern",
+      "label": "盈利模式不清晰",
+      "properties": {
+        "dimension": "商业建模",
+        "severity": "medium"
+      }
+    },
+    {
+      "id": "risk_channel_unreachable",
+      "type": "RiskPattern",
+      "label": "渠道不可达",
+      "properties": {
+        "dimension": "商业建模",
+        "severity": "medium"
+      }
+    },
+    {
+      "id": "risk_pitch_weak",
+      "type": "RiskPattern",
+      "label": "路演叙事薄弱",
+      "properties": {
+        "dimension": "路演表达",
+        "severity": "low"
+      }
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "he_pmf_proj_3264d357",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_3264d357",
+        "mkt_a5f2e466",
+        "tech_6964a395",
+        "tech_2c657e7d",
+        "tech_5b61a1b2"
+      ],
+      "properties": {
+        "project": "Go2重塑入境游",
+        "industry": "文化旅游",
+        "techs": [
+          "强化学习",
+          "大数据",
+          "AR"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'Go2重塑入境游'使用强化学习,大数据,AR技术切入文化旅游领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_b7a0e0af",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_b7a0e0af",
+        "mkt_a5f2e466",
+        "tech_5b61a1b2"
+      ],
+      "properties": {
+        "project": "非物质文化遗产的商业_与保护策略",
+        "industry": "文化旅游",
+        "techs": [
+          "AR"
+        ],
+        "has_moat": false,
+        "has_biz_model": true,
+        "teaching_note": "项目'非物质文化遗产的商业_与保护策略'使用AR技术切入文化旅游领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_78f2d606",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_78f2d606",
+        "mkt_aa05fd09",
+        "tech_ad6a23ef",
+        "tech_7692bbdb",
+        "tech_5b61a1b2"
+      ],
+      "properties": {
+        "project": "基于人工智能的雷达微弱目标检测",
+        "industry": "通用",
+        "techs": [
+          "光学",
+          "目标检测",
+          "AR"
+        ],
+        "has_moat": true,
+        "has_biz_model": false,
+        "teaching_note": "项目'基于人工智能的雷达微弱目标检测'使用光学,目标检测,AR技术切入通用领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_68515984",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_68515984",
+        "mkt_aa05fd09",
+        "tech_2d664feb",
+        "tech_ad6a23ef",
+        "tech_7692bbdb"
+      ],
+      "properties": {
+        "project": "基于YOLO的AI视_能感知系统",
+        "industry": "通用",
+        "techs": [
+          "YOLO",
+          "光学",
+          "目标检测"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'基于YOLO的AI视_能感知系统'使用YOLO,光学,目标检测技术切入通用领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_bfdfddb2",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_bfdfddb2",
+        "mkt_aa05fd09",
+        "tech_7b4e730d",
+        "tech_07e3288e",
+        "tech_40850cca"
+      ],
+      "properties": {
+        "project": "星眸智析--多模态卫_来推演系统",
+        "industry": "通用",
+        "techs": [
+          "注意力机制",
+          "RNN",
+          "神经网络"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'星眸智析--多模态卫_来推演系统'使用注意力机制,RNN,神经网络技术切入通用领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_da4802e7",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_da4802e7",
+        "mkt_aa05fd09",
+        "tech_6964a395",
+        "tech_2d664feb",
+        "tech_d30881ac"
+      ],
+      "properties": {
+        "project": "“预行智控”——面向_智能机器人",
+        "industry": "通用",
+        "techs": [
+          "强化学习",
+          "YOLO",
+          "SLAM"
+        ],
+        "has_moat": false,
+        "has_biz_model": true,
+        "teaching_note": "项目'“预行智控”——面向_智能机器人'使用强化学习,YOLO,SLAM技术切入通用领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_b47acad4",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_b47acad4",
+        "mkt_aa05fd09",
+        "tech_01a78881",
+        "tech_56fe4930",
+        "tech_37acc94c"
+      ],
+      "properties": {
+        "project": "极端气象下电力系统韧_性解决方案",
+        "industry": "通用",
+        "techs": [
+          "数字孪生",
+          "碳中和",
+          "多模态"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'极端气象下电力系统韧_性解决方案'使用数字孪生,碳中和,多模态技术切入通用领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_a85743aa",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_a85743aa",
+        "mkt_aa05fd09",
+        "tech_01a78881",
+        "tech_8c5f70f8",
+        "tech_40850cca"
+      ],
+      "properties": {
+        "project": "多场感知，孪生驱动—_技术引领者",
+        "industry": "通用",
+        "techs": [
+          "数字孪生",
+          "深度学习",
+          "神经网络"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'多场感知，孪生驱动—_技术引领者'使用数字孪生,深度学习,神经网络技术切入通用领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_8b88aaad",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_8b88aaad",
+        "mkt_aa05fd09",
+        "tech_6964a395",
+        "tech_ad6a23ef",
+        "tech_7692bbdb"
+      ],
+      "properties": {
+        "project": "鲲澜芯动：多模态水下_能决策方案",
+        "industry": "通用",
+        "techs": [
+          "强化学习",
+          "光学",
+          "目标检测"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'鲲澜芯动：多模态水下_能决策方案'使用强化学习,光学,目标检测技术切入通用领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_30115f05",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_30115f05",
+        "mkt_aa05fd09",
+        "tech_6964a395",
+        "tech_5b61a1b2",
+        "tech_37acc94c"
+      ],
+      "properties": {
+        "project": "EvoRobo：下一_智能机器人",
+        "industry": "通用",
+        "techs": [
+          "强化学习",
+          "AR",
+          "多模态"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'EvoRobo：下一_智能机器人'使用强化学习,AR,多模态技术切入通用领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_a9941030",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_a9941030",
+        "mkt_d1c2b24c",
+        "tech_7ab147fc",
+        "tech_4d9b6b90",
+        "tech_2dc9b4e0"
+      ],
+      "properties": {
+        "project": "脉语智鉴——结合视触_能脉诊系统",
+        "industry": "医疗健康",
+        "techs": [
+          "图像识别",
+          "传感器",
+          "大模型"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'脉语智鉴——结合视触_能脉诊系统'使用图像识别,传感器,大模型技术切入医疗健康领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_8c46705e",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_8c46705e",
+        "mkt_d1c2b24c",
+        "tech_7b4e730d",
+        "tech_ad6a23ef",
+        "tech_068f6874"
+      ],
+      "properties": {
+        "project": "臻视赋医——面向真实_强算法研究",
+        "industry": "医疗健康",
+        "techs": [
+          "注意力机制",
+          "光学",
+          "生成对抗"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'臻视赋医——面向真实_强算法研究'使用注意力机制,光学,生成对抗技术切入医疗健康领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_66045892",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_66045892",
+        "mkt_d1c2b24c",
+        "tech_068f6874",
+        "tech_40850cca",
+        "tech_70fa887f"
+      ],
+      "properties": {
+        "project": "慧警康策——智能疾病_助诊断系统",
+        "industry": "医疗健康",
+        "techs": [
+          "生成对抗",
+          "神经网络",
+          "迁移学习"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'慧警康策——智能疾病_助诊断系统'使用生成对抗,神经网络,迁移学习技术切入医疗健康领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_5323f05f",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_5323f05f",
+        "mkt_d1c2b24c",
+        "tech_2d664feb",
+        "tech_ad6a23ef",
+        "tech_7692bbdb"
+      ],
+      "properties": {
+        "project": "析光知理——快速脑瘤_能分析系统",
+        "industry": "医疗健康",
+        "techs": [
+          "YOLO",
+          "光学",
+          "目标检测"
+        ],
+        "has_moat": true,
+        "has_biz_model": false,
+        "teaching_note": "项目'析光知理——快速脑瘤_能分析系统'使用YOLO,光学,目标检测技术切入医疗健康领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_f05baed2",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_f05baed2",
+        "mkt_d1c2b24c",
+        "tech_8c5f70f8",
+        "tech_07e3288e",
+        "tech_d30881ac"
+      ],
+      "properties": {
+        "project": "灵眼守护——基于rP_警移动平台",
+        "industry": "医疗健康",
+        "techs": [
+          "深度学习",
+          "RNN",
+          "SLAM"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'灵眼守护——基于rP_警移动平台'使用深度学习,RNN,SLAM技术切入医疗健康领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_b4230f04",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_b4230f04",
+        "mkt_d1c2b24c",
+        "tech_7b4e730d",
+        "tech_068f6874",
+        "tech_8c5f70f8"
+      ],
+      "properties": {
+        "project": "超晰视界——手持超声_域增强技术",
+        "industry": "医疗健康",
+        "techs": [
+          "注意力机制",
+          "生成对抗",
+          "深度学习"
+        ],
+        "has_moat": true,
+        "has_biz_model": false,
+        "teaching_note": "项目'超晰视界——手持超声_域增强技术'使用注意力机制,生成对抗,深度学习技术切入医疗健康领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_e86f23f2",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_e86f23f2",
+        "mkt_d1c2b24c",
+        "tech_2dc9b4e0",
+        "tech_f48c43f5",
+        "tech_ad6a23ef"
+      ],
+      "properties": {
+        "project": "智眸明析——眼底临床_准化大模型",
+        "industry": "医疗健康",
+        "techs": [
+          "大模型",
+          "自然语言处理",
+          "光学"
+        ],
+        "has_moat": true,
+        "has_biz_model": false,
+        "teaching_note": "项目'智眸明析——眼底临床_准化大模型'使用大模型,自然语言处理,光学技术切入医疗健康领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_aea25081",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_aea25081",
+        "mkt_d1c2b24c",
+        "tech_1088e767",
+        "tech_fb2353f9",
+        "tech_4d9b6b90"
+      ],
+      "properties": {
+        "project": "明眸智芯-眼部智能软_监测开拓者",
+        "industry": "医疗健康",
+        "techs": [
+          "芯片",
+          "超声",
+          "传感器"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'明眸智芯-眼部智能软_监测开拓者'使用芯片,超声,传感器技术切入医疗健康领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_5fd1180b",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_5fd1180b",
+        "mkt_d1c2b24c",
+        "tech_ad6a23ef",
+        "tech_06de0925",
+        "tech_40850cca"
+      ],
+      "properties": {
+        "project": "智能纳米光学偏振内窥镜胶囊",
+        "industry": "医疗健康",
+        "techs": [
+          "光学",
+          "激光雷达",
+          "神经网络"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'智能纳米光学偏振内窥镜胶囊'使用光学,激光雷达,神经网络技术切入医疗健康领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_98bb8d5c",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_98bb8d5c",
+        "mkt_f55b5c48",
+        "tech_5b61a1b2",
+        "tech_d1f314cc",
+        "tech_1f097591"
+      ],
+      "properties": {
+        "project": "稳定不倒——非同轴两_衡控制技术",
+        "industry": "交通运输",
+        "techs": [
+          "AR",
+          "单片机",
+          "机器人"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'稳定不倒——非同轴两_衡控制技术'使用AR,单片机,机器人技术切入交通运输领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_ea85a5d3",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_ea85a5d3",
+        "mkt_f55b5c48",
+        "tech_01a78881",
+        "tech_40850cca",
+        "tech_5b61a1b2"
+      ],
+      "properties": {
+        "project": "面向低空经济的人工智_感知与应用",
+        "industry": "交通运输",
+        "techs": [
+          "数字孪生",
+          "神经网络",
+          "AR"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'面向低空经济的人工智_感知与应用'使用数字孪生,神经网络,AR技术切入交通运输领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_464de40f",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_464de40f",
+        "mkt_f55b5c48",
+        "tech_56fe4930",
+        "tech_5b61a1b2",
+        "tech_ffb93bb5"
+      ],
+      "properties": {
+        "project": "“充”出新天地，“智_站决策优化",
+        "industry": "交通运输",
+        "techs": [
+          "碳中和",
+          "AR",
+          "计算机视觉"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'“充”出新天地，“智_站决策优化'使用碳中和,AR,计算机视觉技术切入交通运输领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_ddac4c3d",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_ddac4c3d",
+        "mkt_f55b5c48",
+        "tech_7b4e730d",
+        "tech_2d664feb",
+        "tech_f48c43f5"
+      ],
+      "properties": {
+        "project": "视界智通--交通长时_时分析系统",
+        "industry": "交通运输",
+        "techs": [
+          "注意力机制",
+          "YOLO",
+          "自然语言处理"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'视界智通--交通长时_时分析系统'使用注意力机制,YOLO,自然语言处理技术切入交通运输领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_da1b321e",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_da1b321e",
+        "mkt_f55b5c48",
+        "tech_6964a395",
+        "tech_40850cca",
+        "tech_5b61a1b2"
+      ],
+      "properties": {
+        "project": "低空智驭——大小模型_群智控系统",
+        "industry": "交通运输",
+        "techs": [
+          "强化学习",
+          "神经网络",
+          "AR"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'低空智驭——大小模型_群智控系统'使用强化学习,神经网络,AR技术切入交通运输领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_584b627f",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_584b627f",
+        "mkt_f55b5c48",
+        "tech_7b4e730d",
+        "tech_ad6a23ef",
+        "tech_7692bbdb"
+      ],
+      "properties": {
+        "project": "智卫天穹——面向复杂_机检测系统",
+        "industry": "交通运输",
+        "techs": [
+          "注意力机制",
+          "光学",
+          "目标检测"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'智卫天穹——面向复杂_机检测系统'使用注意力机制,光学,目标检测技术切入交通运输领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_36ccff73",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_36ccff73",
+        "mkt_f55b5c48",
+        "tech_06de0925",
+        "tech_40850cca",
+        "tech_5b61a1b2"
+      ],
+      "properties": {
+        "project": "极野智驭-驾驭荒野，_作业新时代",
+        "industry": "交通运输",
+        "techs": [
+          "激光雷达",
+          "神经网络",
+          "AR"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'极野智驭-驾驭荒野，_作业新时代'使用激光雷达,神经网络,AR技术切入交通运输领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_62456949",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_62456949",
+        "mkt_f55b5c48",
+        "tech_40850cca",
+        "tech_5b61a1b2",
+        "tech_787700a5"
+      ],
+      "properties": {
+        "project": "深海幽灵-面向海洋强_无人航行器",
+        "industry": "交通运输",
+        "techs": [
+          "神经网络",
+          "AR",
+          "GAN"
+        ],
+        "has_moat": false,
+        "has_biz_model": true,
+        "teaching_note": "项目'深海幽灵-面向海洋强_无人航行器'使用神经网络,AR,GAN技术切入交通运输领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_425716be",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_425716be",
+        "mkt_8a964c7a",
+        "tech_2d664feb",
+        "tech_8c5f70f8",
+        "tech_70fa887f"
+      ],
+      "properties": {
+        "project": "智禾——以“小白菜”_态监测系统",
+        "industry": "农业发展",
+        "techs": [
+          "YOLO",
+          "深度学习",
+          "迁移学习"
+        ],
+        "has_moat": true,
+        "has_biz_model": false,
+        "teaching_note": "项目'智禾——以“小白菜”_态监测系统'使用YOLO,深度学习,迁移学习技术切入农业发展领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_030fe1e4",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_030fe1e4",
+        "mkt_8a964c7a",
+        "tech_7ab147fc"
+      ],
+      "properties": {
+        "project": "千帆助农：AI农业灾_警决策助手",
+        "industry": "农业发展",
+        "techs": [
+          "图像识别"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'千帆助农：AI农业灾_警决策助手'使用图像识别技术切入农业发展领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_fdf41c66",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_fdf41c66",
+        "mkt_8a964c7a",
+        "tech_5b61a1b2",
+        "tech_2d664feb",
+        "tech_a5cad1b3"
+      ],
+      "properties": {
+        "project": "赛道AGRO-AIO_能农业系统",
+        "industry": "农业发展",
+        "techs": [
+          "AR",
+          "YOLO",
+          "SoC"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'赛道AGRO-AIO_能农业系统'使用AR,YOLO,SoC技术切入农业发展领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_15e82e24",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_15e82e24",
+        "mkt_8a964c7a",
+        "tech_8c5f70f8",
+        "tech_ffb93bb5",
+        "tech_fb2353f9"
+      ],
+      "properties": {
+        "project": "农夜智巡——AI夜视_植保新篇章",
+        "industry": "农业发展",
+        "techs": [
+          "深度学习",
+          "计算机视觉",
+          "超声"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'农夜智巡——AI夜视_植保新篇章'使用深度学习,计算机视觉,超声技术切入农业发展领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_89ef2bce",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_89ef2bce",
+        "mkt_8a964c7a",
+        "tech_5b61a1b2",
+        "tech_fddfe09e",
+        "tech_fce4b7d0"
+      ],
+      "properties": {
+        "project": "面向南南合作国家的智_稻种植系统",
+        "industry": "农业发展",
+        "techs": [
+          "AR",
+          "低碳",
+          "无人机"
+        ],
+        "has_moat": true,
+        "has_biz_model": false,
+        "teaching_note": "项目'面向南南合作国家的智_稻种植系统'使用AR,低碳,无人机技术切入农业发展领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_032fa339",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_032fa339",
+        "mkt_131e4e3b",
+        "tech_f48c43f5",
+        "tech_56fe4930",
+        "tech_8c5f70f8"
+      ],
+      "properties": {
+        "project": "零碳智汇-适用多行业_化评价系统",
+        "industry": "环境保护",
+        "techs": [
+          "自然语言处理",
+          "碳中和",
+          "深度学习"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'零碳智汇-适用多行业_化评价系统'使用自然语言处理,碳中和,深度学习技术切入环境保护领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_db8b8b77",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_db8b8b77",
+        "mkt_131e4e3b",
+        "tech_787700a5",
+        "tech_5b61a1b2",
+        "tech_61bb1751"
+      ],
+      "properties": {
+        "project": "碳索未来—智能化CO_技术与装备",
+        "industry": "环境保护",
+        "techs": [
+          "GAN",
+          "AR",
+          "机器学习"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'碳索未来—智能化CO_技术与装备'使用GAN,AR,机器学习技术切入环境保护领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_007b2ce8",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_007b2ce8",
+        "mkt_131e4e3b",
+        "tech_56fe4930",
+        "tech_fddfe09e",
+        "tech_85587c49"
+      ],
+      "properties": {
+        "project": "碳智通：AI驱动的减_同优化平台",
+        "industry": "环境保护",
+        "techs": [
+          "碳中和",
+          "低碳",
+          "NLP"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'碳智通：AI驱动的减_同优化平台'使用碳中和,低碳,NLP技术切入环境保护领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_f4d1c138",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_f4d1c138",
+        "mkt_131e4e3b",
+        "tech_f48c43f5",
+        "tech_8c5f70f8",
+        "tech_5b61a1b2"
+      ],
+      "properties": {
+        "project": "'智防·星火'——基_灾预警系统",
+        "industry": "环境保护",
+        "techs": [
+          "自然语言处理",
+          "深度学习",
+          "AR"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目''智防·星火'——基_灾预警系统'使用自然语言处理,深度学习,AR技术切入环境保护领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_169abfde",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_169abfde",
+        "mkt_131e4e3b",
+        "tech_ad6a23ef",
+        "tech_8c5f70f8",
+        "tech_06de0925"
+      ],
+      "properties": {
+        "project": "面向湿地生态监测的多_能解译技术",
+        "industry": "环境保护",
+        "techs": [
+          "光学",
+          "深度学习",
+          "激光雷达"
+        ],
+        "has_moat": true,
+        "has_biz_model": false,
+        "teaching_note": "项目'面向湿地生态监测的多_能解译技术'使用光学,深度学习,激光雷达技术切入环境保护领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_5712b727",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_5712b727",
+        "mkt_131e4e3b",
+        "tech_7b4e730d",
+        "tech_ad6a23ef",
+        "tech_1088e767"
+      ],
+      "properties": {
+        "project": "京芯智水——智慧赋能_统创新力量",
+        "industry": "环境保护",
+        "techs": [
+          "注意力机制",
+          "光学",
+          "芯片"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'京芯智水——智慧赋能_统创新力量'使用注意力机制,光学,芯片技术切入环境保护领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_76e96798",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_76e96798",
+        "mkt_3ae60528",
+        "tech_5b61a1b2",
+        "tech_37acc94c",
+        "tech_b8cc08c1"
+      ],
+      "properties": {
+        "project": "LectūraAgents",
+        "industry": "教育教学",
+        "techs": [
+          "AR",
+          "多模态",
+          "LLM"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'LectūraAgents'使用AR,多模态,LLM技术切入教育教学领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_82349079",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_82349079",
+        "mkt_3ae60528",
+        "tech_f48c43f5",
+        "tech_5b61a1b2",
+        "tech_e8308900"
+      ],
+      "properties": {
+        "project": "育见先贤—基于多模态_式教育系统",
+        "industry": "教育教学",
+        "techs": [
+          "自然语言处理",
+          "AR",
+          "渲染"
+        ],
+        "has_moat": true,
+        "has_biz_model": false,
+        "teaching_note": "项目'育见先贤—基于多模态_式教育系统'使用自然语言处理,AR,渲染技术切入教育教学领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_9ab84361",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_9ab84361",
+        "mkt_3ae60528",
+        "tech_6964a395",
+        "tech_85587c49",
+        "tech_5b61a1b2"
+      ],
+      "properties": {
+        "project": "华宸AI智评系统",
+        "industry": "教育教学",
+        "techs": [
+          "强化学习",
+          "NLP",
+          "AR"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'华宸AI智评系统'使用强化学习,NLP,AR技术切入教育教学领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_53fc061a",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_53fc061a",
+        "mkt_3ae60528",
+        "tech_f48c43f5",
+        "tech_8c5f70f8",
+        "tech_5b61a1b2"
+      ],
+      "properties": {
+        "project": "“声”动学堂--个性_能教学助手",
+        "industry": "教育教学",
+        "techs": [
+          "自然语言处理",
+          "深度学习",
+          "AR"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'“声”动学堂--个性_能教学助手'使用自然语言处理,深度学习,AR技术切入教育教学领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_77caca55",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_77caca55",
+        "mkt_3ae60528",
+        "tech_6964a395",
+        "tech_8c5f70f8",
+        "tech_07e3288e"
+      ],
+      "properties": {
+        "project": "基于虚实结合视觉伺服_习平台设计",
+        "industry": "教育教学",
+        "techs": [
+          "强化学习",
+          "深度学习",
+          "RNN"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'基于虚实结合视觉伺服_习平台设计'使用强化学习,深度学习,RNN技术切入教育教学领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_0e6feb68",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_0e6feb68",
+        "mkt_3ae60528",
+        "tech_7b4e730d",
+        "tech_5b61a1b2",
+        "tech_b8cc08c1"
+      ],
+      "properties": {
+        "project": "人工智能赋能教学解决_教育大模型",
+        "industry": "教育教学",
+        "techs": [
+          "注意力机制",
+          "AR",
+          "LLM"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'人工智能赋能教学解决_教育大模型'使用注意力机制,AR,LLM技术切入教育教学领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_30ec7a4f",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_30ec7a4f",
+        "mkt_3ae60528",
+        "tech_6964a395",
+        "tech_01a78881",
+        "tech_5b61a1b2"
+      ],
+      "properties": {
+        "project": "飞创智教——SIGM_济教培工坊",
+        "industry": "教育教学",
+        "techs": [
+          "强化学习",
+          "数字孪生",
+          "AR"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'飞创智教——SIGM_济教培工坊'使用强化学习,数字孪生,AR技术切入教育教学领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_d70fc4ee",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_d70fc4ee",
+        "mkt_daf8ab76",
+        "tech_fddfe09e",
+        "tech_b8c7cd66",
+        "tech_8c5f70f8"
+      ],
+      "properties": {
+        "project": "“仪探究净”基于深度_损检测系统",
+        "industry": "工业制造",
+        "techs": [
+          "低碳",
+          "红外",
+          "深度学习"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'“仪探究净”基于深度_损检测系统'使用低碳,红外,深度学习技术切入工业制造领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_b4180a0f",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_b4180a0f",
+        "mkt_daf8ab76",
+        "tech_7b4e730d",
+        "tech_f48c43f5",
+        "tech_8c5f70f8"
+      ],
+      "properties": {
+        "project": "AI赋能空天地海一体_体天线设计",
+        "industry": "工业制造",
+        "techs": [
+          "注意力机制",
+          "自然语言处理",
+          "深度学习"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'AI赋能空天地海一体_体天线设计'使用注意力机制,自然语言处理,深度学习技术切入工业制造领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_de7f6865",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_de7f6865",
+        "mkt_daf8ab76",
+        "tech_2d664feb",
+        "tech_ad6a23ef",
+        "tech_06de0925"
+      ],
+      "properties": {
+        "project": "灵嗅智探—氢能厂站A_能巡检系统",
+        "industry": "工业制造",
+        "techs": [
+          "YOLO",
+          "光学",
+          "激光雷达"
+        ],
+        "has_moat": false,
+        "has_biz_model": false,
+        "teaching_note": "项目'灵嗅智探—氢能厂站A_能巡检系统'使用YOLO,光学,激光雷达技术切入工业制造领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_5a2dedef",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_5a2dedef",
+        "mkt_daf8ab76",
+        "tech_6964a395",
+        "tech_01a78881",
+        "tech_8c5f70f8"
+      ],
+      "properties": {
+        "project": "燃煤电厂湿法脱硫节能_能控制系统",
+        "industry": "工业制造",
+        "techs": [
+          "强化学习",
+          "数字孪生",
+          "深度学习"
+        ],
+        "has_moat": true,
+        "has_biz_model": false,
+        "teaching_note": "项目'燃煤电厂湿法脱硫节能_能控制系统'使用强化学习,数字孪生,深度学习技术切入工业制造领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_24ce12b6",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_24ce12b6",
+        "mkt_daf8ab76",
+        "tech_8c5f70f8",
+        "tech_40850cca",
+        "tech_70fa887f"
+      ],
+      "properties": {
+        "project": "听危声防——基于光纤_安全守护者",
+        "industry": "工业制造",
+        "techs": [
+          "深度学习",
+          "神经网络",
+          "迁移学习"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'听危声防——基于光纤_安全守护者'使用深度学习,神经网络,迁移学习技术切入工业制造领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_8c2ff2c8",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_8c2ff2c8",
+        "mkt_daf8ab76",
+        "tech_8c5f70f8",
+        "tech_40850cca",
+        "tech_37acc94c"
+      ],
+      "properties": {
+        "project": "闻声识障——特殊地形_巡检守护者",
+        "industry": "工业制造",
+        "techs": [
+          "深度学习",
+          "神经网络",
+          "多模态"
+        ],
+        "has_moat": true,
+        "has_biz_model": false,
+        "teaching_note": "项目'闻声识障——特殊地形_巡检守护者'使用深度学习,神经网络,多模态技术切入工业制造领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_fa9eb484",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_fa9eb484",
+        "mkt_daf8ab76",
+        "tech_5b61a1b2",
+        "tech_40decf73",
+        "tech_b8cc08c1"
+      ],
+      "properties": {
+        "project": "智链图谱——工业机器_I决策系统",
+        "industry": "工业制造",
+        "techs": [
+          "AR",
+          "预训练",
+          "LLM"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'智链图谱——工业机器_I决策系统'使用AR,预训练,LLM技术切入工业制造领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_80c57f7b",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_80c57f7b",
+        "mkt_daf8ab76",
+        "tech_6964a395",
+        "tech_4d9b6b90",
+        "tech_5b61a1b2"
+      ],
+      "properties": {
+        "project": "广寒天工——月基装备_人作业系统",
+        "industry": "工业制造",
+        "techs": [
+          "强化学习",
+          "传感器",
+          "AR"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'广寒天工——月基装备_人作业系统'使用强化学习,传感器,AR技术切入工业制造领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_6449bc5b",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_6449bc5b",
+        "mkt_daf8ab76",
+        "tech_6964a395",
+        "tech_7692bbdb",
+        "tech_8c5f70f8"
+      ],
+      "properties": {
+        "project": "极端环境勘测革新——_主巡检系统",
+        "industry": "工业制造",
+        "techs": [
+          "强化学习",
+          "目标检测",
+          "深度学习"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'极端环境勘测革新——_主巡检系统'使用强化学习,目标检测,深度学习技术切入工业制造领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_db0dd5e1",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_db0dd5e1",
+        "mkt_7fbf2e97",
+        "tech_5b61a1b2",
+        "tech_787700a5",
+        "tech_2dc9b4e0"
+      ],
+      "properties": {
+        "project": "讯海智航——全流程新_机协作平台",
+        "industry": "政务管理",
+        "techs": [
+          "AR",
+          "GAN",
+          "大模型"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'讯海智航——全流程新_机协作平台'使用AR,GAN,大模型技术切入政务管理领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_4b72d252",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_4b72d252",
+        "mkt_7fbf2e97",
+        "tech_8c5f70f8",
+        "tech_a5cad1b3",
+        "tech_5b61a1b2"
+      ],
+      "properties": {
+        "project": "智擎风控——跨平台多_同治理平台",
+        "industry": "政务管理",
+        "techs": [
+          "深度学习",
+          "SoC",
+          "AR"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'智擎风控——跨平台多_同治理平台'使用深度学习,SoC,AR技术切入政务管理领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_4a60c8e0",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_4a60c8e0",
+        "mkt_7fbf2e97",
+        "tech_2dc9b4e0",
+        "tech_37acc94c",
+        "tech_7ab147fc"
+      ],
+      "properties": {
+        "project": "物衡智判——基于DS_能推理系统",
+        "industry": "政务管理",
+        "techs": [
+          "大模型",
+          "多模态",
+          "图像识别"
+        ],
+        "has_moat": false,
+        "has_biz_model": false,
+        "teaching_note": "项目'物衡智判——基于DS_能推理系统'使用大模型,多模态,图像识别技术切入政务管理领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_52142b98",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_52142b98",
+        "mkt_7fbf2e97",
+        "tech_40850cca",
+        "tech_221c3eff"
+      ],
+      "properties": {
+        "project": "图盾智控——图计算赋_能防控系统",
+        "industry": "政务管理",
+        "techs": [
+          "神经网络",
+          "BERT"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'图盾智控——图计算赋_能防控系统'使用神经网络,BERT,图计算技术切入政务管理领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_0c15a722",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_0c15a722",
+        "mkt_7fbf2e97",
+        "tech_f64736b9",
+        "tech_8c5f70f8",
+        "tech_37acc94c"
+      ],
+      "properties": {
+        "project": "数湖启智——多源异构_湖智算系统",
+        "industry": "政务管理",
+        "techs": [
+          "自动驾驶",
+          "深度学习",
+          "多模态"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'数湖启智——多源异构_湖智算系统'使用自动驾驶,深度学习,多模态技术切入政务管理领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_7565890d",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_7565890d",
+        "mkt_7fbf2e97",
+        "tech_1088e767",
+        "tech_8c5f70f8",
+        "tech_5b61a1b2"
+      ],
+      "properties": {
+        "project": "文思智铠——生成式大_全优化模块",
+        "industry": "政务管理",
+        "techs": [
+          "芯片",
+          "深度学习",
+          "AR"
+        ],
+        "has_moat": true,
+        "has_biz_model": false,
+        "teaching_note": "项目'文思智铠——生成式大_全优化模块'使用芯片,深度学习,AR技术切入政务管理领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_ec67fd58",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_ec67fd58",
+        "mkt_aa05fd09",
+        "tech_f48c43f5",
+        "tech_8c5f70f8",
+        "tech_d5c44258"
+      ],
+      "properties": {
+        "project": "“慧心晰影”",
+        "industry": "通用",
+        "techs": [
+          "自然语言处理",
+          "深度学习",
+          "MR"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'“慧心晰影”'使用自然语言处理,深度学习,MR技术切入通用领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_f654c4c6",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_f654c4c6",
+        "mkt_aa05fd09",
+        "tech_5b61a1b2",
+        "tech_1088e767",
+        "tech_a1b5c56e"
+      ],
+      "properties": {
+        "project": "星哨科技",
+        "industry": "通用",
+        "techs": [
+          "AR",
+          "芯片",
+          "FPGA"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'星哨科技'使用AR,芯片,FPGA技术切入通用领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_62995efb",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_62995efb",
+        "mkt_aa05fd09",
+        "tech_01a78881",
+        "tech_fa264930"
+      ],
+      "properties": {
+        "project": "“挑战杯”",
+        "industry": "通用",
+        "techs": [
+          "数字孪生",
+          "5G"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'“挑战杯”'使用数字孪生,5G技术切入通用领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_bef4e3a0",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_bef4e3a0",
+        "mkt_aa05fd09",
+        "tech_01a78881",
+        "tech_3f39d677",
+        "tech_5b61a1b2"
+      ],
+      "properties": {
+        "project": "云游灵境-云交互空间实时生成技术引领者-网评-挑战杯",
+        "industry": "通用",
+        "techs": [
+          "数字孪生",
+          "实时渲染",
+          "AR"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'云游灵境-云交互空间实时生成技术引领者-网评-挑战杯'使用数字孪生,实时渲染,AR技术切入通用领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_5ea0860e",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_5ea0860e",
+        "mkt_aa05fd09",
+        "tech_ad6a23ef",
+        "tech_01a78881",
+        "tech_3f39d677"
+      ],
+      "properties": {
+        "project": "京工智演 —— 数字表演产业化的领航者",
+        "industry": "通用",
+        "techs": [
+          "光学",
+          "数字孪生",
+          "实时渲染"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'京工智演 —— 数字表演产业化的领航者'使用光学,数字孪生,实时渲染技术切入通用领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_2270f15b",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_2270f15b",
+        "mkt_aa05fd09",
+        "tech_01a78881",
+        "tech_3f39d677",
+        "tech_1088e767"
+      ],
+      "properties": {
+        "project": "元界创生——云上交互空间智能生成技术领跑者_计划书",
+        "industry": "通用",
+        "techs": [
+          "数字孪生",
+          "实时渲染",
+          "芯片"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'元界创生——云上交互空间智能生成技术领跑者_计划书'使用数字孪生,实时渲染,芯片技术切入通用领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_5b849f1d",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_5b849f1d",
+        "mkt_aa05fd09",
+        "tech_f48c43f5",
+        "tech_85587c49",
+        "tech_37acc94c"
+      ],
+      "properties": {
+        "project": "商业计划书-讯海智航——全流程新闻写作AI辅助平台.pdf",
+        "industry": "通用",
+        "techs": [
+          "自然语言处理",
+          "NLP",
+          "多模态"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'商业计划书-讯海智航——全流程新闻写作AI辅助平台.pdf'使用自然语言处理,NLP,多模态技术切入通用领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_81af83ec",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_81af83ec",
+        "mkt_aa05fd09",
+        "tech_01a78881",
+        "tech_3f39d677",
+        "tech_1088e767"
+      ],
+      "properties": {
+        "project": "元界创生云上交互空间智能生成技术领跑者_计划书",
+        "industry": "通用",
+        "techs": [
+          "数字孪生",
+          "实时渲染",
+          "芯片"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'元界创生云上交互空间智能生成技术领跑者_计划书'使用数字孪生,实时渲染,芯片技术切入通用领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_44aa5890",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_44aa5890",
+        "mkt_aa05fd09",
+        "tech_f64736b9",
+        "tech_f48c43f5",
+        "tech_2e2004ef"
+      ],
+      "properties": {
+        "project": "夜视鹰瞳项目",
+        "industry": "通用",
+        "techs": [
+          "自动驾驶",
+          "自然语言处理",
+          "数据挖掘"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'夜视鹰瞳项目'使用自动驾驶,自然语言处理,数据挖掘技术切入通用领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_4a5d64aa",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_4a5d64aa",
+        "mkt_aa05fd09",
+        "tech_40850cca",
+        "tech_7ab147fc",
+        "tech_1fefd5a9"
+      ],
+      "properties": {
+        "project": "推送家2020Q2",
+        "industry": "通用",
+        "techs": [
+          "神经网络",
+          "图像识别",
+          "云计算"
+        ],
+        "has_moat": false,
+        "has_biz_model": true,
+        "teaching_note": "项目'推送家2020Q2'使用神经网络,图像识别,云计算技术切入通用领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_b9e8e5d3",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_b9e8e5d3",
+        "mkt_aa05fd09",
+        "tech_f48c43f5",
+        "tech_40850cca",
+        "tech_5b61a1b2"
+      ],
+      "properties": {
+        "project": "推送家",
+        "industry": "通用",
+        "techs": [
+          "自然语言处理",
+          "神经网络",
+          "AR"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'推送家'使用自然语言处理,神经网络,AR技术切入通用领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_cf0f1605",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_cf0f1605",
+        "mkt_aa05fd09",
+        "tech_5b61a1b2",
+        "tech_b8c7cd66",
+        "tech_2c657e7d"
+      ],
+      "properties": {
+        "project": "溯源：国内首创呼吸道病原拉曼检测仪",
+        "industry": "通用",
+        "techs": [
+          "AR",
+          "红外",
+          "大数据"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'溯源：国内首创呼吸道病原拉曼检测仪'使用AR,红外,大数据技术切入通用领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_fb6c9c33",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_fb6c9c33",
+        "mkt_aa05fd09",
+        "tech_a1b5c56e"
+      ],
+      "properties": {
+        "project": "星哨科技--新一代卫星互联网应用系统，开启全域全时快响预警新时代",
+        "industry": "通用",
+        "techs": [
+          "FPGA"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'星哨科技--新一代卫星互联网应用系统，开启全域全时快响预警新时代'使用FPGA技术切入通用领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_c5de69af",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_c5de69af",
+        "mkt_aa05fd09",
+        "tech_ad6a23ef",
+        "tech_1088e767",
+        "tech_5b61a1b2"
+      ],
+      "properties": {
+        "project": "精微智控--面向智能_环调控系统",
+        "industry": "通用",
+        "techs": [
+          "光学",
+          "芯片",
+          "AR"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'精微智控--面向智能_环调控系统'使用光学,芯片,AR技术切入通用领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_4d9da4f3",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_4d9da4f3",
+        "mkt_aa05fd09",
+        "tech_1088e767",
+        "tech_8bf07aa8",
+        "tech_a1b5c56e"
+      ],
+      "properties": {
+        "project": "银构芯生——3D异质_连材料技术",
+        "industry": "通用",
+        "techs": [
+          "芯片",
+          "纳米",
+          "FPGA"
+        ],
+        "has_moat": true,
+        "has_biz_model": false,
+        "teaching_note": "项目'银构芯生——3D异质_连材料技术'使用芯片,纳米,FPGA技术切入通用领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_8c2f4b96",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_8c2f4b96",
+        "mkt_aa05fd09",
+        "tech_f86ba531",
+        "tech_5b61a1b2",
+        "tech_ef8a9f75"
+      ],
+      "properties": {
+        "project": "灵枢微创--人体自然_手术机器人",
+        "industry": "通用",
+        "techs": [
+          "内窥镜",
+          "AR",
+          "VR"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'灵枢微创--人体自然_手术机器人'使用内窥镜,AR,VR技术切入通用领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_37d3d154",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_37d3d154",
+        "mkt_aa05fd09",
+        "tech_01a78881",
+        "tech_3d13e1c0",
+        "tech_2dc9b4e0"
+      ],
+      "properties": {
+        "project": "医联农村，e路助农—_化路径研究",
+        "industry": "通用",
+        "techs": [
+          "数字孪生",
+          "物联网",
+          "大模型"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'医联农村，e路助农—_化路径研究'使用数字孪生,物联网,大模型技术切入通用领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_9a2fbaa3",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_9a2fbaa3",
+        "mkt_aa05fd09",
+        "tech_ad6a23ef",
+        "tech_2d664feb",
+        "tech_1088e767"
+      ],
+      "properties": {
+        "project": "千钧问鼎——尖端超高_自主化研制",
+        "industry": "通用",
+        "techs": [
+          "光学",
+          "YOLO",
+          "芯片"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'千钧问鼎——尖端超高_自主化研制'使用光学,YOLO,芯片技术切入通用领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_bf910931",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_bf910931",
+        "mkt_aa05fd09",
+        "tech_7692bbdb",
+        "tech_5b61a1b2",
+        "tech_7ab147fc"
+      ],
+      "properties": {
+        "project": "禾光智能--精准制导_机器人系统",
+        "industry": "通用",
+        "techs": [
+          "目标检测",
+          "AR",
+          "图像识别"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'禾光智能--精准制导_机器人系统'使用目标检测,AR,图像识别技术切入通用领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_bad6ae35",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_bad6ae35",
+        "mkt_aa05fd09",
+        "tech_f64736b9",
+        "tech_5b61a1b2",
+        "tech_d5c44258"
+      ],
+      "properties": {
+        "project": "数湖启智-项目书0410",
+        "industry": "通用",
+        "techs": [
+          "自动驾驶",
+          "AR",
+          "MR"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'数湖启智-项目书0410'使用自动驾驶,AR,MR技术切入通用领域。"
+      }
+    },
+    {
+      "id": "he_pmf_proj_30972c83",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_30972c83",
+        "mkt_aa05fd09",
+        "tech_f64736b9",
+        "tech_1088e767",
+        "tech_5b61a1b2"
+      ],
+      "properties": {
+        "project": "禾光智能——智能激光除草机器人系统",
+        "industry": "通用",
+        "techs": [
+          "自动驾驶",
+          "芯片",
+          "AR"
+        ],
+        "has_moat": true,
+        "has_biz_model": true,
+        "teaching_note": "项目'禾光智能——智能激光除草机器人系统'使用自动驾驶,芯片,AR技术切入通用领域。"
+      }
+    },
+    {
+      "id": "he_risk_proj_b7a0e0af_risk_no_moat",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_b7a0e0af",
+        "risk_no_moat",
+        "concept_Moat",
+        "concept_SWOT"
+      ],
+      "properties": {
+        "project": "非物质文化遗产的商业_与保护策略",
+        "risk": "缺乏技术壁垒",
+        "severity": "high",
+        "teaching_note": "项目'非物质文化遗产的商业_与保护策略'存在'缺乏技术壁垒'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_78f2d606_risk_biz_unclear",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_78f2d606",
+        "risk_biz_unclear",
+        "concept_Lean_Canvas",
+        "concept_Pricing",
+        "concept_BEP"
+      ],
+      "properties": {
+        "project": "基于人工智能的雷达微弱目标检测",
+        "risk": "盈利模式不清晰",
+        "severity": "medium",
+        "teaching_note": "项目'基于人工智能的雷达微弱目标检测'存在'盈利模式不清晰'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_78f2d606_risk_compliance",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_78f2d606",
+        "risk_compliance",
+        "concept_Business_Plan"
+      ],
+      "properties": {
+        "project": "基于人工智能的雷达微弱目标检测",
+        "risk": "合规风险",
+        "severity": "high",
+        "teaching_note": "项目'基于人工智能的雷达微弱目标检测'存在'合规风险'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_68515984_risk_compliance",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_68515984",
+        "risk_compliance",
+        "concept_Business_Plan"
+      ],
+      "properties": {
+        "project": "基于YOLO的AI视_能感知系统",
+        "risk": "合规风险",
+        "severity": "high",
+        "teaching_note": "项目'基于YOLO的AI视_能感知系统'存在'合规风险'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_da4802e7_risk_no_moat",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_da4802e7",
+        "risk_no_moat",
+        "concept_Moat",
+        "concept_SWOT"
+      ],
+      "properties": {
+        "project": "“预行智控”——面向_智能机器人",
+        "risk": "缺乏技术壁垒",
+        "severity": "high",
+        "teaching_note": "项目'“预行智控”——面向_智能机器人'存在'缺乏技术壁垒'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_8c46705e_risk_compliance",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_8c46705e",
+        "risk_compliance",
+        "concept_Business_Plan"
+      ],
+      "properties": {
+        "project": "臻视赋医——面向真实_强算法研究",
+        "risk": "合规风险",
+        "severity": "high",
+        "teaching_note": "项目'臻视赋医——面向真实_强算法研究'存在'合规风险'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_66045892_risk_compliance",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_66045892",
+        "risk_compliance",
+        "concept_Business_Plan"
+      ],
+      "properties": {
+        "project": "慧警康策——智能疾病_助诊断系统",
+        "risk": "合规风险",
+        "severity": "high",
+        "teaching_note": "项目'慧警康策——智能疾病_助诊断系统'存在'合规风险'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_5323f05f_risk_biz_unclear",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_5323f05f",
+        "risk_biz_unclear",
+        "concept_Lean_Canvas",
+        "concept_Pricing",
+        "concept_BEP"
+      ],
+      "properties": {
+        "project": "析光知理——快速脑瘤_能分析系统",
+        "risk": "盈利模式不清晰",
+        "severity": "medium",
+        "teaching_note": "项目'析光知理——快速脑瘤_能分析系统'存在'盈利模式不清晰'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_b4230f04_risk_biz_unclear",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_b4230f04",
+        "risk_biz_unclear",
+        "concept_Lean_Canvas",
+        "concept_Pricing",
+        "concept_BEP"
+      ],
+      "properties": {
+        "project": "超晰视界——手持超声_域增强技术",
+        "risk": "盈利模式不清晰",
+        "severity": "medium",
+        "teaching_note": "项目'超晰视界——手持超声_域增强技术'存在'盈利模式不清晰'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_b4230f04_risk_compliance",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_b4230f04",
+        "risk_compliance",
+        "concept_Business_Plan"
+      ],
+      "properties": {
+        "project": "超晰视界——手持超声_域增强技术",
+        "risk": "合规风险",
+        "severity": "high",
+        "teaching_note": "项目'超晰视界——手持超声_域增强技术'存在'合规风险'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_e86f23f2_risk_biz_unclear",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_e86f23f2",
+        "risk_biz_unclear",
+        "concept_Lean_Canvas",
+        "concept_Pricing",
+        "concept_BEP"
+      ],
+      "properties": {
+        "project": "智眸明析——眼底临床_准化大模型",
+        "risk": "盈利模式不清晰",
+        "severity": "medium",
+        "teaching_note": "项目'智眸明析——眼底临床_准化大模型'存在'盈利模式不清晰'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_e86f23f2_risk_compliance",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_e86f23f2",
+        "risk_compliance",
+        "concept_Business_Plan"
+      ],
+      "properties": {
+        "project": "智眸明析——眼底临床_准化大模型",
+        "risk": "合规风险",
+        "severity": "high",
+        "teaching_note": "项目'智眸明析——眼底临床_准化大模型'存在'合规风险'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_aea25081_risk_compliance",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_aea25081",
+        "risk_compliance",
+        "concept_Business_Plan"
+      ],
+      "properties": {
+        "project": "明眸智芯-眼部智能软_监测开拓者",
+        "risk": "合规风险",
+        "severity": "high",
+        "teaching_note": "项目'明眸智芯-眼部智能软_监测开拓者'存在'合规风险'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_ddac4c3d_risk_compliance",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_ddac4c3d",
+        "risk_compliance",
+        "concept_Business_Plan"
+      ],
+      "properties": {
+        "project": "视界智通--交通长时_时分析系统",
+        "risk": "合规风险",
+        "severity": "high",
+        "teaching_note": "项目'视界智通--交通长时_时分析系统'存在'合规风险'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_62456949_risk_no_moat",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_62456949",
+        "risk_no_moat",
+        "concept_Moat",
+        "concept_SWOT"
+      ],
+      "properties": {
+        "project": "深海幽灵-面向海洋强_无人航行器",
+        "risk": "缺乏技术壁垒",
+        "severity": "high",
+        "teaching_note": "项目'深海幽灵-面向海洋强_无人航行器'存在'缺乏技术壁垒'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_425716be_risk_biz_unclear",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_425716be",
+        "risk_biz_unclear",
+        "concept_Lean_Canvas",
+        "concept_Pricing",
+        "concept_BEP"
+      ],
+      "properties": {
+        "project": "智禾——以“小白菜”_态监测系统",
+        "risk": "盈利模式不清晰",
+        "severity": "medium",
+        "teaching_note": "项目'智禾——以“小白菜”_态监测系统'存在'盈利模式不清晰'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_fdf41c66_risk_no_evidence",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_fdf41c66",
+        "risk_no_evidence",
+        "concept_User_Interview",
+        "concept_JTBD",
+        "concept_PMF"
+      ],
+      "properties": {
+        "project": "赛道AGRO-AIO_能农业系统",
+        "risk": "需求验证不足",
+        "severity": "high",
+        "teaching_note": "项目'赛道AGRO-AIO_能农业系统'存在'需求验证不足'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_45e6b8d1_risk_no_moat",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_45e6b8d1",
+        "risk_no_moat",
+        "concept_Moat",
+        "concept_SWOT"
+      ],
+      "properties": {
+        "project": "献计献“策”：云计策_化解决方案",
+        "risk": "缺乏技术壁垒",
+        "severity": "high",
+        "teaching_note": "项目'献计献“策”：云计策_化解决方案'存在'缺乏技术壁垒'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_45e6b8d1_risk_biz_unclear",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_45e6b8d1",
+        "risk_biz_unclear",
+        "concept_Lean_Canvas",
+        "concept_Pricing",
+        "concept_BEP"
+      ],
+      "properties": {
+        "project": "献计献“策”：云计策_化解决方案",
+        "risk": "盈利模式不清晰",
+        "severity": "medium",
+        "teaching_note": "项目'献计献“策”：云计策_化解决方案'存在'盈利模式不清晰'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_89ef2bce_risk_biz_unclear",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_89ef2bce",
+        "risk_biz_unclear",
+        "concept_Lean_Canvas",
+        "concept_Pricing",
+        "concept_BEP"
+      ],
+      "properties": {
+        "project": "面向南南合作国家的智_稻种植系统",
+        "risk": "盈利模式不清晰",
+        "severity": "medium",
+        "teaching_note": "项目'面向南南合作国家的智_稻种植系统'存在'盈利模式不清晰'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_007b2ce8_risk_compliance",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_007b2ce8",
+        "risk_compliance",
+        "concept_Business_Plan"
+      ],
+      "properties": {
+        "project": "碳智通：AI驱动的减_同优化平台",
+        "risk": "合规风险",
+        "severity": "high",
+        "teaching_note": "项目'碳智通：AI驱动的减_同优化平台'存在'合规风险'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_169abfde_risk_biz_unclear",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_169abfde",
+        "risk_biz_unclear",
+        "concept_Lean_Canvas",
+        "concept_Pricing",
+        "concept_BEP"
+      ],
+      "properties": {
+        "project": "面向湿地生态监测的多_能解译技术",
+        "risk": "盈利模式不清晰",
+        "severity": "medium",
+        "teaching_note": "项目'面向湿地生态监测的多_能解译技术'存在'盈利模式不清晰'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_82349079_risk_biz_unclear",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_82349079",
+        "risk_biz_unclear",
+        "concept_Lean_Canvas",
+        "concept_Pricing",
+        "concept_BEP"
+      ],
+      "properties": {
+        "project": "育见先贤—基于多模态_式教育系统",
+        "risk": "盈利模式不清晰",
+        "severity": "medium",
+        "teaching_note": "项目'育见先贤—基于多模态_式教育系统'存在'盈利模式不清晰'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_9ab84361_risk_compliance",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_9ab84361",
+        "risk_compliance",
+        "concept_Business_Plan"
+      ],
+      "properties": {
+        "project": "华宸AI智评系统",
+        "risk": "合规风险",
+        "severity": "high",
+        "teaching_note": "项目'华宸AI智评系统'存在'合规风险'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_53fc061a_risk_compliance",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_53fc061a",
+        "risk_compliance",
+        "concept_Business_Plan"
+      ],
+      "properties": {
+        "project": "“声”动学堂--个性_能教学助手",
+        "risk": "合规风险",
+        "severity": "high",
+        "teaching_note": "项目'“声”动学堂--个性_能教学助手'存在'合规风险'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_de7f6865_risk_no_moat",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_de7f6865",
+        "risk_no_moat",
+        "concept_Moat",
+        "concept_SWOT"
+      ],
+      "properties": {
+        "project": "灵嗅智探—氢能厂站A_能巡检系统",
+        "risk": "缺乏技术壁垒",
+        "severity": "high",
+        "teaching_note": "项目'灵嗅智探—氢能厂站A_能巡检系统'存在'缺乏技术壁垒'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_de7f6865_risk_biz_unclear",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_de7f6865",
+        "risk_biz_unclear",
+        "concept_Lean_Canvas",
+        "concept_Pricing",
+        "concept_BEP"
+      ],
+      "properties": {
+        "project": "灵嗅智探—氢能厂站A_能巡检系统",
+        "risk": "盈利模式不清晰",
+        "severity": "medium",
+        "teaching_note": "项目'灵嗅智探—氢能厂站A_能巡检系统'存在'盈利模式不清晰'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_5a2dedef_risk_biz_unclear",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_5a2dedef",
+        "risk_biz_unclear",
+        "concept_Lean_Canvas",
+        "concept_Pricing",
+        "concept_BEP"
+      ],
+      "properties": {
+        "project": "燃煤电厂湿法脱硫节能_能控制系统",
+        "risk": "盈利模式不清晰",
+        "severity": "medium",
+        "teaching_note": "项目'燃煤电厂湿法脱硫节能_能控制系统'存在'盈利模式不清晰'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_8c2ff2c8_risk_biz_unclear",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_8c2ff2c8",
+        "risk_biz_unclear",
+        "concept_Lean_Canvas",
+        "concept_Pricing",
+        "concept_BEP"
+      ],
+      "properties": {
+        "project": "闻声识障——特殊地形_巡检守护者",
+        "risk": "盈利模式不清晰",
+        "severity": "medium",
+        "teaching_note": "项目'闻声识障——特殊地形_巡检守护者'存在'盈利模式不清晰'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_4a60c8e0_risk_no_moat",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_4a60c8e0",
+        "risk_no_moat",
+        "concept_Moat",
+        "concept_SWOT"
+      ],
+      "properties": {
+        "project": "物衡智判——基于DS_能推理系统",
+        "risk": "缺乏技术壁垒",
+        "severity": "high",
+        "teaching_note": "项目'物衡智判——基于DS_能推理系统'存在'缺乏技术壁垒'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_4a60c8e0_risk_biz_unclear",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_4a60c8e0",
+        "risk_biz_unclear",
+        "concept_Lean_Canvas",
+        "concept_Pricing",
+        "concept_BEP"
+      ],
+      "properties": {
+        "project": "物衡智判——基于DS_能推理系统",
+        "risk": "盈利模式不清晰",
+        "severity": "medium",
+        "teaching_note": "项目'物衡智判——基于DS_能推理系统'存在'盈利模式不清晰'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_4a60c8e0_risk_compliance",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_4a60c8e0",
+        "risk_compliance",
+        "concept_Business_Plan"
+      ],
+      "properties": {
+        "project": "物衡智判——基于DS_能推理系统",
+        "risk": "合规风险",
+        "severity": "high",
+        "teaching_note": "项目'物衡智判——基于DS_能推理系统'存在'合规风险'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_7565890d_risk_biz_unclear",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_7565890d",
+        "risk_biz_unclear",
+        "concept_Lean_Canvas",
+        "concept_Pricing",
+        "concept_BEP"
+      ],
+      "properties": {
+        "project": "文思智铠——生成式大_全优化模块",
+        "risk": "盈利模式不清晰",
+        "severity": "medium",
+        "teaching_note": "项目'文思智铠——生成式大_全优化模块'存在'盈利模式不清晰'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_7565890d_risk_compliance",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_7565890d",
+        "risk_compliance",
+        "concept_Business_Plan"
+      ],
+      "properties": {
+        "project": "文思智铠——生成式大_全优化模块",
+        "risk": "合规风险",
+        "severity": "high",
+        "teaching_note": "项目'文思智铠——生成式大_全优化模块'存在'合规风险'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_ec67fd58_risk_compliance",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_ec67fd58",
+        "risk_compliance",
+        "concept_Business_Plan"
+      ],
+      "properties": {
+        "project": "“慧心晰影”",
+        "risk": "合规风险",
+        "severity": "high",
+        "teaching_note": "项目'“慧心晰影”'存在'合规风险'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_62995efb_risk_no_evidence",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_62995efb",
+        "risk_no_evidence",
+        "concept_User_Interview",
+        "concept_JTBD",
+        "concept_PMF"
+      ],
+      "properties": {
+        "project": "“挑战杯”",
+        "risk": "需求验证不足",
+        "severity": "high",
+        "teaching_note": "项目'“挑战杯”'存在'需求验证不足'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_5b849f1d_risk_compliance",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_5b849f1d",
+        "risk_compliance",
+        "concept_Business_Plan"
+      ],
+      "properties": {
+        "project": "商业计划书-讯海智航——全流程新闻写作AI辅助平台.pdf",
+        "risk": "合规风险",
+        "severity": "high",
+        "teaching_note": "项目'商业计划书-讯海智航——全流程新闻写作AI辅助平台.pdf'存在'合规风险'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_4a5d64aa_risk_no_moat",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_4a5d64aa",
+        "risk_no_moat",
+        "concept_Moat",
+        "concept_SWOT"
+      ],
+      "properties": {
+        "project": "推送家2020Q2",
+        "risk": "缺乏技术壁垒",
+        "severity": "high",
+        "teaching_note": "项目'推送家2020Q2'存在'缺乏技术壁垒'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_b9e8e5d3_risk_compliance",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_b9e8e5d3",
+        "risk_compliance",
+        "concept_Business_Plan"
+      ],
+      "properties": {
+        "project": "推送家",
+        "risk": "合规风险",
+        "severity": "high",
+        "teaching_note": "项目'推送家'存在'合规风险'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_4d9da4f3_risk_biz_unclear",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_4d9da4f3",
+        "risk_biz_unclear",
+        "concept_Lean_Canvas",
+        "concept_Pricing",
+        "concept_BEP"
+      ],
+      "properties": {
+        "project": "银构芯生——3D异质_连材料技术",
+        "risk": "盈利模式不清晰",
+        "severity": "medium",
+        "teaching_note": "项目'银构芯生——3D异质_连材料技术'存在'盈利模式不清晰'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_37d3d154_risk_compliance",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_37d3d154",
+        "risk_compliance",
+        "concept_Business_Plan"
+      ],
+      "properties": {
+        "project": "医联农村，e路助农—_化路径研究",
+        "risk": "合规风险",
+        "severity": "high",
+        "teaching_note": "项目'医联农村，e路助农—_化路径研究'存在'合规风险'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_risk_proj_bad6ae35_risk_compliance",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_bad6ae35",
+        "risk_compliance",
+        "concept_Business_Plan"
+      ],
+      "properties": {
+        "project": "数湖启智-项目书0410",
+        "risk": "合规风险",
+        "severity": "high",
+        "teaching_note": "项目'数湖启智-项目书0410'存在'合规风险'风险，建议重点关注相关概念。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_6964a395",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_6964a395",
+        "proj_3264d357",
+        "proj_da4802e7",
+        "proj_8b88aaad",
+        "proj_30115f05",
+        "proj_da1b321e",
+        "proj_9ab84361",
+        "proj_77caca55",
+        "proj_30ec7a4f",
+        "proj_5a2dedef",
+        "proj_80c57f7b"
+      ],
+      "properties": {
+        "technology": "强化学习",
+        "project_count": 11,
+        "teaching_note": "技术'强化学习'被11个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_2c657e7d",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_2c657e7d",
+        "proj_3264d357",
+        "proj_bfdfddb2",
+        "proj_b47acad4",
+        "proj_66045892",
+        "proj_f05baed2",
+        "proj_ddac4c3d",
+        "proj_032fa339",
+        "proj_53fc061a",
+        "proj_24ce12b6",
+        "proj_db0dd5e1"
+      ],
+      "properties": {
+        "technology": "大数据",
+        "project_count": 23,
+        "teaching_note": "技术'大数据'被23个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_5b61a1b2",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_5b61a1b2",
+        "proj_3264d357",
+        "proj_b7a0e0af",
+        "proj_78f2d606",
+        "proj_68515984",
+        "proj_bfdfddb2",
+        "proj_da4802e7",
+        "proj_8b88aaad",
+        "proj_30115f05",
+        "proj_8c46705e",
+        "proj_66045892"
+      ],
+      "properties": {
+        "technology": "AR",
+        "project_count": 59,
+        "teaching_note": "技术'AR'被59个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_a5cad1b3",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_a5cad1b3",
+        "proj_3264d357",
+        "proj_30115f05",
+        "proj_5fd1180b",
+        "proj_584b627f",
+        "proj_fdf41c66",
+        "proj_007b2ce8",
+        "proj_53fc061a",
+        "proj_db0dd5e1",
+        "proj_4b72d252",
+        "proj_8c2f4b96"
+      ],
+      "properties": {
+        "technology": "SoC",
+        "project_count": 11,
+        "teaching_note": "技术'SoC'被11个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_ad6a23ef",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_ad6a23ef",
+        "proj_78f2d606",
+        "proj_68515984",
+        "proj_8b88aaad",
+        "proj_8c46705e",
+        "proj_5323f05f",
+        "proj_e86f23f2",
+        "proj_5fd1180b",
+        "proj_584b627f",
+        "proj_169abfde",
+        "proj_5712b727"
+      ],
+      "properties": {
+        "technology": "光学",
+        "project_count": 14,
+        "teaching_note": "技术'光学'被14个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_7692bbdb",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_7692bbdb",
+        "proj_78f2d606",
+        "proj_68515984",
+        "proj_8b88aaad",
+        "proj_5323f05f",
+        "proj_ddac4c3d",
+        "proj_584b627f",
+        "proj_6449bc5b",
+        "proj_bf910931"
+      ],
+      "properties": {
+        "technology": "目标检测",
+        "project_count": 8,
+        "teaching_note": "技术'目标检测'被8个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_37acc94c",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_37acc94c",
+        "proj_78f2d606",
+        "proj_bfdfddb2",
+        "proj_da4802e7",
+        "proj_b47acad4",
+        "proj_8b88aaad",
+        "proj_30115f05",
+        "proj_8c46705e",
+        "proj_66045892",
+        "proj_5323f05f",
+        "proj_f05baed2"
+      ],
+      "properties": {
+        "technology": "多模态",
+        "project_count": 33,
+        "teaching_note": "技术'多模态'被33个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_ffb93bb5",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_ffb93bb5",
+        "proj_78f2d606",
+        "proj_b4230f04",
+        "proj_464de40f",
+        "proj_ddac4c3d",
+        "proj_15e82e24",
+        "proj_53fc061a",
+        "proj_6449bc5b",
+        "proj_2270f15b",
+        "proj_81af83ec",
+        "proj_44aa5890"
+      ],
+      "properties": {
+        "technology": "计算机视觉",
+        "project_count": 12,
+        "teaching_note": "技术'计算机视觉'被12个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_b8c7cd66",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_b8c7cd66",
+        "proj_78f2d606",
+        "proj_68515984",
+        "proj_a85743aa",
+        "proj_15e82e24",
+        "proj_169abfde",
+        "proj_d70fc4ee",
+        "proj_de7f6865",
+        "proj_6449bc5b",
+        "proj_44aa5890",
+        "proj_cf0f1605"
+      ],
+      "properties": {
+        "technology": "红外",
+        "project_count": 12,
+        "teaching_note": "技术'红外'被12个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_fce4b7d0",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_fce4b7d0",
+        "proj_78f2d606",
+        "proj_68515984",
+        "proj_b47acad4",
+        "proj_98bb8d5c",
+        "proj_ea85a5d3",
+        "proj_da1b321e",
+        "proj_584b627f",
+        "proj_15e82e24",
+        "proj_89ef2bce",
+        "proj_30ec7a4f"
+      ],
+      "properties": {
+        "technology": "无人机",
+        "project_count": 14,
+        "teaching_note": "技术'无人机'被14个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_2d664feb",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_2d664feb",
+        "proj_68515984",
+        "proj_da4802e7",
+        "proj_5323f05f",
+        "proj_ddac4c3d",
+        "proj_425716be",
+        "proj_fdf41c66",
+        "proj_de7f6865",
+        "proj_9a2fbaa3"
+      ],
+      "properties": {
+        "technology": "YOLO",
+        "project_count": 8,
+        "teaching_note": "技术'YOLO'被8个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_8c5f70f8",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_8c5f70f8",
+        "proj_68515984",
+        "proj_a85743aa",
+        "proj_8b88aaad",
+        "proj_8c46705e",
+        "proj_5323f05f",
+        "proj_f05baed2",
+        "proj_b4230f04",
+        "proj_ddac4c3d",
+        "proj_584b627f",
+        "proj_425716be"
+      ],
+      "properties": {
+        "technology": "深度学习",
+        "project_count": 29,
+        "teaching_note": "技术'深度学习'被29个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_40850cca",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_40850cca",
+        "proj_68515984",
+        "proj_bfdfddb2",
+        "proj_a85743aa",
+        "proj_8c46705e",
+        "proj_66045892",
+        "proj_5323f05f",
+        "proj_f05baed2",
+        "proj_5fd1180b",
+        "proj_ea85a5d3",
+        "proj_da1b321e"
+      ],
+      "properties": {
+        "technology": "神经网络",
+        "project_count": 26,
+        "teaching_note": "技术'神经网络'被26个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_1121be28",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_1121be28",
+        "proj_68515984",
+        "proj_bfdfddb2",
+        "proj_a85743aa",
+        "proj_8c46705e",
+        "proj_66045892",
+        "proj_5fd1180b",
+        "proj_ea85a5d3",
+        "proj_169abfde",
+        "proj_24ce12b6"
+      ],
+      "properties": {
+        "technology": "卷积神经网络",
+        "project_count": 9,
+        "teaching_note": "技术'卷积神经网络'被9个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_7ab147fc",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_7ab147fc",
+        "proj_68515984",
+        "proj_a9941030",
+        "proj_030fe1e4",
+        "proj_5712b727",
+        "proj_b4180a0f",
+        "proj_4a60c8e0",
+        "proj_7565890d",
+        "proj_4a5d64aa",
+        "proj_b9e8e5d3",
+        "proj_bf910931"
+      ],
+      "properties": {
+        "technology": "图像识别",
+        "project_count": 11,
+        "teaching_note": "技术'图像识别'被11个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_8dd4d769",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_8dd4d769",
+        "proj_68515984",
+        "proj_f05baed2",
+        "proj_da1b321e",
+        "proj_15e82e24",
+        "proj_77caca55",
+        "proj_30ec7a4f",
+        "proj_24ce12b6",
+        "proj_8c2ff2c8",
+        "proj_bef4e3a0",
+        "proj_2270f15b"
+      ],
+      "properties": {
+        "technology": "边缘计算",
+        "project_count": 13,
+        "teaching_note": "技术'边缘计算'被13个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_62f8a8e2",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_62f8a8e2",
+        "proj_68515984",
+        "proj_8b88aaad",
+        "proj_f05baed2",
+        "proj_5fd1180b",
+        "proj_ea85a5d3",
+        "proj_f4d1c138",
+        "proj_77caca55"
+      ],
+      "properties": {
+        "technology": "嵌入式",
+        "project_count": 7,
+        "teaching_note": "技术'嵌入式'被7个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_e8308900",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_e8308900",
+        "proj_68515984",
+        "proj_8b88aaad",
+        "proj_82349079",
+        "proj_53fc061a",
+        "proj_30ec7a4f",
+        "proj_bef4e3a0",
+        "proj_5ea0860e",
+        "proj_2270f15b",
+        "proj_81af83ec"
+      ],
+      "properties": {
+        "technology": "渲染",
+        "project_count": 9,
+        "teaching_note": "技术'渲染'被9个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_2435a45b",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_2435a45b",
+        "proj_68515984",
+        "proj_bfdfddb2",
+        "proj_a85743aa",
+        "proj_8c46705e",
+        "proj_f05baed2",
+        "proj_5fd1180b",
+        "proj_ea85a5d3",
+        "proj_fdf41c66",
+        "proj_169abfde",
+        "proj_5712b727"
+      ],
+      "properties": {
+        "technology": "CNN",
+        "project_count": 15,
+        "teaching_note": "技术'CNN'被15个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_7b4e730d",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_7b4e730d",
+        "proj_bfdfddb2",
+        "proj_8c46705e",
+        "proj_b4230f04",
+        "proj_ddac4c3d",
+        "proj_584b627f",
+        "proj_5712b727",
+        "proj_82349079",
+        "proj_0e6feb68",
+        "proj_b4180a0f"
+      ],
+      "properties": {
+        "technology": "注意力机制",
+        "project_count": 9,
+        "teaching_note": "技术'注意力机制'被9个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_07e3288e",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_07e3288e",
+        "proj_bfdfddb2",
+        "proj_f05baed2",
+        "proj_77caca55"
+      ],
+      "properties": {
+        "technology": "RNN",
+        "project_count": 3,
+        "teaching_note": "技术'RNN'被3个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_40decf73",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_40decf73",
+        "proj_bfdfddb2",
+        "proj_da4802e7",
+        "proj_8b88aaad",
+        "proj_30115f05",
+        "proj_8c46705e",
+        "proj_82349079",
+        "proj_fa9eb484",
+        "proj_ec67fd58",
+        "proj_bad6ae35"
+      ],
+      "properties": {
+        "technology": "预训练",
+        "project_count": 9,
+        "teaching_note": "技术'预训练'被9个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_b8cc08c1",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_b8cc08c1",
+        "proj_bfdfddb2",
+        "proj_da4802e7",
+        "proj_b47acad4",
+        "proj_e86f23f2",
+        "proj_584b627f",
+        "proj_007b2ce8",
+        "proj_76e96798",
+        "proj_53fc061a",
+        "proj_0e6feb68",
+        "proj_fa9eb484"
+      ],
+      "properties": {
+        "technology": "LLM",
+        "project_count": 11,
+        "teaching_note": "技术'LLM'被11个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_2dc9b4e0",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_2dc9b4e0",
+        "proj_bfdfddb2",
+        "proj_da4802e7",
+        "proj_b47acad4",
+        "proj_a85743aa",
+        "proj_30115f05",
+        "proj_a9941030",
+        "proj_f05baed2",
+        "proj_e86f23f2",
+        "proj_da1b321e",
+        "proj_032fa339"
+      ],
+      "properties": {
+        "technology": "大模型",
+        "project_count": 28,
+        "teaching_note": "技术'大模型'被28个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_bbca2718",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_bbca2718",
+        "proj_bfdfddb2",
+        "proj_8c46705e",
+        "proj_f05baed2",
+        "proj_5fd1180b",
+        "proj_ea85a5d3",
+        "proj_ddac4c3d",
+        "proj_584b627f",
+        "proj_5712b727",
+        "proj_82349079",
+        "proj_5a2dedef"
+      ],
+      "properties": {
+        "technology": "Transformer",
+        "project_count": 15,
+        "teaching_note": "技术'Transformer'被15个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_481d5b5c",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_481d5b5c",
+        "proj_bfdfddb2",
+        "proj_30115f05",
+        "proj_8c46705e",
+        "proj_82349079",
+        "proj_de7f6865"
+      ],
+      "properties": {
+        "technology": "扩散模型",
+        "project_count": 5,
+        "teaching_note": "技术'扩散模型'被5个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_d30881ac",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_d30881ac",
+        "proj_da4802e7",
+        "proj_f05baed2",
+        "proj_6449bc5b"
+      ],
+      "properties": {
+        "technology": "SLAM",
+        "project_count": 3,
+        "teaching_note": "技术'SLAM'被3个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_06de0925",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_06de0925",
+        "proj_da4802e7",
+        "proj_5fd1180b",
+        "proj_36ccff73",
+        "proj_169abfde",
+        "proj_de7f6865",
+        "proj_6449bc5b"
+      ],
+      "properties": {
+        "technology": "激光雷达",
+        "project_count": 6,
+        "teaching_note": "技术'激光雷达'被6个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_ef8a9f75",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_ef8a9f75",
+        "proj_da4802e7",
+        "proj_30115f05",
+        "proj_5fd1180b",
+        "proj_bef4e3a0",
+        "proj_2270f15b",
+        "proj_81af83ec",
+        "proj_8c2f4b96",
+        "proj_9a2fbaa3"
+      ],
+      "properties": {
+        "technology": "VR",
+        "project_count": 8,
+        "teaching_note": "技术'VR'被8个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_1703f91c",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_1703f91c",
+        "proj_da4802e7",
+        "proj_b47acad4",
+        "proj_e86f23f2",
+        "proj_032fa339",
+        "proj_76e96798",
+        "proj_82349079",
+        "proj_53fc061a",
+        "proj_0c15a722",
+        "proj_7565890d",
+        "proj_bad6ae35"
+      ],
+      "properties": {
+        "technology": "GPT",
+        "project_count": 10,
+        "teaching_note": "技术'GPT'被10个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_0f4aae79",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_0f4aae79",
+        "proj_da4802e7",
+        "proj_30115f05",
+        "proj_ea85a5d3",
+        "proj_36ccff73",
+        "proj_d70fc4ee",
+        "proj_fa9eb484",
+        "proj_44aa5890",
+        "proj_c5de69af",
+        "proj_9a2fbaa3",
+        "proj_bad6ae35"
+      ],
+      "properties": {
+        "technology": "智能制造",
+        "project_count": 10,
+        "teaching_note": "技术'智能制造'被10个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_1f097591",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_1f097591",
+        "proj_da4802e7",
+        "proj_8b88aaad",
+        "proj_30115f05",
+        "proj_66045892",
+        "proj_f05baed2",
+        "proj_b4230f04",
+        "proj_98bb8d5c",
+        "proj_36ccff73",
+        "proj_62456949",
+        "proj_53fc061a"
+      ],
+      "properties": {
+        "technology": "机器人",
+        "project_count": 20,
+        "teaching_note": "技术'机器人'被20个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_4d9b6b90",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_4d9b6b90",
+        "proj_da4802e7",
+        "proj_a85743aa",
+        "proj_8b88aaad",
+        "proj_a9941030",
+        "proj_b4230f04",
+        "proj_aea25081",
+        "proj_5fd1180b",
+        "proj_98bb8d5c",
+        "proj_ea85a5d3",
+        "proj_ddac4c3d"
+      ],
+      "properties": {
+        "technology": "传感器",
+        "project_count": 28,
+        "teaching_note": "技术'传感器'被28个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_ca9b9562",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_ca9b9562",
+        "proj_da4802e7",
+        "proj_da1b321e",
+        "proj_6449bc5b"
+      ],
+      "properties": {
+        "technology": "LiDAR",
+        "project_count": 3,
+        "teaching_note": "技术'LiDAR'被3个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_cf85a8cb",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_cf85a8cb",
+        "proj_da4802e7",
+        "proj_a85743aa",
+        "proj_30115f05",
+        "proj_6449bc5b"
+      ],
+      "properties": {
+        "technology": "点云",
+        "project_count": 4,
+        "teaching_note": "技术'点云'被4个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_01a78881",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_01a78881",
+        "proj_b47acad4",
+        "proj_a85743aa",
+        "proj_ea85a5d3",
+        "proj_30ec7a4f",
+        "proj_5a2dedef",
+        "proj_62995efb",
+        "proj_bef4e3a0",
+        "proj_5ea0860e",
+        "proj_2270f15b",
+        "proj_81af83ec"
+      ],
+      "properties": {
+        "technology": "数字孪生",
+        "project_count": 11,
+        "teaching_note": "技术'数字孪生'被11个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_56fe4930",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_56fe4930",
+        "proj_b47acad4",
+        "proj_464de40f",
+        "proj_032fa339",
+        "proj_007b2ce8",
+        "proj_5a2dedef"
+      ],
+      "properties": {
+        "technology": "碳中和",
+        "project_count": 5,
+        "teaching_note": "技术'碳中和'被5个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_8a68be7b",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_8a68be7b",
+        "proj_b47acad4",
+        "proj_464de40f",
+        "proj_c5de69af",
+        "proj_9a2fbaa3",
+        "proj_bf910931",
+        "proj_30972c83"
+      ],
+      "properties": {
+        "technology": "新能源",
+        "project_count": 6,
+        "teaching_note": "技术'新能源'被6个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_fb2353f9",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_fb2353f9",
+        "proj_a85743aa",
+        "proj_8c46705e",
+        "proj_5323f05f",
+        "proj_b4230f04",
+        "proj_aea25081",
+        "proj_15e82e24"
+      ],
+      "properties": {
+        "technology": "超声",
+        "project_count": 6,
+        "teaching_note": "技术'超声'被6个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_eca9158c",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_eca9158c",
+        "proj_a85743aa",
+        "proj_f05baed2",
+        "proj_032fa339",
+        "proj_82349079",
+        "proj_24ce12b6",
+        "proj_4b72d252",
+        "proj_4a5d64aa"
+      ],
+      "properties": {
+        "technology": "LSTM",
+        "project_count": 7,
+        "teaching_note": "技术'LSTM'被7个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_787700a5",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_787700a5",
+        "proj_a85743aa",
+        "proj_8c46705e",
+        "proj_5323f05f",
+        "proj_b4230f04",
+        "proj_ea85a5d3",
+        "proj_62456949",
+        "proj_db8b8b77",
+        "proj_5712b727",
+        "proj_82349079",
+        "proj_53fc061a"
+      ],
+      "properties": {
+        "technology": "GAN",
+        "project_count": 13,
+        "teaching_note": "技术'GAN'被13个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_61bb1751",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_61bb1751",
+        "proj_a85743aa",
+        "proj_30115f05",
+        "proj_5fd1180b",
+        "proj_464de40f",
+        "proj_62456949",
+        "proj_032fa339",
+        "proj_db8b8b77",
+        "proj_169abfde",
+        "proj_82349079",
+        "proj_5a2dedef"
+      ],
+      "properties": {
+        "technology": "机器学习",
+        "project_count": 14,
+        "teaching_note": "技术'机器学习'被14个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_1088e767",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_1088e767",
+        "proj_8b88aaad",
+        "proj_aea25081",
+        "proj_5712b727",
+        "proj_7565890d",
+        "proj_f654c4c6",
+        "proj_2270f15b",
+        "proj_81af83ec",
+        "proj_c5de69af",
+        "proj_4d9da4f3",
+        "proj_9a2fbaa3"
+      ],
+      "properties": {
+        "technology": "芯片",
+        "project_count": 11,
+        "teaching_note": "技术'芯片'被11个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_068f6874",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_068f6874",
+        "proj_8c46705e",
+        "proj_66045892",
+        "proj_b4230f04",
+        "proj_82349079",
+        "proj_bad6ae35"
+      ],
+      "properties": {
+        "technology": "生成对抗",
+        "project_count": 5,
+        "teaching_note": "技术'生成对抗'被5个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_eb8dc8ec",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_eb8dc8ec",
+        "proj_8c46705e",
+        "proj_c5de69af",
+        "proj_9a2fbaa3"
+      ],
+      "properties": {
+        "technology": "量子",
+        "project_count": 3,
+        "teaching_note": "技术'量子'被3个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_d5c44258",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_d5c44258",
+        "proj_8c46705e",
+        "proj_66045892",
+        "proj_5323f05f",
+        "proj_b4230f04",
+        "proj_e86f23f2",
+        "proj_82349079",
+        "proj_ec67fd58",
+        "proj_2270f15b",
+        "proj_81af83ec",
+        "proj_9a2fbaa3"
+      ],
+      "properties": {
+        "technology": "MR",
+        "project_count": 11,
+        "teaching_note": "技术'MR'被11个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_70fa887f",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_70fa887f",
+        "proj_66045892",
+        "proj_425716be",
+        "proj_24ce12b6"
+      ],
+      "properties": {
+        "technology": "迁移学习",
+        "project_count": 3,
+        "teaching_note": "技术'迁移学习'被3个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_221c3eff",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_221c3eff",
+        "proj_66045892",
+        "proj_ddac4c3d",
+        "proj_82349079",
+        "proj_52142b98",
+        "proj_5b849f1d",
+        "proj_bad6ae35"
+      ],
+      "properties": {
+        "technology": "BERT",
+        "project_count": 6,
+        "teaching_note": "技术'BERT'被6个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_1fefd5a9",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_1fefd5a9",
+        "proj_66045892",
+        "proj_f05baed2",
+        "proj_0c15a722",
+        "proj_ec67fd58",
+        "proj_5ea0860e",
+        "proj_4a5d64aa",
+        "proj_b9e8e5d3"
+      ],
+      "properties": {
+        "technology": "云计算",
+        "project_count": 7,
+        "teaching_note": "技术'云计算'被7个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_fa264930",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_fa264930",
+        "proj_66045892",
+        "proj_15e82e24",
+        "proj_30ec7a4f",
+        "proj_24ce12b6",
+        "proj_62995efb",
+        "proj_2270f15b",
+        "proj_81af83ec",
+        "proj_b9e8e5d3",
+        "proj_8c2f4b96"
+      ],
+      "properties": {
+        "technology": "5G",
+        "project_count": 9,
+        "teaching_note": "技术'5G'被9个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_75d8fafb",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_75d8fafb",
+        "proj_66045892",
+        "proj_ddac4c3d",
+        "proj_b9e8e5d3",
+        "proj_30972c83"
+      ],
+      "properties": {
+        "technology": "区块链",
+        "project_count": 4,
+        "teaching_note": "技术'区块链'被4个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_bb481825",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_bb481825",
+        "proj_66045892",
+        "proj_032fa339",
+        "proj_007b2ce8",
+        "proj_9ab84361",
+        "proj_77caca55",
+        "proj_fa9eb484",
+        "proj_4a60c8e0",
+        "proj_52142b98",
+        "proj_bad6ae35"
+      ],
+      "properties": {
+        "technology": "知识图谱",
+        "project_count": 9,
+        "teaching_note": "技术'知识图谱'被9个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_8bf07aa8",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_8bf07aa8",
+        "proj_5323f05f",
+        "proj_aea25081",
+        "proj_5fd1180b",
+        "proj_cf0f1605",
+        "proj_c5de69af",
+        "proj_4d9da4f3",
+        "proj_9a2fbaa3"
+      ],
+      "properties": {
+        "technology": "纳米",
+        "project_count": 7,
+        "teaching_note": "技术'纳米'被7个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_3d13e1c0",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_3d13e1c0",
+        "proj_f05baed2",
+        "proj_15e82e24",
+        "proj_30ec7a4f",
+        "proj_0c15a722",
+        "proj_37d3d154",
+        "proj_bad6ae35",
+        "proj_30972c83"
+      ],
+      "properties": {
+        "technology": "物联网",
+        "project_count": 7,
+        "teaching_note": "技术'物联网'被7个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_166c215f",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_166c215f",
+        "proj_b4230f04",
+        "proj_e86f23f2",
+        "proj_aea25081",
+        "proj_5a2dedef",
+        "proj_bf910931",
+        "proj_bad6ae35",
+        "proj_30972c83"
+      ],
+      "properties": {
+        "technology": "联邦学习",
+        "project_count": 7,
+        "teaching_note": "技术'联邦学习'被7个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_f48c43f5",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_f48c43f5",
+        "proj_e86f23f2",
+        "proj_ddac4c3d",
+        "proj_032fa339",
+        "proj_f4d1c138",
+        "proj_82349079",
+        "proj_53fc061a",
+        "proj_b4180a0f",
+        "proj_ec67fd58",
+        "proj_5b849f1d",
+        "proj_44aa5890"
+      ],
+      "properties": {
+        "technology": "自然语言处理",
+        "project_count": 11,
+        "teaching_note": "技术'自然语言处理'被11个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_2e2004ef",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_2e2004ef",
+        "proj_e86f23f2",
+        "proj_f4d1c138",
+        "proj_5a2dedef",
+        "proj_44aa5890"
+      ],
+      "properties": {
+        "technology": "数据挖掘",
+        "project_count": 4,
+        "teaching_note": "技术'数据挖掘'被4个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_68368d8b",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_68368d8b",
+        "proj_e86f23f2",
+        "proj_0c15a722",
+        "proj_bad6ae35"
+      ],
+      "properties": {
+        "technology": "数据湖",
+        "project_count": 3,
+        "teaching_note": "技术'数据湖'被3个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_fddfe09e",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_fddfe09e",
+        "proj_464de40f",
+        "proj_89ef2bce",
+        "proj_007b2ce8",
+        "proj_d70fc4ee",
+        "proj_5a2dedef"
+      ],
+      "properties": {
+        "technology": "低碳",
+        "project_count": 5,
+        "teaching_note": "技术'低碳'被5个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_85587c49",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_85587c49",
+        "proj_ddac4c3d",
+        "proj_032fa339",
+        "proj_007b2ce8",
+        "proj_9ab84361",
+        "proj_5b849f1d"
+      ],
+      "properties": {
+        "technology": "NLP",
+        "project_count": 5,
+        "teaching_note": "技术'NLP'被5个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_f64736b9",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_f64736b9",
+        "proj_ddac4c3d",
+        "proj_0c15a722",
+        "proj_44aa5890",
+        "proj_bad6ae35",
+        "proj_30972c83"
+      ],
+      "properties": {
+        "technology": "自动驾驶",
+        "project_count": 5,
+        "teaching_note": "技术'自动驾驶'被5个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_589f8ced",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_589f8ced",
+        "proj_425716be",
+        "proj_f4d1c138",
+        "proj_bad6ae35",
+        "proj_30972c83"
+      ],
+      "properties": {
+        "technology": "IoT",
+        "project_count": 4,
+        "teaching_note": "技术'IoT'被4个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_d9c9cfab",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_d9c9cfab",
+        "proj_76e96798",
+        "proj_82349079",
+        "proj_53fc061a"
+      ],
+      "properties": {
+        "technology": "语音合成",
+        "project_count": 3,
+        "teaching_note": "技术'语音合成'被3个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_8f5a5dfc",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_8f5a5dfc",
+        "proj_9ab84361",
+        "proj_2270f15b",
+        "proj_81af83ec"
+      ],
+      "properties": {
+        "technology": "AIGC",
+        "project_count": 3,
+        "teaching_note": "技术'AIGC'被3个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_3e86ca88",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_3e86ca88",
+        "proj_b4180a0f",
+        "proj_bef4e3a0",
+        "proj_2270f15b",
+        "proj_81af83ec"
+      ],
+      "properties": {
+        "technology": "元宇宙",
+        "project_count": 4,
+        "teaching_note": "技术'元宇宙'被4个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_a1b5c56e",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_a1b5c56e",
+        "proj_f654c4c6",
+        "proj_fb6c9c33",
+        "proj_4d9da4f3"
+      ],
+      "properties": {
+        "technology": "FPGA",
+        "project_count": 3,
+        "teaching_note": "技术'FPGA'被3个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_techcluster_tech_3f39d677",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_3f39d677",
+        "proj_bef4e3a0",
+        "proj_5ea0860e",
+        "proj_2270f15b",
+        "proj_81af83ec"
+      ],
+      "properties": {
+        "technology": "实时渲染",
+        "project_count": 4,
+        "teaching_note": "技术'实时渲染'被4个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
+      "id": "he_indcomp_mkt_a5f2e466",
+      "type": "Industry_Competition",
+      "nodes": [
+        "mkt_a5f2e466",
+        "proj_3264d357",
+        "proj_b7a0e0af"
+      ],
+      "properties": {
+        "industry": "文化旅游",
+        "project_count": 2,
+        "teaching_note": "文化旅游赛道有2个竞争项目，需要明确差异化定位。"
+      }
+    },
+    {
+      "id": "he_indcomp_mkt_aa05fd09",
+      "type": "Industry_Competition",
+      "nodes": [
+        "mkt_aa05fd09",
+        "proj_78f2d606",
+        "proj_68515984",
+        "proj_bfdfddb2",
+        "proj_da4802e7",
+        "proj_b47acad4",
+        "proj_a85743aa",
+        "proj_8b88aaad",
+        "proj_30115f05",
+        "proj_ec67fd58",
+        "proj_f654c4c6",
+        "proj_62995efb",
+        "proj_bef4e3a0",
+        "proj_5ea0860e",
+        "proj_2270f15b",
+        "proj_5b849f1d",
+        "proj_81af83ec",
+        "proj_44aa5890",
+        "proj_4a5d64aa",
+        "proj_b9e8e5d3",
+        "proj_cf0f1605",
+        "proj_fb6c9c33",
+        "proj_c5de69af",
+        "proj_4d9da4f3",
+        "proj_8c2f4b96",
+        "proj_37d3d154",
+        "proj_9a2fbaa3",
+        "proj_bf910931",
+        "proj_bad6ae35",
+        "proj_30972c83"
+      ],
+      "properties": {
+        "industry": "通用",
+        "project_count": 29,
+        "teaching_note": "通用赛道有29个竞争项目，需要明确差异化定位。"
+      }
+    },
+    {
+      "id": "he_indcomp_mkt_d1c2b24c",
+      "type": "Industry_Competition",
+      "nodes": [
+        "mkt_d1c2b24c",
+        "proj_a9941030",
+        "proj_8c46705e",
+        "proj_66045892",
+        "proj_5323f05f",
+        "proj_f05baed2",
+        "proj_b4230f04",
+        "proj_e86f23f2",
+        "proj_aea25081",
+        "proj_5fd1180b"
+      ],
+      "properties": {
+        "industry": "医疗健康",
+        "project_count": 9,
+        "teaching_note": "医疗健康赛道有9个竞争项目，需要明确差异化定位。"
+      }
+    },
+    {
+      "id": "he_indcomp_mkt_f55b5c48",
+      "type": "Industry_Competition",
+      "nodes": [
+        "mkt_f55b5c48",
+        "proj_98bb8d5c",
+        "proj_ea85a5d3",
+        "proj_464de40f",
+        "proj_ddac4c3d",
+        "proj_da1b321e",
+        "proj_584b627f",
+        "proj_36ccff73",
+        "proj_62456949"
+      ],
+      "properties": {
+        "industry": "交通运输",
+        "project_count": 8,
+        "teaching_note": "交通运输赛道有8个竞争项目，需要明确差异化定位。"
+      }
+    },
+    {
+      "id": "he_indcomp_mkt_8a964c7a",
+      "type": "Industry_Competition",
+      "nodes": [
+        "mkt_8a964c7a",
+        "proj_425716be",
+        "proj_030fe1e4",
+        "proj_fdf41c66",
+        "proj_45e6b8d1",
+        "proj_15e82e24",
+        "proj_89ef2bce"
+      ],
+      "properties": {
+        "industry": "农业发展",
+        "project_count": 6,
+        "teaching_note": "农业发展赛道有6个竞争项目，需要明确差异化定位。"
+      }
+    },
+    {
+      "id": "he_indcomp_mkt_131e4e3b",
+      "type": "Industry_Competition",
+      "nodes": [
+        "mkt_131e4e3b",
+        "proj_032fa339",
+        "proj_db8b8b77",
+        "proj_007b2ce8",
+        "proj_f4d1c138",
+        "proj_169abfde",
+        "proj_5712b727"
+      ],
+      "properties": {
+        "industry": "环境保护",
+        "project_count": 6,
+        "teaching_note": "环境保护赛道有6个竞争项目，需要明确差异化定位。"
+      }
+    },
+    {
+      "id": "he_indcomp_mkt_3ae60528",
+      "type": "Industry_Competition",
+      "nodes": [
+        "mkt_3ae60528",
+        "proj_76e96798",
+        "proj_82349079",
+        "proj_9ab84361",
+        "proj_53fc061a",
+        "proj_77caca55",
+        "proj_0e6feb68",
+        "proj_30ec7a4f"
+      ],
+      "properties": {
+        "industry": "教育教学",
+        "project_count": 7,
+        "teaching_note": "教育教学赛道有7个竞争项目，需要明确差异化定位。"
+      }
+    },
+    {
+      "id": "he_indcomp_mkt_daf8ab76",
+      "type": "Industry_Competition",
+      "nodes": [
+        "mkt_daf8ab76",
+        "proj_d70fc4ee",
+        "proj_b4180a0f",
+        "proj_de7f6865",
+        "proj_5a2dedef",
+        "proj_24ce12b6",
+        "proj_8c2ff2c8",
+        "proj_fa9eb484",
+        "proj_80c57f7b",
+        "proj_6449bc5b"
+      ],
+      "properties": {
+        "industry": "工业制造",
+        "project_count": 9,
+        "teaching_note": "工业制造赛道有9个竞争项目，需要明确差异化定位。"
+      }
+    },
+    {
+      "id": "he_indcomp_mkt_7fbf2e97",
+      "type": "Industry_Competition",
+      "nodes": [
+        "mkt_7fbf2e97",
+        "proj_db0dd5e1",
+        "proj_4b72d252",
+        "proj_4a60c8e0",
+        "proj_52142b98",
+        "proj_0c15a722",
+        "proj_7565890d"
+      ],
+      "properties": {
+        "industry": "政务管理",
+        "project_count": 6,
+        "teaching_note": "政务管理赛道有6个竞争项目，需要明确差异化定位。"
+      }
+    },
+    {
+      "id": "he_prereq_0",
+      "type": "Concept_Prerequisite",
+      "nodes": [
+        "concept_User_Interview",
+        "concept_JTBD",
+        "concept_PMF",
+        "concept_Value_Proposition"
+      ],
+      "properties": {
+        "teaching_note": "从用户访谈到价值主张的发现路径",
+        "order": "sequential"
+      }
+    },
+    {
+      "id": "he_prereq_1",
+      "type": "Concept_Prerequisite",
+      "nodes": [
+        "concept_PMF",
+        "concept_Lean_Canvas",
+        "concept_Pricing",
+        "concept_BEP"
+      ],
+      "properties": {
+        "teaching_note": "从PMF到商业模式验证的路径",
+        "order": "sequential"
+      }
+    },
+    {
+      "id": "he_prereq_2",
+      "type": "Concept_Prerequisite",
+      "nodes": [
+        "concept_CAC",
+        "concept_LTV",
+        "concept_AARRR",
+        "concept_BEP"
+      ],
+      "properties": {
+        "teaching_note": "单位经济与增长指标的关联",
+        "order": "sequential"
+      }
+    },
+    {
+      "id": "he_prereq_3",
+      "type": "Concept_Prerequisite",
+      "nodes": [
+        "concept_SWOT",
+        "concept_Moat",
+        "concept_Value_Proposition"
+      ],
+      "properties": {
+        "teaching_note": "竞争分析到差异化壁垒的路径",
+        "order": "sequential"
+      }
+    },
+    {
+      "id": "he_prereq_4",
+      "type": "Concept_Prerequisite",
+      "nodes": [
+        "concept_MVP",
+        "concept_PMF",
+        "concept_Lean_Canvas"
+      ],
+      "properties": {
+        "teaching_note": "MVP验证产品市场契合度",
+        "order": "sequential"
+      }
+    },
+    {
+      "id": "he_prereq_5",
+      "type": "Concept_Prerequisite",
+      "nodes": [
+        "concept_Business_Plan",
+        "concept_Pitch_Deck",
+        "concept_Lean_Canvas"
+      ],
+      "properties": {
+        "teaching_note": "从商业计划到路演的输出路径",
+        "order": "sequential"
+      }
+    },
+    {
+      "id": "he_case_proj_48b910fb",
+      "type": "Case_Study",
+      "nodes": [
+        "mkt_aa05fd09",
+        "concept_PMF",
+        "tech_bb481825",
+        "tech_61bb1751",
+        "proj_48b910fb",
+        "concept_Lean_Canvas",
+        "concept_Moat",
+        "risk_compliance",
+        "tech_8c5f70f8",
+        "risk_market_inflate"
+      ],
+      "properties": {
+        "project": "数湖启智-项目书0411",
+        "industry": "通用",
+        "problem": "当前核心瓶颈在于人工与自动化清洗的双重局限性形成治理真空：人工清洗需要投入大量专业人力进行重复性标注与规则制定，在面对海量异构数据时效率难以保证；而AI驱动的自动化清洗虽能缓解人力瓶颈，却受场景泛化能力，针对特定领域优化的算法在迁移至其他领域时，因数据模态差异与业务逻辑断层，往往产生误判或过度清洗，迫使企业为每",
+        "solution": "本项目提出的技术能够有效应对多源异构数据湖所带来的挑战，并高质量完成数据管理任务。本项目研制了基于多源异构数据湖的数据智算平台。该系统综合运用前述研究成果，包括任务感知的关系透视、人机协作的数据提质、数据优选的模型提效，旨在真实贴近用户需求，广泛适应多个应用场景。系统为用户提供自助式数据发现，数据清洗融合以及高效模型训练功能。",
+        "market_size": "",
+        "biz_models": [
+          "平台",
+          "数据服务",
+          "API"
+        ],
+        "moat": [
+          "专利",
+          "发明专利",
+          "SCI"
+        ],
+        "success_factors": [
+          "有用户验证",
+          "团队包含教授、院士"
+        ],
+        "failure_risks": [
+          "存在合规/隐私风险需评估",
+          "未提供市场规模数据"
+        ],
+        "teaching_note": "【核心案例】数湖启智-项目书0411（通用）\n痛点：当前核心瓶颈在于人工与自动化清洗的双重局限性形成治理真空：人工清洗需要投入大量专业人力进行重复性标注与规则制定，在面对海量异构数据时效率难以保证；而AI驱动的自动化清洗虽能缓解人力瓶颈，却受场景泛化能\n方案：本项目提出的技术能够有效应对多源异构数据湖所带来的挑战，并高质量完成数据管理任务。本项目研制了基于多源异构数据湖的数据智算平台。该系统综合运用前述研究成果，包括任务感知的关系透视、人机协作的数据提质、\n商业模式：平台, 数据服务, API\n壁垒：专利, 发明专利, SCI\n成功要素：有用户验证; 团队包含教授、院士\n⚠风险：存在合规/隐私风险需评估; 未提供市场规模数据\n",
+        "is_detailed": true
+      }
+    },
+    {
+      "id": "he_case_proj_82349079",
+      "type": "Case_Study",
+      "nodes": [
+        "tech_61bb1751",
+        "proj_82349079",
+        "risk_biz_unclear",
+        "concept_Moat",
+        "tech_bbca2718",
+        "tech_2dc9b4e0",
+        "risk_market_inflate",
+        "mkt_3ae60528"
+      ],
+      "properties": {
+        "project": "育见先贤—基于多模态_式教育系统",
+        "industry": "教育教学",
+        "problem": "",
+        "solution": "",
+        "market_size": "",
+        "biz_models": [],
+        "moat": [
+          "核心技术"
+        ],
+        "success_factors": [
+          "团队包含工程师"
+        ],
+        "failure_risks": [
+          "盈利模式不清晰",
+          "未提供市场规模数据"
+        ],
+        "teaching_note": "【核心案例】育见先贤—基于多模态_式教育系统（教育教学）\n壁垒：核心技术\n成功要素：团队包含工程师\n⚠风险：盈利模式不清晰; 未提供市场规模数据\n",
+        "is_detailed": true
+      }
+    },
+    {
+      "id": "he_case_proj_da1b321e",
+      "type": "Case_Study",
+      "nodes": [
+        "concept_PMF",
+        "concept_Moat",
+        "risk_biz_unclear",
+        "tech_37acc94c",
+        "mkt_f55b5c48",
+        "tech_8dd4d769",
+        "proj_da1b321e",
+        "tech_2dc9b4e0",
+        "risk_market_inflate"
+      ],
+      "properties": {
+        "project": "低空智驭——大小模型_群智控系统",
+        "industry": "交通运输",
+        "problem": "传统技术瓶颈，为低空经济的军事、民用与应急领域提供高效解决方案，助力",
+        "solution": "",
+        "market_size": "",
+        "biz_models": [],
+        "moat": [
+          "核心技术"
+        ],
+        "success_factors": [],
+        "failure_risks": [
+          "盈利模式不清晰",
+          "未提供市场规模数据"
+        ],
+        "teaching_note": "【核心案例】低空智驭——大小模型_群智控系统（交通运输）\n痛点：传统技术瓶颈，为低空经济的军事、民用与应急领域提供高效解决方案，助力\n壁垒：核心技术\n⚠风险：盈利模式不清晰; 未提供市场规模数据\n",
+        "is_detailed": true
+      }
+    },
+    {
+      "id": "he_case_proj_030fe1e4",
+      "type": "Case_Study",
+      "nodes": [
+        "mkt_8a964c7a",
+        "concept_Lean_Canvas",
+        "proj_030fe1e4",
+        "risk_no_moat",
+        "risk_market_inflate"
+      ],
+      "properties": {
+        "project": "千帆助农：AI农业灾_警决策助手",
+        "industry": "农业发展",
+        "problem": "",
+        "solution": "",
+        "market_size": "",
+        "biz_models": [
+          "咨询",
+          "API"
+        ],
+        "moat": [],
+        "success_factors": [
+          "发表1篇论文",
+          "有用户验证"
+        ],
+        "failure_risks": [
+          "缺乏明确技术壁垒",
+          "未提供市场规模数据"
+        ],
+        "teaching_note": "【核心案例】千帆助农：AI农业灾_警决策助手（农业发展）\n商业模式：咨询, API\n成功要素：发表1篇论文; 有用户验证\n⚠风险：缺乏明确技术壁垒; 未提供市场规模数据\n",
+        "is_detailed": true
+      }
+    },
+    {
+      "id": "he_case_proj_4a60c8e0",
+      "type": "Case_Study",
+      "nodes": [
+        "tech_bb481825",
+        "concept_Lean_Canvas",
+        "mkt_7fbf2e97",
+        "proj_4a60c8e0",
+        "tech_37acc94c",
+        "risk_compliance",
+        "risk_no_moat",
+        "tech_2dc9b4e0",
+        "risk_market_inflate"
+      ],
+      "properties": {
+        "project": "物衡智判——基于DS_能推理系统",
+        "industry": "政务管理",
+        "problem": "",
+        "solution": "",
+        "market_size": "",
+        "biz_models": [
+          "咨询"
+        ],
+        "moat": [],
+        "success_factors": [
+          "有用户验证"
+        ],
+        "failure_risks": [
+          "缺乏明确技术壁垒",
+          "存在合规/隐私风险需评估",
+          "未提供市场规模数据"
+        ],
+        "teaching_note": "【核心案例】物衡智判——基于DS_能推理系统（政务管理）\n商业模式：咨询\n成功要素：有用户验证\n⚠风险：缺乏明确技术壁垒; 存在合规/隐私风险需评估; 未提供市场规模数据\n",
+        "is_detailed": true
+      }
+    },
+    {
+      "id": "he_case_proj_80c57f7b",
+      "type": "Case_Study",
+      "nodes": [
+        "concept_PMF",
+        "concept_Lean_Canvas",
+        "tech_4d9b6b90",
+        "proj_80c57f7b",
+        "mkt_daf8ab76",
+        "concept_Moat",
+        "tech_5b61a1b2",
+        "risk_market_inflate",
+        "tech_6964a395"
+      ],
+      "properties": {
+        "project": "广寒天工——月基装备_人作业系统",
+        "industry": "工业制造",
+        "problem": "亟需突破感知与导航、规划与决策等基础理论与关",
+        "solution": "",
+        "market_size": "",
+        "biz_models": [
+          "授权",
+          "平台"
+        ],
+        "moat": [
+          "专利",
+          "发明专利",
+          "SCI",
+          "EI",
+          "核心技术"
+        ],
+        "success_factors": [
+          "团队包含院士"
+        ],
+        "failure_risks": [
+          "未提供市场规模数据"
+        ],
+        "teaching_note": "【核心案例】广寒天工——月基装备_人作业系统（工业制造）\n痛点：亟需突破感知与导航、规划与决策等基础理论与关\n商业模式：授权, 平台\n壁垒：专利, 发明专利, SCI\n成功要素：团队包含院士\n⚠风险：未提供市场规模数据\n",
+        "is_detailed": true
+      }
+    },
+    {
+      "id": "he_case_proj_a9941030",
+      "type": "Case_Study",
+      "nodes": [
+        "concept_Lean_Canvas",
+        "concept_Moat",
+        "proj_a9941030",
+        "mkt_d1c2b24c",
+        "tech_4d9b6b90",
+        "tech_2dc9b4e0",
+        "risk_market_inflate"
+      ],
+      "properties": {
+        "project": "脉语智鉴——结合视触_能脉诊系统",
+        "industry": "医疗健康",
+        "problem": "",
+        "solution": "",
+        "market_size": "",
+        "biz_models": [
+          "平台"
+        ],
+        "moat": [
+          "专利",
+          "发明专利",
+          "SCI",
+          "核心技术"
+        ],
+        "success_factors": [
+          "有用户验证"
+        ],
+        "failure_risks": [
+          "未提供市场规模数据"
+        ],
+        "teaching_note": "【核心案例】脉语智鉴——结合视触_能脉诊系统（医疗健康）\n商业模式：平台\n壁垒：专利, 发明专利, SCI\n成功要素：有用户验证\n⚠风险：未提供市场规模数据\n",
+        "is_detailed": true
+      }
+    },
+    {
+      "id": "he_case_proj_db8b8b77",
+      "type": "Case_Study",
+      "nodes": [
+        "proj_db8b8b77",
+        "mkt_131e4e3b",
+        "tech_61bb1751",
+        "concept_Lean_Canvas",
+        "concept_Moat",
+        "risk_market_inflate"
+      ],
+      "properties": {
+        "project": "碳索未来—智能化CO_技术与装备",
+        "industry": "环境保护",
+        "problem": "",
+        "solution": "",
+        "market_size": "",
+        "biz_models": [
+          "授权"
+        ],
+        "moat": [
+          "专利",
+          "SCI",
+          "核心技术"
+        ],
+        "success_factors": [
+          "发表15篇论文"
+        ],
+        "failure_risks": [
+          "未提供市场规模数据"
+        ],
+        "teaching_note": "【核心案例】碳索未来—智能化CO_技术与装备（环境保护）\n商业模式：授权\n壁垒：专利, SCI, 核心技术\n成功要素：发表15篇论文\n⚠风险：未提供市场规模数据\n",
+        "is_detailed": true
+      }
+    },
+    {
+      "id": "he_case_proj_3264d357",
+      "type": "Case_Study",
+      "nodes": [
+        "concept_PMF",
+        "mkt_a5f2e466",
+        "concept_Lean_Canvas",
+        "proj_3264d357",
+        "concept_Moat",
+        "tech_5b61a1b2",
+        "risk_market_inflate",
+        "tech_6964a395"
+      ],
+      "properties": {
+        "project": "Go2重塑入境游",
+        "industry": "文化旅游",
+        "problem": "当前中国入境旅游行业正面临显著的供需结构性矛盾，外籍游客需求持续",
+        "solution": "",
+        "market_size": "",
+        "biz_models": [
+          "平台"
+        ],
+        "moat": [
+          "核心技术"
+        ],
+        "success_factors": [],
+        "failure_risks": [
+          "未提供市场规模数据"
+        ],
+        "teaching_note": "【核心案例】Go2重塑入境游（文化旅游）\n痛点：当前中国入境旅游行业正面临显著的供需结构性矛盾，外籍游客需求持续\n商业模式：平台\n壁垒：核心技术\n⚠风险：未提供市场规模数据\n",
+        "is_detailed": true
+      }
+    },
+    {
+      "id": "he_case_proj_bad6ae35",
+      "type": "Case_Study",
+      "nodes": [
+        "mkt_aa05fd09",
+        "concept_PMF",
+        "tech_bb481825",
+        "tech_61bb1751",
+        "concept_Lean_Canvas",
+        "concept_Moat",
+        "risk_compliance",
+        "tech_8c5f70f8",
+        "proj_bad6ae35",
+        "risk_market_inflate"
+      ],
+      "properties": {
+        "project": "数湖启智-项目书0410",
+        "industry": "通用",
+        "problem": "当前核心瓶颈在于人工与自动化清洗的双重局限性形成治理真空：人工清洗需要投入大量专业人力进行重复性标注与规则制定，在面对海量异构数据时效率难以保证；而AI驱动的自动化清洗虽能缓解人力瓶颈，却受场景泛化能力，针对特定领域优化的算法在迁移至其他领域时时，因数据模态差异与业务逻辑断层，往往产生误判或过度清洗，迫使企业为",
+        "solution": "本项目提出的技术能够有效应对多源异构数据湖所带来的挑战，并高质量完成数据管理任务。本项目研制了基于多源异构数据湖的数据智算平台。该系统综合运用前述研究成果，包括任务感知的关系透视、人机协作的数据提质、数据优选的模型提效，旨在真实贴近用户需求，广泛适应多个应用场景。系统为用户提供自助式数据发现，数据清洗融合以及高效模型训练功能。",
+        "market_size": "",
+        "biz_models": [
+          "平台",
+          "数据服务",
+          "API"
+        ],
+        "moat": [
+          "专利",
+          "发明专利",
+          "SCI"
+        ],
+        "success_factors": [
+          "有用户验证",
+          "团队包含教授、院士"
+        ],
+        "failure_risks": [
+          "存在合规/隐私风险需评估",
+          "未提供市场规模数据"
+        ],
+        "teaching_note": "【核心案例】数湖启智-项目书0410（通用）\n痛点：当前核心瓶颈在于人工与自动化清洗的双重局限性形成治理真空：人工清洗需要投入大量专业人力进行重复性标注与规则制定，在面对海量异构数据时效率难以保证；而AI驱动的自动化清洗虽能缓解人力瓶颈，却受场景泛化能\n方案：本项目提出的技术能够有效应对多源异构数据湖所带来的挑战，并高质量完成数据管理任务。本项目研制了基于多源异构数据湖的数据智算平台。该系统综合运用前述研究成果，包括任务感知的关系透视、人机协作的数据提质、\n商业模式：平台, 数据服务, API\n壁垒：专利, 发明专利, SCI\n成功要素：有用户验证; 团队包含教授、院士\n⚠风险：存在合规/隐私风险需评估; 未提供市场规模数据\n",
+        "is_detailed": true
+      }
+    },
+    {
+      "id": "he_case_proj_44acb8cc",
+      "type": "Case_Study",
+      "nodes": [
+        "mkt_aa05fd09",
+        "tech_75d8fafb",
+        "concept_Lean_Canvas",
+        "tech_1fefd5a9",
+        "concept_TAM",
+        "proj_44acb8cc",
+        "risk_compliance",
+        "concept_Moat",
+        "tech_5b61a1b2"
+      ],
+      "properties": {
+        "project": "推送家商业计划书2020-GACC",
+        "industry": "通用",
+        "problem": "",
+        "solution": "",
+        "market_size": "92亿",
+        "biz_models": [
+          "订阅",
+          "平台",
+          "咨询"
+        ],
+        "moat": [
+          "专利",
+          "发明专利",
+          "核心技术"
+        ],
+        "success_factors": [
+          "有用户验证",
+          "市场规模92亿",
+          "团队包含教授"
+        ],
+        "failure_risks": [
+          "存在合规/隐私风险需评估"
+        ],
+        "teaching_note": "【核心案例】推送家商业计划书2020-GACC（通用）\n市场规模：92亿\n商业模式：订阅, 平台, 咨询\n壁垒：专利, 发明专利, 核心技术\n成功要素：有用户验证; 市场规模92亿; 团队包含教授\n⚠风险：存在合规/隐私风险需评估\n",
+        "is_detailed": true
+      }
+    },
+    {
+      "id": "he_case_proj_d70fc4ee",
+      "type": "Case_Study",
+      "nodes": [
+        "proj_d70fc4ee",
+        "tech_b8c7cd66",
+        "concept_Lean_Canvas",
+        "concept_Moat",
+        "mkt_daf8ab76",
+        "tech_8c5f70f8",
+        "risk_market_inflate"
+      ],
+      "properties": {
+        "project": "“仪探究净”基于深度_损检测系统",
+        "industry": "工业制造",
+        "problem": "",
+        "solution": "团队设计开发了一款可靠性强，操作简单，支持实时检测的基于深度学习",
+        "market_size": "",
+        "biz_models": [
+          "平台"
+        ],
+        "moat": [
+          "专利"
+        ],
+        "success_factors": [
+          "团队包含教授"
+        ],
+        "failure_risks": [
+          "未提供市场规模数据"
+        ],
+        "teaching_note": "【核心案例】“仪探究净”基于深度_损检测系统（工业制造）\n方案：团队设计开发了一款可靠性强，操作简单，支持实时检测的基于深度学习\n商业模式：平台\n壁垒：专利\n成功要素：团队包含教授\n⚠风险：未提供市场规模数据\n",
+        "is_detailed": true
+      }
+    },
+    {
+      "id": "he_case_proj_584b627f",
+      "type": "Case_Study",
+      "nodes": [
+        "concept_Lean_Canvas",
+        "tech_b8cc08c1",
+        "concept_Moat",
+        "concept_TAM",
+        "mkt_f55b5c48",
+        "tech_bbca2718",
+        "proj_584b627f",
+        "tech_8c5f70f8"
+      ],
+      "properties": {
+        "project": "智卫天穹——面向复杂_机检测系统",
+        "industry": "交通运输",
+        "problem": "",
+        "solution": "",
+        "market_size": "3.5万亿",
+        "biz_models": [
+          "授权",
+          "平台"
+        ],
+        "moat": [
+          "专利",
+          "发明专利",
+          "SCI"
+        ],
+        "success_factors": [
+          "拥有10项专利",
+          "发表2篇论文",
+          "市场规模3.5万亿"
+        ],
+        "failure_risks": [],
+        "teaching_note": "【核心案例】智卫天穹——面向复杂_机检测系统（交通运输）\n市场规模：3.5万亿\n商业模式：授权, 平台\n壁垒：专利, 发明专利, SCI\n成功要素：拥有10项专利; 发表2篇论文; 市场规模3.5万亿\n",
+        "is_detailed": true
+      }
+    },
+    {
+      "id": "he_case_proj_425716be",
+      "type": "Case_Study",
+      "nodes": [
+        "mkt_8a964c7a",
+        "proj_425716be",
+        "risk_biz_unclear",
+        "tech_2d664feb",
+        "risk_no_moat",
+        "tech_8c5f70f8",
+        "risk_market_inflate"
+      ],
+      "properties": {
+        "project": "智禾——以“小白菜”_态监测系统",
+        "industry": "农业发展",
+        "problem": "",
+        "solution": "",
+        "market_size": "",
+        "biz_models": [],
+        "moat": [],
+        "success_factors": [
+          "发表4篇论文"
+        ],
+        "failure_risks": [
+          "盈利模式不清晰",
+          "缺乏明确技术壁垒",
+          "未提供市场规模数据"
+        ],
+        "teaching_note": "【核心案例】智禾——以“小白菜”_态监测系统（农业发展）\n成功要素：发表4篇论文\n⚠风险：盈利模式不清晰; 缺乏明确技术壁垒; 未提供市场规模数据\n",
+        "is_detailed": true
+      }
+    },
+    {
+      "id": "he_case_proj_f4d1c138",
+      "type": "Case_Study",
+      "nodes": [
+        "mkt_131e4e3b",
+        "proj_f4d1c138",
+        "tech_589f8ced",
+        "risk_biz_unclear",
+        "risk_no_moat",
+        "tech_2dc9b4e0",
+        "risk_market_inflate",
+        "tech_8c5f70f8"
+      ],
+      "properties": {
+        "project": "'智防·星火'——基_灾预警系统",
+        "industry": "环境保护",
+        "problem": "",
+        "solution": "",
+        "market_size": "",
+        "biz_models": [],
+        "moat": [],
+        "success_factors": [],
+        "failure_risks": [
+          "盈利模式不清晰",
+          "缺乏明确技术壁垒",
+          "未提供市场规模数据"
+        ],
+        "teaching_note": "【核心案例】'智防·星火'——基_灾预警系统（环境保护）\n⚠风险：盈利模式不清晰; 缺乏明确技术壁垒; 未提供市场规模数据\n",
+        "is_detailed": true
+      }
+    }
+  ]
+}

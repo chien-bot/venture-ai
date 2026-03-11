@@ -1,0 +1,17 @@
+[
+  {"rule_id": "H1", "type": "客户–价值主张错位", "severity": "high", "trigger_message": "客户群体与价值主张不匹配", "fix_task": "重新定义目标客户或调整价值主张"},
+  {"rule_id": "H2", "type": "渠道不可达", "severity": "high", "trigger_message": "选定渠道无法触达目标客户", "fix_task": "验证渠道可达性，提供触达证据"},
+  {"rule_id": "H3", "type": "定价无支付意愿证据", "severity": "medium", "trigger_message": "缺乏用户支付意愿的验证数据", "fix_task": "进行支付意愿调研或预售测试"},
+  {"rule_id": "H4", "type": "TAM/SAM/SOM口径混乱", "severity": "medium", "trigger_message": "市场规模估算的数据来源和计算逻辑不一致", "fix_task": "统一数据口径，自下而上重新估算"},
+  {"rule_id": "H5", "type": "需求证据不足", "severity": "high", "trigger_message": "用户痛点缺乏一手数据支撑", "fix_task": "补充用户访谈或行为数据"},
+  {"rule_id": "H6", "type": "竞品对比不可比", "severity": "medium", "trigger_message": "竞品对比维度不对等或遗漏关键竞品", "fix_task": "按统一维度重构竞品对比矩阵"},
+  {"rule_id": "H7", "type": "创新点不可验证", "severity": "medium", "trigger_message": "创新点缺乏数据或实验支撑", "fix_task": "设计验证实验或提供对比数据"},
+  {"rule_id": "H8", "type": "单位经济不成立", "severity": "high", "trigger_message": "LTV < CAC 或单位经济模型假设不合理", "fix_task": "重新计算单位经济，调整定价或降低获客成本"},
+  {"rule_id": "H9", "type": "增长逻辑跳跃", "severity": "medium", "trigger_message": "用户增长策略缺乏阶段性逻辑", "fix_task": "拆解增长为种子期、扩展期、规模期分别规划"},
+  {"rule_id": "H10", "type": "里程碑不可交付", "severity": "medium", "trigger_message": "里程碑设置过于模糊或不可量化", "fix_task": "定义SMART指标的具体交付物"},
+  {"rule_id": "H11", "type": "合规/伦理缺口", "severity": "high", "trigger_message": "项目涉及数据隐私、行业准入等合规风险", "fix_task": "补充合规分析和伦理风险评估"},
+  {"rule_id": "H12", "type": "技术路线与资源不匹配", "severity": "high", "trigger_message": "技术方案超出团队现有能力和资源", "fix_task": "调整技术方案或补充资源获取计划"},
+  {"rule_id": "H13", "type": "实验设计不合格", "severity": "medium", "trigger_message": "验证实验缺乏对照组或样本量不足", "fix_task": "重新设计实验方案"},
+  {"rule_id": "H14", "type": "路演叙事断裂", "severity": "low", "trigger_message": "路演材料的故事线不连贯", "fix_task": "按 问题→方案→市场→模式→团队 重构叙事"},
+  {"rule_id": "H15", "type": "评分项证据覆盖不足", "severity": "medium", "trigger_message": "多个评分维度缺乏支撑证据", "fix_task": "针对缺失项逐一补充证据材料"}
+]

@@ -1,0 +1,271 @@
+"""Agent router: entry point for multi-agent LangGraph pipeline."""
+
+import re
+import json
+from services.session_store import get_chat_history, append_chat
+from services.database import get_uploaded_files_for_project
+from prompts.coach import COACH_GREETING
+from agents.graph import get_graph
+
+
+def get_greeting(agent_type: str) -> str:
+    greetings = {
+        "coach": COACH_GREETING,
+        "tutor": "你好！我是创新创业学习辅导员。有什么概念或问题想了解的吗？比如 PMF、商业模式画布、TAM/SAM/SOM 等等。",
+        "competition": "你好！我是竞赛顾问。请先简单描述一下你的项目，我来帮你评估竞赛准备情况。",
+        "grader": "你好！请提交你的项目材料（计划书或PPT内容），我会基于 Rubric 标准进行评估。",
+        "auto": (
+            "你好！我是你的创新创业 AI 助手。无论你是想讨论项目想法、"
+            "学习创业概念，还是评估竞赛准备，直接告诉我就好——"
+            "我会自动为你找到最合适的帮助。🚀"
+        ),
+    }
+    return greetings.get(agent_type, greetings["auto"])
+
+
+def run_agent(session_id: str, message: str, agent_type: str = "coach", project_id: str = "") -> dict:
+    append_chat(session_id, "user", message)
+    history = get_chat_history(session_id)
+
+    # F3-adv: Inject uploaded file context into message
+    file_context = ""
+    if project_id:
+        files = get_uploaded_files_for_project(project_id)
+        texts = [f"[文件: {f['filename']}]\n{f['extracted_text'][:2000]}"
+                 for f in files if f.get("extracted_text")]
+        if texts:
+            file_context = "\n\n---\n已上传文件参考资料：\n" + "\n\n".join(texts[-3:])  # latest 3
+
+    current_msg = message + file_context if file_context else message
+
+    initial_state = {
+        "session_id": session_id,
+        "project_id": project_id,
+        "messages": history,
+        "current_message": current_msg,
+        "intent": "",
+        "tutor_concept": None,
+        "coach_output": None,
+        "tutor_output": None,
+        "competition_output": None,
+        "scores": None,
+        "rubric_scores": None,
+        "stage": None,
+        "diagnosis": [],
+        "final_reply": "",
+        "triggered_rules": None,
+        "hypergraph_context": None,
+        "extracted_techs": None,
+        "extracted_industry": None,
+        "extracted_concept": None,
+    }
+
+    graph = get_graph()
+    final_state = graph.invoke(initial_state)
+
+    reply = final_state.get("final_reply", "")
+    append_chat(session_id, "assistant", reply)
+
+    result: dict = {
+        "reply": reply,
+        "intent": final_state.get("intent", "coach"),
+    }
+    if final_state.get("scores"):
+        result["scores"] = final_state["scores"]
+    if final_state.get("stage"):
+        result["stage"] = final_state["stage"]
+    if final_state.get("diagnosis"):
+        result["diagnosis"] = final_state["diagnosis"]
+    if final_state.get("rubric_scores"):
+        result["rubric_scores"] = final_state["rubric_scores"]
+    if final_state.get("triggered_rules"):
+        result["triggered_rules"] = final_state["triggered_rules"]
+
+    return result
+
+
+def _build_initial_state(session_id: str, message: str, project_id: str) -> dict:
+    """Build the shared initial state for both streaming and non-streaming paths."""
+    history = get_chat_history(session_id)
+    file_context = ""
+    if project_id:
+        files = get_uploaded_files_for_project(project_id)
+        texts = [f"[文件: {f['filename']}]\n{f['extracted_text'][:2000]}"
+                 for f in files if f.get("extracted_text")]
+        if texts:
+            file_context = "\n\n---\n已上传文件参考资料：\n" + "\n\n".join(texts[-3:])
+    current_msg = message + file_context if file_context else message
+    return {
+        "session_id": session_id,
+        "project_id": project_id,
+        "messages": history,
+        "current_message": current_msg,
+        "intent": "",
+        "tutor_concept": None,
+        "coach_output": None,
+        "tutor_output": None,
+        "competition_output": None,
+        "scores": None,
+        "rubric_scores": None,
+        "stage": None,
+        "diagnosis": [],
+        "final_reply": "",
+        "triggered_rules": None,
+        "hypergraph_context": None,
+        "extracted_techs": None,
+        "extracted_industry": None,
+        "extracted_concept": None,
+    }
+
+
+def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", project_id: str = ""):
+    """
+    Streaming version: runs router + retriever synchronously, then streams the
+    main LLM call. Yields SSE-formatted strings: data chunks + final metadata.
+    """
+    from agents.nodes.router import router_node
+    from agents.nodes.retriever import retriever_node
+    from agents.nodes.critic import critic_node
+    from agents.nodes.synthesizer import synthesizer_node
+    from services.claude_client import chat_completion_stream
+    from services.evidence_tracer import refresh_tracer
+    from agents.adaptive_questioning import build_questioning_context
+    from services.competition_mode import get_countdown_context
+    from services.database import get_competition_date, get_latest_annotations_for_coach
+    from prompts.coach import COACH_SYSTEM_PROMPT
+    from prompts.tutor import TUTOR_SYSTEM_PROMPT
+    from prompts.competition import COMPETITION_SYSTEM_PROMPT
+    from config import USE_MOCK_API
+
+    append_chat(session_id, "user", message)
+    state = _build_initial_state(session_id, message, project_id)
+
+    # Phase 1: Router (fast — lightweight LLM or keyword-based)
+    state = {**state, **router_node(state)}
+    intent = state.get("intent", "coach")
+
+    # Phase 2: Retriever (no LLM, pure data lookup)
+    state = {**state, **retriever_node(state)}
+    hypergraph_ctx = state.get("hypergraph_context", "")
+
+    # Phase 3: Build system prompt based on intent
+    if intent == "competition":
+        system = COMPETITION_SYSTEM_PROMPT
+        if hypergraph_ctx:
+            system += f"\n\n[超图案例库参考]\n{hypergraph_ctx}"
+    elif intent in ("tutor", "hybrid"):
+        system = TUTOR_SYSTEM_PROMPT
+        if hypergraph_ctx:
+            system += f"\n\n[超图案例参考]\n{hypergraph_ctx}"
+    else:
+        system = COACH_SYSTEM_PROMPT
+        if hypergraph_ctx:
+            system += (
+                "\n\n[超图知识库检索结果 — 基于82个真实竞赛案例]\n"
+                "以下是从超图案例库中检索到的与学生项目相关的信息。"
+                "请在回答中引用这些案例和风险模式来增强你的指导：\n\n"
+                f"{hypergraph_ctx}"
+            )
+        # Evidence tracer
+        tracer = refresh_tracer(session_id, state.get("messages", []))
+        evidence_ctx = tracer.format_missing_evidence()
+        if evidence_ctx:
+            system += f"\n\n[证据追踪摘要]\n{evidence_ctx}"
+        # Adaptive questioning
+        q_ctx = build_questioning_context(state.get("scores"), state.get("messages", []), message)
+        if q_ctx:
+            system += f"\n\n{q_ctx}"
+        # Competition countdown
+        if project_id:
+            comp_date = get_competition_date(project_id)
+            cd_ctx = get_countdown_context(comp_date)
+            if cd_ctx:
+                system += f"\n\n{cd_ctx}"
+            try:
+                notes = get_latest_annotations_for_coach(project_id)
+                if notes:
+                    system += "\n\n[教师批注 - 请在本轮对话中体现以下教师指导意见]\n"
+                    for a in notes[:3]:
+                        system += f"  • {a['note_text']}\n"
+            except Exception:
+                pass
+
+    # Phase 4: Send intent metadata
+    yield f"data: {json.dumps({'type': 'meta', 'intent': intent})}\n\n"
+
+    # Phase 5: Stream LLM response
+    if USE_MOCK_API:
+        yield f"data: {json.dumps({'type': 'token', 'content': '（Mock 模式暂无流式输出）'})}\n\n"
+        full_text = "（Mock 模式暂无流式输出）"
+    else:
+        full_text = ""
+        for chunk in chat_completion_stream(system, state.get("messages", [])):
+            full_text += chunk
+            yield f"data: {json.dumps({'type': 'token', 'content': chunk})}\n\n"
+
+    # Phase 6: Parse scores from accumulated text, run critic
+    scores_match = re.search(r"<!--SCORES:(.*?)-->", full_text)
+    scores_data = None
+    if scores_match:
+        try:
+            scores_data = json.loads(scores_match.group(1))
+        except json.JSONDecodeError:
+            pass
+
+    clean_reply = re.sub(r"<!--SCORES:.*?-->", "", full_text).strip()
+    # Also clean rubric scores marker
+    clean_reply = re.sub(r"<!--RUBRIC:.*?-->", "", clean_reply).strip()
+
+    new_scores = None
+    stage = state.get("stage")
+    diagnosis = state.get("diagnosis", [])
+    if scores_data:
+        new_scores = {k: v for k, v in scores_data.items() if k not in ("stage", "diagnosis")}
+        stage = scores_data.get("stage", stage)
+        diagnosis = scores_data.get("diagnosis", diagnosis)
+
+    # For hybrid: we only streamed the first agent (tutor). We need coach too.
+    # For simplicity, hybrid falls back to non-streaming for the coach part.
+    if intent == "hybrid":
+        state["tutor_output"] = clean_reply
+        # Run coach via non-streaming graph path
+        from agents.nodes.coach import coach_node
+        coach_state = {**state, **coach_node(state)}
+        coach_output = coach_state.get("coach_output", "")
+        if coach_output:
+            yield f"data: {json.dumps({'type': 'token', 'content': '\\n\\n---\\n\\n### 回到你的项目\\n\\n'})}\n\n"
+            yield f"data: {json.dumps({'type': 'token', 'content': coach_output})}\n\n"
+            concept = state.get("tutor_concept") or "概念"
+            clean_reply = f"### 关于「{concept}」的解释\n\n{clean_reply}\n\n---\n\n### 回到你的项目\n\n{coach_output}"
+            # Use coach scores if available
+            if coach_state.get("scores"):
+                new_scores = coach_state["scores"]
+                stage = coach_state.get("stage", stage)
+                diagnosis = coach_state.get("diagnosis", diagnosis)
+
+    # Run critic for constraint checking
+    state["final_reply"] = clean_reply
+    state["scores"] = new_scores
+    state["stage"] = stage
+    state["diagnosis"] = diagnosis
+    critic_result = critic_node(state)
+    triggered = critic_result.get("triggered_rules") or []
+
+    # Save reply and update project scores
+    append_chat(session_id, "assistant", clean_reply)
+    if project_id and (new_scores or stage or diagnosis):
+        from services.session_store import update_project_scores
+        update_project_scores(project_id, new_scores, stage, diagnosis)
+
+    # Phase 7: Send final metadata
+    meta = {"type": "done", "intent": intent}
+    if new_scores:
+        meta["scores"] = new_scores
+    if stage:
+        meta["stage"] = stage
+    if diagnosis:
+        meta["diagnosis"] = diagnosis
+    if triggered:
+        meta["triggered_rules"] = triggered
+
+    yield f"data: {json.dumps(meta)}\n\n"

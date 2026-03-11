@@ -1,0 +1,26 @@
+{
+  "node_types": {
+    "Concept": ["PMF", "TAM", "SAM", "SOM", "Value Proposition", "Moat", "Pricing", "CAC", "LTV", "BEP"],
+    "Method": ["Lean Canvas", "JTBD", "AARRR", "SWOT", "BCG", "Business Model Canvas", "Porter Five Forces"],
+    "Task": ["User Interview", "Survey", "Competitor Analysis", "MVP Design", "Experiment", "Market Sizing"],
+    "Artifact": ["Business Plan", "Pitch Deck", "Market Report", "Financial Model", "PRD", "Lean Canvas"],
+    "Metric": ["CAC", "LTV", "Conversion Rate", "Retention", "Payback Period", "MRR", "Churn Rate"],
+    "Case": ["Awarded Project", "Industry Benchmark", "Failed Case"],
+    "RubricItem": [],
+    "Mistake": [],
+    "Evidence": [],
+    "Project": [],
+    "UserProfile": []
+  },
+  "relation_types": [
+    "PREREQ",
+    "USES",
+    "PRODUCES",
+    "MEASURED_BY",
+    "EVIDENCED_BY",
+    "EVALUATED_BY",
+    "COMMON_MISTAKE",
+    "FIX_STRATEGY",
+    "EXEMPLIFIED_BY"
+  ]
+}

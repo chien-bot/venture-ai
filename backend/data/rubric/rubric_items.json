@@ -1,0 +1,74 @@
+[
+  {
+    "id": "R1",
+    "name": "痛点定义 (Problem Definition)",
+    "description": "问题清晰、具体、基于真实用户痛点",
+    "required_evidence": ["用户访谈", "问卷调查"],
+    "common_mistakes": ["痛点模糊", "假设性需求"],
+    "weight": 0.1
+  },
+  {
+    "id": "R2",
+    "name": "用户证据 (User Evidence)",
+    "description": "论点有充分且相关的证据支撑",
+    "required_evidence": ["访谈引用", "行为数据"],
+    "common_mistakes": ["主观验证"],
+    "weight": 0.15
+  },
+  {
+    "id": "R3",
+    "name": "方案可行性 (Solution Feasibility)",
+    "description": "方案在技术和运营上可行",
+    "required_evidence": ["技术路线图", "资源匹配"],
+    "common_mistakes": ["过度工程化"],
+    "weight": 0.1
+  },
+  {
+    "id": "R4",
+    "name": "商业模式一致性 (Business Model Consistency)",
+    "description": "客户、价值主张、渠道、收入、成本保持一致",
+    "required_evidence": ["商业模式画布"],
+    "common_mistakes": ["渠道-用户不匹配"],
+    "weight": 0.15
+  },
+  {
+    "id": "R5",
+    "name": "市场与竞争 (Market & Competition)",
+    "description": "市场规模估算和竞争分析合理",
+    "required_evidence": ["TAM/SAM/SOM", "竞品对比表"],
+    "common_mistakes": ["市场规模虚高"],
+    "weight": 0.1
+  },
+  {
+    "id": "R6",
+    "name": "财务逻辑 (Financial Logic)",
+    "description": "单位经济和财务假设合理",
+    "required_evidence": ["单位经济模型", "现金流"],
+    "common_mistakes": ["LTV < CAC"],
+    "weight": 0.1
+  },
+  {
+    "id": "R7",
+    "name": "创新与差异化 (Innovation & Differentiation)",
+    "description": "有清晰的差异化优势且可验证",
+    "required_evidence": ["对比矩阵"],
+    "common_mistakes": ["伪创新"],
+    "weight": 0.1
+  },
+  {
+    "id": "R8",
+    "name": "团队与执行 (Team & Execution)",
+    "description": "团队能力匹配项目野心",
+    "required_evidence": ["团队简介", "里程碑"],
+    "common_mistakes": ["技能不匹配"],
+    "weight": 0.05
+  },
+  {
+    "id": "R9",
+    "name": "表达与材料 (Presentation & Materials)",
+    "description": "材料清晰、有逻辑、有说服力",
+    "required_evidence": ["路演PPT"],
+    "common_mistakes": ["叙事断裂"],
+    "weight": 0.05
+  }
+]
