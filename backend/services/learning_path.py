@@ -114,7 +114,15 @@ def generate_learning_path(project_id: str) -> list[dict]:
                     "completion_keywords": tmpl["completion_keywords"],
                     "status": "pending",
                 }
-                save_learning_task(**task)
+                save_learning_task(
+                    task_id=task_id,
+                    project_id=project_id,
+                    owner_id=owner_id,
+                    dimension=dim,
+                    title=tmpl["title"],
+                    description=tmpl["description"],
+                    completion_keywords=tmpl["completion_keywords"],
+                )
                 tasks.append(task)
 
     return tasks

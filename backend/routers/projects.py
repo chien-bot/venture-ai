@@ -1,10 +1,10 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
 from models.schemas import ProjectCreate, ProjectInfo
 from services.session_store import get_project, set_project, get_all_projects
 from services.database import (
     get_projects_for_user, add_team_member, remove_team_member,
-    get_team_members, get_user_by_username,
+    get_team_members, get_user_by_username, get_user_by_token,
 )
 import uuid
 from datetime import datetime
@@ -12,10 +12,21 @@ from datetime import datetime
 router = APIRouter(prefix="/api/projects", tags=["projects"])
 
 
+def _get_current_user(request: Request) -> dict | None:
+    auth = request.headers.get("Authorization", "")
+    if auth.startswith("Bearer "):
+        token = auth[7:]
+        return get_user_by_token(token)
+    return None
+
+
 @router.get("/")
-def list_projects(owner_id: str = None):
-    if owner_id:
-        projects = get_projects_for_user(owner_id)
+def list_projects(request: Request):
+    user = _get_current_user(request)
+    if user and user.get("role") == "student":
+        projects = get_projects_for_user(user["user_id"])
+    elif user and user.get("role") == "teacher":
+        projects = get_all_projects()
     else:
         projects = get_all_projects()
     return {"projects": projects}
@@ -30,7 +41,10 @@ def get_project_detail(project_id: str):
 
 
 @router.post("/", response_model=ProjectInfo)
-def create_project(req: ProjectCreate, owner_id: str = "student_001"):
+def create_project(req: ProjectCreate, request: Request, owner_id: str = "student_001"):
+    user = _get_current_user(request)
+    if user:
+        owner_id = user["user_id"]
     project_id = f"proj_{uuid.uuid4().hex[:6]}"
     project = {
         "project_id": project_id,
