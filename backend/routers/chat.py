@@ -68,6 +68,13 @@ def send_message(req: ChatRequest):
     triggered_ids = [r["rule_id"] for r in triggered if isinstance(r, dict)]
     knowledge_recs = get_recommendations(triggered_ids)
 
+    # Extract structured fix_tasks from triggered rules (H1-H15)
+    fix_tasks = [
+        {"rule_id": r["rule_id"], "severity": r["severity"], "fix_task": r["fix_task"]}
+        for r in triggered
+        if isinstance(r, dict) and r.get("fix_task") and r.get("severity") in ("high", "medium")
+    ] or None
+
     return ChatResponse(
         session_id=req.session_id,
         reply=result["reply"],
@@ -77,6 +84,7 @@ def send_message(req: ChatRequest):
         rubric_scores=result.get("rubric_scores"),
         intent=result.get("intent"),
         knowledge_recommendations=knowledge_recs or None,
+        fix_tasks=fix_tasks,
     )
 
 

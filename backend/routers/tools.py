@@ -3,7 +3,7 @@ routers/tools.py
 ────────────────────────────────────────────────────────────────
 四大创新功能 API：
   1. GET  /api/tools/timeline/{project_id}     — 项目演进时间线
-  2. GET  /api/tools/benchmark/{project_id}    — 匿名对标
+  2. GET  /api/tools/benchmark/{project_id}    — 匿名对标（超图增强）
   3. POST /api/tools/pitch-check              — Pitch Deck 结构检查
   4. POST /api/tools/interview-analyze        — 用户访谈报告解析
 """
@@ -24,6 +24,7 @@ from services.database import (
 from services.learning_path import get_or_generate_learning_path, generate_learning_path
 from services.evidence_tracer import EvidenceTracer
 from services.claude_client import chat_completion
+from hypergraph.engine import query_hypergraph, search_by_industry
 from config import USE_MOCK_API
 
 router = APIRouter(prefix="/api/tools", tags=["tools"])
@@ -76,14 +77,30 @@ def get_timeline(project_id: str):
 
 
 # ──────────────────────────────────────────────────────────────
-# 2. 跨项目匿名对标
+# 2. 跨项目匿名对标（超图增强 + AI 洞察）
 # ──────────────────────────────────────────────────────────────
+
+_BENCHMARK_INSIGHT_PROMPT = """你是一位创业导师，正在帮助学生对标分析。
+给你以下信息：
+1. 学生项目基本信息（行业、技术、当前评分）
+2. 班级内排名数据（各维度百分位）
+3. 超图竞赛案例库检索结果（同行业/同技术的历史优秀案例）
+
+请生成一段200字以内的对标洞察，内容包括：
+- 和历史竞赛案例相比，该项目的差距在哪（1-2条）
+- 历史案例中有哪些值得借鉴的成功要素（1-2条）
+- 针对最弱维度给出具体改进建议（1条）
+
+以JSON返回，格式：
+{"gaps": ["差距1", "差距2"], "learnings": ["借鉴1", "借鉴2"], "suggestion": "改进建议", "summary": "一句话综合评价"}
+只返回JSON，不要其他文字。"""
+
 
 @router.get("/benchmark/{project_id}")
 def get_benchmark(project_id: str):
     """
-    返回当前项目在班级中各维度的百分位排名。
-    其他项目匿名显示（只显示序号，不显示名称）。
+    返回当前项目在班级中各维度的百分位排名，
+    同时从超图检索同行业竞赛案例，并由 LLM 生成对标洞察。
     """
     proj = get_project(project_id)
     if not proj:
@@ -92,45 +109,98 @@ def get_benchmark(project_id: str):
     all_projects = get_all_projects()
     scored = [p for p in all_projects if p.get("scores") and any(p["scores"].get(d, 0) > 0 for d in DIMS)]
 
-    if not scored:
-        return {
-            "project_id": project_id,
-            "message": "暂无其他项目数据",
-            "benchmark": {},
-        }
-
     my_scores = proj.get("scores", {})
     benchmark: dict[str, dict] = {}
 
-    for d in DIMS:
-        my_val = my_scores.get(d, 0)
-        all_vals = sorted([p["scores"].get(d, 0) for p in scored])
-        n = len(all_vals)
-        class_avg = round(sum(all_vals) / n, 1) if n else 0
-        class_median = all_vals[n // 2] if n else 0
-        # Top 20% threshold
-        top20_idx = max(0, int(n * 0.8) - 1)
-        top20_threshold = all_vals[top20_idx] if n else 0
+    if scored:
+        for d in DIMS:
+            my_val = my_scores.get(d, 0)
+            all_vals = sorted([p["scores"].get(d, 0) for p in scored])
+            n = len(all_vals)
+            class_avg = round(sum(all_vals) / n, 1) if n else 0
+            class_median = all_vals[n // 2] if n else 0
+            top20_idx = max(0, int(n * 0.8) - 1)
+            top20_threshold = all_vals[top20_idx] if n else 0
+            below = sum(1 for v in all_vals if v <= my_val)
+            percentile = round(below / n * 100) if n else 0
+            benchmark[d] = {
+                "my_score": my_val,
+                "class_avg": class_avg,
+                "class_median": class_median,
+                "top20_threshold": top20_threshold,
+                "percentile": percentile,
+                "rank": n - below + 1,
+                "total": n,
+                "status": "top20" if percentile >= 80 else "above_avg" if my_val >= class_avg else "below_avg",
+            }
 
-        # Percentile: what % of projects score <= my_val
-        below = sum(1 for v in all_vals if v <= my_val)
-        percentile = round(below / n * 100) if n else 0
-
-        benchmark[d] = {
-            "my_score": my_val,
-            "class_avg": class_avg,
-            "class_median": class_median,
-            "top20_threshold": top20_threshold,
-            "percentile": percentile,
-            "rank": n - below + 1,
-            "total": n,
-            "status": "top20" if percentile >= 80 else "above_avg" if my_val >= class_avg else "below_avg",
-        }
-
-    # Class distribution (anonymized): list of scores per dimension
     distribution: dict[str, list[float]] = {}
     for d in DIMS:
-        distribution[d] = sorted([p["scores"].get(d, 0) for p in scored])
+        distribution[d] = sorted([p["scores"].get(d, 0) for p in scored]) if scored else []
+
+    # ── 超图检索：找同行业/同技术的竞赛案例 ──────────────────
+    industry = proj.get("industry", "")
+    proj_techs = proj.get("technologies", []) or []
+    hypergraph_ctx = query_hypergraph(
+        tech_keywords=proj_techs[:5] if proj_techs else None,
+        industry=industry,
+    )
+
+    # 组装给 LLM 用的超图摘要
+    similar_cases = hypergraph_ctx.get("detailed_cases", []) or hypergraph_ctx.get("similar_projects", [])
+    risk_patterns = hypergraph_ctx.get("risk_patterns", [])
+
+    # ── LLM 生成对标洞察 ──────────────────────────────────────
+    ai_insight: dict = {}
+    if not USE_MOCK_API and (similar_cases or risk_patterns):
+        try:
+            # 找最弱维度
+            weakest_dim = min(DIMS, key=lambda d: my_scores.get(d, 0))
+            weakest_label = DIM_LABELS.get(weakest_dim, weakest_dim)
+
+            cases_text = ""
+            for c in similar_cases[:3]:
+                name = c.get("name") or c.get("project", "")
+                industry_c = c.get("industry", "")
+                success = "; ".join(c.get("success_factors", [])[:2]) if c.get("success_factors") else ""
+                risks = "; ".join(c.get("failure_risks", [])[:2]) if c.get("failure_risks") else ""
+                moat = ", ".join(c.get("moat", [])[:2]) if c.get("moat") else ""
+                cases_text += f"\n- {name}（{industry_c}）"
+                if success: cases_text += f"  ✅成功要素：{success}"
+                if risks: cases_text += f"  ⚠风险：{risks}"
+                if moat: cases_text += f"  壁垒：{moat}"
+
+            risk_text = ""
+            for r in risk_patterns[:3]:
+                risk_text += f"\n- {r['risk']}（{r['severity']}）: {r.get('note', '')}"
+
+            user_msg = f"""项目名称：{proj.get('name', '')}
+行业：{industry}
+技术：{', '.join(proj_techs[:5]) if proj_techs else '未指定'}
+当前评分：{', '.join(f'{DIM_LABELS[d]}={my_scores.get(d,0)}' for d in DIMS)}
+最弱维度：{weakest_label}（{my_scores.get(weakest_dim, 0)}分）
+
+【超图同行业竞赛案例】{cases_text if cases_text else '暂无匹配案例'}
+
+【超图风险模式匹配】{risk_text if risk_text else '暂无风险提示'}"""
+
+            raw = chat_completion(_BENCHMARK_INSIGHT_PROMPT, [{"role": "user", "content": user_msg}], max_tokens=400)
+            import json as _j
+            m = re.search(r'\{[\s\S]*\}', raw)
+            if m:
+                ai_insight = _j.loads(m.group(0))
+        except Exception:
+            pass
+
+    if not ai_insight and similar_cases:
+        # Mock fallback: derive insight from hypergraph data directly
+        top_case = similar_cases[0]
+        ai_insight = {
+            "gaps": [f"与「{top_case.get('name', '优秀案例')}」相比，商业模式清晰度有待提升"],
+            "learnings": top_case.get("success_factors", ["注重早期用户验证"])[:2] or ["注重早期用户验证"],
+            "suggestion": f"重点加强{DIM_LABELS.get(min(DIMS, key=lambda d: my_scores.get(d,0)), '最弱维度')}维度，对标竞赛案例的最佳实践",
+            "summary": f"项目处于起步阶段，超图中有 {len(similar_cases)} 个同行业竞赛案例可参考",
+        }
 
     return {
         "project_id": project_id,
@@ -138,6 +208,14 @@ def get_benchmark(project_id: str):
         "class_size": len(scored),
         "benchmark": benchmark,
         "distribution": distribution,
+        # 超图数据
+        "hypergraph": {
+            "similar_cases": similar_cases[:5],
+            "risk_patterns": risk_patterns[:5],
+            "biz_strategies": hypergraph_ctx.get("business_strategies", [])[:3],
+        },
+        # AI 洞察
+        "ai_insight": ai_insight,
     }
 
 
@@ -320,13 +398,32 @@ def get_pitch_history(project_id: str):
     return {"project_id": project_id, "checks": checks}
 
 
-# ── F4: Evidence Dashboard ────────────────────────────────────────────
+# ── F4: Evidence Dashboard（超图增强 + AI 分析） ────────────────────────
+
+_EVIDENCE_ANALYSIS_PROMPT = """你是一位创业导师，帮助学生分析他们的证据质量。
+给你：
+1. 学生对话中提取的证据统计（DATA/CLAIM/QUOTE/COMMIT 各类数量，各Rubric维度覆盖情况）
+2. 无数据支撑的弱主张列表
+3. 超图竞赛案例中类似项目的证据质量参照
+
+请生成证据质量分析报告，以JSON返回：
+{
+  "quality_score": 0-10分,
+  "quality_label": "充分/一般/薄弱",
+  "strengths": ["优势1", "优势2"],
+  "weak_dimensions": ["待加强的Rubric维度1", "维度2"],
+  "hypergraph_comparison": "与超图案例相比的1句话评价",
+  "next_actions": ["具体行动建议1", "具体行动建议2", "具体行动建议3"],
+  "summary": "50字以内总结"
+}
+只返回JSON，不要其他文字。"""
+
 
 @router.get("/evidence/{project_id}")
 def get_evidence_dashboard(project_id: str):
     """
     Aggregate all chat messages for the project and run EvidenceTracer.
-    Returns structured breakdown of DATA/CLAIM/QUOTE/COMMIT per Rubric dimension.
+    Also maps evidence to hypergraph nodes and generates AI quality analysis.
     """
     sessions = get_sessions_for_project(project_id)
     all_messages: list[dict] = []
@@ -341,12 +438,116 @@ def get_evidence_dashboard(project_id: str):
             "by_rubric": {},
             "weak_claims": [],
             "evidence_list": [],
+            "hypergraph_nodes": [],
+            "ai_analysis": None,
         }
 
     tracer = EvidenceTracer(project_id)
     tracer.ingest(all_messages)
     summary = tracer.summarize()
-    return {"project_id": project_id, **summary}
+
+    # ── 超图节点映射：从证据文本提取技术/行业关键词，查超图 ──
+    proj = get_project(project_id)
+    industry = proj.get("industry", "") if proj else ""
+    proj_techs = (proj.get("technologies", []) or []) if proj else []
+
+    # Also extract keywords from evidence texts
+    evidence_texts = " ".join(e["text"] for e in summary.get("evidence_list", [])[:30])
+    hypergraph_ctx = query_hypergraph(
+        tech_keywords=proj_techs[:5] if proj_techs else None,
+        industry=industry,
+    )
+    similar_cases = hypergraph_ctx.get("detailed_cases", []) or hypergraph_ctx.get("similar_projects", [])
+
+    # Map evidence rubric coverage to hypergraph concept nodes
+    from hypergraph.engine import _find_concept_id, get_neighbors, _nodes
+    _RUBRIC_TO_CONCEPT = {
+        "R1_pain_point":     "痛点",
+        "R2_user_evidence":  "用户访谈",
+        "R3_solution":       "解决方案",
+        "R4_business_model": "商业模式",
+        "R5_market":         "市场规模",
+        "R6_finance":        "财务规划",
+        "R7_innovation":     "护城河",
+        "R8_execution":      "精益创业",
+        "R9_pitch":          "路演",
+    }
+    hypergraph_nodes = []
+    by_rubric = summary.get("by_rubric", {})
+    for rubric_key, concept_label in _RUBRIC_TO_CONCEPT.items():
+        cid = _find_concept_id(concept_label)
+        count = by_rubric.get(rubric_key, 0)
+        if cid:
+            node = _nodes.get(cid, {})
+            neighbors = [n["label"] for n in get_neighbors(cid) if n["type"] == "Concept"][:3]
+            hypergraph_nodes.append({
+                "rubric": rubric_key,
+                "concept": node.get("label", concept_label),
+                "evidence_count": count,
+                "status": "covered" if count > 0 else "missing",
+                "related_concepts": neighbors,
+            })
+
+    # ── LLM 生成证据质量分析 ──────────────────────────────────
+    ai_analysis: dict | None = None
+    if not USE_MOCK_API:
+        try:
+            weak_claims_text = "\n".join(
+                f"  - 第{w['turn']}轮：「{w['text'][:60]}」"
+                for w in summary.get("weak_claims", [])[:5]
+            ) or "  （无）"
+
+            covered_rubrics = [k for k, v in by_rubric.items() if v > 0]
+            missing_rubrics = [k for k in _RUBRIC_TO_CONCEPT if k not in covered_rubrics]
+
+            case_ref = ""
+            if similar_cases:
+                c = similar_cases[0]
+                case_ref = f"超图参考案例「{c.get('name','')}」：{', '.join(c.get('success_factors',[])[:2])}"
+
+            user_msg = f"""项目：{proj.get('name','') if proj else project_id}，行业：{industry}
+证据统计：DATA={summary['by_type']['DATA']} QUOTE={summary['by_type']['QUOTE']} CLAIM={summary['by_type']['CLAIM']} COMMIT={summary['by_type']['COMMIT']}
+已覆盖Rubric维度：{', '.join(covered_rubrics) or '无'}
+缺失Rubric维度：{', '.join(missing_rubrics) or '无'}
+无数据支撑的弱主张：
+{weak_claims_text}
+{case_ref}"""
+
+            raw = chat_completion(_EVIDENCE_ANALYSIS_PROMPT, [{"role": "user", "content": user_msg}], max_tokens=500)
+            import json as _j
+            m = re.search(r'\{[\s\S]*\}', raw)
+            if m:
+                ai_analysis = _j.loads(m.group(0))
+        except Exception:
+            pass
+
+    if not ai_analysis:
+        # Rule-based fallback
+        total = summary.get("total", 0)
+        data_count = summary["by_type"].get("DATA", 0)
+        claim_count = summary["by_type"].get("CLAIM", 0)
+        covered_count = len([k for k, v in by_rubric.items() if v > 0])
+        quality_score = min(10, round(data_count * 1.5 + covered_count * 0.5))
+        ai_analysis = {
+            "quality_score": quality_score,
+            "quality_label": "充分" if quality_score >= 7 else "一般" if quality_score >= 4 else "薄弱",
+            "strengths": [f"已提供 {data_count} 条有数据支撑的陈述"] if data_count > 0 else [],
+            "weak_dimensions": [k for k, v in by_rubric.items() if v == 0][:3],
+            "hypergraph_comparison": f"超图中有 {len(similar_cases)} 个同行业案例可参考" if similar_cases else "暂无超图匹配案例",
+            "next_actions": [
+                "用具体数据（数字、来源）替代主观判断",
+                "补充用户访谈记录（R2证据）",
+                "引用行业报告数据支撑市场规模主张",
+            ][:3 - min(2, data_count)],
+            "summary": f"共收集 {total} 条证据，覆盖 {covered_count}/9 个评分维度",
+        }
+
+    return {
+        "project_id": project_id,
+        **summary,
+        "hypergraph_nodes": hypergraph_nodes,
+        "ai_analysis": ai_analysis,
+    }
 
 
 def _mock_interview_analyze(text: str) -> dict:

@@ -15,6 +15,7 @@ from agents.nodes.retriever import retriever_node
 from agents.nodes.coach import coach_node
 from agents.nodes.tutor import tutor_node
 from agents.nodes.competition import competition_node
+from agents.nodes.grader import grader_node
 from agents.nodes.synthesizer import synthesizer_node
 from agents.nodes.critic import critic_node
 
@@ -25,6 +26,8 @@ def _route_after_retriever(state: AgentState) -> str:
         return "competition"
     if intent in ("tutor", "hybrid"):
         return "tutor"
+    if intent == "grader":
+        return "grader"
     return "coach"  # default: coach
 
 
@@ -45,6 +48,7 @@ def build_graph() -> StateGraph:
     graph.add_node("coach", coach_node)
     graph.add_node("tutor", tutor_node)
     graph.add_node("competition", competition_node)
+    graph.add_node("grader", grader_node)
     graph.add_node("synthesizer", synthesizer_node)
     graph.add_node("critic", critic_node)
 
@@ -62,6 +66,7 @@ def build_graph() -> StateGraph:
             "coach": "coach",
             "tutor": "tutor",
             "competition": "competition",
+            "grader": "grader",
         },
     )
 
@@ -78,6 +83,7 @@ def build_graph() -> StateGraph:
     # All terminal agents go to synthesizer, then critic, then END
     graph.add_edge("coach", "synthesizer")
     graph.add_edge("competition", "synthesizer")
+    graph.add_edge("grader", "synthesizer")
     graph.add_edge("synthesizer", "critic")
     graph.add_edge("critic", END)
 

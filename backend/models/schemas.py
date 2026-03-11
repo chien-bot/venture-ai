@@ -70,6 +70,8 @@ class ChatResponse(BaseModel):
     rubric_scores: Optional[dict] = None
     intent: Optional[str] = None
     knowledge_recommendations: Optional[list] = None
+    fix_tasks: Optional[list] = None  # structured fix tasks from H1-H15 rules
+    rubric_full: Optional[dict] = None  # detailed grader report {R1: {score, evidence, suggestion}}
 
 
 # ── Teacher Dashboard ──

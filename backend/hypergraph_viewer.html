@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>超图可视化 - VentureAI</title>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #080d1a; color: #e2e8f0; font-family: -apple-system, sans-serif; overflow: hidden; height: 100vh; }
+
+  #toolbar {
+    position: fixed; top: 0; left: 0; right: 0; height: 52px;
+    background: rgba(8,13,26,0.95); border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: flex; align-items: center; gap: 12px; padding: 0 16px; z-index: 100;
+    backdrop-filter: blur(10px);
+  }
+  #toolbar h1 { font-size: 14px; font-weight: 700; background: linear-gradient(135deg, #6366f1, #22d3ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent; white-space: nowrap; }
+  #toolbar select, #toolbar input[type=range] { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #e2e8f0; padding: 4px 10px; font-size: 12px; cursor: pointer; }
+  #toolbar label { font-size: 11px; color: #94a3b8; white-space: nowrap; }
+  #toolbar button {
+    background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3);
+    color: #a5b4fc; border-radius: 8px; padding: 5px 12px; font-size: 12px; cursor: pointer;
+    transition: all 0.2s;
+  }
+  #toolbar button:hover { background: rgba(99,102,241,0.3); }
+  #stats { font-size: 11px; color: #64748b; margin-left: auto; white-space: nowrap; }
+
+  #canvas { position: fixed; top: 52px; left: 0; right: 0; bottom: 0; }
+  svg { width: 100%; height: 100%; }
+
+  /* Tooltip */
+  #tooltip {
+    position: fixed; pointer-events: none; z-index: 200;
+    background: rgba(15,23,42,0.95); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px; padding: 10px 14px; font-size: 12px; max-width: 260px;
+    backdrop-filter: blur(10px); display: none;
+  }
+  #tooltip .tt-title { font-weight: 700; color: #e2e8f0; margin-bottom: 4px; }
+  #tooltip .tt-type { font-size: 10px; color: #6366f1; margin-bottom: 6px; }
+  #tooltip .tt-row { color: #94a3b8; margin-bottom: 2px; }
+
+  /* Legend */
+  #legend {
+    position: fixed; bottom: 16px; left: 16px; z-index: 100;
+    background: rgba(8,13,26,0.9); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px; padding: 12px 14px;
+  }
+  #legend h3 { font-size: 10px; color: #64748b; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .legend-item { display: flex; align-items: center; gap: 7px; margin-bottom: 5px; font-size: 11px; color: #94a3b8; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  /* Info panel */
+  #info {
+    position: fixed; top: 68px; right: 16px; z-index: 100; width: 260px;
+    background: rgba(8,13,26,0.9); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px; padding: 14px; display: none;
+  }
+  #info h3 { font-size: 13px; font-weight: 700; color: #e2e8f0; margin-bottom: 8px; }
+  #info .info-row { font-size: 11px; color: #94a3b8; margin-bottom: 5px; }
+  #info .info-label { color: #6366f1; font-weight: 600; }
+  #info-close { float: right; cursor: pointer; color: #64748b; font-size: 14px; line-height: 1; }
+
+  #loading {
+    position: fixed; inset: 0; background: #080d1a;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 300;
+  }
+  #loading .spinner { width: 40px; height: 40px; border: 3px solid rgba(99,102,241,0.2); border-top-color: #6366f1; border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 12px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  #loading p { color: #64748b; font-size: 13px; }
+</style>
+</head>
+<body>
+
+<div id="loading">
+  <div class="spinner"></div>
+  <p>加载超图数据...</p>
+</div>
+
+<div id="toolbar">
+  <h1>超图可视化</h1>
+  <label>节点类型</label>
+  <select id="typeFilter">
+    <option value="">全部核心类型</option>
+    <option value="Project,Technology,SubTechnology">项目 + 技术</option>
+    <option value="Project,Market,BusinessModel,MoatType">项目 + 商业</option>
+    <option value="Project,RiskPattern">项目 + 风险</option>
+    <option value="Project,ApplicationDomain,SolutionApproach">项目 + 应用域</option>
+    <option value="Project">仅项目</option>
+    <option value="Technology,SubTechnology,Framework">技术全图</option>
+  </select>
+  <label>数量上限</label>
+  <select id="limitSelect">
+    <option value="100">100</option>
+    <option value="200" selected>200</option>
+    <option value="400">400</option>
+    <option value="800">全部</option>
+  </select>
+  <button id="reloadBtn">刷新</button>
+  <button id="resetBtn">重置视图</button>
+  <div id="stats">加载中...</div>
+</div>
+
+<div id="canvas"><svg></svg></div>
+<div id="tooltip"></div>
+<div id="legend">
+  <h3>节点类型</h3>
+</div>
+
+<div id="info">
+  <span id="info-close" onclick="document.getElementById('info').style.display='none'">✕</span>
+  <h3 id="info-title"></h3>
+  <div id="info-body"></div>
+</div>
+
+<script>
+const API = "http://localhost:8000";
+
+const TYPE_COLORS = {
+  Project:           "#6366f1",
+  Technology:        "#22d3ee",
+  SubTechnology:     "#06b6d4",
+  Market:            "#10b981",
+  Concept:           "#a78bfa",
+  RiskPattern:       "#ef4444",
+  BusinessModel:     "#f59e0b",
+  MoatType:          "#fbbf24",
+  ApplicationDomain: "#34d399",
+  Framework:         "#38bdf8",
+  SolutionApproach:  "#fb923c",
+  DataModality:      "#e879f9",
+  HardwarePlatform:  "#94a3b8",
+  Keyword:           "#475569",
+  default:           "#64748b",
+};
+
+const TYPE_RADIUS = {
+  Project: 10,
+  Technology: 7,
+  SubTechnology: 5,
+  Market: 7,
+  Concept: 6,
+  RiskPattern: 7,
+  BusinessModel: 7,
+  MoatType: 6,
+  ApplicationDomain: 6,
+  Framework: 5,
+  SolutionApproach: 5,
+  default: 5,
+};
+
+const EDGE_COLORS = {
+  Technology_Cluster:    "rgba(34,211,238,0.25)",
+  Business_Strategy:     "rgba(245,158,11,0.25)",
+  Pain_Solution_Fit:     "rgba(239,68,68,0.25)",
+  Product_Market_Fit:    "rgba(16,185,129,0.25)",
+  Risk_Pattern:          "rgba(239,68,68,0.2)",
+  Project_Profile:       "rgba(99,102,241,0.12)",
+  Application_Domain_Map:"rgba(52,211,153,0.2)",
+  default:               "rgba(255,255,255,0.08)",
+};
+
+let simulation, svg, g, zoom;
+let allNodes = [], allEdges = [];
+
+function color(type) { return TYPE_COLORS[type] || TYPE_COLORS.default; }
+function radius(type) { return TYPE_RADIUS[type] || TYPE_RADIUS.default; }
+function edgeColor(type) { return EDGE_COLORS[type] || EDGE_COLORS.default; }
+
+async function loadData() {
+  const typeFilter = document.getElementById("typeFilter").value;
+  const limit = document.getElementById("limitSelect").value;
+  const url = `${API}/api/graph/hypergraph/visualization?limit=${limit}${typeFilter ? "&node_types=" + typeFilter : ""}`;
+  const res = await fetch(url);
+  const data = await res.json();
+  return data;
+}
+
+function buildGraph(data) {
+  const nodeMap = new Map(data.nodes.map(n => [n.id, n]));
+
+  // Convert hyperedges → pairwise edges for force simulation
+  const edges = [];
+  const edgeSet = new Set();
+  for (const he of data.hyperedges) {
+    const members = he.nodes.filter(id => nodeMap.has(id));
+    // Connect each member to the first member (star topology)
+    for (let i = 1; i < members.length; i++) {
+      const key = [members[0], members[i]].sort().join("|");
+      if (!edgeSet.has(key)) {
+        edgeSet.add(key);
+        edges.push({ source: members[0], target: members[i], type: he.type, he_id: he.id, teaching_note: he.teaching_note });
+      }
+    }
+  }
+
+  return { nodes: data.nodes, edges, stats: data.stats, hyperedges: data.hyperedges };
+}
+
+function render(data) {
+  const { nodes, edges, stats } = buildGraph(data);
+  allNodes = nodes;
+  allEdges = edges;
+
+  // Stats bar
+  document.getElementById("stats").textContent =
+    `${stats.total_nodes} 节点 · ${stats.total_hyperedges} 超边 · ${stats.node_types ? Object.keys(stats.node_types).length : 0} 类型`;
+
+  // Clear
+  svg = d3.select("svg");
+  svg.selectAll("*").remove();
+
+  const W = window.innerWidth;
+  const H = window.innerHeight - 52;
+
+  // Zoom
+  zoom = d3.zoom().scaleExtent([0.1, 8]).on("zoom", (e) => g.attr("transform", e.transform));
+  svg.call(zoom);
+  g = svg.append("g");
+
+  // Defs: arrow marker per edge type (not used visually but kept for structure)
+  const defs = svg.append("defs");
+  defs.append("filter").attr("id", "glow")
+    .append("feGaussianBlur").attr("stdDeviation", "3").attr("result", "coloredBlur");
+
+  // Draw edges first
+  const link = g.append("g").attr("class", "links")
+    .selectAll("line")
+    .data(edges)
+    .join("line")
+    .attr("stroke", d => edgeColor(d.type))
+    .attr("stroke-width", 1)
+    .attr("stroke-opacity", 0.6);
+
+  // Draw nodes
+  const node = g.append("g").attr("class", "nodes")
+    .selectAll("g")
+    .data(nodes)
+    .join("g")
+    .attr("class", "node")
+    .style("cursor", "pointer")
+    .call(d3.drag()
+      .on("start", dragstarted)
+      .on("drag", dragged)
+      .on("end", dragended)
+    )
+    .on("click", (event, d) => showInfo(d))
+    .on("mouseover", (event, d) => showTooltip(event, d))
+    .on("mousemove", (event) => moveTooltip(event))
+    .on("mouseout", hideTooltip);
+
+  // Circle
+  node.append("circle")
+    .attr("r", d => radius(d.type))
+    .attr("fill", d => color(d.type))
+    .attr("fill-opacity", 0.85)
+    .attr("stroke", d => color(d.type))
+    .attr("stroke-width", 1.5)
+    .attr("stroke-opacity", 0.4);
+
+  // Label (only for Project nodes by default)
+  node.filter(d => d.type === "Project" || radius(d.type) >= 7)
+    .append("text")
+    .text(d => d.label.length > 10 ? d.label.slice(0, 10) + "…" : d.label)
+    .attr("x", d => radius(d.type) + 3)
+    .attr("y", 4)
+    .attr("font-size", "9px")
+    .attr("fill", "#94a3b8")
+    .attr("pointer-events", "none");
+
+  // Simulation
+  simulation = d3.forceSimulation(nodes)
+    .force("link", d3.forceLink(edges).id(d => d.id).distance(d => {
+      if (d.type === "Project_Profile") return 60;
+      if (d.type === "Technology_Cluster") return 50;
+      return 80;
+    }).strength(0.3))
+    .force("charge", d3.forceManyBody().strength(d => d.type === "Project" ? -120 : -60))
+    .force("center", d3.forceCenter(W / 2, H / 2))
+    .force("collision", d3.forceCollide().radius(d => radius(d.type) + 3))
+    .on("tick", () => {
+      link
+        .attr("x1", d => d.source.x)
+        .attr("y1", d => d.source.y)
+        .attr("x2", d => d.target.x)
+        .attr("y2", d => d.target.y);
+      node.attr("transform", d => `translate(${d.x},${d.y})`);
+    });
+
+  // Build legend
+  buildLegend(nodes);
+
+  // Hide loading
+  document.getElementById("loading").style.display = "none";
+}
+
+function buildLegend(nodes) {
+  const types = [...new Set(nodes.map(n => n.type))].sort();
+  const leg = document.getElementById("legend");
+  leg.innerHTML = '<h3>节点类型</h3>';
+  for (const t of types) {
+    const count = nodes.filter(n => n.type === t).length;
+    const item = document.createElement("div");
+    item.className = "legend-item";
+    item.innerHTML = `<div class="legend-dot" style="background:${color(t)}"></div><span>${t} <span style="color:#475569">(${count})</span></span>`;
+    item.style.cursor = "pointer";
+    item.onclick = () => highlightType(t);
+    leg.appendChild(item);
+  }
+}
+
+function highlightType(type) {
+  d3.selectAll(".node circle")
+    .attr("fill-opacity", d => d.type === type ? 1 : 0.15)
+    .attr("stroke-opacity", d => d.type === type ? 1 : 0.1);
+  d3.selectAll(".links line")
+    .attr("stroke-opacity", 0.05);
+  setTimeout(() => {
+    d3.selectAll(".node circle").attr("fill-opacity", 0.85).attr("stroke-opacity", 0.4);
+    d3.selectAll(".links line").attr("stroke-opacity", 0.6);
+  }, 2000);
+}
+
+function showTooltip(event, d) {
+  const tt = document.getElementById("tooltip");
+  tt.style.display = "block";
+  tt.innerHTML = `
+    <div class="tt-title">${d.label}</div>
+    <div class="tt-type">${d.type}</div>
+    ${d.industry ? `<div class="tt-row">行业: ${d.industry}</div>` : ""}
+  `;
+  moveTooltip(event);
+}
+function moveTooltip(event) {
+  const tt = document.getElementById("tooltip");
+  tt.style.left = (event.clientX + 14) + "px";
+  tt.style.top  = (event.clientY - 10) + "px";
+}
+function hideTooltip() {
+  document.getElementById("tooltip").style.display = "none";
+}
+
+function showInfo(d) {
+  // Find connected edges
+  const connected = allEdges.filter(e =>
+    (e.source.id || e.source) === d.id || (e.target.id || e.target) === d.id
+  );
+  const edgeTypes = [...new Set(connected.map(e => e.type))];
+  const neighbors = [...new Set(connected.map(e => {
+    const sid = e.source.id || e.source;
+    const tid = e.target.id || e.target;
+    return sid === d.id ? tid : sid;
+  }))];
+
+  const panel = document.getElementById("info");
+  document.getElementById("info-title").textContent = d.label;
+  document.getElementById("info-body").innerHTML = `
+    <div class="info-row"><span class="info-label">类型：</span>${d.type}</div>
+    ${d.industry ? `<div class="info-row"><span class="info-label">行业：</span>${d.industry}</div>` : ""}
+    <div class="info-row"><span class="info-label">连接数：</span>${connected.length}</div>
+    <div class="info-row"><span class="info-label">边类型：</span>${edgeTypes.join(", ") || "无"}</div>
+    <div class="info-row"><span class="info-label">相邻节点数：</span>${neighbors.length}</div>
+  `;
+  panel.style.display = "block";
+
+  // Highlight this node's connections
+  d3.selectAll(".node circle")
+    .attr("fill-opacity", n => n.id === d.id ? 1 : neighbors.includes(n.id) ? 0.8 : 0.15)
+    .attr("stroke-width", n => n.id === d.id ? 3 : 1.5);
+  d3.selectAll(".links line")
+    .attr("stroke-opacity", e => {
+      const sid = e.source.id || e.source;
+      const tid = e.target.id || e.target;
+      return sid === d.id || tid === d.id ? 0.9 : 0.05;
+    })
+    .attr("stroke-width", e => {
+      const sid = e.source.id || e.source;
+      const tid = e.target.id || e.target;
+      return sid === d.id || tid === d.id ? 2 : 1;
+    });
+}
+
+function dragstarted(event, d) {
+  if (!event.active) simulation.alphaTarget(0.3).restart();
+  d.fx = d.x; d.fy = d.y;
+}
+function dragged(event, d) { d.fx = event.x; d.fy = event.y; }
+function dragended(event, d) {
+  if (!event.active) simulation.alphaTarget(0);
+  d.fx = null; d.fy = null;
+}
+
+function resetView() {
+  svg.transition().duration(600).call(zoom.transform, d3.zoomIdentity);
+  d3.selectAll(".node circle").attr("fill-opacity", 0.85).attr("stroke-opacity", 0.4).attr("stroke-width", 1.5);
+  d3.selectAll(".links line").attr("stroke-opacity", 0.6).attr("stroke-width", 1);
+  document.getElementById("info").style.display = "none";
+}
+
+async function reload() {
+  document.getElementById("loading").style.display = "flex";
+  try {
+    const data = await loadData();
+    render(data);
+  } catch(e) {
+    document.getElementById("loading").innerHTML = `<p style="color:#ef4444">加载失败：请确认后端运行在 http://localhost:8000</p>`;
+  }
+}
+
+document.getElementById("reloadBtn").onclick = reload;
+document.getElementById("resetBtn").onclick = resetView;
+document.getElementById("typeFilter").onchange = reload;
+document.getElementById("limitSelect").onchange = reload;
+
+window.addEventListener("resize", () => {
+  const W = window.innerWidth, H = window.innerHeight - 52;
+  if (simulation) simulation.force("center", d3.forceCenter(W/2, H/2)).alpha(0.1).restart();
+});
+
+// Initial load
+reload();
+</script>
+</body>
+</html>

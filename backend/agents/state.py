@@ -22,6 +22,7 @@ class AgentState(TypedDict):
     # Structured data extracted from agent outputs
     scores: Optional[dict]
     rubric_scores: Optional[dict]
+    rubric_full: Optional[dict]   # detailed rubric: {R1: {score, evidence, suggestion}, ...}
     stage: Optional[str]
     diagnosis: list
 

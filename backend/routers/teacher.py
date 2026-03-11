@@ -423,3 +423,120 @@ def get_all_session_ratings():
     ratings = get_all_ratings()
     avg = round(sum(r["rating"] for r in ratings) / len(ratings), 1) if ratings else 0
     return {"ratings": ratings, "avg_rating": avg, "total": len(ratings)}
+
+
+# ── 知识覆盖汇总 ────────────────────────────────────────────────────
+
+# All tutor concepts that can be taught
+ALL_CONCEPTS = [
+    "PMF", "CAC", "LTV", "TAM", "SAM", "SOM", "JTBD", "AARRR",
+    "SWOT", "BEP", "Lean Canvas", "精益画布", "商业模式画布",
+    "波特五力", "价值主张", "护城河", "用户画像", "竞品分析",
+    "TAM/SAM/SOM", "产品市场契合", "获客成本", "终身价值",
+    "市场规模", "商业模式", "精益创业", "最小可行产品",
+    "PMF验证", "联合创始人", "股权结构", "投资人关系",
+]
+
+# Concept → explanation keywords that appear in assistant messages
+CONCEPT_MENTION_PATTERNS = {
+    "PMF": ["PMF", "产品市场契合", "product market fit"],
+    "CAC": ["CAC", "获客成本", "customer acquisition cost"],
+    "LTV": ["LTV", "终身价值", "lifetime value"],
+    "TAM": ["TAM", "总体市场规模", "可寻址市场"],
+    "SAM": ["SAM", "可服务市场"],
+    "SOM": ["SOM", "可获取市场"],
+    "JTBD": ["JTBD", "jobs to be done", "用户任务理论"],
+    "AARRR": ["AARRR", "增长黑客", "海盗指标"],
+    "SWOT": ["SWOT", "优势劣势机会威胁"],
+    "BEP": ["BEP", "盈亏平衡", "盈亏平衡点"],
+    "精益画布": ["精益画布", "lean canvas"],
+    "商业模式画布": ["商业模式画布", "BMC", "business model canvas"],
+    "波特五力": ["波特五力", "porter", "五力模型"],
+    "价值主张": ["价值主张", "value proposition"],
+    "护城河": ["护城河", "moat", "竞争壁垒"],
+    "用户画像": ["用户画像", "persona", "用户画像分析"],
+    "竞品分析": ["竞品分析", "竞争对手分析", "竞争格局"],
+    "最小可行产品": ["MVP", "最小可行产品", "minimum viable product"],
+    "股权结构": ["股权", "股权结构", "cap table"],
+    "精益创业": ["精益创业", "lean startup"],
+}
+
+
+@router.get("/knowledge-coverage")
+def get_knowledge_coverage():
+    """
+    扫描所有 tutor 会话，统计哪些概念已被讲解、各项目学生学习情况。
+    """
+    from services.database import get_conn
+
+    with get_conn() as conn:
+        # Get all tutor/hybrid sessions
+        sessions = conn.execute(
+            "SELECT cs.session_id, cs.project_id, p.owner_id, p.name as project_name "
+            "FROM chat_sessions cs LEFT JOIN projects p ON cs.project_id = p.project_id "
+            "WHERE cs.agent_type IN ('tutor', 'hybrid', 'auto') ORDER BY cs.created_at"
+        ).fetchall()
+
+    # concept → {count: int, projects: set, students: set}
+    concept_stats: dict[str, dict] = {
+        c: {"count": 0, "projects": set(), "students": set()} for c in CONCEPT_MENTION_PATTERNS
+    }
+
+    # project → covered concepts
+    project_coverage: dict[str, set] = {}
+
+    for sess in sessions:
+        sid = sess["session_id"]
+        pid = sess["project_id"] or ""
+        student = sess["owner_id"] or ""
+
+        with get_conn() as conn:
+            msgs = conn.execute(
+                "SELECT role, content FROM chat_messages WHERE session_id=? ORDER BY id",
+                (sid,)
+            ).fetchall()
+
+        # Only scan assistant messages (AI taught concepts)
+        full_text = " ".join(m["content"] for m in msgs if m["role"] == "assistant")
+
+        for concept, patterns in CONCEPT_MENTION_PATTERNS.items():
+            if any(p.lower() in full_text.lower() for p in patterns):
+                concept_stats[concept]["count"] += 1
+                if pid:
+                    concept_stats[concept]["projects"].add(pid)
+                    if pid not in project_coverage:
+                        project_coverage[pid] = set()
+                    project_coverage[pid].add(concept)
+                if student:
+                    concept_stats[concept]["students"].add(student)
+
+    # Build coverage summary
+    covered = [c for c, s in concept_stats.items() if s["count"] > 0]
+    not_covered = [c for c, s in concept_stats.items() if s["count"] == 0]
+
+    # Top concepts by frequency
+    top_concepts = sorted(
+        [{"concept": c, "count": s["count"], "student_count": len(s["students"]), "project_count": len(s["projects"])}
+         for c, s in concept_stats.items() if s["count"] > 0],
+        key=lambda x: x["count"], reverse=True
+    )
+
+    # Per-project coverage
+    proj_coverage_list = []
+    for pid, concepts in project_coverage.items():
+        proj_coverage_list.append({
+            "project_id": pid,
+            "covered_concepts": sorted(concepts),
+            "coverage_rate": round(len(concepts) / len(CONCEPT_MENTION_PATTERNS) * 100, 1),
+        })
+
+    return {
+        "total_concepts": len(CONCEPT_MENTION_PATTERNS),
+        "covered_count": len(covered),
+        "not_covered_count": len(not_covered),
+        "coverage_rate": round(len(covered) / len(CONCEPT_MENTION_PATTERNS) * 100, 1),
+        "covered_concepts": covered,
+        "not_covered_concepts": not_covered,
+        "top_concepts": top_concepts[:15],
+        "project_coverage": proj_coverage_list,
+    }

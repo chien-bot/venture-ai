@@ -222,6 +222,20 @@ def init_db():
 
 # ── User / Auth ────────────────────────────────────────────────────
 
+def save_user(user_id: str, username: str, password: str, role: str,
+              display_name: str = "", class_id: str = "") -> bool:
+    """Insert a new user. Returns True on success, False if username taken."""
+    try:
+        with get_conn() as conn:
+            conn.execute(
+                "INSERT INTO users (user_id, username, password, role, display_name, class_id) VALUES (?,?,?,?,?,?)",
+                (user_id, username, password, role, display_name or username, class_id)
+            )
+        return True
+    except sqlite3.IntegrityError:
+        return False
+
+
 def get_user_by_username(username: str) -> dict | None:
     with get_conn() as conn:
         row = conn.execute("SELECT * FROM users WHERE username=?", (username,)).fetchone()

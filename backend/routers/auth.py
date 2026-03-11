@@ -1,13 +1,42 @@
 from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
 from models.schemas import LoginRequest, LoginResponse
-from services.database import get_user_by_username, save_token, get_user_by_token as db_get_user_by_token
+from services.database import get_user_by_username, save_token, get_user_by_token as db_get_user_by_token, save_user
 import uuid
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
 
 
+class RegisterRequest(BaseModel):
+    username: str
+    password: str
+    display_name: str = ""
+    class_id: str = ""
+
+
 def get_user_by_token(token: str) -> dict | None:
     return db_get_user_by_token(token)
+
+
+@router.post("/register", response_model=LoginResponse)
+def register(req: RegisterRequest):
+    if len(req.username) < 3:
+        raise HTTPException(status_code=400, detail="用户名至少3个字符")
+    if len(req.password) < 4:
+        raise HTTPException(status_code=400, detail="密码至少4个字符")
+    user_id = str(uuid.uuid4())
+    ok = save_user(user_id, req.username, req.password, "student",
+                   req.display_name, req.class_id)
+    if not ok:
+        raise HTTPException(status_code=409, detail="用户名已存在")
+    token = str(uuid.uuid4())
+    save_token(token, user_id)
+    return LoginResponse(
+        token=token,
+        user_id=user_id,
+        username=req.username,
+        role="student",
+    )
 
 
 @router.post("/login", response_model=LoginResponse)

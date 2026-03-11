@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from routers import auth, chat, projects, teacher
 from routers import graph as graph_router
 from routers import tools as tools_router
@@ -7,6 +8,7 @@ from routers import upload as upload_router
 from routers import peer_review as peer_review_router
 from services.database import init_db
 from graph_db.neo4j_client import sync_knowledge_graph, is_available
+from pathlib import Path
 import logging
 
 logger = logging.getLogger(__name__)
@@ -51,3 +53,10 @@ app.include_router(peer_review_router.router)
 @app.get("/health")
 def health():
     return {"status": "ok", "service": "VentureAI"}
+
+
+@app.get("/hypergraph")
+def hypergraph_viewer():
+    """Serve the standalone hypergraph visualization page."""
+    html_path = Path(__file__).parent / "hypergraph_viewer.html"
+    return FileResponse(str(html_path), media_type="text/html")

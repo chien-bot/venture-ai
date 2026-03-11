@@ -54,6 +54,7 @@ def run_agent(session_id: str, message: str, agent_type: str = "coach", project_
         "diagnosis": [],
         "final_reply": "",
         "triggered_rules": None,
+        "rubric_full": None,
         "hypergraph_context": None,
         "extracted_techs": None,
         "extracted_industry": None,
@@ -107,6 +108,7 @@ def _build_initial_state(session_id: str, message: str, project_id: str) -> dict
         "competition_output": None,
         "scores": None,
         "rubric_scores": None,
+        "rubric_full": None,
         "stage": None,
         "diagnosis": [],
         "final_reply": "",
@@ -149,7 +151,10 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
     hypergraph_ctx = state.get("hypergraph_context", "")
 
     # Phase 3: Build system prompt based on intent
-    if intent == "competition":
+    if intent == "grader":
+        from agents.nodes.grader import GRADER_SYSTEM_PROMPT
+        system = GRADER_SYSTEM_PROMPT
+    elif intent == "competition":
         system = COMPETITION_SYSTEM_PROMPT
         if hypergraph_ctx:
             system += f"\n\n[超图案例库参考]\n{hypergraph_ctx}"
@@ -199,9 +204,41 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
         full_text = "（Mock 模式暂无流式输出）"
     else:
         full_text = ""
+        buffer = ""
         for chunk in chat_completion_stream(system, state.get("messages", [])):
             full_text += chunk
-            yield f"data: {json.dumps({'type': 'token', 'content': chunk})}\n\n"
+            buffer += chunk
+            # Hold back buffer if it might be the start of a SCORES comment
+            while True:
+                start = buffer.find("<!--SCORES:")
+                if start == -1:
+                    # No SCORES comment starting, flush everything
+                    if buffer:
+                        yield f"data: {json.dumps({'type': 'token', 'content': buffer})}\n\n"
+                        buffer = ""
+                    break
+                elif start > 0:
+                    # Flush content before the potential SCORES comment
+                    yield f"data: {json.dumps({'type': 'token', 'content': buffer[:start]})}\n\n"
+                    buffer = buffer[start:]
+                    break
+                else:
+                    # buffer starts with <!--SCORES:, wait for closing -->
+                    end = buffer.find("-->")
+                    if end != -1:
+                        # Found complete SCORES comment, discard it
+                        buffer = buffer[end + 3:]
+                    else:
+                        # Incomplete comment, keep buffering
+                        break
+        # Flush any remaining buffer (strip any incomplete SCORES comment)
+        if buffer:
+            clean_buffer = re.sub(r"<!--SCORES:.*?-->", "", buffer)
+            # If buffer starts with <!--SCORES: but has no closing -->, drop it entirely
+            if not re.search(r"<!--SCORES:", clean_buffer):
+                pass
+            if clean_buffer:
+                yield f"data: {json.dumps({'type': 'token', 'content': clean_buffer})}\n\n"
 
     # Phase 6: Parse scores from accumulated text, run critic
     scores_match = re.search(r"<!--SCORES:(.*?)-->", full_text)
@@ -212,9 +249,20 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
         except json.JSONDecodeError:
             pass
 
+    # Parse full rubric from grader
+    rubric_full = None
+    rubric_full_match = re.search(r"<!--RUBRIC_FULL:\s*([\s\S]*?)-->", full_text)
+    if rubric_full_match:
+        try:
+            rubric_full = json.loads(rubric_full_match.group(1).strip())
+        except json.JSONDecodeError:
+            pass
+
     clean_reply = re.sub(r"<!--SCORES:.*?-->", "", full_text).strip()
     # Also clean rubric scores marker
     clean_reply = re.sub(r"<!--RUBRIC:.*?-->", "", clean_reply).strip()
+    # Clean full rubric marker
+    clean_reply = re.sub(r"<!--RUBRIC_FULL:[\s\S]*?-->", "", clean_reply).strip()
 
     new_scores = None
     stage = state.get("stage")
@@ -258,6 +306,10 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
         update_project_scores(project_id, new_scores, stage, diagnosis)
 
     # Phase 7: Send final metadata
+    if rubric_full:
+        rubric_scores_from_full = {k: v["score"] for k, v in rubric_full.items()}
+    else:
+        rubric_scores_from_full = None
     meta = {"type": "done", "intent": intent}
     if new_scores:
         meta["scores"] = new_scores
@@ -265,7 +317,19 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
         meta["stage"] = stage
     if diagnosis:
         meta["diagnosis"] = diagnosis
+    if rubric_full:
+        meta["rubric_full"] = rubric_full
+    if rubric_scores_from_full:
+        meta["rubric_scores"] = rubric_scores_from_full
     if triggered:
         meta["triggered_rules"] = triggered
+        # Structured fix tasks for frontend display
+        fix_tasks = [
+            {"rule_id": r["rule_id"], "severity": r["severity"], "fix_task": r["fix_task"]}
+            for r in triggered
+            if isinstance(r, dict) and r.get("fix_task") and r.get("severity") in ("high", "medium")
+        ]
+        if fix_tasks:
+            meta["fix_tasks"] = fix_tasks
 
     yield f"data: {json.dumps(meta)}\n\n"

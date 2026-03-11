@@ -17,6 +17,12 @@ COMPETITION_KEYWORDS = [
     "评估我的项目", "帮我打分", "参赛", "路演准备", "R1", "R2",
 ]
 
+GRADER_KEYWORDS = [
+    "批改", "形成性评价", "评价我的计划", "批改计划书", "给我打分",
+    "rubric评分", "全面评估", "评价一下", "综合评分", "帮我评分",
+    "评价报告", "改进建议", "修改意见", "帮我评价", "形成性",
+]
+
 CONFUSION_WORDS = [
     "不懂", "不理解", "什么意思", "不太明白", "不太懂",
     "不清楚", "搞不懂", "没搞懂", "不知道", "怎么理解",
@@ -28,11 +34,13 @@ ROUTER_SYSTEM_PROMPT = """你是一个意图分类器。根据用户最新消息
 - coach     → 用户在讨论项目想法、商业模式、团队、执行等创业话题，或者只是打招呼/闲聊
 - tutor     → 用户在询问某个创业/商业概念的定义或解释
 - competition → 用户要求对项目进行竞赛评分或 Rubric 评估
+- grader    → 用户要求对整个项目/计划书进行全面批改、形成性评价、生成改进建议报告
 - hybrid    → 用户同时涉及概念疑问 + 项目讨论（先解释概念再继续教练对话）
 
 重要规则：
 - 简单问候（你好、hi、hello、在吗）→ 一律输出 coach
 - 只有当消息中明确包含商业概念词（如PMF、LTV、CAC等）且同时在讨论项目时，才输出 hybrid
+- "批改"、"形成性评价"、"全面评估"、"改进建议" → grader
 - 如果不确定，默认输出 coach
 
 示例：
@@ -40,6 +48,7 @@ ROUTER_SYSTEM_PROMPT = """你是一个意图分类器。根据用户最新消息
 "我想做一个帮助老人的APP" → coach
 "PMF 是什么意思" → tutor
 "帮我评估一下我的竞赛准备情况" → competition
+"帮我批改一下我的计划书" → grader
 "我不太明白 LTV，但我觉得我的项目盈利模式..." → hybrid
 """
 
@@ -59,7 +68,11 @@ def _mock_route(message: str) -> tuple[str, str | None]:
     """Keyword-based routing for mock mode."""
     msg_upper = message.upper()
 
-    # Check competition keywords first
+    # Check grader keywords first
+    if any(kw in message for kw in GRADER_KEYWORDS):
+        return "grader", None
+
+    # Check competition keywords
     if any(kw.upper() in msg_upper for kw in COMPETITION_KEYWORDS):
         return "competition", None
 
@@ -92,7 +105,7 @@ def router_node(state: AgentState) -> AgentState:
         try:
             from config import MODEL_LIGHT
             intent = chat_completion(ROUTER_SYSTEM_PROMPT, classification_messages, model=MODEL_LIGHT).strip().lower()
-            if intent not in ("coach", "tutor", "competition", "hybrid"):
+            if intent not in ("coach", "tutor", "competition", "grader", "hybrid"):
                 intent = "coach"
         except Exception:
             intent = "coach"
