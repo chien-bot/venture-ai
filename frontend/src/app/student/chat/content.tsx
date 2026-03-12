@@ -189,7 +189,8 @@ export default function StudentChatPageContent() {
             const updated = [...prev];
             const last = updated[updated.length - 1];
             if (last && last.role === "assistant") {
-              updated[updated.length - 1] = { ...last, content: last.content + token };
+              const newContent = (last.content + token).replace(/<!--SCORES:[\s\S]*?-->/g, '');
+              updated[updated.length - 1] = { ...last, content: newContent };
             }
             return updated;
           });

@@ -234,10 +234,8 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
         # Flush any remaining buffer (strip any incomplete SCORES comment)
         if buffer:
             clean_buffer = re.sub(r"<!--SCORES:.*?-->", "", buffer)
-            # If buffer starts with <!--SCORES: but has no closing -->, drop it entirely
-            if not re.search(r"<!--SCORES:", clean_buffer):
-                pass
-            if clean_buffer:
+            # Only yield if clean_buffer has no remaining SCORES markers
+            if clean_buffer and not re.search(r"<!--SCORES:", clean_buffer):
                 yield f"data: {json.dumps({'type': 'token', 'content': clean_buffer})}\n\n"
 
     # Phase 6: Parse scores from accumulated text, run critic
@@ -281,7 +279,10 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
         coach_state = {**state, **coach_node(state)}
         coach_output = coach_state.get("coach_output", "")
         if coach_output:
-            yield f"data: {json.dumps({'type': 'token', 'content': '\\n\\n---\\n\\n### 回到你的项目\\n\\n'})}\n\n"
+            yield "data: " + json.dumps({
+    "type": "token",
+    "content": "\n\n---\n\n### 回到你的项目\n\n"
+}) + "\n\n"
             yield f"data: {json.dumps({'type': 'token', 'content': coach_output})}\n\n"
             concept = state.get("tutor_concept") or "概念"
             clean_reply = f"### 关于「{concept}」的解释\n\n{clean_reply}\n\n---\n\n### 回到你的项目\n\n{coach_output}"

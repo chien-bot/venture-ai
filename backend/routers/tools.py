@@ -612,12 +612,14 @@ def _current_week_range(week_start: str | None = None):
 def get_weekly_report(project_id: str, week_start: str = ""):
     """Generate or retrieve weekly report for a project."""
     ws, we = _current_week_range(week_start or None)
+    today_str = datetime.now().strftime("%Y-%m-%d")
 
-    # Check if report already exists
-    existing = get_weekly_reports(project_id)
-    for r in existing:
-        if r.get("week_start") == ws:
-            return r
+    # Only return cached report for past weeks (not current week)
+    if we < today_str:
+        existing = get_weekly_reports(project_id)
+        for r in existing:
+            if r.get("week_start") == ws:
+                return r
 
     # Generate new report from activity data
     activity = get_project_activity_in_range(project_id, ws, we)
@@ -636,7 +638,7 @@ def get_weekly_report(project_id: str, week_start: str = ""):
     }
 
     # Score changes
-    snapshots = activity.get("snapshots", [])
+    snapshots = activity.get("score_snapshots", [])
     if snapshots:
         first = snapshots[0].get("scores", {})
         last = snapshots[-1].get("scores", {})

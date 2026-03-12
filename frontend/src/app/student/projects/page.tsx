@@ -133,6 +133,36 @@ export default function ProjectsPage() {
   const [activeTab, setActiveTab]   = useState<TabId>("overview");
   const [showCreate, setShowCreate] = useState(false);
   const [form, setForm]             = useState({ name: "", industry: "", description: "" });
+  const [sidebarWidth, setSidebarWidth] = useState(256);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const isDragging = useRef(false);
+  const dragStartX = useRef(0);
+  const dragStartWidth = useRef(0);
+
+  const onDragStart = (e: React.MouseEvent) => {
+    isDragging.current = true;
+    dragStartX.current = e.clientX;
+    dragStartWidth.current = sidebarWidth;
+    document.body.style.cursor = "col-resize";
+    document.body.style.userSelect = "none";
+  };
+
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      if (!isDragging.current) return;
+      const delta = e.clientX - dragStartX.current;
+      const newWidth = Math.max(160, Math.min(400, dragStartWidth.current + delta));
+      setSidebarWidth(newWidth);
+    };
+    const onUp = () => {
+      isDragging.current = false;
+      document.body.style.cursor = "";
+      document.body.style.userSelect = "";
+    };
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+    return () => { window.removeEventListener("mousemove", onMove); window.removeEventListener("mouseup", onUp); };
+  }, []);
 
   // Tab data
   const [timeline, setTimeline]     = useState<any>(null);
@@ -187,8 +217,14 @@ export default function ProjectsPage() {
     <div className="flex h-full" style={{ background: "var(--bg-base)" }}>
 
       {/* ── Left: project list ─────────────────────────────── */}
-      <div className="w-64 flex-shrink-0 flex flex-col overflow-hidden"
-           style={{ borderRight: "1px solid var(--border)", background: "rgba(8,13,26,0.8)" }}>
+      <div className="flex-shrink-0 flex flex-col overflow-hidden transition-all"
+           style={{
+             width: sidebarCollapsed ? 0 : sidebarWidth,
+             minWidth: sidebarCollapsed ? 0 : 160,
+             borderRight: sidebarCollapsed ? "none" : "1px solid var(--border)",
+             background: "rgba(8,13,26,0.8)",
+             overflow: "hidden",
+           }}>
         <div className="px-4 py-3 flex items-center justify-between flex-shrink-0"
              style={{ borderBottom: "1px solid var(--border)" }}>
           <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>我的项目</p>
@@ -255,6 +291,32 @@ export default function ProjectsPage() {
               </button>
             );
           })}
+        </div>
+      </div>
+
+      {/* ── Drag handle + collapse button ─────────────────── */}
+      <div
+        style={{ width: 4, flexShrink: 0, cursor: "col-resize", background: "transparent", position: "relative" }}
+        onMouseDown={sidebarCollapsed ? undefined : onDragStart}
+      >
+        <div style={{
+          position: "absolute", top: "50%", left: "50%",
+          transform: "translate(-50%, -50%)",
+          zIndex: 10,
+        }}>
+          <button
+            onClick={() => setSidebarCollapsed(c => !c)}
+            style={{
+              width: 16, height: 32, borderRadius: 8,
+              background: "rgba(255,255,255,0.08)",
+              border: "1px solid var(--border)",
+              color: "var(--text-muted)",
+              cursor: "pointer", fontSize: 10, display: "flex",
+              alignItems: "center", justifyContent: "center",
+            }}
+          >
+            {sidebarCollapsed ? "›" : "‹"}
+          </button>
         </div>
       </div>
 

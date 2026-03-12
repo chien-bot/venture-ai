@@ -43,17 +43,17 @@ export default function WeeklyReport({ projectId }: Props) {
       {/* Stats */}
       <div className="flex gap-4">
         <div className="flex-1 p-3 rounded-lg text-center" style={{ background: "rgba(255,255,255,0.03)" }}>
-          <p className="text-lg font-bold" style={{ color: "#6366f1" }}>{report.stats.sessions}</p>
+          <p className="text-lg font-bold" style={{ color: "#6366f1" }}>{report.stats?.sessions ?? 0}</p>
           <p className="text-xs" style={{ color: "var(--text-muted)" }}>对话次数</p>
         </div>
         <div className="flex-1 p-3 rounded-lg text-center" style={{ background: "rgba(255,255,255,0.03)" }}>
-          <p className="text-lg font-bold" style={{ color: "#22d3ee" }}>{report.stats.messages}</p>
+          <p className="text-lg font-bold" style={{ color: "#22d3ee" }}>{report.stats?.messages ?? 0}</p>
           <p className="text-xs" style={{ color: "var(--text-muted)" }}>消息条数</p>
         </div>
       </div>
 
       {/* Highlights */}
-      {report.highlights.length > 0 && (
+      {(report.highlights?.length ?? 0) > 0 && (
         <div>
           <p className="text-xs font-medium mb-2" style={{ color: "var(--text-muted)" }}>亮点</p>
           <div className="space-y-1.5">
@@ -68,7 +68,7 @@ export default function WeeklyReport({ projectId }: Props) {
       )}
 
       {/* Score changes */}
-      {Object.keys(report.score_changes).length > 0 && (
+      {Object.keys(report.score_changes ?? {}).length > 0 && (
         <div>
           <p className="text-xs font-medium mb-2" style={{ color: "var(--text-muted)" }}>分数变化</p>
           <div className="space-y-1.5">
@@ -85,7 +85,7 @@ export default function WeeklyReport({ projectId }: Props) {
       )}
 
       {/* Action items */}
-      {report.action_items.length > 0 && (
+      {(report.action_items?.length ?? 0) > 0 && (
         <div>
           <p className="text-xs font-medium mb-2" style={{ color: "var(--text-muted)" }}>待办事项</p>
           <div className="space-y-1.5">

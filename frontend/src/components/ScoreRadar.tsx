@@ -34,7 +34,7 @@ export default function ScoreRadar({ scores }: { scores: Scores | null }) {
 
   return (
     <div className="flex flex-col items-center">
-      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+      <svg width={size} height={size} viewBox={`-12 -12 ${size + 24} ${size + 24}`}>
         <defs>
           <radialGradient id="radarFill" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stopColor="#6366f1" stopOpacity="0.3" />

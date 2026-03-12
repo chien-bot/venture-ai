@@ -30,6 +30,8 @@ export default function PeerReviewPage() {
   const [comments, setComments] = useState<Record<string, string>>({});
   const [overallComment, setOverallComment] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [claiming, setClaiming] = useState<string | null>(null);
+  const [claimed, setClaimed] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     const stored = sessionStorage.getItem("user");
@@ -61,11 +63,14 @@ export default function PeerReviewPage() {
   };
 
   const handleClaim = async (projectId: string) => {
-    if (!user) return;
+    if (!user || claiming) return;
+    setClaiming(projectId);
     try {
       await assignReview(user.user_id, projectId);
+      setClaimed(prev => new Set(prev).add(projectId));
       loadData(user.user_id);
     } catch { /* ignore */ }
+    setClaiming(null);
   };
 
   const startReview = (a: ReviewAssignment) => {
@@ -126,50 +131,77 @@ export default function PeerReviewPage() {
         </div>
 
         {/* Review Form Modal */}
-        {reviewingAssignment && (
-          <div className="glass-card p-6 rounded-xl space-y-4" style={{ border: "1px solid rgba(99,102,241,0.3)" }}>
-            <h3 className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
-              评审项目: {reviewingAssignment.project_name || reviewingAssignment.project_id}
-            </h3>
-            <p className="text-xs" style={{ color: "var(--text-muted)" }}>请对以下5个维度进行1-10分评分并给出建议</p>
-
-            {DIMS.map(d => (
-              <div key={d} className="space-y-1">
-                <label className="text-sm font-medium" style={{ color: "var(--text-secondary)" }}>
-                  {DIM_LABELS[d]}
-                </label>
-                <div className="flex gap-3 items-center">
-                  <input type="range" min={1} max={10} value={scores[d] || 5}
-                    onChange={e => setScores({ ...scores, [d]: Number(e.target.value) })}
-                    className="flex-1" />
-                  <span className="text-sm w-6 text-right" style={{ color: "#a5b4fc" }}>{scores[d] || 5}</span>
+        {reviewingAssignment && tab === "assignments" && (
+          <div style={{
+            position: "fixed", inset: 0, zIndex: 50,
+            background: "rgba(0,0,0,0.6)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+          }}>
+            <div style={{
+              width: "100%", maxWidth: 560, maxHeight: "85vh",
+              display: "flex", flexDirection: "column",
+              background: "var(--bg-card, #0f172a)",
+              border: "1px solid rgba(99,102,241,0.3)",
+              borderRadius: 16, overflow: "hidden",
+            }}>
+              {/* Header */}
+              <div style={{ padding: "16px 20px", borderBottom: "1px solid var(--border)", flexShrink: 0, display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
+                <div>
+                  <h3 className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
+                    评审项目: {reviewingAssignment.project_name || reviewingAssignment.project_id}
+                  </h3>
+                  <p className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>请对以下5个维度进行1-10分评分并给出建议</p>
                 </div>
-                <input value={comments[d] || ""} placeholder="简短建议..."
-                  onChange={e => setComments({ ...comments, [d]: e.target.value })}
-                  className="w-full text-sm px-3 py-1.5 rounded-lg"
-                  style={{ background: "rgba(255,255,255,0.05)", border: "1px solid var(--border)",
-                    color: "var(--text-primary)", outline: "none" }} />
+                <button onClick={() => setReviewingAssignment(null)}
+                  style={{ color: "var(--text-muted)", fontSize: 18, lineHeight: 1, background: "none", border: "none", cursor: "pointer", marginLeft: 12 }}>
+                  ✕
+                </button>
               </div>
-            ))}
 
-            <div>
-              <label className="text-sm font-medium" style={{ color: "var(--text-secondary)" }}>总体评价</label>
-              <textarea value={overallComment} onChange={e => setOverallComment(e.target.value)}
-                rows={3} placeholder="写下你的总体评价..."
-                className="w-full text-sm px-3 py-2 rounded-lg mt-1"
-                style={{ background: "rgba(255,255,255,0.05)", border: "1px solid var(--border)",
-                  color: "var(--text-primary)", outline: "none", resize: "none" }} />
-            </div>
+              {/* Scrollable body */}
+              <div style={{ flex: 1, overflowY: "auto", padding: "16px 20px" }} className="space-y-4">
+                {DIMS.map(d => (
+                  <div key={d} className="space-y-1">
+                    <label className="text-sm font-medium" style={{ color: "var(--text-secondary)" }}>
+                      {DIM_LABELS[d]}
+                    </label>
+                    <div className="flex gap-3 items-center">
+                      <input type="range" min={1} max={10} value={scores[d] || 5}
+                        onChange={e => setScores({ ...scores, [d]: Number(e.target.value) })}
+                        className="flex-1" />
+                      <span className="text-sm w-6 text-right" style={{ color: "#a5b4fc" }}>{scores[d] || 5}</span>
+                    </div>
+                    <input value={comments[d] || ""} placeholder="简短建议..."
+                      onChange={e => setComments({ ...comments, [d]: e.target.value })}
+                      className="w-full text-sm px-3 py-1.5 rounded-lg"
+                      style={{ background: "rgba(255,255,255,0.05)", border: "1px solid var(--border)",
+                        color: "var(--text-primary)", outline: "none" }} />
+                  </div>
+                ))}
+                <div>
+                  <label className="text-sm font-medium" style={{ color: "var(--text-secondary)" }}>总体评价</label>
+                  <textarea value={overallComment} onChange={e => setOverallComment(e.target.value)}
+                    rows={3} placeholder="写下你的总体评价..."
+                    className="w-full text-sm px-3 py-2 rounded-lg mt-1"
+                    style={{ background: "rgba(255,255,255,0.05)", border: "1px solid var(--border)",
+                      color: "var(--text-primary)", outline: "none", resize: "none" }} />
+                </div>
+              </div>
 
-            <div className="flex gap-2 justify-end">
-              <button onClick={() => setReviewingAssignment(null)}
-                className="px-4 py-2 rounded-lg text-sm"
-                style={{ color: "var(--text-muted)" }}>取消</button>
-              <button onClick={handleSubmitReview} disabled={submitting}
-                className="px-4 py-2 rounded-lg text-sm font-medium"
-                style={{ background: "#6366f1", color: "white", opacity: submitting ? 0.5 : 1 }}>
-                提交评审
-              </button>
+              {/* Fixed footer */}
+              <div className="flex gap-2 justify-end" style={{
+                padding: "12px 20px", borderTop: "1px solid var(--border)", flexShrink: 0,
+                background: "var(--bg-card, #0f172a)",
+              }}>
+                <button onClick={() => setReviewingAssignment(null)}
+                  className="px-4 py-2 rounded-lg text-sm"
+                  style={{ color: "var(--text-muted)" }}>取消</button>
+                <button onClick={handleSubmitReview} disabled={submitting}
+                  className="px-4 py-2 rounded-lg text-sm font-medium"
+                  style={{ background: "#6366f1", color: "white", opacity: submitting ? 0.5 : 1 }}>
+                  {submitting ? "提交中..." : "提交评审"}
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -276,9 +308,15 @@ export default function PeerReviewPage() {
                   </p>
                 </div>
                 <button onClick={() => handleClaim(p.project_id)}
-                  className="px-3 py-1.5 rounded-lg text-sm font-medium"
-                  style={{ background: "rgba(99,102,241,0.15)", color: "#a5b4fc" }}>
-                  领取评审
+                  disabled={!!claiming || claimed.has(p.project_id)}
+                  className="px-3 py-1.5 rounded-lg text-sm font-medium transition-all"
+                  style={{
+                    background: claimed.has(p.project_id) ? "rgba(16,185,129,0.15)" : claiming === p.project_id ? "rgba(99,102,241,0.08)" : "rgba(99,102,241,0.15)",
+                    color: claimed.has(p.project_id) ? "#6ee7b7" : "#a5b4fc",
+                    opacity: claiming && claiming !== p.project_id ? 0.5 : 1,
+                    cursor: claimed.has(p.project_id) ? "default" : "pointer",
+                  }}>
+                  {claimed.has(p.project_id) ? "✓ 已领取" : claiming === p.project_id ? "领取中..." : "领取评审"}
                 </button>
               </div>
             ))}

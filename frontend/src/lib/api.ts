@@ -106,7 +106,9 @@ export async function sendMessageStream(
       try {
         const data = JSON.parse(jsonStr);
         if (data.type === "token") {
-          onToken(data.content);
+          const clean = data.content.replace(/<!--SCORES:[\s\S]*?-->/g, '');
+          if (!clean) continue;
+          onToken(clean);
         } else if (data.type === "meta") {
           onMeta(data);
         } else if (data.type === "done") {

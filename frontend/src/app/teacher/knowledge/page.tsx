@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { getKnowledgeCoverage } from "@/lib/api";
+import { getKnowledgeCoverage, getTeacherProjects } from "@/lib/api";
 
 interface KnowledgeCoverage {
   total_concepts: number;
@@ -16,11 +16,20 @@ interface KnowledgeCoverage {
 export default function KnowledgeCoveragePage() {
   const [data, setData] = useState<KnowledgeCoverage | null>(null);
   const [loading, setLoading] = useState(true);
+  const [projectNames, setProjectNames] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    getKnowledgeCoverage()
-      .then(setData)
-      .catch(() => setData(null))
+    Promise.all([
+      getKnowledgeCoverage(),
+      getTeacherProjects().catch(() => ({ projects: [] })),
+    ]).then(([coverage, projRes]) => {
+      setData(coverage);
+      const nameMap: Record<string, string> = {};
+      for (const p of (projRes.projects || [])) {
+        nameMap[p.project_id] = p.name;
+      }
+      setProjectNames(nameMap);
+    }).catch(() => setData(null))
       .finally(() => setLoading(false));
   }, []);
 
@@ -167,7 +176,7 @@ export default function KnowledgeCoveragePage() {
                    style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)" }}>
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs font-medium" style={{ color: "var(--text-secondary)" }}>
-                    项目 {proj.project_id.slice(-8)}
+                    {projectNames[proj.project_id] || `项目 ${proj.project_id.slice(-8)}`}
                   </span>
                   <span className="text-xs font-bold"
                         style={{ color: proj.coverage_rate >= 50 ? "#6ee7b7" : "#fcd34d" }}>
