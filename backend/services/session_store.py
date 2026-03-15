@@ -58,8 +58,8 @@ def append_chat(session_id: str, role: str, content: str):
     _db_append_chat(session_id, role, content)
 
 
-def create_session(session_id: str, project_id: str = "", agent_type: str = "coach"):
-    _db_create_session(session_id, project_id, agent_type)
+def create_session(session_id: str, project_id: str = "", agent_type: str = "coach", owner_id: str = ""):
+    _db_create_session(session_id, project_id, agent_type, owner_id)
 
 
 def get_latest_session_for_project(project_id: str) -> dict | None:

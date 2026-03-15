@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from models.schemas import ChatRequest, ChatResponse
@@ -21,9 +21,14 @@ router = APIRouter(prefix="/api/chat", tags=["chat"])
 
 
 @router.post("/start")
-def start_chat(agent_type: str = "auto", project_id: str = ""):
+def start_chat(request: Request, agent_type: str = "auto", project_id: str = ""):
+    from services.database import get_user_by_token
+    auth = request.headers.get("Authorization", "")
+    user = get_user_by_token(auth[7:]) if auth.startswith("Bearer ") else None
+    owner_id = user["user_id"] if user else ""
+
     session_id = str(uuid.uuid4())
-    create_session(session_id, project_id, agent_type)
+    create_session(session_id, project_id, agent_type, owner_id)
     greeting = get_greeting(agent_type)
     append_chat(session_id, "assistant", greeting)
 
@@ -244,6 +249,34 @@ def submit_rating(req: RatingRequest):
 @router.get("/rating/{session_id}")
 def get_rating(session_id: str):
     return get_rating_for_session(session_id) or {}
+
+
+# ── Student Session History ───────────────────────────────────────────
+
+@router.get("/my-sessions")
+def get_my_sessions(request: Request):
+    """Return all coaching sessions for the current student."""
+    from services.database import get_sessions_for_user, get_user_by_token
+    auth = request.headers.get("Authorization", "")
+    user = get_user_by_token(auth[7:]) if auth.startswith("Bearer ") else None
+    if not user:
+        raise HTTPException(status_code=401, detail="未登录")
+    sessions = get_sessions_for_user(user["user_id"])
+    return {"sessions": sessions}
+
+
+@router.delete("/session/{session_id}")
+def delete_session_endpoint(session_id: str, request: Request):
+    """Delete a session (owner only)."""
+    from services.database import delete_session, get_user_by_token
+    auth = request.headers.get("Authorization", "")
+    user = get_user_by_token(auth[7:]) if auth.startswith("Bearer ") else None
+    if not user:
+        raise HTTPException(status_code=401, detail="未登录")
+    ok = delete_session(session_id, user["user_id"])
+    if not ok:
+        raise HTTPException(status_code=404, detail="对话不存在或无权限删除")
+    return {"ok": True}
 
 
 # ── Session Memory (F1-adv) ──────────────────────────────────────────

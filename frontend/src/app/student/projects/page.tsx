@@ -131,6 +131,7 @@ export default function ProjectsPage() {
   const [projects, setProjects]     = useState<Project[]>([]);
   const [selected, setSelected]     = useState<Project | null>(null);
   const [activeTab, setActiveTab]   = useState<TabId>("overview");
+  const [reportKey, setReportKey]   = useState(0);
   const [showCreate, setShowCreate] = useState(false);
   const [form, setForm]             = useState({ name: "", industry: "", description: "" });
   const [sidebarWidth, setSidebarWidth] = useState(256);
@@ -353,15 +354,16 @@ export default function ProjectsPage() {
             </div>
 
             {/* Tabs */}
-            <div className="flex gap-0 flex-shrink-0 px-4 pt-3"
+            <div className="flex flex-wrap gap-2 px-4 py-3 flex-shrink-0"
                  style={{ borderBottom: "1px solid var(--border)" }}>
               {TABS.map((tab) => (
-                <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-                        className="flex items-center gap-1.5 px-4 py-2 text-xs font-medium transition-all relative"
+                <button key={tab.id} onClick={() => { setActiveTab(tab.id); if (tab.id === "report") setReportKey(k => k + 1); }}
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all"
                         style={{
+                          background: activeTab === tab.id ? "rgba(99,102,241,0.15)" : "rgba(255,255,255,0.04)",
+                          border: `1px solid ${activeTab === tab.id ? "rgba(99,102,241,0.4)" : "var(--border)"}`,
                           color: activeTab === tab.id ? "#a5b4fc" : "var(--text-muted)",
-                          borderBottom: activeTab === tab.id ? "2px solid #6366f1" : "2px solid transparent",
-                          marginBottom: -1,
+                          boxShadow: activeTab === tab.id ? "0 0 12px rgba(99,102,241,0.15)" : "none",
                         }}>
                   <span>{tab.icon}</span>{tab.label}
                 </button>
@@ -373,49 +375,51 @@ export default function ProjectsPage() {
 
               {/* ── OVERVIEW ── */}
               {activeTab === "overview" && (
-                <div className="space-y-5 animate-fadeInUp">
+                <div className="space-y-6 animate-fadeInUp">
                   {/* F6: Auto Diagnosis Summary Banner */}
                   {(() => {
                     const summary = generateDiagnosisSummary(selected, timeline);
                     const isGood = summary.includes("良好");
                     return (
-                      <div className="rounded-xl px-4 py-3 flex items-start gap-3"
+                      <div className="rounded-xl px-5 py-4 flex items-start gap-3"
                            style={{
                              background: isGood ? "rgba(16,185,129,0.06)" : "rgba(99,102,241,0.08)",
                              border: `1px solid ${isGood ? "rgba(16,185,129,0.2)" : "rgba(99,102,241,0.25)"}`,
                            }}>
-                        <span style={{ fontSize: "1rem" }}>{isGood ? "✅" : "💡"}</span>
+                        <span style={{ fontSize: "1.1rem" }}>{isGood ? "✅" : "💡"}</span>
                         <div>
-                          <p className="text-xs font-medium mb-0.5" style={{ color: isGood ? "#6ee7b7" : "#a5b4fc" }}>AI 诊断摘要</p>
-                          <p className="text-xs" style={{ color: "var(--text-secondary)" }}>{summary}</p>
+                          <p className="text-xs font-semibold mb-1" style={{ color: isGood ? "#6ee7b7" : "#a5b4fc" }}>AI 诊断摘要</p>
+                          <p className="text-sm" style={{ color: "var(--text-secondary)" }}>{summary}</p>
                         </div>
                       </div>
                     );
                   })()}
                   {selected.scores && Object.values(selected.scores).some(v => v > 0) ? (
-                    <>
-                      <div className="rounded-2xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)" }}>
+                    <div className="grid grid-cols-2 gap-5">
+                      <div className="rounded-2xl p-6" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)" }}>
                         <p className="text-xs font-semibold mb-4" style={{ color: "var(--text-muted)" }}>能力评估雷达图</p>
                         <ScoreRadar scores={selected.scores} />
                       </div>
-                      <div className="rounded-2xl p-5 space-y-3" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)" }}>
-                        <p className="text-xs font-semibold mb-3" style={{ color: "var(--text-muted)" }}>各维度得分</p>
+                      <div className="rounded-2xl p-6" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)" }}>
+                        <p className="text-xs font-semibold mb-4" style={{ color: "var(--text-muted)" }}>各维度得分</p>
+                        <div className="space-y-4">
                         {DIMS.map((d) => {
                           const v = (selected.scores as any)?.[d] || 0;
                           return (
                             <div key={d}>
-                              <div className="flex justify-between mb-1">
+                              <div className="flex justify-between mb-1.5">
                                 <span className="text-xs" style={{ color: "var(--text-secondary)" }}>{DIM_LABELS[d]}</span>
-                                <span className="text-xs font-bold" style={{ color: scoreColor(v) }}>{v}</span>
+                                <span className="text-xs font-bold" style={{ color: scoreColor(v) }}>{v} / 10</span>
                               </div>
-                              <div className="h-1.5 rounded-full" style={{ background: "rgba(255,255,255,0.06)" }}>
-                                <div className="h-1.5 rounded-full" style={{ width: `${v * 10}%`, background: scoreGrad(v) }} />
+                              <div className="h-2 rounded-full" style={{ background: "rgba(255,255,255,0.06)" }}>
+                                <div className="h-2 rounded-full" style={{ width: `${v * 10}%`, background: scoreGrad(v) }} />
                               </div>
                             </div>
                           );
                         })}
+                        </div>
                       </div>
-                    </>
+                    </div>
                   ) : (
                     <div className="text-center py-12 rounded-2xl" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)" }}>
                       <div className="text-4xl mb-3 opacity-30">💬</div>
@@ -425,11 +429,11 @@ export default function ProjectsPage() {
                   )}
 
                   {selected.diagnosis?.length > 0 && (
-                    <div className="rounded-2xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)" }}>
-                      <p className="text-xs font-semibold mb-3" style={{ color: "var(--text-muted)" }}>诊断发现</p>
-                      <div className="space-y-2">
+                    <div className="rounded-2xl p-6" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)" }}>
+                      <p className="text-xs font-semibold mb-4" style={{ color: "var(--text-muted)" }}>诊断发现</p>
+                      <div className="space-y-2.5">
                         {selected.diagnosis.map((d, i) => (
-                          <div key={i} className="flex gap-2 px-3 py-2 rounded-xl text-xs"
+                          <div key={i} className="flex gap-3 px-4 py-3 rounded-xl text-sm"
                                style={{ background: "rgba(245,158,11,0.06)", border: "1px solid rgba(245,158,11,0.2)" }}>
                             <span style={{ color: "#fcd34d" }}>⚠</span>
                             <span style={{ color: "var(--text-secondary)" }}>{d}</span>
@@ -443,8 +447,8 @@ export default function ProjectsPage() {
 
               {/* ── TIMELINE ── */}
               {activeTab === "timeline" && (
-                <div className="space-y-5 animate-fadeInUp">
-                  <div className="rounded-2xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)" }}>
+                <div className="space-y-6 animate-fadeInUp">
+                  <div className="rounded-2xl p-6" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)" }}>
                     <div className="flex items-center justify-between mb-4">
                       <p className="text-xs font-semibold" style={{ color: "var(--text-muted)" }}>成长时间线</p>
                       {timeline && <span className="badge badge-blue text-xs">{timeline.total_rounds} 轮对话记录</span>}
@@ -522,8 +526,8 @@ export default function ProjectsPage() {
 
               {/* ── BENCHMARK ── */}
               {activeTab === "benchmark" && (
-                <div className="space-y-5 animate-fadeInUp">
-                  <div className="rounded-2xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)" }}>
+                <div className="space-y-6 animate-fadeInUp">
+                  <div className="rounded-2xl p-6" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)" }}>
                     <div className="flex items-center justify-between mb-4">
                       <p className="text-xs font-semibold" style={{ color: "var(--text-muted)" }}>班级匿名对标</p>
                       {benchmark && <span className="badge badge-purple text-xs">{benchmark.class_size} 个项目参与对标</span>}
@@ -592,7 +596,7 @@ export default function ProjectsPage() {
 
                   {/* ── 超图竞赛案例对标 ── */}
                   {benchmark && (benchmark.hypergraph?.similar_cases?.length > 0 || benchmark.hypergraph?.risk_patterns?.length > 0) && (
-                    <div className="rounded-2xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)" }}>
+                    <div className="rounded-2xl p-6" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)" }}>
                       <p className="text-xs font-semibold mb-4" style={{ color: "var(--text-muted)" }}>
                         超图竞赛案例对标（82个真实竞赛项目）
                       </p>
@@ -647,7 +651,7 @@ export default function ProjectsPage() {
 
                   {/* ── AI 对标洞察 ── */}
                   {benchmark?.ai_insight && Object.keys(benchmark.ai_insight).length > 0 && (
-                    <div className="rounded-2xl p-5" style={{ background: "rgba(99,102,241,0.05)", border: "1px solid rgba(99,102,241,0.2)" }}>
+                    <div className="rounded-2xl p-6" style={{ background: "rgba(99,102,241,0.05)", border: "1px solid rgba(99,102,241,0.2)" }}>
                       <p className="text-xs font-semibold mb-3" style={{ color: "#a5b4fc" }}>AI 对标洞察</p>
                       {benchmark.ai_insight.summary && (
                         <p className="text-sm mb-4" style={{ color: "var(--text-primary)" }}>{benchmark.ai_insight.summary}</p>
@@ -683,8 +687,8 @@ export default function ProjectsPage() {
 
               {/* ── PITCH CHECK ── */}
               {activeTab === "pitch" && (
-                <div className="space-y-5 animate-fadeInUp">
-                  <div className="rounded-2xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)" }}>
+                <div className="space-y-6 animate-fadeInUp">
+                  <div className="rounded-2xl p-6" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)" }}>
                     <p className="text-xs font-semibold mb-1" style={{ color: "var(--text-muted)" }}>Pitch Deck 结构检查器</p>
                     <p className="text-xs mb-4" style={{ color: "var(--text-muted)" }}>
                       粘贴你的路演大纲（标题 + 要点），AI 自动检测 7 大模块是否完整
@@ -707,7 +711,7 @@ export default function ProjectsPage() {
                   </div>
 
                   {pitchResult && (
-                    <div className="rounded-2xl p-5 animate-fadeInUp" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)" }}>
+                    <div className="rounded-2xl p-6 animate-fadeInUp" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)" }}>
                       {/* Summary */}
                       <div className="flex items-center gap-4 mb-5 p-4 rounded-xl"
                            style={{ background: "rgba(99,102,241,0.06)", border: "1px solid rgba(99,102,241,0.2)" }}>
@@ -787,8 +791,8 @@ export default function ProjectsPage() {
 
               {/* ── INTERVIEW ANALYZE ── */}
               {activeTab === "interview" && (
-                <div className="space-y-5 animate-fadeInUp">
-                  <div className="rounded-2xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)" }}>
+                <div className="space-y-6 animate-fadeInUp">
+                  <div className="rounded-2xl p-6" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)" }}>
                     <p className="text-xs font-semibold mb-1" style={{ color: "var(--text-muted)" }}>用户访谈报告解析器</p>
                     <p className="text-xs mb-4" style={{ color: "var(--text-muted)" }}>
                       粘贴访谈对话记录，AI 自动提取 JTBD、痛点、支付意愿，生成 R1/R2 证据
@@ -915,8 +919,8 @@ export default function ProjectsPage() {
 
               {/* ── EVIDENCE DASHBOARD (F4) ── */}
               {activeTab === "evidence" && (
-                <div className="space-y-5 animate-fadeInUp">
-                  <div className="rounded-2xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)" }}>
+                <div className="space-y-6 animate-fadeInUp">
+                  <div className="rounded-2xl p-6" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)" }}>
                     <div className="flex items-center justify-between mb-4">
                       <p className="text-xs font-semibold" style={{ color: "var(--text-muted)" }}>证据追踪仪表盘</p>
                       {evidence && evidence.total > 0 && (
@@ -1033,7 +1037,7 @@ export default function ProjectsPage() {
 
                   {/* ── 超图 Rubric 节点覆盖图 ── */}
                   {evidence && evidence.hypergraph_nodes?.length > 0 && (
-                    <div className="rounded-2xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)" }}>
+                    <div className="rounded-2xl p-6" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)" }}>
                       <p className="text-xs font-semibold mb-3" style={{ color: "var(--text-muted)" }}>超图知识节点覆盖</p>
                       <div className="grid grid-cols-3 gap-2">
                         {evidence.hypergraph_nodes.map((node: any) => {
@@ -1067,7 +1071,7 @@ export default function ProjectsPage() {
 
                   {/* ── AI 证据质量分析 ── */}
                   {evidence?.ai_analysis && (
-                    <div className="rounded-2xl p-5" style={{ background: "rgba(99,102,241,0.05)", border: "1px solid rgba(99,102,241,0.2)" }}>
+                    <div className="rounded-2xl p-6" style={{ background: "rgba(99,102,241,0.05)", border: "1px solid rgba(99,102,241,0.2)" }}>
                       <div className="flex items-center justify-between mb-3">
                         <p className="text-xs font-semibold" style={{ color: "#a5b4fc" }}>AI 证据质量分析</p>
                         <div className="flex items-center gap-2">
@@ -1140,7 +1144,7 @@ export default function ProjectsPage() {
               {/* F2-adv: Weekly Report tab */}
               {activeTab === "report" && selected && (
                 <div className="animate-fadeInUp">
-                  <WeeklyReport projectId={selected.project_id} />
+                  <WeeklyReport key={reportKey} projectId={selected.project_id} />
                 </div>
               )}
 

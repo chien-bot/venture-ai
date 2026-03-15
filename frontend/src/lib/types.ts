@@ -122,5 +122,5 @@ export interface WeeklyReport {
   highlights: string[];
   score_changes: Record<string, { from: number; to: number; delta: number }>;
   action_items: string[];
-  stats: { sessions: number; messages: number };
+  stats: { total_sessions: number; sessions: number; messages: number };
 }

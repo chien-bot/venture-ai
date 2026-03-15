@@ -260,6 +260,16 @@ export async function getLatestSession(projectId: string) {
   return request(`/api/chat/latest-session/${projectId}`);
 }
 
+// Student chat history
+export async function getMySessions() {
+  return request(`/api/chat/my-sessions`);
+}
+
+export async function deleteSession(sessionId: string) {
+  return request(`/api/chat/session/${sessionId}`, { method: "DELETE" });
+}
+
+
 // File Upload
 export async function uploadFile(file: File, projectId: string, sessionId: string) {
   const token = typeof window !== "undefined" ? sessionStorage.getItem("token") : null;

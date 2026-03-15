@@ -52,6 +52,7 @@ def init_db():
                 session_id  TEXT PRIMARY KEY,
                 project_id  TEXT,
                 agent_type  TEXT,
+                owner_id    TEXT,
                 created_at  TEXT DEFAULT (datetime('now'))
             );
 
@@ -180,6 +181,12 @@ def init_db():
         # Add competition_date column if not exists (safe migration)
         try:
             conn.execute("ALTER TABLE projects ADD COLUMN competition_date TEXT")
+        except Exception:
+            pass  # column already exists
+
+        # Add owner_id to chat_sessions if not exists (safe migration)
+        try:
+            conn.execute("ALTER TABLE chat_sessions ADD COLUMN owner_id TEXT")
         except Exception:
             pass  # column already exists
 
@@ -328,11 +335,11 @@ def _hydrate_project(row: dict) -> dict:
 
 # ── Chat Sessions ──────────────────────────────────────────────────
 
-def create_session(session_id: str, project_id: str = "", agent_type: str = "coach"):
+def create_session(session_id: str, project_id: str = "", agent_type: str = "coach", owner_id: str = ""):
     with get_conn() as conn:
         conn.execute(
-            "INSERT OR IGNORE INTO chat_sessions (session_id, project_id, agent_type) VALUES (?,?,?)",
-            (session_id, project_id, agent_type)
+            "INSERT OR IGNORE INTO chat_sessions (session_id, project_id, agent_type, owner_id) VALUES (?,?,?,?)",
+            (session_id, project_id, agent_type, owner_id)
         )
 
 
@@ -385,10 +392,10 @@ def get_sessions_for_project(project_id: str) -> list[dict]:
 
 
 def get_latest_session_for_project(project_id: str) -> dict | None:
-    """Return the most recent chat session for a project, with its messages."""
+    """Return the most recent coach/auto chat session for a project, with its messages."""
     with get_conn() as conn:
         row = conn.execute(
-            "SELECT session_id, agent_type, created_at FROM chat_sessions WHERE project_id=? ORDER BY created_at DESC LIMIT 1",
+            "SELECT session_id, agent_type, created_at FROM chat_sessions WHERE project_id=? AND agent_type != 'defense' ORDER BY created_at DESC LIMIT 1",
             (project_id,)
         ).fetchone()
         if not row:
@@ -398,18 +405,50 @@ def get_latest_session_for_project(project_id: str) -> dict | None:
         return session
 
 
+def delete_session(session_id: str, owner_id: str) -> bool:
+    """Delete a session and its messages. Only owner can delete (legacy sessions with no owner are allowed)."""
+    with get_conn() as conn:
+        row = conn.execute(
+            "SELECT owner_id FROM chat_sessions WHERE session_id=?", (session_id,)
+        ).fetchone()
+        if not row:
+            return False
+        if row["owner_id"] and row["owner_id"] != owner_id:
+            return False
+        conn.execute("DELETE FROM chat_messages WHERE session_id=?", (session_id,))
+        conn.execute("DELETE FROM chat_sessions WHERE session_id=?", (session_id,))
+        return True
+
+
 def get_sessions_for_user(owner_id: str) -> list[dict]:
-    """Return all sessions for projects owned by a user."""
+    """Return all non-defense sessions for a user (including sessions without a project)."""
     with get_conn() as conn:
         rows = conn.execute(
-            """SELECT cs.session_id, cs.project_id, cs.agent_type, cs.created_at, p.name as project_name
+            """SELECT cs.session_id, cs.project_id, cs.agent_type, cs.created_at,
+                      p.name as project_name
                FROM chat_sessions cs
-               JOIN projects p ON cs.project_id = p.project_id
-               WHERE p.owner_id = ?
+               LEFT JOIN projects p ON cs.project_id = p.project_id
+               WHERE (p.owner_id = ? OR cs.owner_id = ?)
+                 AND cs.agent_type != 'defense'
+               GROUP BY cs.session_id
                ORDER BY cs.created_at DESC""",
-            (owner_id,)
+            (owner_id, owner_id)
         ).fetchall()
-        return [dict(r) for r in rows]
+        sessions = []
+        for r in rows:
+            s = dict(r)
+            first_user = conn.execute(
+                "SELECT content FROM chat_messages WHERE session_id=? AND role='user' ORDER BY created_at ASC LIMIT 1",
+                (s["session_id"],)
+            ).fetchone()
+            msg_count = conn.execute(
+                "SELECT COUNT(*) FROM chat_messages WHERE session_id=?",
+                (s["session_id"],)
+            ).fetchone()[0]
+            s["preview"] = first_user["content"][:40] if first_user else "新对话"
+            s["message_count"] = msg_count
+            sessions.append(s)
+        return sessions
 
 
 # ── Score Snapshots (Timeline) ──────────────────────────────────────
@@ -703,27 +742,41 @@ def get_all_weekly_reports(week_start: str = None) -> list[dict]:
 
 def get_project_activity_in_range(project_id: str, start: str, end: str) -> dict:
     """Aggregate chat messages, score snapshots, and diagnosis for a date range."""
+    end_full = end + " 23:59:59"  # include full end day
     with get_conn() as conn:
-        # Session count in range
+        # Total sessions started in range (including empty ones)
+        total_session_row = conn.execute(
+            """SELECT COUNT(*) as cnt FROM chat_sessions
+               WHERE project_id=? AND created_at BETWEEN ? AND ?""",
+            (project_id, start, end_full)
+        ).fetchone()
+        total_session_count = total_session_row["cnt"] if total_session_row else 0
+
+        # Session count in range — only sessions where user actually sent a message
         session_row = conn.execute(
-            "SELECT COUNT(DISTINCT session_id) as cnt FROM chat_sessions WHERE project_id=? AND created_at BETWEEN ? AND ?",
-            (project_id, start, end)
+            """SELECT COUNT(DISTINCT cs.session_id) as cnt
+               FROM chat_sessions cs
+               JOIN chat_messages cm ON cs.session_id = cm.session_id
+               WHERE cs.project_id=? AND cs.created_at BETWEEN ? AND ?
+                 AND cm.role = 'user'""",
+            (project_id, start, end_full)
         ).fetchone()
         session_count = session_row["cnt"] if session_row else 0
 
-        # Message count
+        # Message count — only user messages
         msg_row = conn.execute(
             """SELECT COUNT(*) as cnt FROM chat_messages cm
                JOIN chat_sessions cs ON cm.session_id = cs.session_id
-               WHERE cs.project_id=? AND cm.created_at BETWEEN ? AND ?""",
-            (project_id, start, end)
+               WHERE cs.project_id=? AND cm.created_at BETWEEN ? AND ?
+                 AND cm.role = 'user'""",
+            (project_id, start, end_full)
         ).fetchone()
         message_count = msg_row["cnt"] if msg_row else 0
 
         # Score snapshots in range
         snap_rows = conn.execute(
             "SELECT scores_json, stage, round_num, created_at FROM score_snapshots WHERE project_id=? AND created_at BETWEEN ? AND ? ORDER BY id",
-            (project_id, start, end)
+            (project_id, start, end_full)
         ).fetchall()
         snapshots = []
         for s in snap_rows:
@@ -734,6 +787,7 @@ def get_project_activity_in_range(project_id: str, start: str, end: str) -> dict
         # Current project state
         proj = get_project(project_id)
         return {
+            "total_session_count": total_session_count,
             "session_count": session_count,
             "message_count": message_count,
             "score_snapshots": snapshots,

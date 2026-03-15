@@ -632,6 +632,7 @@ def get_weekly_report(project_id: str, week_start: str = ""):
         "score_changes": {},
         "action_items": [],
         "stats": {
+            "total_sessions": activity.get("total_session_count", 0),
             "sessions": activity.get("session_count", 0),
             "messages": activity.get("message_count", 0),
         },

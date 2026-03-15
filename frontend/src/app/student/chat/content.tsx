@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { startChat, sendMessage, sendMessageStream, listProjects, createProject, submitRating, getLatestSession, uploadFile } from "@/lib/api";
+import { startChat, sendMessage, sendMessageStream, listProjects, createProject, submitRating, getLatestSession, uploadFile, getMySessions, getChatHistory, deleteSession } from "@/lib/api";
 import { ChatMessage, Scores, Project } from "@/lib/types";
 import ChatWindow from "@/components/ChatWindow";
 import ScoreRadar from "@/components/ScoreRadar";
@@ -74,6 +74,10 @@ export default function StudentChatPageContent() {
   const [creatingProject, setCreatingProject] = useState(false);
   // Track if we've already auto-created a project for this session
   const autoCreatedRef = useRef(false);
+  // Chat history sidebar
+  const [historySessions, setHistorySessions] = useState<any[]>([]);
+  const [historyCollapsed, setHistoryCollapsed] = useState(false);
+  const [activeSessionProject, setActiveSessionProject] = useState<{name: string; industry?: string} | null>(null);
 
   const handleFileUpload = async (file: File) => {
     if (!file || !selectedProjectId) return;
@@ -111,6 +115,7 @@ export default function StudentChatPageContent() {
       setMessages([{ role: "assistant", content: res.greeting }]);
       setScores(null); setDiagnosis([]); setStage("discovery");
       setRubricScores(null); setIntent("coach");
+      refreshHistory();
     } catch {
       setMessages([{ role: "assistant", content: "连接失败，请检查后端服务是否已启动。" }]);
     }
@@ -120,7 +125,8 @@ export default function StudentChatPageContent() {
     if (pid) {
       try {
         const res = await getLatestSession(pid);
-        if (res.exists && res.messages?.length > 0) {
+        // Only restore if it's a coach/auto session, not a defense session
+        if (res.exists && res.messages?.length > 0 && res.agent_type !== "defense") {
           setSessionId(res.session_id);
           setMessages(res.messages.map((m: any) => ({ role: m.role, content: m.content })));
           if (res.scores) setScores(res.scores);
@@ -133,6 +139,10 @@ export default function StudentChatPageContent() {
     }
     await initChat(pid);
   };
+
+  useEffect(() => {
+    refreshHistory();
+  }, []);
 
   useEffect(() => {
     listProjects().then((r) => {
@@ -168,8 +178,45 @@ export default function StudentChatPageContent() {
     restoreOrInit(pid);
   };
 
-  const handleNewSession = () => {
-    initChat(selectedProjectId);
+  const handleNewSession = async () => {
+    await initChat(selectedProjectId);
+    await refreshHistory();
+  };
+
+  const refreshHistory = async () => {
+    try {
+      const res = await getMySessions();
+      setHistorySessions(res.sessions || []);
+    } catch {}
+  };
+
+  const handleDeleteSession = async (e: React.MouseEvent, sid: string) => {
+    e.stopPropagation();
+    if (!confirm("确定要删除这条对话吗？")) return;
+    try {
+      await deleteSession(sid);
+      if (sid === sessionId) await handleNewSession();
+      else await refreshHistory();
+    } catch (err: any) {
+      alert("删除失败：" + (err?.message || "未知错误"));
+    }
+  };
+
+  const handleLoadSession = async (session: any) => {
+    try {
+      const [res, projRes] = await Promise.all([
+        getChatHistory(session.session_id),
+        listProjects(),
+      ]);
+      const freshProjects = projRes.projects || [];
+      setProjects(freshProjects);
+      setSessionId(session.session_id);
+      setMessages((res.messages || []).map((m: any) => ({ role: m.role, content: m.content })));
+      if (session.project_id) setSelectedProjectId(session.project_id);
+      setActiveSessionProject(session.project_name ? { name: session.project_name } : null);
+      setScores(null); setDiagnosis([]); setStage("discovery");
+      setRubricScores(null); setIntent("coach");
+    } catch {}
   };
 
   const handleSend = async (msg: string) => {
@@ -232,6 +279,7 @@ export default function StudentChatPageContent() {
       });
     } finally {
       setLoading(false);
+      refreshHistory();
       // After first AI reply with no project selected, try to auto-infer project
       if (!selectedProjectId) {
         setMessages((prev) => {
@@ -325,13 +373,100 @@ export default function StudentChatPageContent() {
     }
   };
 
-  const selectedProject = projects.find((p) => p.project_id === selectedProjectId);
+  const selectedProject = projects.find((p) => p.project_id === selectedProjectId) || activeSessionProject;
   const currentMeta = INTENT_META[intent] ?? INTENT_META.coach;
   const stageKeys = Object.keys(STAGE_MAP);
   const stageIdx = stageKeys.indexOf(stage);
 
   return (
     <div className="flex h-full overflow-hidden" style={{ background: "var(--bg-base)" }}>
+
+      {/* ── History Sidebar ── */}
+      <div className="flex-shrink-0 flex flex-col transition-all duration-200"
+           style={{
+             width: historyCollapsed ? 0 : 220,
+             minWidth: historyCollapsed ? 0 : 220,
+             borderRight: historyCollapsed ? "none" : "1px solid var(--border)",
+             background: "rgba(8,13,26,0.9)",
+             overflow: "hidden",
+           }}>
+        {/* Header */}
+        <div className="px-3 py-3 flex items-center justify-between flex-shrink-0"
+             style={{ borderBottom: "1px solid var(--border)" }}>
+          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>历史对话</p>
+          <button
+            onClick={handleNewSession}
+            className="btn-glow text-xs px-2 py-1 rounded-lg flex items-center gap-1"
+          >
+            <span>+</span> 新建
+          </button>
+        </div>
+
+        {/* Session list */}
+        <div className="flex-1 overflow-y-auto p-2 space-y-1">
+          {historySessions.length === 0 ? (
+            <div className="text-center py-8">
+              <p className="text-xs" style={{ color: "var(--text-muted)" }}>暂无历史对话</p>
+            </div>
+          ) : historySessions.map((s) => {
+            const isActive = s.session_id === sessionId;
+            const date = s.created_at ? new Date(s.created_at).toLocaleDateString("zh-CN", { month: "numeric", day: "numeric" }) : "";
+            return (
+              <div
+                key={s.session_id}
+                className="group relative"
+              >
+                <button
+                  onClick={() => handleLoadSession(s)}
+                  className="w-full text-left px-3 py-2.5 rounded-xl transition-all pr-8"
+                  style={{
+                    background: isActive ? "rgba(99,102,241,0.15)" : "transparent",
+                    border: `1px solid ${isActive ? "rgba(99,102,241,0.4)" : "transparent"}`,
+                  }}
+                >
+                  <p className="text-xs font-medium truncate mb-0.5"
+                     style={{ color: isActive ? "#a5b4fc" : "var(--text-primary)" }}>
+                    {s.preview || "新对话"}
+                  </p>
+                  <div className="flex items-center gap-1.5">
+                    <p className="text-xs truncate" style={{ color: "var(--text-muted)", maxWidth: 100 }}>
+                      {s.project_name || "未关联项目"}
+                    </p>
+                    <span className="text-xs flex-shrink-0" style={{ color: "var(--text-muted)" }}>· {date}</span>
+                  </div>
+                </button>
+                <button
+                  onClick={(e) => handleDeleteSession(e, s.session_id)}
+                  className="absolute right-1.5 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity rounded p-1"
+                  style={{ color: "var(--text-muted)" }}
+                  title="删除对话"
+                >
+                  ✕
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Collapse toggle */}
+      <div className="flex-shrink-0 flex items-center" style={{ width: 12, position: "relative" }}>
+        <button
+          onClick={() => setHistoryCollapsed(c => !c)}
+          style={{
+            position: "absolute", left: -8, zIndex: 10,
+            width: 16, height: 32, borderRadius: 8,
+            background: "rgba(255,255,255,0.08)",
+            border: "1px solid var(--border)",
+            color: "var(--text-muted)",
+            cursor: "pointer", fontSize: 10,
+            display: "flex", alignItems: "center", justifyContent: "center",
+          }}
+        >
+          {historyCollapsed ? "›" : "‹"}
+        </button>
+      </div>
+
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden relative">
         {/* Current project indicator bar */}
         <div className="flex items-center gap-2 px-4 py-2 flex-shrink-0"

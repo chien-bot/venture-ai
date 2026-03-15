@@ -299,27 +299,37 @@ export default function PeerReviewPage() {
               <div className="glass-card p-8 rounded-xl text-center">
                 <p className="text-sm" style={{ color: "var(--text-muted)" }}>暂无可评审的项目</p>
               </div>
-            ) : available.map((p: any) => (
-              <div key={p.project_id} className="glass-card p-4 rounded-xl flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium" style={{ color: "var(--text-primary)" }}>{p.name}</p>
-                  <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
-                    {p.industry} · {p.stage || "未知阶段"}
-                  </p>
+            ) : available.map((p: any) => {
+              const alreadyClaimed = claimed.has(p.project_id) ||
+                assignments.some(a => a.project_id === p.project_id);
+              return (
+                <div key={p.project_id} className="glass-card p-4 rounded-xl flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium" style={{ color: "var(--text-primary)" }}>{p.name}</p>
+                    <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
+                      {p.industry} · {p.stage || "未知阶段"}
+                    </p>
+                  </div>
+                  {alreadyClaimed ? (
+                    <span className="px-3 py-1.5 rounded-lg text-sm font-medium"
+                      style={{ background: "rgba(16,185,129,0.1)", color: "#6ee7b7", border: "1px solid rgba(16,185,129,0.2)" }}>
+                      ✓ 已领取
+                    </span>
+                  ) : (
+                    <button onClick={() => handleClaim(p.project_id)}
+                      disabled={!!claiming}
+                      className="px-3 py-1.5 rounded-lg text-sm font-medium transition-all"
+                      style={{
+                        background: claiming === p.project_id ? "rgba(99,102,241,0.08)" : "rgba(99,102,241,0.15)",
+                        color: "#a5b4fc",
+                        opacity: claiming && claiming !== p.project_id ? 0.5 : 1,
+                      }}>
+                      {claiming === p.project_id ? "领取中..." : "领取评审"}
+                    </button>
+                  )}
                 </div>
-                <button onClick={() => handleClaim(p.project_id)}
-                  disabled={!!claiming || claimed.has(p.project_id)}
-                  className="px-3 py-1.5 rounded-lg text-sm font-medium transition-all"
-                  style={{
-                    background: claimed.has(p.project_id) ? "rgba(16,185,129,0.15)" : claiming === p.project_id ? "rgba(99,102,241,0.08)" : "rgba(99,102,241,0.15)",
-                    color: claimed.has(p.project_id) ? "#6ee7b7" : "#a5b4fc",
-                    opacity: claiming && claiming !== p.project_id ? 0.5 : 1,
-                    cursor: claimed.has(p.project_id) ? "default" : "pointer",
-                  }}>
-                  {claimed.has(p.project_id) ? "✓ 已领取" : claiming === p.project_id ? "领取中..." : "领取评审"}
-                </button>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>
