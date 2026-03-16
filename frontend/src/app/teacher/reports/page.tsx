@@ -32,7 +32,7 @@ export default function TeacherReportsPage() {
   const activeProjects = reports.filter(r => (r.stats?.sessions || 0) > 0).length;
 
   return (
-    <div className="flex-1 p-6 overflow-y-auto">
+    <div className="h-full p-6 overflow-y-auto" style={{ background: "var(--bg-base)" }}>
       <div className="max-w-5xl mx-auto space-y-6">
         <div className="flex items-center justify-between">
           <h1 className="text-xl font-bold gradient-text">周报汇总</h1>

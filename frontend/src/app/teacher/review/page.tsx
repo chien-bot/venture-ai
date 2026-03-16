@@ -16,16 +16,10 @@ const RUBRIC_NAMES: Record<string, string> = {
   R9: "表达与材料",
 };
 
-function getScoreColor(score: number): string {
-  if (score >= 7) return "bg-green-100 text-green-700";
-  if (score >= 5) return "bg-amber-100 text-amber-700";
-  return "bg-red-100 text-red-700";
-}
-
-function getScoreBg(score: number): string {
-  if (score >= 7) return "bg-green-500";
-  if (score >= 5) return "bg-amber-500";
-  return "bg-red-500";
+function scoreColor(score: number) {
+  if (score >= 7) return { color: "#6ee7b7", bg: "rgba(16,185,129,0.15)", bar: "#10b981" };
+  if (score >= 5) return { color: "#fcd34d", bg: "rgba(245,158,11,0.15)", bar: "#f59e0b" };
+  return { color: "#fca5a5", bg: "rgba(239,68,68,0.15)", bar: "#ef4444" };
 }
 
 export default function TeacherReviewPage() {
@@ -34,12 +28,14 @@ export default function TeacherReviewPage() {
   const [review, setReview] = useState<ProjectReview | null>(null);
   const [loading, setLoading] = useState(false);
   const [listLoading, setListLoading] = useState(true);
-  // F2: Competition date
   const [compDate, setCompDate] = useState("");
   const [compDateSaved, setCompDateSaved] = useState(false);
-  // F3: Annotation note
   const [noteText, setNoteText] = useState("");
   const [noteSaved, setNoteSaved] = useState(false);
+  const [expandedRubric, setExpandedRubric] = useState<string | null>(null);
+
+  const toggleRubric = (key: string) =>
+    setExpandedRubric((prev) => (prev === key ? null : key));
 
   useEffect(() => {
     getTeacherProjects()
@@ -80,114 +76,140 @@ export default function TeacherReviewPage() {
   };
 
   return (
-    <div className="flex h-full">
-      {/* Project list */}
-      <div className="w-80 border-r bg-white overflow-y-auto">
-        <div className="p-4 border-b">
-          <h2 className="font-semibold text-gray-800">项目审阅</h2>
-          <p className="text-xs text-gray-400 mt-1">选择项目查看 Rubric 评估</p>
+    <div className="flex h-full" style={{ background: "var(--bg-base)" }}>
+
+      {/* Project list sidebar */}
+      <div className="w-72 flex-shrink-0 flex flex-col overflow-hidden"
+           style={{ borderRight: "1px solid var(--border)", background: "var(--bg-surface)" }}>
+        <div className="p-4 flex-shrink-0" style={{ borderBottom: "1px solid var(--border)" }}>
+          <h2 className="font-semibold text-sm gradient-text">项目审阅</h2>
+          <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>选择项目查看 Rubric 评估</p>
         </div>
-        <div className="divide-y">
-          {listLoading ? <ProjectListSkeleton /> : null}
-          {projects.map((proj) => (
-            <button
-              key={proj.project_id}
-              onClick={() => loadReview(proj.project_id)}
-              className={`w-full text-left p-4 hover:bg-gray-50 transition-colors ${
-                selectedId === proj.project_id ? "bg-emerald-50 border-l-4 border-emerald-500" : ""
-              }`}
-            >
-              <h3 className="font-medium text-sm text-gray-800">{proj.name}</h3>
-              <p className="text-xs text-gray-400 mt-0.5">{proj.industry}</p>
-            </button>
-          ))}
+        <div className="flex-1 overflow-y-auto">
+          {listLoading && <ProjectListSkeleton />}
+          {projects.map((proj) => {
+            const isSelected = selectedId === proj.project_id;
+            return (
+              <button
+                key={proj.project_id}
+                onClick={() => loadReview(proj.project_id)}
+                className="w-full text-left px-4 py-3 transition-all duration-150"
+                style={{
+                  borderBottom: "1px solid var(--border)",
+                  background: isSelected ? "rgba(99,102,241,0.1)" : "transparent",
+                  borderLeft: isSelected ? "3px solid #6366f1" : "3px solid transparent",
+                }}
+              >
+                <h3 className="text-sm font-medium truncate" style={{ color: isSelected ? "#a5b4fc" : "var(--text-primary)" }}>
+                  {proj.name}
+                </h3>
+                <p className="text-xs mt-0.5 truncate" style={{ color: "var(--text-muted)" }}>{proj.industry}</p>
+              </button>
+            );
+          })}
         </div>
       </div>
 
-      {/* Review detail - printable area */}
-      <div className="flex-1 overflow-y-auto bg-gray-50 p-8">
+      {/* Review detail */}
+      <div className="flex-1 overflow-y-auto p-6">
         {loading ? (
           <div className="flex items-center justify-center h-full">
-            <p className="text-gray-400">加载评估报告...</p>
+            <p style={{ color: "var(--text-muted)" }}>加载评估报告...</p>
           </div>
         ) : review ? (
-          <div className="max-w-4xl mx-auto print-area animate-fadeIn">
-            {/* Score summary */}
-            <div className="bg-white rounded-xl p-6 shadow-sm mb-6 print-card">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-bold text-gray-800 print-title">Rubric 评估报告</h2>
+          <div className="max-w-3xl mx-auto space-y-4 animate-fadeInUp">
+
+            {/* Rubric — header + collapsible rows in one card */}
+            <div className="glass rounded-2xl overflow-hidden">
+              {/* Card header */}
+              <div className="flex items-center justify-between px-5 py-4"
+                   style={{ borderBottom: "1px solid var(--border)" }}>
+                <div className="flex items-center gap-2">
+                  <span className="badge badge-blue">Rubric</span>
+                  <h2 className="text-sm font-semibold" style={{ color: "var(--text-secondary)" }}>评估报告</h2>
+                </div>
                 <div className="flex items-center gap-3">
                   <button
                     onClick={() => window.print()}
-                    className="no-print flex items-center gap-2 px-4 py-2 border border-gray-300 text-gray-600 text-sm rounded-lg hover:bg-gray-50 transition-colors"
+                    className="no-print flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs transition-all"
+                    style={{ border: "1px solid var(--border)", color: "var(--text-muted)" }}
                   >
-                    ⎙ 打印报告
+                    ⎙ 打印
                   </button>
                   <div className="text-right">
-                    <p className="text-3xl font-bold text-gray-800">
+                    <p className="text-2xl font-bold" style={{ color: "var(--text-primary)" }}>
                       {review.total_score}
-                      <span className="text-lg text-gray-400">/{review.max_score}</span>
+                      <span className="text-sm ml-1" style={{ color: "var(--text-muted)" }}>/{review.max_score}</span>
                     </p>
-                    <p className="text-xs text-gray-400">总分</p>
+                    <p className="text-xs" style={{ color: "var(--text-muted)" }}>总分</p>
                   </div>
                 </div>
               </div>
 
-              {/* Score bars */}
-              <div className="space-y-3">
-                {Object.entries(review.rubric_scores).map(([key, item]) => (
-                  <div key={key} className="flex items-center gap-3">
-                    <span className="w-28 text-sm text-gray-600">{RUBRIC_NAMES[key] || key}</span>
-                    <div className="flex-1 bg-gray-100 rounded-full h-3">
-                      <div
-                        className={`h-3 rounded-full transition-all ${getScoreBg(item.score)}`}
-                        style={{ width: `${(item.score / 10) * 100}%` }}
-                      ></div>
-                    </div>
-                    <span className={`text-xs font-bold px-2 py-0.5 rounded ${getScoreColor(item.score)}`}>
-                      {item.score}/10
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
+              {/* Collapsible rows */}
+              {Object.entries(review.rubric_scores).map(([key, item], idx, arr) => {
+                const c = scoreColor(item.score);
+                const isOpen = expandedRubric === key;
+                const isLast = idx === arr.length - 1;
+                return (
+                  <div key={key} style={{ borderBottom: isLast ? "none" : "1px solid var(--border)" }}>
+                    <button
+                      onClick={() => toggleRubric(key)}
+                      className="w-full flex items-center gap-3 px-5 py-3 transition-all duration-150 text-left"
+                      style={{ background: isOpen ? "rgba(99,102,241,0.06)" : "transparent" }}
+                    >
+                      <span className="text-xs font-bold w-5 flex-shrink-0" style={{ color: "var(--text-muted)" }}>{key}</span>
+                      <span className="text-xs flex-1" style={{ color: "var(--text-primary)" }}>{RUBRIC_NAMES[key]}</span>
+                      <div className="flex-1 h-2 rounded-full" style={{ background: "rgba(255,255,255,0.06)" }}>
+                        <div className="h-2 rounded-full transition-all"
+                             style={{ width: `${(item.score / 10) * 100}%`, background: c.bar }} />
+                      </div>
+                      <span className="text-xs font-bold w-10 text-center px-1.5 py-0.5 rounded-md flex-shrink-0"
+                            style={{ background: c.bg, color: c.color }}>
+                        {item.score}/10
+                      </span>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+                           stroke="currentColor" strokeWidth="2.5" className="flex-shrink-0 transition-transform duration-200"
+                           style={{ color: "var(--text-muted)", transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}>
+                        <polyline points="6 9 12 15 18 9" />
+                      </svg>
+                    </button>
 
-            {/* Detail cards */}
-            <div className="grid grid-cols-2 gap-4 mb-6">
-              {Object.entries(review.rubric_scores).map(([key, item]) => (
-                <div key={key} className="bg-white rounded-xl p-4 shadow-sm">
-                  <div className="flex justify-between items-start mb-2">
-                    <h4 className="font-medium text-sm text-gray-800">{RUBRIC_NAMES[key]}</h4>
-                    <span className={`text-xs font-bold px-2 py-0.5 rounded ${getScoreColor(item.score)}`}>
-                      {item.score}
-                    </span>
+                    {isOpen && (
+                      <div className="px-5 pb-4 pt-1 space-y-2" style={{ background: "rgba(99,102,241,0.04)" }}>
+                        <p className="text-xs" style={{ color: "var(--text-muted)" }}>{item.justification}</p>
+                        {item.missing.length > 0 && (
+                          <div className="rounded-lg px-3 py-2" style={{ background: "rgba(239,68,68,0.07)", border: "1px solid rgba(239,68,68,0.15)" }}>
+                            <p className="text-xs font-medium mb-1" style={{ color: "#fca5a5" }}>缺失证据</p>
+                            <ul className="space-y-0.5">
+                              {item.missing.map((m, i) => (
+                                <li key={i} className="text-xs" style={{ color: "var(--text-muted)" }}>— {m}</li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
-                  <p className="text-xs text-gray-600 mb-2">{item.justification}</p>
-                  {item.missing.length > 0 && (
-                    <div>
-                      <p className="text-xs text-red-500 font-medium">缺失证据:</p>
-                      <ul className="text-xs text-gray-500 mt-1">
-                        {item.missing.map((m, i) => (
-                          <li key={i}>- {m}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             {/* Evidence trace */}
             {review.evidence_trace.length > 0 && (
-              <div className="bg-white rounded-xl p-6 shadow-sm mb-6">
-                <h3 className="font-semibold text-gray-700 mb-4">证据链追溯</h3>
-                <div className="space-y-3">
+              <div className="glass rounded-2xl p-5">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="badge badge-purple">证据链</span>
+                  <h3 className="text-sm font-semibold" style={{ color: "var(--text-secondary)" }}>来源追溯</h3>
+                </div>
+                <div className="space-y-2">
                   {review.evidence_trace.map((e, i) => (
-                    <div key={i} className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
-                      <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded">{e.rubric}</span>
+                    <div key={i} className="flex items-start gap-3 px-3 py-2.5 rounded-xl"
+                         style={{ background: "rgba(99,102,241,0.06)", border: "1px solid rgba(99,102,241,0.15)" }}>
+                      <span className="badge badge-blue flex-shrink-0" style={{ fontSize: "0.6rem" }}>{e.rubric}</span>
                       <div>
-                        <p className="text-sm text-gray-700 italic">{e.quote}</p>
-                        <p className="text-xs text-gray-400 mt-1">来源: {e.source}</p>
+                        <p className="text-xs italic" style={{ color: "var(--text-primary)" }}>{e.quote}</p>
+                        <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>来源：{e.source}</p>
                       </div>
                     </div>
                   ))}
@@ -196,50 +218,83 @@ export default function TeacherReviewPage() {
             )}
 
             {/* Revision suggestions */}
-            <div className="bg-white rounded-xl p-6 shadow-sm mb-4">
-              <h3 className="font-semibold text-gray-700 mb-4">修改建议</h3>
+            <div className="glass rounded-2xl p-5">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="badge badge-green">修改建议</span>
+              </div>
               <div className="space-y-2">
                 {review.revision_suggestions.map((s, i) => (
-                  <div key={i} className="flex items-start gap-3 p-3 bg-emerald-50 rounded-lg">
-                    <span className="text-emerald-600 font-bold text-sm">{i + 1}</span>
-                    <p className="text-sm text-gray-700">{s}</p>
+                  <div key={i} className="flex items-start gap-2 px-3 py-2 rounded-xl"
+                       style={{ background: "rgba(16,185,129,0.06)", border: "1px solid rgba(16,185,129,0.12)" }}>
+                    <span className="text-xs font-bold flex-shrink-0 mt-0.5" style={{ color: "#6ee7b7" }}>{i + 1}</span>
+                    <p className="text-xs" style={{ color: "var(--text-secondary)" }}>{s}</p>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* F2: Competition Date */}
-            <div className="bg-white rounded-xl p-5 shadow-sm mb-4 no-print">
-              <h3 className="font-semibold text-gray-700 mb-3">竞赛倒计时设置</h3>
-              <div className="flex gap-2 items-center">
-                <input type="date" value={compDate} onChange={(e) => { setCompDate(e.target.value); setCompDateSaved(false); }}
-                       className="border border-gray-300 rounded-lg px-3 py-1.5 text-sm text-gray-700 outline-none" />
-                <button onClick={handleSaveCompDate}
-                        className="px-4 py-1.5 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 transition-colors">
-                  保存
-                </button>
-                {compDateSaved && <span className="text-xs text-green-600">✓ 已保存，AI 将自动切换倒计时模式</span>}
+            {/* Competition Date + Annotation — side by side */}
+            <div className="grid grid-cols-2 gap-3 no-print">
+              <div className="glass rounded-2xl p-4">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="badge badge-blue">竞赛设置</span>
+                </div>
+                <div className="flex gap-2 items-center">
+                  <input
+                    type="date"
+                    value={compDate}
+                    onChange={(e) => { setCompDate(e.target.value); setCompDateSaved(false); }}
+                    className="flex-1 px-3 py-1.5 rounded-lg text-xs outline-none"
+                    style={{ background: "rgba(255,255,255,0.05)", border: "1px solid var(--border)", color: "var(--text-primary)" }}
+                  />
+                  <button
+                    onClick={handleSaveCompDate}
+                    className="btn-glow px-3 py-1.5 rounded-lg text-xs"
+                    style={{ background: "linear-gradient(135deg, #4f46e5, #6366f1)", borderColor: "rgba(99,102,241,0.5)" }}
+                  >
+                    保存
+                  </button>
+                </div>
+                {compDateSaved && (
+                  <p className="text-xs mt-2" style={{ color: "#6ee7b7" }}>✓ 已保存，AI 将自动切换倒计时模式</p>
+                )}
+              </div>
+
+              <div className="glass rounded-2xl p-4">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="badge badge-purple">教师批注</span>
+                </div>
+                <textarea
+                  rows={2}
+                  placeholder="写下指导意见，AI 将在学生下次对话中体现..."
+                  value={noteText}
+                  onChange={(e) => { setNoteText(e.target.value); setNoteSaved(false); }}
+                  className="w-full px-3 py-2 rounded-lg text-xs resize-none outline-none mb-2"
+                  style={{ background: "rgba(255,255,255,0.05)", border: "1px solid var(--border)", color: "var(--text-primary)" }}
+                />
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={handleSaveNote}
+                    className="btn-glow px-3 py-1.5 rounded-lg text-xs"
+                    style={{ background: "linear-gradient(135deg, #d97706, #f59e0b)", borderColor: "rgba(245,158,11,0.5)" }}
+                  >
+                    添加批注
+                  </button>
+                  {noteSaved && <span className="text-xs" style={{ color: "#6ee7b7" }}>✓ 批注已保存</span>}
+                </div>
               </div>
             </div>
 
-            {/* F3: Teacher Annotation */}
-            <div className="bg-white rounded-xl p-5 shadow-sm no-print">
-              <h3 className="font-semibold text-gray-700 mb-3">教师批注（将注入 AI 对话）</h3>
-              <textarea rows={3} placeholder="写下对该项目的指导意见，AI 将在学生下次对话中体现..."
-                        value={noteText} onChange={(e) => { setNoteText(e.target.value); setNoteSaved(false); }}
-                        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-700 resize-none outline-none mb-2" />
-              <div className="flex items-center gap-3">
-                <button onClick={handleSaveNote}
-                        className="px-4 py-1.5 bg-amber-500 text-white text-sm rounded-lg hover:bg-amber-600 transition-colors">
-                  添加批注
-                </button>
-                {noteSaved && <span className="text-xs text-green-600">✓ 批注已保存，将在下次 AI 对话中生效</span>}
-              </div>
-            </div>
           </div>
         ) : (
-          <div className="flex items-center justify-center h-full text-gray-400">
-            <p>选择一个项目查看评估报告</p>
+          <div className="flex flex-col items-center justify-center h-full gap-3">
+            <div className="w-12 h-12 rounded-2xl flex items-center justify-center"
+                 style={{ background: "rgba(99,102,241,0.1)", border: "1px solid rgba(99,102,241,0.2)" }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="1.5">
+                <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z" />
+              </svg>
+            </div>
+            <p className="text-sm" style={{ color: "var(--text-muted)" }}>选择左侧项目查看评估报告</p>
           </div>
         )}
       </div>
