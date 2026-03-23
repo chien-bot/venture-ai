@@ -23,13 +23,17 @@
           "壁垒"
         ],
         "problem": "当前中国入境旅游行业正面临显著的供需结构性矛盾，外籍游客需求持续",
-        "solution": "",
-        "market_size": "",
+        "solution": "基于强化学习和AR技术的入境游智能服务平台，为外国游客提供多语言导航、文化体验和一站式旅行规划",
+        "market_size": "中国入境旅游市场2024年恢复至约1500亿美元，AI旅游服务细分市场约50亿",
         "biz_detail": ".......................................................15",
         "patent_count": 0,
         "paper_count": 0,
         "team_backgrounds": [],
-        "success_factors": [],
+        "success_factors": [
+          "技术创新（强化学习+AR）",
+          "政策利好（入境签证放宽）",
+          "差异化定位"
+        ],
         "failure_risks": [
           "未提供市场规模数据"
         ],
@@ -57,7 +61,7 @@
       "type": "Project",
       "label": "基于人工智能的雷达微弱目标检测",
       "properties": {
-        "industry": "通用",
+        "industry": "工业制造",
         "source": "科技创新类2",
         "technologies": [
           "光学",
@@ -80,7 +84,7 @@
       "type": "Project",
       "label": "基于YOLO的AI视_能感知系统",
       "properties": {
-        "industry": "通用",
+        "industry": "工业制造",
         "source": "科技创新类2",
         "technologies": [
           "YOLO",
@@ -107,7 +111,7 @@
       "type": "Project",
       "label": "星眸智析--多模态卫_来推演系统",
       "properties": {
-        "industry": "通用",
+        "industry": "政务管理",
         "source": "科技创新类2",
         "technologies": [
           "注意力机制",
@@ -137,7 +141,7 @@
       "type": "Project",
       "label": "“预行智控”——面向_智能机器人",
       "properties": {
-        "industry": "通用",
+        "industry": "工业制造",
         "source": "科技创新类2",
         "technologies": [
           "强化学习",
@@ -160,7 +164,7 @@
       "type": "Project",
       "label": "极端气象下电力系统韧_性解决方案",
       "properties": {
-        "industry": "通用",
+        "industry": "工业制造",
         "source": "科技创新类2",
         "technologies": [
           "数字孪生",
@@ -188,7 +192,7 @@
       "type": "Project",
       "label": "多场感知，孪生驱动—_技术引领者",
       "properties": {
-        "industry": "通用",
+        "industry": "工业制造",
         "source": "科技创新类2",
         "technologies": [
           "数字孪生",
@@ -217,7 +221,7 @@
       "type": "Project",
       "label": "鲲澜芯动：多模态水下_能决策方案",
       "properties": {
-        "industry": "通用",
+        "industry": "工业制造",
         "source": "科技创新类2",
         "technologies": [
           "强化学习",
@@ -246,7 +250,7 @@
       "type": "Project",
       "label": "EvoRobo：下一_智能机器人",
       "properties": {
-        "industry": "通用",
+        "industry": "工业制造",
         "source": "科技创新类2",
         "technologies": [
           "强化学习",
@@ -293,9 +297,9 @@
           "SCI",
           "论文"
         ],
-        "problem": "",
-        "solution": "",
-        "market_size": "",
+        "problem": "传统中医脉诊高度依赖老中医主观经验，年轻医师难以短期掌握，导致中医诊断传承困难、标准化程度低",
+        "solution": "结合视觉和触觉传感的智能脉诊系统，通过多模态AI将脉象数据量化，实现中医脉诊的标准化和可复制",
+        "market_size": "中医诊断设备市场约200亿元，AI辅助中医细分约15亿",
         "biz_detail": "",
         "patent_count": 0,
         "paper_count": 0,
@@ -334,6 +338,13 @@
           "EI",
           "发明专利",
           "专利"
+        ],
+        "problem": "医学影像AI算法在实验室效果好但临床部署后性能下降，主要因为训练数据与真实场景分布不一致",
+        "solution": "面向真实临床环境的鲁棒医学影像分析算法，通过域自适应和数据增强技术提升临床适用性",
+        "market_size": "医学影像AI市场约150亿元",
+        "failure_risks": [
+          "NMPA审批周期长",
+          "医院IT基础设施参差不齐"
         ]
       }
     },
@@ -655,13 +666,16 @@
           "SCI"
         ],
         "problem": "传统技术瓶颈，为低空经济的军事、民用与应急领域提供高效解决方案，助力",
-        "solution": "",
-        "market_size": "",
+        "solution": "融合大模型语义理解与小模型实时推理的群智控制系统，用于低空无人机集群的自主感知和协同决策",
+        "market_size": "低空经济2024年预计规模5000亿元，智能控制系统占比约10%",
         "biz_detail": "",
         "patent_count": 0,
         "paper_count": 0,
         "team_backgrounds": [],
-        "success_factors": [],
+        "success_factors": [
+          "大小模型协同架构创新",
+          "切中低空经济政策窗口"
+        ],
         "failure_risks": [
           "盈利模式不清晰",
           "未提供市场规模数据"
@@ -781,9 +795,9 @@
           "EI",
           "论文"
         ],
-        "problem": "",
-        "solution": "",
-        "market_size": "",
+        "problem": "传统农业生态监测依赖人工巡查，效率低、覆盖面小，难以实时掌握病虫害和生长状态",
+        "solution": "以小白菜为模式物种的AI生态监测系统，通过计算机视觉实时监测植物生长状态和病虫害",
+        "market_size": "智慧农业监测市场约300亿元，蔬菜种植细分约40亿",
         "biz_detail": "",
         "patent_count": 0,
         "paper_count": 4,
@@ -815,9 +829,9 @@
         "moat": [
           "论文"
         ],
-        "problem": "",
-        "solution": "",
-        "market_size": "",
+        "problem": "农业灾害预警信息分散在多个气象和农业部门，农户难以获取及时、精准、可操作的预警决策建议",
+        "solution": "AI驱动的农业灾害预警决策助手，融合气象、土壤、作物数据，为农户提供精准的灾害预警和应对策略",
+        "market_size": "农业保险+精准农业市场合计约1000亿元，灾害预警决策细分约20亿",
         "biz_detail": "",
         "patent_count": 0,
         "paper_count": 1,
@@ -970,9 +984,9 @@
           "专利",
           "论文"
         ],
-        "problem": "",
-        "solution": "",
-        "market_size": "",
+        "problem": "工业碳排放监测和碳捕集过程高度依赖人工操作，效率低、成本高、精度不稳定",
+        "solution": "智能化CO2捕集与碳排放评价系统，通过AI优化碳捕集工艺参数，降低能耗和运营成本",
+        "market_size": "碳捕集市场（CCUS）全球约500亿美元，中国约300亿元",
         "biz_detail": "..................................................................................................................................28",
         "patent_count": 0,
         "paper_count": 15,
@@ -1155,9 +1169,9 @@
           "论文",
           "SCI"
         ],
-        "problem": "",
-        "solution": "",
-        "market_size": "",
+        "problem": "传统教育中，学生难以与历史人物和思想家进行对话式学习，历史文化教育缺乏沉浸感和互动性",
+        "solution": "基于多模态大模型的沉浸式教育系统，让学生可以与AI驱动的历史先贤进行对话交流和情境学习",
+        "market_size": "AI教育市场约500亿元，沉浸式教育细分约30亿",
         "biz_detail": "",
         "patent_count": 0,
         "paper_count": 0,
@@ -1197,7 +1211,10 @@
           "论文",
           "首创",
           "护城河"
-        ]
+        ],
+        "problem": "教育评估主要依赖标准化考试，缺乏对学生综合素质和过程性数据的系统化评价",
+        "solution": "AI驱动的综合素质智能评价系统，结合多维度数据分析进行过程化、个性化评估",
+        "market_size": "教育评价与考试服务市场约300亿元"
       }
     },
     {
@@ -1328,9 +1345,9 @@
           "论文",
           "专利"
         ],
-        "problem": "",
+        "problem": "工业产品表面缺陷检测依赖人工目视检查，效率低（每分钟仅能检查数个产品）、漏检率高（约5-10%）",
         "solution": "团队设计开发了一款可靠性强，操作简单，支持实时检测的基于深度学习",
-        "market_size": "",
+        "market_size": "工业视觉检测市场约200亿元，AI质检细分约50亿",
         "biz_detail": "",
         "patent_count": 0,
         "paper_count": 0,
@@ -1526,8 +1543,8 @@
           "SCI"
         ],
         "problem": "亟需突破感知与导航、规划与决策等基础理论与关",
-        "solution": "",
-        "market_size": "",
+        "solution": "面向月球基地建设的智能装备与无人作业系统，集成自主导航、远程操控和协同作业能力",
+        "market_size": "航天装备制造市场约3000亿元，月球探测相关约200亿（政府主导）",
         "biz_detail": "",
         "patent_count": 0,
         "paper_count": 0,
@@ -1596,6 +1613,13 @@
           "SCI",
           "论文",
           "壁垒"
+        ],
+        "problem": "新闻生产流程中，记者面临信息过载、写作效率低、事实核查困难等问题",
+        "solution": "全流程AI新闻写作辅助平台，集成智能选题、辅助写作、事实核查、人机协作编辑功能",
+        "market_size": "媒体AI市场约50亿元",
+        "failure_risks": [
+          "新闻行业AI使用伦理争议",
+          "传统媒体转型意愿不强"
         ]
       }
     },
@@ -1620,7 +1644,10 @@
         ],
         "moat": [
           "EI"
-        ]
+        ],
+        "problem": "网络诈骗和金融风险信号分散在多个平台，单一平台难以构建全景风控视图",
+        "solution": "跨平台多源数据融合的智能风控系统，通过图计算和知识推理实现协同风险治理",
+        "market_size": "风控AI市场约300亿元"
       }
     },
     {
@@ -1639,9 +1666,9 @@
         ],
         "biz_model": [],
         "moat": [],
-        "problem": "",
-        "solution": "",
-        "market_size": "",
+        "problem": "司法和行政执法中，物证鉴定和价值评估依赖专家经验，主观性强、效率低、标准不统一",
+        "solution": "基于DS证据理论的智能推理系统，通过多源证据融合实现物证的客观化、标准化评估",
+        "market_size": "司法科技市场约100亿元，智能证据分析细分约10亿",
         "biz_detail": "",
         "patent_count": 0,
         "paper_count": 0,
@@ -1743,7 +1770,7 @@
       "type": "Project",
       "label": "“慧心晰影”",
       "properties": {
-        "industry": "通用",
+        "industry": "医疗健康",
         "source": "创新创业赛",
         "technologies": [
           "自然语言处理",
@@ -1768,7 +1795,7 @@
       "type": "Project",
       "label": "星哨科技",
       "properties": {
-        "industry": "通用",
+        "industry": "交通运输",
         "source": "创新创业赛",
         "technologies": [
           "AR",
@@ -1823,7 +1850,7 @@
       "type": "Project",
       "label": "云游灵境-云交互空间实时生成技术引领者-网评-挑战杯",
       "properties": {
-        "industry": "通用",
+        "industry": "文化旅游",
         "source": "创新创业赛",
         "technologies": [
           "数字孪生",
@@ -1855,7 +1882,7 @@
       "type": "Project",
       "label": "京工智演 —— 数字表演产业化的领航者",
       "properties": {
-        "industry": "通用",
+        "industry": "文化旅游",
         "source": "创新创业赛",
         "technologies": [
           "光学",
@@ -1885,7 +1912,7 @@
       "type": "Project",
       "label": "元界创生——云上交互空间智能生成技术领跑者_计划书",
       "properties": {
-        "industry": "通用",
+        "industry": "文化旅游",
         "source": "创新创业赛",
         "technologies": [
           "数字孪生",
@@ -1946,7 +1973,7 @@
       "type": "Project",
       "label": "元界创生云上交互空间智能生成技术领跑者_计划书",
       "properties": {
-        "industry": "通用",
+        "industry": "文化旅游",
         "source": "创新创业赛",
         "technologies": [
           "数字孪生",
@@ -1978,7 +2005,7 @@
       "type": "Project",
       "label": "夜视鹰瞳项目",
       "properties": {
-        "industry": "通用",
+        "industry": "工业制造",
         "source": "创新创业赛",
         "technologies": [
           "自动驾驶",
@@ -2011,7 +2038,7 @@
       "type": "Project",
       "label": "推送家2020Q2",
       "properties": {
-        "industry": "通用",
+        "industry": "政务管理",
         "source": "创新创业赛",
         "technologies": [
           "神经网络",
@@ -2034,7 +2061,7 @@
       "type": "Project",
       "label": "推送家",
       "properties": {
-        "industry": "通用",
+        "industry": "政务管理",
         "source": "创新创业赛",
         "technologies": [
           "自然语言处理",
@@ -2067,7 +2094,7 @@
       "type": "Project",
       "label": "溯源：国内首创呼吸道病原拉曼检测仪",
       "properties": {
-        "industry": "通用",
+        "industry": "医疗健康",
         "source": "创新创业赛",
         "technologies": [
           "AR",
@@ -2094,7 +2121,7 @@
       "type": "Project",
       "label": "星哨科技--新一代卫星互联网应用系统，开启全域全时快响预警新时代",
       "properties": {
-        "industry": "通用",
+        "industry": "交通运输",
         "source": "创新创业赛",
         "technologies": [
           "FPGA"
@@ -2117,7 +2144,7 @@
       "type": "Project",
       "label": "精微智控--面向智能_环调控系统",
       "properties": {
-        "industry": "通用",
+        "industry": "工业制造",
         "source": "科技创新类1",
         "technologies": [
           "光学",
@@ -2143,7 +2170,7 @@
       "type": "Project",
       "label": "银构芯生——3D异质_连材料技术",
       "properties": {
-        "industry": "通用",
+        "industry": "工业制造",
         "source": "科技创新类1",
         "technologies": [
           "芯片",
@@ -2165,7 +2192,7 @@
       "type": "Project",
       "label": "灵枢微创--人体自然_手术机器人",
       "properties": {
-        "industry": "通用",
+        "industry": "医疗健康",
         "source": "科技创新类1",
         "technologies": [
           "内窥镜",
@@ -2191,7 +2218,7 @@
       "type": "Project",
       "label": "医联农村，e路助农—_化路径研究",
       "properties": {
-        "industry": "通用",
+        "industry": "医疗健康",
         "source": "科技创新类1",
         "technologies": [
           "数字孪生",
@@ -2212,7 +2239,7 @@
       "type": "Project",
       "label": "千钧问鼎——尖端超高_自主化研制",
       "properties": {
-        "industry": "通用",
+        "industry": "工业制造",
         "source": "科技创新类1",
         "technologies": [
           "光学",
@@ -2241,7 +2268,7 @@
       "type": "Project",
       "label": "禾光智能--精准制导_机器人系统",
       "properties": {
-        "industry": "通用",
+        "industry": "农业发展",
         "source": "科技创新类1",
         "technologies": [
           "目标检测",
@@ -2270,7 +2297,7 @@
       "type": "Project",
       "label": "数湖启智-项目书0410",
       "properties": {
-        "industry": "通用",
+        "industry": "政务管理",
         "source": "科技创新类1",
         "technologies": [
           "自动驾驶",
@@ -2296,7 +2323,7 @@
         ],
         "problem": "当前核心瓶颈在于人工与自动化清洗的双重局限性形成治理真空：人工清洗需要投入大量专业人力进行重复性标注与规则制定，在面对海量异构数据时效率难以保证；而AI驱动的自动化清洗虽能缓解人力瓶颈，却受场景泛化能力，针对特定领域优化的算法在迁移至其他领域时时，因数据模态差异与业务逻辑断层，往往产生误判或过度清洗，迫使企业为",
         "solution": "本项目提出的技术能够有效应对多源异构数据湖所带来的挑战，并高质量完成数据管理任务。本项目研制了基于多源异构数据湖的数据智算平台。该系统综合运用前述研究成果，包括任务感知的关系透视、人机协作的数据提质、数据优选的模型提效，旨在真实贴近用户需求，广泛适应多个应用场景。系统为用户提供自助式数据发现，数据清洗融合以及高效模型训练功能。",
-        "market_size": "",
+        "market_size": "数据治理与数据湖市场约500亿元，智能数据清洗细分约80亿",
         "biz_detail": "",
         "patent_count": 0,
         "paper_count": 0,
@@ -2320,7 +2347,7 @@
       "type": "Project",
       "label": "禾光智能——智能激光除草机器人系统",
       "properties": {
-        "industry": "通用",
+        "industry": "农业发展",
         "source": "科技创新类1",
         "technologies": [
           "自动驾驶",
@@ -8230,6 +8257,1565 @@
       "properties": {
         "doc_frequency": 2
       }
+    },
+    {
+      "id": "proj_1b340131",
+      "type": "Project",
+      "label": "心语智护——AI驱动的心理健康筛查与干预平台",
+      "properties": {
+        "industry": "医疗健康",
+        "source": "互联网+",
+        "technologies": [
+          "NLP",
+          "大模型",
+          "情感计算",
+          "知识图谱"
+        ],
+        "biz_model": [
+          "SaaS",
+          "B2B",
+          "订阅"
+        ],
+        "moat": [
+          "临床数据壁垒",
+          "医疗机构合作"
+        ],
+        "problem": "高校心理健康筛查依赖问卷量表，学生配合度低（<40%），且无法持续监测和早期预警",
+        "solution": "通过分析学生日常文字和语音交互的情感特征，AI自动进行心理状态评估和预警，降低筛查门槛",
+        "market_size": "心理健康数字疗法市场约100亿元，高校心理服务细分约10亿",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [
+          "无感知筛查降低抵触",
+          "高校刚需场景",
+          "政策推动（教育部心理健康文件）"
+        ],
+        "failure_risks": [
+          "隐私伦理风险高",
+          "临床验证周期长",
+          "学生信任度建立困难"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "technology_7d9f0fd1",
+      "type": "Technology",
+      "label": "情感计算",
+      "properties": {}
+    },
+    {
+      "id": "moattype_55c825af",
+      "type": "MoatType",
+      "label": "临床数据壁垒",
+      "properties": {}
+    },
+    {
+      "id": "moattype_feea78f0",
+      "type": "MoatType",
+      "label": "医疗机构合作",
+      "properties": {}
+    },
+    {
+      "id": "proj_c9054fe3",
+      "type": "Project",
+      "label": "智瞳识药——基于计算机视觉的药品识别与用药安全系统",
+      "properties": {
+        "industry": "医疗健康",
+        "source": "挑战杯",
+        "technologies": [
+          "计算机视觉",
+          "目标检测",
+          "OCR",
+          "知识图谱"
+        ],
+        "biz_model": [
+          "API",
+          "B2B"
+        ],
+        "moat": [
+          "药品图像数据库",
+          "药品知识图谱"
+        ],
+        "problem": "老年患者和慢病患者常需同时服用多种药物，易混淆药品导致误服，每年因用药错误致死约25万人",
+        "solution": "用手机拍照自动识别药品名称、剂量，结合知识图谱检测药物相互作用并提供用药提醒",
+        "market_size": "用药安全管理市场约80亿元",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [
+          "解决真实安全痛点",
+          "技术成熟度高"
+        ],
+        "failure_risks": [
+          "药品外观相似度高增加识别难度",
+          "需要持续更新药品数据库"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "technology_f529c51e",
+      "type": "Technology",
+      "label": "OCR",
+      "properties": {}
+    },
+    {
+      "id": "moattype_a6438531",
+      "type": "MoatType",
+      "label": "药品图像数据库",
+      "properties": {}
+    },
+    {
+      "id": "moattype_caf133a8",
+      "type": "MoatType",
+      "label": "药品知识图谱",
+      "properties": {}
+    },
+    {
+      "id": "proj_5cc37e08",
+      "type": "Project",
+      "label": "码上精通——面向编程教育的AI实时纠错与导学系统",
+      "properties": {
+        "industry": "教育教学",
+        "source": "互联网+",
+        "technologies": [
+          "大模型",
+          "代码分析",
+          "知识图谱",
+          "NLP"
+        ],
+        "biz_model": [
+          "SaaS",
+          "订阅",
+          "B2B"
+        ],
+        "moat": [
+          "编程错误模式库",
+          "学习路径算法"
+        ],
+        "problem": "编程教学中，教师无法逐一辅导每个学生的代码错误，学生平均等待答疑时间>30分钟，挫败感导致30%的学生放弃编程课",
+        "solution": "AI实时分析学生代码，不直接给答案而是通过苏格拉底式追问引导学生理解错误原因并自主修正",
+        "market_size": "编程教育市场约500亿元，AI辅助编程教学约30亿",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [
+          "引导式学习而非直接给答案",
+          "实时反馈降低挫败感"
+        ],
+        "failure_risks": [
+          "与GitHub Copilot等工具定位冲突",
+          "学生可能绕过引导直接求答案"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "technology_50ce88b6",
+      "type": "Technology",
+      "label": "代码分析",
+      "properties": {}
+    },
+    {
+      "id": "moattype_79e36391",
+      "type": "MoatType",
+      "label": "编程错误模式库",
+      "properties": {}
+    },
+    {
+      "id": "moattype_8fd77c67",
+      "type": "MoatType",
+      "label": "学习路径算法",
+      "properties": {}
+    },
+    {
+      "id": "proj_49b0e650",
+      "type": "Project",
+      "label": "知行合一——大模型驱动的新工科实验教学助手",
+      "properties": {
+        "industry": "教育教学",
+        "source": "挑战杯",
+        "technologies": [
+          "大模型",
+          "数字孪生",
+          "AR",
+          "知识图谱"
+        ],
+        "biz_model": [
+          "SaaS",
+          "B2B",
+          "授权"
+        ],
+        "moat": [
+          "学科知识图谱",
+          "实验仿真引擎"
+        ],
+        "problem": "新工科实验教学面临设备昂贵、场地受限、安全风险高等问题，学生实操机会有限",
+        "solution": "大模型+数字孪生的虚拟实验平台，学生可通过AR进行沉浸式实验操作，AI提供实时指导和评估",
+        "market_size": "虚拟仿真实验市场约100亿元",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [
+          "政策支持（教育部虚拟仿真项目）",
+          "降低实验成本"
+        ],
+        "failure_risks": [
+          "虚拟实验无法完全替代真实操作",
+          "高校采购决策周期长"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "painpoint_57846ffb",
+      "type": "PainPoint",
+      "label": "风险",
+      "properties": {}
+    },
+    {
+      "id": "moattype_6546f19b",
+      "type": "MoatType",
+      "label": "学科知识图谱",
+      "properties": {}
+    },
+    {
+      "id": "moattype_969ae3ff",
+      "type": "MoatType",
+      "label": "实验仿真引擎",
+      "properties": {}
+    },
+    {
+      "id": "proj_e96a9c8e",
+      "type": "Project",
+      "label": "田间守望——无人机+AI的精准植保作业系统",
+      "properties": {
+        "industry": "农业发展",
+        "source": "互联网+",
+        "technologies": [
+          "无人机",
+          "计算机视觉",
+          "目标检测",
+          "边缘计算"
+        ],
+        "biz_model": [
+          "服务费",
+          "SaaS",
+          "B2B"
+        ],
+        "moat": [
+          "作物病虫害图像数据集",
+          "飞防作业经验"
+        ],
+        "problem": "传统农药喷洒效率低、浪费严重（有效利用率仅30%），且农药残留影响食品安全",
+        "solution": "无人机载AI实时识别病虫害区域，精准定点喷洒，农药用量减少40%，效率提升5倍",
+        "market_size": "农业植保无人机市场约200亿元，智能植保细分约50亿",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [
+          "农药减量是政策要求",
+          "技术成熟（大疆等验证过路径）"
+        ],
+        "failure_risks": [
+          "与大疆植保竞争激烈",
+          "农户价格敏感度高"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "businessmodel_5d7dbac5",
+      "type": "BusinessModel",
+      "label": "服务费",
+      "properties": {}
+    },
+    {
+      "id": "moattype_27025a57",
+      "type": "MoatType",
+      "label": "作物病虫害图像数据集",
+      "properties": {}
+    },
+    {
+      "id": "moattype_56f2af40",
+      "type": "MoatType",
+      "label": "飞防作业经验",
+      "properties": {}
+    },
+    {
+      "id": "proj_364eea9a",
+      "type": "Project",
+      "label": "渔光互补——基于物联网的智慧水产养殖管控平台",
+      "properties": {
+        "industry": "农业发展",
+        "source": "创青春",
+        "technologies": [
+          "IoT",
+          "大数据",
+          "机器学习",
+          "边缘计算"
+        ],
+        "biz_model": [
+          "SaaS",
+          "数据服务",
+          "B2B"
+        ],
+        "moat": [
+          "水产养殖数据模型",
+          "行业know-how"
+        ],
+        "problem": "水产养殖高度依赖经验，水质异常发现滞后（通常>6小时），导致每年因水质问题损失超200亿",
+        "solution": "IoT传感器实时监测水质参数，AI预测水质变化趋势，提前4-6小时预警并自动调控",
+        "market_size": "智慧水产养殖市场约100亿元",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [
+          "预警提前量大（4-6小时）",
+          "自动化控制降低人力成本"
+        ],
+        "failure_risks": [
+          "传感器维护成本高",
+          "养殖户数字化接受度低"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "moattype_29bc6d67",
+      "type": "MoatType",
+      "label": "水产养殖数据模型",
+      "properties": {}
+    },
+    {
+      "id": "moattype_d9a60137",
+      "type": "MoatType",
+      "label": "行业know-how",
+      "properties": {}
+    },
+    {
+      "id": "proj_bab9b8b5",
+      "type": "Project",
+      "label": "碧水云图——AI驱动的城市水体污染溯源系统",
+      "properties": {
+        "industry": "环境保护",
+        "source": "挑战杯",
+        "technologies": [
+          "计算机视觉",
+          "光谱分析",
+          "GIS",
+          "机器学习"
+        ],
+        "biz_model": [
+          "B2B",
+          "技术服务",
+          "SaaS"
+        ],
+        "moat": [
+          "水体污染光谱数据库",
+          "溯源算法"
+        ],
+        "problem": "城市水体污染源头难以快速定位，传统人工采样化验需要3-5天，无法应对突发污染事件",
+        "solution": "无人船载高光谱成像+AI分析，30分钟内完成污染类型识别和排污口溯源定位",
+        "market_size": "水环境监测市场约300亿元，智能溯源细分约20亿",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [
+          "政策刚需（河长制考核）",
+          "极大缩短溯源时间"
+        ],
+        "failure_risks": [
+          "政府采购依赖关系",
+          "技术在复杂水体中的泛化性"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "technology_f369293b",
+      "type": "Technology",
+      "label": "光谱分析",
+      "properties": {}
+    },
+    {
+      "id": "technology_715ecda3",
+      "type": "Technology",
+      "label": "GIS",
+      "properties": {}
+    },
+    {
+      "id": "moattype_d20adbdb",
+      "type": "MoatType",
+      "label": "水体污染光谱数据库",
+      "properties": {}
+    },
+    {
+      "id": "moattype_44a0d0c6",
+      "type": "MoatType",
+      "label": "溯源算法",
+      "properties": {}
+    },
+    {
+      "id": "proj_01bd987c",
+      "type": "Project",
+      "label": "绿能管家——社区级碳足迹追踪与减碳激励平台",
+      "properties": {
+        "industry": "环境保护",
+        "source": "互联网+",
+        "technologies": [
+          "大数据",
+          "区块链",
+          "IoT",
+          "机器学习"
+        ],
+        "biz_model": [
+          "平台",
+          "广告",
+          "B2B"
+        ],
+        "moat": [
+          "碳积分体系",
+          "社区运营能力"
+        ],
+        "problem": "个人和社区缺乏直观的碳排放量化工具和减碳动力，碳中和目标难以落地到个体层面",
+        "solution": "连接智能电表、出行数据等多源数据自动计算碳足迹，通过碳积分兑换激励社区居民参与减碳",
+        "market_size": "个人碳账户市场约50亿元（起步阶段）",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [
+          "双碳政策驱动",
+          "游戏化机制提高参与度"
+        ],
+        "failure_risks": [
+          "碳积分变现路径不清晰",
+          "数据采集隐私问题",
+          "用户留存困难"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "moattype_b7c94654",
+      "type": "MoatType",
+      "label": "碳积分体系",
+      "properties": {}
+    },
+    {
+      "id": "moattype_d26fb165",
+      "type": "MoatType",
+      "label": "社区运营能力",
+      "properties": {}
+    },
+    {
+      "id": "proj_034a87e2",
+      "type": "Project",
+      "label": "声纹卫士——基于声学AI的工业设备预测性维护系统",
+      "properties": {
+        "industry": "工业制造",
+        "source": "互联网+",
+        "technologies": [
+          "声学信号处理",
+          "深度学习",
+          "边缘计算",
+          "IoT"
+        ],
+        "biz_model": [
+          "SaaS",
+          "B2B",
+          "订阅"
+        ],
+        "moat": [
+          "工业声纹数据库",
+          "算法精度"
+        ],
+        "problem": "工厂设备突发故障导致非计划停机，平均每次停机损失超50万元，传统定期维护浪费30%的维护资源",
+        "solution": "通过声学传感器采集设备运行声纹，AI模型提前7-14天预测故障类型和位置，准确率>90%",
+        "market_size": "预测性维护市场约500亿元",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [
+          "非接触式检测（无需改造设备）",
+          "ROI明确（减少停机损失）"
+        ],
+        "failure_risks": [
+          "工业环境噪声干扰大",
+          "不同设备需要定制模型",
+          "工厂数据安全顾虑"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "technology_64832822",
+      "type": "Technology",
+      "label": "声学信号处理",
+      "properties": {}
+    },
+    {
+      "id": "moattype_aa0d5cb3",
+      "type": "MoatType",
+      "label": "工业声纹数据库",
+      "properties": {}
+    },
+    {
+      "id": "moattype_5b8fafb0",
+      "type": "MoatType",
+      "label": "算法精度",
+      "properties": {}
+    },
+    {
+      "id": "proj_3d8db06a",
+      "type": "Project",
+      "label": "焊道精灵——机器视觉引导的智能焊接质量控制系统",
+      "properties": {
+        "industry": "工业制造",
+        "source": "挑战杯",
+        "technologies": [
+          "机器视觉",
+          "深度学习",
+          "机器人",
+          "边缘计算"
+        ],
+        "biz_model": [
+          "设备销售",
+          "技术服务",
+          "B2B"
+        ],
+        "moat": [
+          "焊缝缺陷检测算法",
+          "工艺参数优化模型"
+        ],
+        "problem": "焊接质量检测依赖X光探伤，检测成本高、效率低，且无法在焊接过程中实时纠偏",
+        "solution": "机器视觉实时监控焊接过程，AI识别焊缝缺陷并自动调整焊接参数，缺陷率降低80%",
+        "market_size": "智能焊接市场约150亿元",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [
+          "实时纠偏（非事后检测）",
+          "降低废品率效果显著"
+        ],
+        "failure_risks": [
+          "焊接工艺种类多需要适配",
+          "工业客户验证周期长"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "technology_8853aa83",
+      "type": "Technology",
+      "label": "机器视觉",
+      "properties": {}
+    },
+    {
+      "id": "businessmodel_e993c545",
+      "type": "BusinessModel",
+      "label": "设备销售",
+      "properties": {}
+    },
+    {
+      "id": "moattype_dcbe4b20",
+      "type": "MoatType",
+      "label": "焊缝缺陷检测算法",
+      "properties": {}
+    },
+    {
+      "id": "moattype_c64af392",
+      "type": "MoatType",
+      "label": "工艺参数优化模型",
+      "properties": {}
+    },
+    {
+      "id": "proj_f17768fc",
+      "type": "Project",
+      "label": "路通智行——面向乡村的自动驾驶物流配送车",
+      "properties": {
+        "industry": "交通运输",
+        "source": "互联网+",
+        "technologies": [
+          "自动驾驶",
+          "计算机视觉",
+          "路径规划",
+          "V2X"
+        ],
+        "biz_model": [
+          "运营服务",
+          "B2B"
+        ],
+        "moat": [
+          "乡村道路数据集",
+          "低成本硬件方案"
+        ],
+        "problem": "农村最后一公里物流成本是城市的3-5倍，快递员日均配送距离长、效率低，偏远村庄常2-3天才能收到快递",
+        "solution": "低成本自动驾驶配送车，适配乡村非标准化道路，单车日配送能力200单，成本降低60%",
+        "market_size": "农村物流市场约3000亿元，末端配送约500亿",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [
+          "农村场景竞争少",
+          "政策支持（乡村振兴）",
+          "成本优势明显"
+        ],
+        "failure_risks": [
+          "乡村道路复杂性（泥路、无标线）",
+          "车辆安全认证困难",
+          "基础设施（充电/通信）不完善"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "technology_16cf1ae1",
+      "type": "Technology",
+      "label": "路径规划",
+      "properties": {}
+    },
+    {
+      "id": "technology_270b0c45",
+      "type": "Technology",
+      "label": "V2X",
+      "properties": {}
+    },
+    {
+      "id": "businessmodel_41405a6f",
+      "type": "BusinessModel",
+      "label": "运营服务",
+      "properties": {}
+    },
+    {
+      "id": "moattype_22822cc8",
+      "type": "MoatType",
+      "label": "乡村道路数据集",
+      "properties": {}
+    },
+    {
+      "id": "moattype_d1793311",
+      "type": "MoatType",
+      "label": "低成本硬件方案",
+      "properties": {}
+    },
+    {
+      "id": "proj_ed59faec",
+      "type": "Project",
+      "label": "港智通——基于数字孪生的智慧港口调度系统",
+      "properties": {
+        "industry": "交通运输",
+        "source": "挑战杯",
+        "technologies": [
+          "数字孪生",
+          "强化学习",
+          "IoT",
+          "大数据"
+        ],
+        "biz_model": [
+          "SaaS",
+          "B2B",
+          "技术服务"
+        ],
+        "moat": [
+          "港口调度优化算法",
+          "行业数据积累"
+        ],
+        "problem": "港口集装箱调度依赖调度员经验，效率波动大，泊位利用率仅60-70%，船舶平均等待时间>12小时",
+        "solution": "数字孪生+强化学习的港口全局调度优化系统，泊位利用率提升至85%，船舶等待时间缩短40%",
+        "market_size": "智慧港口市场约200亿元",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [
+          "经济效益直接可量化",
+          "大型港口标杆效应"
+        ],
+        "failure_risks": [
+          "港口IT系统封闭性强",
+          "定制化程度高"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "moattype_043da7b4",
+      "type": "MoatType",
+      "label": "港口调度优化算法",
+      "properties": {}
+    },
+    {
+      "id": "moattype_b8427138",
+      "type": "MoatType",
+      "label": "行业数据积累",
+      "properties": {}
+    },
+    {
+      "id": "proj_b5a0dafe",
+      "type": "Project",
+      "label": "社区智脑——基于大模型的基层治理辅助决策系统",
+      "properties": {
+        "industry": "政务管理",
+        "source": "互联网+",
+        "technologies": [
+          "大模型",
+          "知识图谱",
+          "NLP",
+          "GIS"
+        ],
+        "biz_model": [
+          "B2B",
+          "SaaS"
+        ],
+        "moat": [
+          "基层治理知识库",
+          "政务数据接口"
+        ],
+        "problem": "社区工作者面临大量重复性事务（政策咨询、矛盾调解、表格填报），80%时间花在事务性工作上",
+        "solution": "大模型驱动的社区治理助手，自动处理政策查询、生成工作报告、辅助矛盾调解方案制定",
+        "market_size": "基层治理信息化市场约200亿元",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [
+          "解决基层减负刚需",
+          "政策导向明确"
+        ],
+        "failure_risks": [
+          "政务数据敏感性高",
+          "各地政策差异大需定制",
+          "AI生成内容的准确性要求高"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "moattype_116f1d63",
+      "type": "MoatType",
+      "label": "基层治理知识库",
+      "properties": {}
+    },
+    {
+      "id": "moattype_c6466826",
+      "type": "MoatType",
+      "label": "政务数据接口",
+      "properties": {}
+    },
+    {
+      "id": "proj_29a636a7",
+      "type": "Project",
+      "label": "数盾护航——面向中小企业的AI数据合规自检平台",
+      "properties": {
+        "industry": "政务管理",
+        "source": "创青春",
+        "technologies": [
+          "NLP",
+          "知识图谱",
+          "自动化测试"
+        ],
+        "biz_model": [
+          "SaaS",
+          "订阅",
+          "B2B"
+        ],
+        "moat": [
+          "法规知识图谱",
+          "合规检查引擎"
+        ],
+        "problem": "中小企业缺乏专业法务团队，面对GDPR/个保法等复杂数据合规要求无力应对，违规罚款风险大",
+        "solution": "AI自动扫描企业数据流和隐私策略，对照法规知识图谱生成合规报告和整改建议",
+        "market_size": "数据合规服务市场约100亿元",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [
+          "合规罚款恐惧是强驱动力",
+          "自动化降低专业门槛"
+        ],
+        "failure_risks": [
+          "法规更新频繁需持续维护",
+          "法律责任归属问题"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "technology_1b6ad7ff",
+      "type": "Technology",
+      "label": "自动化测试",
+      "properties": {}
+    },
+    {
+      "id": "moattype_35b684eb",
+      "type": "MoatType",
+      "label": "法规知识图谱",
+      "properties": {}
+    },
+    {
+      "id": "moattype_060cf88e",
+      "type": "MoatType",
+      "label": "合规检查引擎",
+      "properties": {}
+    },
+    {
+      "id": "proj_7282853e",
+      "type": "Project",
+      "label": "古韵新声——AI驱动的非遗技艺数字传承平台",
+      "properties": {
+        "industry": "文化旅游",
+        "source": "互联网+",
+        "technologies": [
+          "计算机视觉",
+          "动作捕捉",
+          "大模型",
+          "3D重建"
+        ],
+        "biz_model": [
+          "平台",
+          "增值服务",
+          "B2B"
+        ],
+        "moat": [
+          "非遗技艺数字资产",
+          "传承人合作网络"
+        ],
+        "problem": "全国1557项国家级非遗中，超过40%面临传承人老龄化和后继无人问题，传统技艺濒临失传",
+        "solution": "通过动作捕捉和3D重建数字化记录非遗技艺，大模型生成互动教学内容，让用户在线学习体验",
+        "market_size": "非遗保护产业约500亿元，数字化细分约30亿",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [
+          "文化保护政策支持",
+          "内容独特性强"
+        ],
+        "failure_risks": [
+          "非遗传承人合作意愿不确定",
+          "商业变现路径不清晰"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "technology_27fc2796",
+      "type": "Technology",
+      "label": "动作捕捉",
+      "properties": {}
+    },
+    {
+      "id": "technology_4dd818c7",
+      "type": "Technology",
+      "label": "3D重建",
+      "properties": {}
+    },
+    {
+      "id": "moattype_294f076f",
+      "type": "MoatType",
+      "label": "非遗技艺数字资产",
+      "properties": {}
+    },
+    {
+      "id": "moattype_b6c7a732",
+      "type": "MoatType",
+      "label": "传承人合作网络",
+      "properties": {}
+    },
+    {
+      "id": "proj_aa8f9fbd",
+      "type": "Project",
+      "label": "游智通——小语种国家入境游AI导览助手",
+      "properties": {
+        "industry": "文化旅游",
+        "source": "创青春",
+        "technologies": [
+          "大模型",
+          "语音识别",
+          "AR",
+          "多语言NLP"
+        ],
+        "biz_model": [
+          "平台",
+          "佣金",
+          "广告"
+        ],
+        "moat": [
+          "多语言旅游知识库",
+          "目的地内容生态"
+        ],
+        "problem": "来自东南亚、中东等小语种国家的入境游客，在中国面临严重的语言和文化障碍，现有翻译工具不懂旅游场景",
+        "solution": "支持30+语种的AI旅游导览助手，理解旅游场景语义，提供文化解读、路线推荐和实时翻译",
+        "market_size": "入境旅游服务市场约200亿元",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [
+          "小语种竞争对手少",
+          "入境游政策利好"
+        ],
+        "failure_risks": [
+          "小语种训练数据稀缺",
+          "各地旅游信息碎片化"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "technology_ad3e8fbd",
+      "type": "Technology",
+      "label": "多语言NLP",
+      "properties": {}
+    },
+    {
+      "id": "moattype_32fcb380",
+      "type": "MoatType",
+      "label": "多语言旅游知识库",
+      "properties": {}
+    },
+    {
+      "id": "moattype_2817aa2d",
+      "type": "MoatType",
+      "label": "目的地内容生态",
+      "properties": {}
+    },
+    {
+      "id": "proj_4b7d443e",
+      "type": "Project",
+      "label": "知产卫士——AI专利侵权风险预警与规避系统",
+      "properties": {
+        "industry": "政务管理",
+        "source": "互联网+",
+        "technologies": [
+          "NLP",
+          "知识图谱",
+          "大模型",
+          "语义检索"
+        ],
+        "biz_model": [
+          "SaaS",
+          "订阅",
+          "B2B"
+        ],
+        "moat": [
+          "专利语义分析模型",
+          "侵权案例库"
+        ],
+        "problem": "科技企业出海面临专利诉讼风险，人工专利检索耗时（平均40小时/项目），且易遗漏关键风险专利",
+        "solution": "AI自动分析产品技术特征，语义匹配相关专利，评估侵权风险等级并生成规避设计建议",
+        "market_size": "知识产权服务市场约2000亿元，AI专利分析约50亿",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [
+          "出海企业刚需",
+          "AI检索效率提升100倍"
+        ],
+        "failure_risks": [
+          "专利分析准确性要求极高",
+          "需要专利律师验证"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "technology_ef5aae49",
+      "type": "Technology",
+      "label": "语义检索",
+      "properties": {}
+    },
+    {
+      "id": "moattype_bf4b6115",
+      "type": "MoatType",
+      "label": "专利语义分析模型",
+      "properties": {}
+    },
+    {
+      "id": "moattype_be25555c",
+      "type": "MoatType",
+      "label": "侵权案例库",
+      "properties": {}
+    },
+    {
+      "id": "proj_6b3af5a5",
+      "type": "Project",
+      "label": "灵犀客服——多模态AI客服训练与质检平台",
+      "properties": {
+        "industry": "政务管理",
+        "source": "互联网+",
+        "technologies": [
+          "大模型",
+          "语音识别",
+          "NLP",
+          "情感计算"
+        ],
+        "biz_model": [
+          "SaaS",
+          "B2B",
+          "订阅"
+        ],
+        "moat": [
+          "客服对话数据集",
+          "情感分析模型"
+        ],
+        "problem": "客服行业人员流动率高（年均60%），新员工培训周期长（3-6个月），服务质量不稳定",
+        "solution": "AI模拟真实客户场景进行客服培训，实时质检客服对话并提供改进建议，培训周期缩短60%",
+        "market_size": "客服外包与培训市场约1000亿元，AI质检约50亿",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [
+          "降低培训成本效果显著",
+          "SaaS模式易规模化"
+        ],
+        "failure_risks": [
+          "大型企业倾向自建",
+          "客服行业向AI替代转型"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "moattype_fcec7a24",
+      "type": "MoatType",
+      "label": "客服对话数据集",
+      "properties": {}
+    },
+    {
+      "id": "moattype_21c5e20e",
+      "type": "MoatType",
+      "label": "情感分析模型",
+      "properties": {}
+    },
+    {
+      "id": "proj_8e05a0e7",
+      "type": "Project",
+      "label": "供链明眸——中小制造企业供应链风险预警平台",
+      "properties": {
+        "industry": "工业制造",
+        "source": "创青春",
+        "technologies": [
+          "知识图谱",
+          "大数据",
+          "机器学习",
+          "NLP"
+        ],
+        "biz_model": [
+          "SaaS",
+          "B2B",
+          "数据服务"
+        ],
+        "moat": [
+          "供应商信用数据",
+          "风险预测模型"
+        ],
+        "problem": "中小制造企业供应链信息不透明，供应商爆雷（资金链断裂、质量事故）平均提前发现时间<1天",
+        "solution": "整合工商、司法、舆情等多源数据构建供应商知识图谱，AI提前14天预警供应链风险",
+        "market_size": "供应链风控市场约200亿元",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [
+          "预警提前量长（14天）",
+          "多源数据融合优势"
+        ],
+        "failure_risks": [
+          "数据获取成本高",
+          "中小企业付费意愿低"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "moattype_bf34cf6a",
+      "type": "MoatType",
+      "label": "供应商信用数据",
+      "properties": {}
+    },
+    {
+      "id": "moattype_795ba8b7",
+      "type": "MoatType",
+      "label": "风险预测模型",
+      "properties": {}
+    },
+    {
+      "id": "proj_1fd87473",
+      "type": "Project",
+      "label": "银发乐学——面向老年人的AI数字素养提升应用",
+      "properties": {
+        "industry": "教育教学",
+        "source": "互联网+",
+        "technologies": [
+          "大模型",
+          "语音交互",
+          "适老化设计"
+        ],
+        "biz_model": [
+          "广告",
+          "增值服务",
+          "会员"
+        ],
+        "moat": [
+          "适老化交互设计",
+          "社区运营"
+        ],
+        "problem": "2.8亿老年人中超60%存在数字鸿沟，不会用智能手机导致无法享受数字化公共服务",
+        "solution": "语音驱动、极简界面的AI教学助手，手把手教老年人使用手机常用功能，支持方言识别",
+        "market_size": "老年数字教育市场约100亿元（增速快）",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [
+          "社会价值大",
+          "政策支持（国务院适老化文件）",
+          "方言识别差异化"
+        ],
+        "failure_risks": [
+          "老年用户付费意愿低",
+          "获客依赖社区地推",
+          "产品迭代需极度克制"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "technology_cd63d219",
+      "type": "Technology",
+      "label": "语音交互",
+      "properties": {}
+    },
+    {
+      "id": "technology_c7d6a325",
+      "type": "Technology",
+      "label": "适老化设计",
+      "properties": {}
+    },
+    {
+      "id": "moattype_da14eab4",
+      "type": "MoatType",
+      "label": "适老化交互设计",
+      "properties": {}
+    },
+    {
+      "id": "moattype_16ad867c",
+      "type": "MoatType",
+      "label": "社区运营",
+      "properties": {}
+    },
+    {
+      "id": "proj_50feb992",
+      "type": "Project",
+      "label": "睿检通——AI驱动的建筑工程质量智能巡检系统",
+      "properties": {
+        "industry": "工业制造",
+        "source": "挑战杯",
+        "technologies": [
+          "计算机视觉",
+          "无人机",
+          "BIM",
+          "边缘计算"
+        ],
+        "biz_model": [
+          "SaaS",
+          "B2B",
+          "技术服务"
+        ],
+        "moat": [
+          "建筑缺陷检测模型",
+          "BIM集成能力"
+        ],
+        "problem": "建筑工程质量巡检人工效率低（日均覆盖<3000㎡），漏检率约5%，且高空作业安全风险大",
+        "solution": "无人机+AI自动完成建筑外立面和结构巡检，日均覆盖面积提升10倍，自动生成质量报告",
+        "market_size": "建筑质检市场约500亿元，智能化细分约30亿",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [
+          "安全替代人工高空作业",
+          "效率提升10倍以上"
+        ],
+        "failure_risks": [
+          "建筑行业数字化程度低",
+          "各项目差异大难标准化"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "technology_418d8681",
+      "type": "Technology",
+      "label": "BIM",
+      "properties": {}
+    },
+    {
+      "id": "moattype_f43c7ba3",
+      "type": "MoatType",
+      "label": "建筑缺陷检测模型",
+      "properties": {}
+    },
+    {
+      "id": "moattype_513eb77b",
+      "type": "MoatType",
+      "label": "BIM集成能力",
+      "properties": {}
+    },
+    {
+      "id": "proj_9afa9d57",
+      "type": "Project",
+      "label": "食安链——区块链+AI的食品安全全链条溯源平台",
+      "properties": {
+        "industry": "农业发展",
+        "source": "互联网+",
+        "technologies": [
+          "区块链",
+          "计算机视觉",
+          "IoT",
+          "大数据"
+        ],
+        "biz_model": [
+          "SaaS",
+          "B2B",
+          "平台"
+        ],
+        "moat": [
+          "溯源数据链",
+          "品牌商合作"
+        ],
+        "problem": "食品安全事件频发但溯源困难，从农田到餐桌的供应链信息断裂，消费者无法验证食品来源",
+        "solution": "IoT采集+区块链存证+AI质检，实现从种植/养殖到零售的全链条不可篡改溯源",
+        "market_size": "食品溯源市场约200亿元",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [
+          "食品安全是社会焦点",
+          "区块链保证数据可信"
+        ],
+        "failure_risks": [
+          "供应链参与方配合度低",
+          "IoT部署成本高",
+          "消费者扫码意愿下降"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "moattype_88312247",
+      "type": "MoatType",
+      "label": "溯源数据链",
+      "properties": {}
+    },
+    {
+      "id": "moattype_0e8ef3ec",
+      "type": "MoatType",
+      "label": "品牌商合作",
+      "properties": {}
+    },
+    {
+      "id": "proj_e8a1cdbb",
+      "type": "Project",
+      "label": "译境通——面向学术论文的AI多语言翻译与润色平台",
+      "properties": {
+        "industry": "教育教学",
+        "source": "互联网+",
+        "technologies": [
+          "大模型",
+          "NLP",
+          "RAG",
+          "知识图谱"
+        ],
+        "biz_model": [
+          "订阅",
+          "按次付费",
+          "B2B"
+        ],
+        "moat": [
+          "学术领域微调模型",
+          "术语知识图谱"
+        ],
+        "problem": "中国科研人员年产论文>50万篇需英文发表，人工翻译成本高（千字200-500元），机翻学术准确性不足",
+        "solution": "针对学术场景微调的翻译大模型，理解学科术语和论文逻辑结构，翻译+润色一体化",
+        "market_size": "学术翻译市场约30亿元",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [
+          "科研人员刚需",
+          "专业术语翻译差异化"
+        ],
+        "failure_risks": [
+          "通用大模型翻译能力快速提升",
+          "学术界对AI使用态度分化"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "technology_fb6a72bb",
+      "type": "Technology",
+      "label": "RAG",
+      "properties": {}
+    },
+    {
+      "id": "businessmodel_88ca632e",
+      "type": "BusinessModel",
+      "label": "按次付费",
+      "properties": {}
+    },
+    {
+      "id": "moattype_14d4838d",
+      "type": "MoatType",
+      "label": "学术领域微调模型",
+      "properties": {}
+    },
+    {
+      "id": "moattype_0bf668fb",
+      "type": "MoatType",
+      "label": "术语知识图谱",
+      "properties": {}
+    },
+    {
+      "id": "proj_2cf12219",
+      "type": "Project",
+      "label": "云程万里——高校毕业生AI职业规划与求职辅导系统",
+      "properties": {
+        "industry": "教育教学",
+        "source": "创青春",
+        "technologies": [
+          "大模型",
+          "知识图谱",
+          "推荐系统",
+          "NLP"
+        ],
+        "biz_model": [
+          "平台",
+          "B2B",
+          "广告"
+        ],
+        "moat": [
+          "就业数据知识图谱",
+          "高校合作渠道"
+        ],
+        "problem": "高校毕业生就业率压力大，学生缺乏个性化职业指导，高校就业指导中心人均服务比>1000:1",
+        "solution": "AI分析学生的专业背景、技能、兴趣，结合行业趋势和岗位要求，提供个性化职业规划和面试辅导",
+        "market_size": "大学生求职服务市场约200亿元",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [
+          "高校就业指标KPI驱动",
+          "学生免费+企业付费模式"
+        ],
+        "failure_risks": [
+          "与BOSS直聘等平台竞争",
+          "AI指导的可靠性存疑"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "technology_b89d9a90",
+      "type": "Technology",
+      "label": "推荐系统",
+      "properties": {}
+    },
+    {
+      "id": "moattype_178a813a",
+      "type": "MoatType",
+      "label": "就业数据知识图谱",
+      "properties": {}
+    },
+    {
+      "id": "moattype_fe70d673",
+      "type": "MoatType",
+      "label": "高校合作渠道",
+      "properties": {}
+    },
+    {
+      "id": "proj_f73e909d",
+      "type": "Project",
+      "label": "智护家园——社区独居老人安全监护IoT系统",
+      "properties": {
+        "industry": "医疗健康",
+        "source": "互联网+",
+        "technologies": [
+          "IoT",
+          "边缘计算",
+          "计算机视觉",
+          "机器学习"
+        ],
+        "biz_model": [
+          "SaaS",
+          "B2B",
+          "订阅"
+        ],
+        "moat": [
+          "老人行为模式数据",
+          "社区运营网络"
+        ],
+        "problem": "全国独居老人超3000万，跌倒是老年人意外死亡首因，约50%的跌倒发生在家中且无人发现",
+        "solution": "非穿戴式IoT传感器网络（毫米波雷达+环境传感器），AI识别跌倒/异常行为自动报警",
+        "market_size": "智慧养老市场约1000亿元，居家安全监护约100亿",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [
+          "非穿戴式（老人无需配合）",
+          "社会价值+政策驱动"
+        ],
+        "failure_risks": [
+          "隐私顾虑（摄像头方案不可接受）",
+          "老年人/家属付费意愿评估"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "moattype_a0fe6d85",
+      "type": "MoatType",
+      "label": "老人行为模式数据",
+      "properties": {}
+    },
+    {
+      "id": "moattype_d6d6e6ba",
+      "type": "MoatType",
+      "label": "社区运营网络",
+      "properties": {}
+    },
+    {
+      "id": "proj_e2fc99fd",
+      "type": "Project",
+      "label": "慧眼识灾——多源遥感AI城市内涝预警系统",
+      "properties": {
+        "industry": "环境保护",
+        "source": "挑战杯",
+        "technologies": [
+          "遥感",
+          "深度学习",
+          "GIS",
+          "大数据"
+        ],
+        "biz_model": [
+          "B2B",
+          "技术服务",
+          "SaaS"
+        ],
+        "moat": [
+          "城市内涝模型",
+          "多源数据融合算法"
+        ],
+        "problem": "城市内涝频发（每年影响超200个城市），传统水文模型精度低、响应慢，难以精确预测积水点",
+        "solution": "融合卫星遥感、气象雷达、排水管网数据的AI内涝预测系统，提前2小时精确预测积水点和深度",
+        "market_size": "城市防洪排涝市场约300亿元",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [
+          "城市安全刚需",
+          "预测精度高"
+        ],
+        "failure_risks": [
+          "城市排水管网数据获取困难",
+          "极端天气预测仍有不确定性"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "technology_557e6439",
+      "type": "Technology",
+      "label": "遥感",
+      "properties": {}
+    },
+    {
+      "id": "moattype_63fd160c",
+      "type": "MoatType",
+      "label": "城市内涝模型",
+      "properties": {}
+    },
+    {
+      "id": "moattype_dc75cecb",
+      "type": "MoatType",
+      "label": "多源数据融合算法",
+      "properties": {}
+    },
+    {
+      "id": "proj_d3e06530",
+      "type": "Project",
+      "label": "矿脉智探——AI驱动的矿山安全生产智能监控系统",
+      "properties": {
+        "industry": "工业制造",
+        "source": "挑战杯",
+        "technologies": [
+          "计算机视觉",
+          "IoT",
+          "边缘计算",
+          "知识图谱"
+        ],
+        "biz_model": [
+          "B2B",
+          "SaaS",
+          "技术服务"
+        ],
+        "moat": [
+          "矿山安全知识图谱",
+          "煤矿场景视觉模型"
+        ],
+        "problem": "中国每年矿山事故仍造成数百人死亡，人工安全巡检覆盖不足，违规行为发现率低",
+        "solution": "AI视觉识别矿工未戴安全帽、违规操作等行为，结合IoT监测瓦斯/温度，实现全方位安全预警",
+        "market_size": "矿山安全信息化市场约100亿元",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [],
+        "success_factors": [
+          "安全监管政策强驱动",
+          "事故代价极高"
+        ],
+        "failure_risks": [
+          "矿下环境恶劣（粉尘、光照差）",
+          "矿山企业数字化基础差"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "moattype_414614fd",
+      "type": "MoatType",
+      "label": "矿山安全知识图谱",
+      "properties": {}
+    },
+    {
+      "id": "moattype_e60c5fcc",
+      "type": "MoatType",
+      "label": "煤矿场景视觉模型",
+      "properties": {}
     }
   ],
   "hyperedges": [
@@ -23493,6 +25079,1890 @@
         "project_count": 2,
         "teaching_note": "关键词'水下'和'机器'在2个项目中共现"
       }
+    },
+    {
+      "id": "he_profile_proj_1b340131",
+      "type": "Project_Profile",
+      "nodes": [
+        "proj_1b340131",
+        "mkt_d1c2b24c",
+        "tech_85587c49",
+        "tech_2dc9b4e0",
+        "technology_7d9f0fd1",
+        "tech_bb481825"
+      ],
+      "properties": {
+        "source": "互联网+"
+      }
+    },
+    {
+      "id": "he_pmf_proj_1b340131",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_1b340131",
+        "mkt_d1c2b24c",
+        "biz_b0ca9e41",
+        "biz_91e32a5f",
+        "biz_02daf71f"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_psf_proj_1b340131",
+      "type": "Pain_Solution_Fit",
+      "nodes": [
+        "proj_1b340131",
+        "pain_d28f5f79"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_risk_proj_1b340131_liance",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_1b340131",
+        "risk_compliance"
+      ],
+      "properties": {
+        "risk_description": "隐私伦理风险高"
+      }
+    },
+    {
+      "id": "he_risk_proj_1b340131_idence",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_1b340131",
+        "risk_no_evidence"
+      ],
+      "properties": {
+        "risk_description": "临床验证周期长"
+      }
+    },
+    {
+      "id": "he_tech_proj_1b340131",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_85587c49",
+        "tech_2dc9b4e0",
+        "technology_7d9f0fd1",
+        "tech_bb481825"
+      ],
+      "properties": {
+        "project": "proj_1b340131"
+      }
+    },
+    {
+      "id": "he_biz_proj_1b340131",
+      "type": "Business_Strategy",
+      "nodes": [
+        "proj_1b340131",
+        "biz_b0ca9e41",
+        "biz_91e32a5f",
+        "biz_02daf71f",
+        "moattype_55c825af",
+        "moattype_feea78f0"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_profile_proj_c9054fe3",
+      "type": "Project_Profile",
+      "nodes": [
+        "proj_c9054fe3",
+        "mkt_d1c2b24c",
+        "tech_ffb93bb5",
+        "tech_7692bbdb",
+        "technology_f529c51e",
+        "tech_bb481825"
+      ],
+      "properties": {
+        "source": "挑战杯"
+      }
+    },
+    {
+      "id": "he_pmf_proj_c9054fe3",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_c9054fe3",
+        "mkt_d1c2b24c",
+        "biz_db974238",
+        "biz_91e32a5f"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_psf_proj_c9054fe3",
+      "type": "Pain_Solution_Fit",
+      "nodes": [
+        "proj_c9054fe3",
+        "pain_d28f5f79"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_risk_proj_c9054fe3_93ab13",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_c9054fe3",
+        "risk_0d93ab13"
+      ],
+      "properties": {
+        "risk_description": "需要持续更新药品数据库"
+      }
+    },
+    {
+      "id": "he_tech_proj_c9054fe3",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_ffb93bb5",
+        "tech_7692bbdb",
+        "technology_f529c51e",
+        "tech_bb481825"
+      ],
+      "properties": {
+        "project": "proj_c9054fe3"
+      }
+    },
+    {
+      "id": "he_biz_proj_c9054fe3",
+      "type": "Business_Strategy",
+      "nodes": [
+        "proj_c9054fe3",
+        "biz_db974238",
+        "biz_91e32a5f",
+        "moattype_a6438531",
+        "moattype_caf133a8"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_profile_proj_5cc37e08",
+      "type": "Project_Profile",
+      "nodes": [
+        "proj_5cc37e08",
+        "mkt_3ae60528",
+        "tech_2dc9b4e0",
+        "technology_50ce88b6",
+        "tech_bb481825",
+        "tech_85587c49"
+      ],
+      "properties": {
+        "source": "互联网+"
+      }
+    },
+    {
+      "id": "he_pmf_proj_5cc37e08",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_5cc37e08",
+        "mkt_3ae60528",
+        "biz_b0ca9e41",
+        "biz_02daf71f",
+        "biz_91e32a5f"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_psf_proj_5cc37e08",
+      "type": "Pain_Solution_Fit",
+      "nodes": [
+        "proj_5cc37e08",
+        "pain_d28f5f79"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_tech_proj_5cc37e08",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_2dc9b4e0",
+        "technology_50ce88b6",
+        "tech_bb481825",
+        "tech_85587c49"
+      ],
+      "properties": {
+        "project": "proj_5cc37e08"
+      }
+    },
+    {
+      "id": "he_biz_proj_5cc37e08",
+      "type": "Business_Strategy",
+      "nodes": [
+        "proj_5cc37e08",
+        "biz_b0ca9e41",
+        "biz_02daf71f",
+        "biz_91e32a5f",
+        "moattype_79e36391",
+        "moattype_8fd77c67"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_profile_proj_49b0e650",
+      "type": "Project_Profile",
+      "nodes": [
+        "proj_49b0e650",
+        "mkt_3ae60528",
+        "tech_2dc9b4e0",
+        "tech_01a78881",
+        "tech_5b61a1b2",
+        "tech_bb481825"
+      ],
+      "properties": {
+        "source": "挑战杯"
+      }
+    },
+    {
+      "id": "he_pmf_proj_49b0e650",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_49b0e650",
+        "mkt_3ae60528",
+        "biz_b0ca9e41",
+        "biz_91e32a5f",
+        "biz_98a315c0"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_psf_proj_49b0e650",
+      "type": "Pain_Solution_Fit",
+      "nodes": [
+        "proj_49b0e650",
+        "painpoint_57846ffb"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_tech_proj_49b0e650",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_2dc9b4e0",
+        "tech_01a78881",
+        "tech_5b61a1b2",
+        "tech_bb481825"
+      ],
+      "properties": {
+        "project": "proj_49b0e650"
+      }
+    },
+    {
+      "id": "he_biz_proj_49b0e650",
+      "type": "Business_Strategy",
+      "nodes": [
+        "proj_49b0e650",
+        "biz_b0ca9e41",
+        "biz_91e32a5f",
+        "biz_98a315c0",
+        "moattype_6546f19b",
+        "moattype_969ae3ff"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_profile_proj_e96a9c8e",
+      "type": "Project_Profile",
+      "nodes": [
+        "proj_e96a9c8e",
+        "mkt_8a964c7a",
+        "tech_fce4b7d0",
+        "tech_ffb93bb5",
+        "tech_7692bbdb",
+        "tech_8dd4d769"
+      ],
+      "properties": {
+        "source": "互联网+"
+      }
+    },
+    {
+      "id": "he_pmf_proj_e96a9c8e",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_e96a9c8e",
+        "mkt_8a964c7a",
+        "businessmodel_5d7dbac5",
+        "biz_b0ca9e41",
+        "biz_91e32a5f"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_psf_proj_e96a9c8e",
+      "type": "Pain_Solution_Fit",
+      "nodes": [
+        "proj_e96a9c8e",
+        "pain_cbf04045"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_risk_proj_e96a9c8e_40efc4",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_e96a9c8e",
+        "risk_bf40efc4"
+      ],
+      "properties": {
+        "risk_description": "与大疆植保竞争激烈"
+      }
+    },
+    {
+      "id": "he_tech_proj_e96a9c8e",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_fce4b7d0",
+        "tech_ffb93bb5",
+        "tech_7692bbdb",
+        "tech_8dd4d769"
+      ],
+      "properties": {
+        "project": "proj_e96a9c8e"
+      }
+    },
+    {
+      "id": "he_biz_proj_e96a9c8e",
+      "type": "Business_Strategy",
+      "nodes": [
+        "proj_e96a9c8e",
+        "businessmodel_5d7dbac5",
+        "biz_b0ca9e41",
+        "biz_91e32a5f",
+        "moattype_27025a57",
+        "moattype_56f2af40"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_profile_proj_364eea9a",
+      "type": "Project_Profile",
+      "nodes": [
+        "proj_364eea9a",
+        "mkt_8a964c7a",
+        "tech_589f8ced",
+        "tech_2c657e7d",
+        "tech_61bb1751",
+        "tech_8dd4d769"
+      ],
+      "properties": {
+        "source": "创青春"
+      }
+    },
+    {
+      "id": "he_pmf_proj_364eea9a",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_364eea9a",
+        "mkt_8a964c7a",
+        "biz_b0ca9e41",
+        "biz_5fd032b3",
+        "biz_91e32a5f"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_psf_proj_364eea9a",
+      "type": "Pain_Solution_Fit",
+      "nodes": [
+        "proj_364eea9a",
+        "pain_d28f5f79"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_tech_proj_364eea9a",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_589f8ced",
+        "tech_2c657e7d",
+        "tech_61bb1751",
+        "tech_8dd4d769"
+      ],
+      "properties": {
+        "project": "proj_364eea9a"
+      }
+    },
+    {
+      "id": "he_biz_proj_364eea9a",
+      "type": "Business_Strategy",
+      "nodes": [
+        "proj_364eea9a",
+        "biz_b0ca9e41",
+        "biz_5fd032b3",
+        "biz_91e32a5f",
+        "moattype_29bc6d67",
+        "moattype_d9a60137"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_profile_proj_bab9b8b5",
+      "type": "Project_Profile",
+      "nodes": [
+        "proj_bab9b8b5",
+        "mkt_131e4e3b",
+        "tech_ffb93bb5",
+        "technology_f369293b",
+        "technology_715ecda3",
+        "tech_61bb1751"
+      ],
+      "properties": {
+        "source": "挑战杯"
+      }
+    },
+    {
+      "id": "he_pmf_proj_bab9b8b5",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_bab9b8b5",
+        "mkt_131e4e3b",
+        "biz_91e32a5f",
+        "biz_b6496f76",
+        "biz_b0ca9e41"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_psf_proj_bab9b8b5",
+      "type": "Pain_Solution_Fit",
+      "nodes": [
+        "proj_bab9b8b5",
+        "pain_d28f5f79"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_risk_proj_bab9b8b5_5b96ee",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_bab9b8b5",
+        "risk_985b96ee"
+      ],
+      "properties": {
+        "risk_description": "技术在复杂水体中的泛化性"
+      }
+    },
+    {
+      "id": "he_tech_proj_bab9b8b5",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_ffb93bb5",
+        "technology_f369293b",
+        "technology_715ecda3",
+        "tech_61bb1751"
+      ],
+      "properties": {
+        "project": "proj_bab9b8b5"
+      }
+    },
+    {
+      "id": "he_biz_proj_bab9b8b5",
+      "type": "Business_Strategy",
+      "nodes": [
+        "proj_bab9b8b5",
+        "biz_91e32a5f",
+        "biz_b6496f76",
+        "biz_b0ca9e41",
+        "moattype_d20adbdb",
+        "moattype_44a0d0c6"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_profile_proj_01bd987c",
+      "type": "Project_Profile",
+      "nodes": [
+        "proj_01bd987c",
+        "mkt_131e4e3b",
+        "tech_2c657e7d",
+        "tech_75d8fafb",
+        "tech_589f8ced",
+        "tech_61bb1751"
+      ],
+      "properties": {
+        "source": "互联网+"
+      }
+    },
+    {
+      "id": "he_pmf_proj_01bd987c",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_01bd987c",
+        "mkt_131e4e3b",
+        "biz_4981287f",
+        "biz_bacd6f47",
+        "biz_91e32a5f"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_psf_proj_01bd987c",
+      "type": "Pain_Solution_Fit",
+      "nodes": [
+        "proj_01bd987c",
+        "pain_fdcfc601"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_risk_proj_01bd987c_1243ed",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_01bd987c",
+        "risk_8f1243ed"
+      ],
+      "properties": {
+        "risk_description": "碳积分变现路径不清晰"
+      }
+    },
+    {
+      "id": "he_risk_proj_01bd987c_liance",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_01bd987c",
+        "risk_compliance"
+      ],
+      "properties": {
+        "risk_description": "数据采集隐私问题"
+      }
+    },
+    {
+      "id": "he_tech_proj_01bd987c",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_2c657e7d",
+        "tech_75d8fafb",
+        "tech_589f8ced",
+        "tech_61bb1751"
+      ],
+      "properties": {
+        "project": "proj_01bd987c"
+      }
+    },
+    {
+      "id": "he_biz_proj_01bd987c",
+      "type": "Business_Strategy",
+      "nodes": [
+        "proj_01bd987c",
+        "biz_4981287f",
+        "biz_bacd6f47",
+        "biz_91e32a5f",
+        "moattype_b7c94654",
+        "moattype_d26fb165"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_profile_proj_034a87e2",
+      "type": "Project_Profile",
+      "nodes": [
+        "proj_034a87e2",
+        "mkt_daf8ab76",
+        "technology_64832822",
+        "tech_8c5f70f8",
+        "tech_8dd4d769",
+        "tech_589f8ced"
+      ],
+      "properties": {
+        "source": "互联网+"
+      }
+    },
+    {
+      "id": "he_pmf_proj_034a87e2",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_034a87e2",
+        "mkt_daf8ab76",
+        "biz_b0ca9e41",
+        "biz_91e32a5f",
+        "biz_02daf71f"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_psf_proj_034a87e2",
+      "type": "Pain_Solution_Fit",
+      "nodes": [
+        "proj_034a87e2",
+        "pain_d28f5f79"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_tech_proj_034a87e2",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "technology_64832822",
+        "tech_8c5f70f8",
+        "tech_8dd4d769",
+        "tech_589f8ced"
+      ],
+      "properties": {
+        "project": "proj_034a87e2"
+      }
+    },
+    {
+      "id": "he_biz_proj_034a87e2",
+      "type": "Business_Strategy",
+      "nodes": [
+        "proj_034a87e2",
+        "biz_b0ca9e41",
+        "biz_91e32a5f",
+        "biz_02daf71f",
+        "moattype_aa0d5cb3",
+        "moattype_5b8fafb0"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_profile_proj_3d8db06a",
+      "type": "Project_Profile",
+      "nodes": [
+        "proj_3d8db06a",
+        "mkt_daf8ab76",
+        "technology_8853aa83",
+        "tech_8c5f70f8",
+        "tech_1f097591",
+        "tech_8dd4d769"
+      ],
+      "properties": {
+        "source": "挑战杯"
+      }
+    },
+    {
+      "id": "he_pmf_proj_3d8db06a",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_3d8db06a",
+        "mkt_daf8ab76",
+        "businessmodel_e993c545",
+        "biz_b6496f76",
+        "biz_91e32a5f"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_psf_proj_3d8db06a",
+      "type": "Pain_Solution_Fit",
+      "nodes": [
+        "proj_3d8db06a",
+        "pain_cbf04045"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_risk_proj_3d8db06a_idence",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_3d8db06a",
+        "risk_no_evidence"
+      ],
+      "properties": {
+        "risk_description": "工业客户验证周期长"
+      }
+    },
+    {
+      "id": "he_tech_proj_3d8db06a",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "technology_8853aa83",
+        "tech_8c5f70f8",
+        "tech_1f097591",
+        "tech_8dd4d769"
+      ],
+      "properties": {
+        "project": "proj_3d8db06a"
+      }
+    },
+    {
+      "id": "he_biz_proj_3d8db06a",
+      "type": "Business_Strategy",
+      "nodes": [
+        "proj_3d8db06a",
+        "businessmodel_e993c545",
+        "biz_b6496f76",
+        "biz_91e32a5f",
+        "moattype_dcbe4b20",
+        "moattype_c64af392"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_profile_proj_f17768fc",
+      "type": "Project_Profile",
+      "nodes": [
+        "proj_f17768fc",
+        "mkt_f55b5c48",
+        "tech_f64736b9",
+        "tech_ffb93bb5",
+        "technology_16cf1ae1",
+        "technology_270b0c45"
+      ],
+      "properties": {
+        "source": "互联网+"
+      }
+    },
+    {
+      "id": "he_pmf_proj_f17768fc",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_f17768fc",
+        "mkt_f55b5c48",
+        "businessmodel_41405a6f",
+        "biz_91e32a5f"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_psf_proj_f17768fc",
+      "type": "Pain_Solution_Fit",
+      "nodes": [
+        "proj_f17768fc",
+        "pain_cbf04045"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_tech_proj_f17768fc",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_f64736b9",
+        "tech_ffb93bb5",
+        "technology_16cf1ae1",
+        "technology_270b0c45"
+      ],
+      "properties": {
+        "project": "proj_f17768fc"
+      }
+    },
+    {
+      "id": "he_biz_proj_f17768fc",
+      "type": "Business_Strategy",
+      "nodes": [
+        "proj_f17768fc",
+        "businessmodel_41405a6f",
+        "biz_91e32a5f",
+        "moattype_22822cc8",
+        "moattype_d1793311"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_profile_proj_ed59faec",
+      "type": "Project_Profile",
+      "nodes": [
+        "proj_ed59faec",
+        "mkt_f55b5c48",
+        "tech_01a78881",
+        "tech_6964a395",
+        "tech_589f8ced",
+        "tech_2c657e7d"
+      ],
+      "properties": {
+        "source": "挑战杯"
+      }
+    },
+    {
+      "id": "he_pmf_proj_ed59faec",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_ed59faec",
+        "mkt_f55b5c48",
+        "biz_b0ca9e41",
+        "biz_91e32a5f",
+        "biz_b6496f76"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_psf_proj_ed59faec",
+      "type": "Pain_Solution_Fit",
+      "nodes": [
+        "proj_ed59faec",
+        "pain_d28f5f79"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_tech_proj_ed59faec",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_01a78881",
+        "tech_6964a395",
+        "tech_589f8ced",
+        "tech_2c657e7d"
+      ],
+      "properties": {
+        "project": "proj_ed59faec"
+      }
+    },
+    {
+      "id": "he_biz_proj_ed59faec",
+      "type": "Business_Strategy",
+      "nodes": [
+        "proj_ed59faec",
+        "biz_b0ca9e41",
+        "biz_91e32a5f",
+        "biz_b6496f76",
+        "moattype_043da7b4",
+        "moattype_b8427138"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_profile_proj_b5a0dafe",
+      "type": "Project_Profile",
+      "nodes": [
+        "proj_b5a0dafe",
+        "mkt_7fbf2e97",
+        "tech_2dc9b4e0",
+        "tech_bb481825",
+        "tech_85587c49",
+        "technology_715ecda3"
+      ],
+      "properties": {
+        "source": "互联网+"
+      }
+    },
+    {
+      "id": "he_pmf_proj_b5a0dafe",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_b5a0dafe",
+        "mkt_7fbf2e97",
+        "biz_91e32a5f",
+        "biz_b0ca9e41"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_psf_proj_b5a0dafe",
+      "type": "Pain_Solution_Fit",
+      "nodes": [
+        "proj_b5a0dafe",
+        "pain_d28f5f79"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_risk_proj_b5a0dafe_93ab13",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_b5a0dafe",
+        "risk_0d93ab13"
+      ],
+      "properties": {
+        "risk_description": "政务数据敏感性高"
+      }
+    },
+    {
+      "id": "he_tech_proj_b5a0dafe",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_2dc9b4e0",
+        "tech_bb481825",
+        "tech_85587c49",
+        "technology_715ecda3"
+      ],
+      "properties": {
+        "project": "proj_b5a0dafe"
+      }
+    },
+    {
+      "id": "he_biz_proj_b5a0dafe",
+      "type": "Business_Strategy",
+      "nodes": [
+        "proj_b5a0dafe",
+        "biz_91e32a5f",
+        "biz_b0ca9e41",
+        "moattype_116f1d63",
+        "moattype_c6466826"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_profile_proj_29a636a7",
+      "type": "Project_Profile",
+      "nodes": [
+        "proj_29a636a7",
+        "mkt_7fbf2e97",
+        "tech_85587c49",
+        "tech_bb481825",
+        "technology_1b6ad7ff"
+      ],
+      "properties": {
+        "source": "创青春"
+      }
+    },
+    {
+      "id": "he_pmf_proj_29a636a7",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_29a636a7",
+        "mkt_7fbf2e97",
+        "biz_b0ca9e41",
+        "biz_02daf71f",
+        "biz_91e32a5f"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_psf_proj_29a636a7",
+      "type": "Pain_Solution_Fit",
+      "nodes": [
+        "proj_29a636a7",
+        "pain_fdcfc601"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_tech_proj_29a636a7",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_85587c49",
+        "tech_bb481825",
+        "technology_1b6ad7ff"
+      ],
+      "properties": {
+        "project": "proj_29a636a7"
+      }
+    },
+    {
+      "id": "he_biz_proj_29a636a7",
+      "type": "Business_Strategy",
+      "nodes": [
+        "proj_29a636a7",
+        "biz_b0ca9e41",
+        "biz_02daf71f",
+        "biz_91e32a5f",
+        "moattype_35b684eb",
+        "moattype_060cf88e"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_profile_proj_7282853e",
+      "type": "Project_Profile",
+      "nodes": [
+        "proj_7282853e",
+        "mkt_a5f2e466",
+        "tech_ffb93bb5",
+        "technology_27fc2796",
+        "tech_2dc9b4e0",
+        "technology_4dd818c7"
+      ],
+      "properties": {
+        "source": "互联网+"
+      }
+    },
+    {
+      "id": "he_pmf_proj_7282853e",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_7282853e",
+        "mkt_a5f2e466",
+        "biz_4981287f",
+        "biz_432ce951",
+        "biz_91e32a5f"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_psf_proj_7282853e",
+      "type": "Pain_Solution_Fit",
+      "nodes": [
+        "proj_7282853e",
+        "pain_d28f5f79"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_risk_proj_7282853e_1243ed",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_7282853e",
+        "risk_8f1243ed"
+      ],
+      "properties": {
+        "risk_description": "商业变现路径不清晰"
+      }
+    },
+    {
+      "id": "he_tech_proj_7282853e",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_ffb93bb5",
+        "technology_27fc2796",
+        "tech_2dc9b4e0",
+        "technology_4dd818c7"
+      ],
+      "properties": {
+        "project": "proj_7282853e"
+      }
+    },
+    {
+      "id": "he_biz_proj_7282853e",
+      "type": "Business_Strategy",
+      "nodes": [
+        "proj_7282853e",
+        "biz_4981287f",
+        "biz_432ce951",
+        "biz_91e32a5f",
+        "moattype_294f076f",
+        "moattype_b6c7a732"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_profile_proj_aa8f9fbd",
+      "type": "Project_Profile",
+      "nodes": [
+        "proj_aa8f9fbd",
+        "mkt_a5f2e466",
+        "tech_2dc9b4e0",
+        "tech_7c306e88",
+        "tech_5b61a1b2",
+        "technology_ad3e8fbd"
+      ],
+      "properties": {
+        "source": "创青春"
+      }
+    },
+    {
+      "id": "he_pmf_proj_aa8f9fbd",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_aa8f9fbd",
+        "mkt_a5f2e466",
+        "biz_4981287f",
+        "biz_394ab37f",
+        "biz_bacd6f47"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_psf_proj_aa8f9fbd",
+      "type": "Pain_Solution_Fit",
+      "nodes": [
+        "proj_aa8f9fbd",
+        "pain_d28f5f79"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_risk_proj_aa8f9fbd_93ab13",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_aa8f9fbd",
+        "risk_0d93ab13"
+      ],
+      "properties": {
+        "risk_description": "小语种训练数据稀缺"
+      }
+    },
+    {
+      "id": "he_tech_proj_aa8f9fbd",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_2dc9b4e0",
+        "tech_7c306e88",
+        "tech_5b61a1b2",
+        "technology_ad3e8fbd"
+      ],
+      "properties": {
+        "project": "proj_aa8f9fbd"
+      }
+    },
+    {
+      "id": "he_biz_proj_aa8f9fbd",
+      "type": "Business_Strategy",
+      "nodes": [
+        "proj_aa8f9fbd",
+        "biz_4981287f",
+        "biz_394ab37f",
+        "biz_bacd6f47",
+        "moattype_32fcb380",
+        "moattype_2817aa2d"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_profile_proj_4b7d443e",
+      "type": "Project_Profile",
+      "nodes": [
+        "proj_4b7d443e",
+        "mkt_7fbf2e97",
+        "tech_85587c49",
+        "tech_bb481825",
+        "tech_2dc9b4e0",
+        "technology_ef5aae49"
+      ],
+      "properties": {
+        "source": "互联网+"
+      }
+    },
+    {
+      "id": "he_pmf_proj_4b7d443e",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_4b7d443e",
+        "mkt_7fbf2e97",
+        "biz_b0ca9e41",
+        "biz_02daf71f",
+        "biz_91e32a5f"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_psf_proj_4b7d443e",
+      "type": "Pain_Solution_Fit",
+      "nodes": [
+        "proj_4b7d443e",
+        "painpoint_57846ffb"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_risk_proj_4b7d443e_idence",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_4b7d443e",
+        "risk_no_evidence"
+      ],
+      "properties": {
+        "risk_description": "需要专利律师验证"
+      }
+    },
+    {
+      "id": "he_tech_proj_4b7d443e",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_85587c49",
+        "tech_bb481825",
+        "tech_2dc9b4e0",
+        "technology_ef5aae49"
+      ],
+      "properties": {
+        "project": "proj_4b7d443e"
+      }
+    },
+    {
+      "id": "he_biz_proj_4b7d443e",
+      "type": "Business_Strategy",
+      "nodes": [
+        "proj_4b7d443e",
+        "biz_b0ca9e41",
+        "biz_02daf71f",
+        "biz_91e32a5f",
+        "moattype_bf4b6115",
+        "moattype_be25555c"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_profile_proj_6b3af5a5",
+      "type": "Project_Profile",
+      "nodes": [
+        "proj_6b3af5a5",
+        "mkt_7fbf2e97",
+        "tech_2dc9b4e0",
+        "tech_7c306e88",
+        "tech_85587c49",
+        "technology_7d9f0fd1"
+      ],
+      "properties": {
+        "source": "互联网+"
+      }
+    },
+    {
+      "id": "he_pmf_proj_6b3af5a5",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_6b3af5a5",
+        "mkt_7fbf2e97",
+        "biz_b0ca9e41",
+        "biz_91e32a5f",
+        "biz_02daf71f"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_psf_proj_6b3af5a5",
+      "type": "Pain_Solution_Fit",
+      "nodes": [
+        "proj_6b3af5a5",
+        "pain_d28f5f79"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_tech_proj_6b3af5a5",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_2dc9b4e0",
+        "tech_7c306e88",
+        "tech_85587c49",
+        "technology_7d9f0fd1"
+      ],
+      "properties": {
+        "project": "proj_6b3af5a5"
+      }
+    },
+    {
+      "id": "he_biz_proj_6b3af5a5",
+      "type": "Business_Strategy",
+      "nodes": [
+        "proj_6b3af5a5",
+        "biz_b0ca9e41",
+        "biz_91e32a5f",
+        "biz_02daf71f",
+        "moattype_fcec7a24",
+        "moattype_21c5e20e"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_profile_proj_8e05a0e7",
+      "type": "Project_Profile",
+      "nodes": [
+        "proj_8e05a0e7",
+        "mkt_daf8ab76",
+        "tech_bb481825",
+        "tech_2c657e7d",
+        "tech_61bb1751",
+        "tech_85587c49"
+      ],
+      "properties": {
+        "source": "创青春"
+      }
+    },
+    {
+      "id": "he_pmf_proj_8e05a0e7",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_8e05a0e7",
+        "mkt_daf8ab76",
+        "biz_b0ca9e41",
+        "biz_91e32a5f",
+        "biz_5fd032b3"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_psf_proj_8e05a0e7",
+      "type": "Pain_Solution_Fit",
+      "nodes": [
+        "proj_8e05a0e7",
+        "pain_d28f5f79"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_risk_proj_8e05a0e7_93ab13",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_8e05a0e7",
+        "risk_0d93ab13"
+      ],
+      "properties": {
+        "risk_description": "数据获取成本高"
+      }
+    },
+    {
+      "id": "he_risk_proj_8e05a0e7_nclear",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_8e05a0e7",
+        "risk_biz_unclear"
+      ],
+      "properties": {
+        "risk_description": "中小企业付费意愿低"
+      }
+    },
+    {
+      "id": "he_tech_proj_8e05a0e7",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_bb481825",
+        "tech_2c657e7d",
+        "tech_61bb1751",
+        "tech_85587c49"
+      ],
+      "properties": {
+        "project": "proj_8e05a0e7"
+      }
+    },
+    {
+      "id": "he_biz_proj_8e05a0e7",
+      "type": "Business_Strategy",
+      "nodes": [
+        "proj_8e05a0e7",
+        "biz_b0ca9e41",
+        "biz_91e32a5f",
+        "biz_5fd032b3",
+        "moattype_bf34cf6a",
+        "moattype_795ba8b7"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_profile_proj_1fd87473",
+      "type": "Project_Profile",
+      "nodes": [
+        "proj_1fd87473",
+        "mkt_3ae60528",
+        "tech_2dc9b4e0",
+        "technology_cd63d219",
+        "technology_c7d6a325"
+      ],
+      "properties": {
+        "source": "互联网+"
+      }
+    },
+    {
+      "id": "he_pmf_proj_1fd87473",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_1fd87473",
+        "mkt_3ae60528",
+        "biz_bacd6f47",
+        "biz_432ce951",
+        "biz_4d9dd5e4"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_psf_proj_1fd87473",
+      "type": "Pain_Solution_Fit",
+      "nodes": [
+        "proj_1fd87473",
+        "pain_d28f5f79"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_risk_proj_1fd87473_4b8ae4",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_1fd87473",
+        "risk_014b8ae4"
+      ],
+      "properties": {
+        "risk_description": "老年用户付费意愿低"
+      }
+    },
+    {
+      "id": "he_risk_proj_1fd87473_c_high",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_1fd87473",
+        "risk_cac_high"
+      ],
+      "properties": {
+        "risk_description": "获客依赖社区地推"
+      }
+    },
+    {
+      "id": "he_tech_proj_1fd87473",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_2dc9b4e0",
+        "technology_cd63d219",
+        "technology_c7d6a325"
+      ],
+      "properties": {
+        "project": "proj_1fd87473"
+      }
+    },
+    {
+      "id": "he_biz_proj_1fd87473",
+      "type": "Business_Strategy",
+      "nodes": [
+        "proj_1fd87473",
+        "biz_bacd6f47",
+        "biz_432ce951",
+        "biz_4d9dd5e4",
+        "moattype_da14eab4",
+        "moattype_16ad867c"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_profile_proj_50feb992",
+      "type": "Project_Profile",
+      "nodes": [
+        "proj_50feb992",
+        "mkt_daf8ab76",
+        "tech_ffb93bb5",
+        "tech_fce4b7d0",
+        "technology_418d8681",
+        "tech_8dd4d769"
+      ],
+      "properties": {
+        "source": "挑战杯"
+      }
+    },
+    {
+      "id": "he_pmf_proj_50feb992",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_50feb992",
+        "mkt_daf8ab76",
+        "biz_b0ca9e41",
+        "biz_91e32a5f",
+        "biz_b6496f76"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_psf_proj_50feb992",
+      "type": "Pain_Solution_Fit",
+      "nodes": [
+        "proj_50feb992",
+        "pain_cbf04045"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_tech_proj_50feb992",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_ffb93bb5",
+        "tech_fce4b7d0",
+        "technology_418d8681",
+        "tech_8dd4d769"
+      ],
+      "properties": {
+        "project": "proj_50feb992"
+      }
+    },
+    {
+      "id": "he_biz_proj_50feb992",
+      "type": "Business_Strategy",
+      "nodes": [
+        "proj_50feb992",
+        "biz_b0ca9e41",
+        "biz_91e32a5f",
+        "biz_b6496f76",
+        "moattype_f43c7ba3",
+        "moattype_513eb77b"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_profile_proj_9afa9d57",
+      "type": "Project_Profile",
+      "nodes": [
+        "proj_9afa9d57",
+        "mkt_8a964c7a",
+        "tech_75d8fafb",
+        "tech_ffb93bb5",
+        "tech_589f8ced",
+        "tech_2c657e7d"
+      ],
+      "properties": {
+        "source": "互联网+"
+      }
+    },
+    {
+      "id": "he_pmf_proj_9afa9d57",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_9afa9d57",
+        "mkt_8a964c7a",
+        "biz_b0ca9e41",
+        "biz_91e32a5f",
+        "biz_4981287f"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_psf_proj_9afa9d57",
+      "type": "Pain_Solution_Fit",
+      "nodes": [
+        "proj_9afa9d57",
+        "pain_d6f39fd5"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_tech_proj_9afa9d57",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_75d8fafb",
+        "tech_ffb93bb5",
+        "tech_589f8ced",
+        "tech_2c657e7d"
+      ],
+      "properties": {
+        "project": "proj_9afa9d57"
+      }
+    },
+    {
+      "id": "he_biz_proj_9afa9d57",
+      "type": "Business_Strategy",
+      "nodes": [
+        "proj_9afa9d57",
+        "biz_b0ca9e41",
+        "biz_91e32a5f",
+        "biz_4981287f",
+        "moattype_88312247",
+        "moattype_0e8ef3ec"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_profile_proj_e8a1cdbb",
+      "type": "Project_Profile",
+      "nodes": [
+        "proj_e8a1cdbb",
+        "mkt_3ae60528",
+        "tech_2dc9b4e0",
+        "tech_85587c49",
+        "technology_fb6a72bb",
+        "tech_bb481825"
+      ],
+      "properties": {
+        "source": "互联网+"
+      }
+    },
+    {
+      "id": "he_pmf_proj_e8a1cdbb",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_e8a1cdbb",
+        "mkt_3ae60528",
+        "biz_02daf71f",
+        "businessmodel_88ca632e",
+        "biz_91e32a5f"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_psf_proj_e8a1cdbb",
+      "type": "Pain_Solution_Fit",
+      "nodes": [
+        "proj_e8a1cdbb",
+        "pain_0b5964e6"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_tech_proj_e8a1cdbb",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_2dc9b4e0",
+        "tech_85587c49",
+        "technology_fb6a72bb",
+        "tech_bb481825"
+      ],
+      "properties": {
+        "project": "proj_e8a1cdbb"
+      }
+    },
+    {
+      "id": "he_biz_proj_e8a1cdbb",
+      "type": "Business_Strategy",
+      "nodes": [
+        "proj_e8a1cdbb",
+        "biz_02daf71f",
+        "businessmodel_88ca632e",
+        "biz_91e32a5f",
+        "moattype_14d4838d",
+        "moattype_0bf668fb"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_profile_proj_2cf12219",
+      "type": "Project_Profile",
+      "nodes": [
+        "proj_2cf12219",
+        "mkt_3ae60528",
+        "tech_2dc9b4e0",
+        "tech_bb481825",
+        "technology_b89d9a90",
+        "tech_85587c49"
+      ],
+      "properties": {
+        "source": "创青春"
+      }
+    },
+    {
+      "id": "he_pmf_proj_2cf12219",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_2cf12219",
+        "mkt_3ae60528",
+        "biz_4981287f",
+        "biz_91e32a5f",
+        "biz_bacd6f47"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_psf_proj_2cf12219",
+      "type": "Pain_Solution_Fit",
+      "nodes": [
+        "proj_2cf12219",
+        "pain_fdcfc601"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_risk_proj_2cf12219_40efc4",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_2cf12219",
+        "risk_bf40efc4"
+      ],
+      "properties": {
+        "risk_description": "与BOSS直聘等平台竞争"
+      }
+    },
+    {
+      "id": "he_tech_proj_2cf12219",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_2dc9b4e0",
+        "tech_bb481825",
+        "technology_b89d9a90",
+        "tech_85587c49"
+      ],
+      "properties": {
+        "project": "proj_2cf12219"
+      }
+    },
+    {
+      "id": "he_biz_proj_2cf12219",
+      "type": "Business_Strategy",
+      "nodes": [
+        "proj_2cf12219",
+        "biz_4981287f",
+        "biz_91e32a5f",
+        "biz_bacd6f47",
+        "moattype_178a813a",
+        "moattype_fe70d673"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_profile_proj_f73e909d",
+      "type": "Project_Profile",
+      "nodes": [
+        "proj_f73e909d",
+        "mkt_d1c2b24c",
+        "tech_589f8ced",
+        "tech_8dd4d769",
+        "tech_ffb93bb5",
+        "tech_61bb1751"
+      ],
+      "properties": {
+        "source": "互联网+"
+      }
+    },
+    {
+      "id": "he_pmf_proj_f73e909d",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_f73e909d",
+        "mkt_d1c2b24c",
+        "biz_b0ca9e41",
+        "biz_91e32a5f",
+        "biz_02daf71f"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_psf_proj_f73e909d",
+      "type": "Pain_Solution_Fit",
+      "nodes": [
+        "proj_f73e909d",
+        "pain_d28f5f79"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_risk_proj_f73e909d_liance",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_f73e909d",
+        "risk_compliance"
+      ],
+      "properties": {
+        "risk_description": "隐私顾虑（摄像头方案不可接受）"
+      }
+    },
+    {
+      "id": "he_risk_proj_f73e909d_nclear",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_f73e909d",
+        "risk_biz_unclear"
+      ],
+      "properties": {
+        "risk_description": "老年人/家属付费意愿评估"
+      }
+    },
+    {
+      "id": "he_tech_proj_f73e909d",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_589f8ced",
+        "tech_8dd4d769",
+        "tech_ffb93bb5",
+        "tech_61bb1751"
+      ],
+      "properties": {
+        "project": "proj_f73e909d"
+      }
+    },
+    {
+      "id": "he_biz_proj_f73e909d",
+      "type": "Business_Strategy",
+      "nodes": [
+        "proj_f73e909d",
+        "biz_b0ca9e41",
+        "biz_91e32a5f",
+        "biz_02daf71f",
+        "moattype_a0fe6d85",
+        "moattype_d6d6e6ba"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_profile_proj_e2fc99fd",
+      "type": "Project_Profile",
+      "nodes": [
+        "proj_e2fc99fd",
+        "mkt_131e4e3b",
+        "technology_557e6439",
+        "tech_8c5f70f8",
+        "technology_715ecda3",
+        "tech_2c657e7d"
+      ],
+      "properties": {
+        "source": "挑战杯"
+      }
+    },
+    {
+      "id": "he_pmf_proj_e2fc99fd",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_e2fc99fd",
+        "mkt_131e4e3b",
+        "biz_91e32a5f",
+        "biz_b6496f76",
+        "biz_b0ca9e41"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_psf_proj_e2fc99fd",
+      "type": "Pain_Solution_Fit",
+      "nodes": [
+        "proj_e2fc99fd",
+        "pain_d28f5f79"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_risk_proj_e2fc99fd_93ab13",
+      "type": "Risk_Pattern",
+      "nodes": [
+        "proj_e2fc99fd",
+        "risk_0d93ab13"
+      ],
+      "properties": {
+        "risk_description": "城市排水管网数据获取困难"
+      }
+    },
+    {
+      "id": "he_tech_proj_e2fc99fd",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "technology_557e6439",
+        "tech_8c5f70f8",
+        "technology_715ecda3",
+        "tech_2c657e7d"
+      ],
+      "properties": {
+        "project": "proj_e2fc99fd"
+      }
+    },
+    {
+      "id": "he_biz_proj_e2fc99fd",
+      "type": "Business_Strategy",
+      "nodes": [
+        "proj_e2fc99fd",
+        "biz_91e32a5f",
+        "biz_b6496f76",
+        "biz_b0ca9e41",
+        "moattype_63fd160c",
+        "moattype_dc75cecb"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_profile_proj_d3e06530",
+      "type": "Project_Profile",
+      "nodes": [
+        "proj_d3e06530",
+        "mkt_daf8ab76",
+        "tech_ffb93bb5",
+        "tech_589f8ced",
+        "tech_8dd4d769",
+        "tech_bb481825"
+      ],
+      "properties": {
+        "source": "挑战杯"
+      }
+    },
+    {
+      "id": "he_pmf_proj_d3e06530",
+      "type": "Product_Market_Fit",
+      "nodes": [
+        "proj_d3e06530",
+        "mkt_daf8ab76",
+        "biz_91e32a5f",
+        "biz_b0ca9e41",
+        "biz_b6496f76"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_psf_proj_d3e06530",
+      "type": "Pain_Solution_Fit",
+      "nodes": [
+        "proj_d3e06530",
+        "pain_7f56244b"
+      ],
+      "properties": {}
+    },
+    {
+      "id": "he_tech_proj_d3e06530",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_ffb93bb5",
+        "tech_589f8ced",
+        "tech_8dd4d769",
+        "tech_bb481825"
+      ],
+      "properties": {
+        "project": "proj_d3e06530"
+      }
+    },
+    {
+      "id": "he_biz_proj_d3e06530",
+      "type": "Business_Strategy",
+      "nodes": [
+        "proj_d3e06530",
+        "biz_91e32a5f",
+        "biz_b0ca9e41",
+        "biz_b6496f76",
+        "moattype_414614fd",
+        "moattype_e60c5fcc"
+      ],
+      "properties": {}
     }
   ]
 }

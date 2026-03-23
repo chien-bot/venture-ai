@@ -10,3 +10,5 @@ langgraph==0.2.60
 langchain-core==0.3.28
 neo4j==5.27.0
 PyPDF2==3.0.1
+scikit-learn>=1.3.0
+numpy>=1.24.0

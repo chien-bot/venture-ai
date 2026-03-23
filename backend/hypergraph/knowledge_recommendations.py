@@ -10,34 +10,46 @@ from __future__ import annotations
 
 # H规则 → 推荐概念映射
 H_RULE_TO_CONCEPT: dict[str, dict] = {
-    "H1":  {"concept": "价值主张画布",    "query": "什么是价值主张画布，如何用它对齐客户需求和产品功能？"},
-    "H2":  {"concept": "渠道策略与GTM",   "query": "如何选择和验证用户获取渠道？什么是Go-To-Market策略？"},
-    "H3":  {"concept": "支付意愿测试",    "query": "如何通过预售和访谈验证用户真实的支付意愿？"},
-    "H4":  {"concept": "TAM/SAM/SOM",    "query": "如何自下而上估算市场规模TAM、SAM、SOM？"},
-    "H5":  {"concept": "用户访谈方法",    "query": "如何设计和执行高质量的用户访谈？有哪些常见错误？"},
-    "H6":  {"concept": "竞品分析矩阵",    "query": "如何系统做竞品对比分析？竞品分析矩阵怎么建？"},
-    "H7":  {"concept": "护城河理论",      "query": "什么是护城河？创业公司如何建立和量化差异化优势？"},
-    "H8":  {"concept": "单位经济模型",    "query": "如何计算LTV、CAC，单位经济模型怎么验证？"},
-    "H9":  {"concept": "增长黑客框架",    "query": "什么是AARRR增长漏斗？如何设计增长策略？"},
-    "H10": {"concept": "SMART里程碑",     "query": "如何制定SMART里程碑计划？项目阶段如何划分？"},
-    "H11": {"concept": "合规与伦理风险",  "query": "数据隐私和行业合规如何评估？哪些行业有特殊监管？"},
-    "H12": {"concept": "技术可行性评估",  "query": "如何评估技术路线与团队能力的匹配度？"},
-    "H13": {"concept": "实验设计方法",    "query": "如何设计有效的A/B测试和最小化验证实验？"},
-    "H14": {"concept": "路演叙事结构",    "query": "如何构建完整的路演故事线？7幕叙事结构是什么？"},
-    "H15": {"concept": "证据链构建",      "query": "如何为每个评分维度构建完整的证据材料？"},
+    "H1":  {"concept": "价值主张",        "query": "什么是价值主张画布，如何用它对齐客户需求和产品功能？"},
+    "H2":  {"concept": "渠道策略",        "query": "如何选择和验证用户获取渠道？什么是Go-To-Market策略？"},
+    "H3":  {"concept": "定价策略",        "query": "如何通过预售和访谈验证用户真实的支付意愿？"},
+    "H4":  {"concept": "总可寻址市场",    "query": "如何自下而上估算市场规模TAM、SAM、SOM？"},
+    "H5":  {"concept": "用户访谈",        "query": "如何设计和执行高质量的用户访谈？有哪些常见错误？"},
+    "H6":  {"concept": "竞争分析",        "query": "如何系统做竞品对比分析？竞品分析矩阵怎么建？"},
+    "H7":  {"concept": "护城河",          "query": "什么是护城河？创业公司如何建立和量化差异化优势？"},
+    "H8":  {"concept": "用户终身价值",    "query": "如何计算LTV、CAC，单位经济模型怎么验证？"},
+    "H9":  {"concept": "海盗指标",        "query": "什么是AARRR增长漏斗？如何设计增长策略？"},
+    "H10": {"concept": "技术路线图",      "query": "如何制定SMART里程碑计划？项目阶段如何划分？"},
+    "H11": {"concept": "合规性",          "query": "数据隐私和行业合规如何评估？哪些行业有特殊监管？"},
+    "H12": {"concept": "技术验证",        "query": "如何评估技术路线与团队能力的匹配度？"},
+    "H13": {"concept": "最小可行产品",    "query": "如何设计有效的A/B测试和最小化验证实验？"},
+    "H14": {"concept": "路演材料",        "query": "如何构建完整的路演故事线？7幕叙事结构是什么？"},
+    "H15": {"concept": "精益画布",        "query": "如何为每个评分维度构建完整的证据材料？"},
 }
 
 
 def get_recommendations(triggered_rule_ids: list[str]) -> list[dict]:
     """
     Given a list of triggered H-rule IDs, return up to 3 concept recommendations.
-    Each recommendation: {rule_id, concept, query}
+
+    V2: 增加前置依赖推理（多跳遍历），为每个推荐概念附带学习路径。
+    Each recommendation: {rule_id, concept, query, prerequisites, learning_order}
     """
+    from hypergraph.engine import get_concept_prerequisites
+
     recs = []
     seen: set[str] = set()
     for rid in triggered_rule_ids:
         if rid in H_RULE_TO_CONCEPT and rid not in seen:
-            recs.append({"rule_id": rid, **H_RULE_TO_CONCEPT[rid]})
+            entry = {"rule_id": rid, **H_RULE_TO_CONCEPT[rid]}
+
+            # 多跳：查找概念的前置依赖
+            concept_name = entry["concept"]
+            prereq_info = get_concept_prerequisites(concept_name)
+            entry["prerequisites"] = prereq_info["prerequisites"]
+            entry["learning_order"] = prereq_info["learning_order"]
+
+            recs.append(entry)
             seen.add(rid)
         if len(recs) >= 3:
             break

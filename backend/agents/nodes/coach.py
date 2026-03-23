@@ -15,7 +15,7 @@ from agents.adaptive_questioning import (
     DIM_LABELS,
 )
 from services.competition_mode import get_countdown_context
-from services.database import get_competition_date, get_latest_annotations_for_coach
+from services.database import get_competition_date, get_latest_annotations_for_coach, get_previous_scores
 
 
 # ── 追问策略库 ─────────────────────────────────────────────────────
@@ -169,8 +169,8 @@ def coach_node(state: AgentState) -> AgentState:
         if evidence_context:
             system += f"\n\n[证据追踪摘要]\n{evidence_context}"
 
-        # Inject adaptive questioning context
-        questioning_context = build_questioning_context(scores, messages, current_message)
+        # Inject adaptive questioning context (V2: with session memory)
+        questioning_context = build_questioning_context(scores, messages, current_message, session_id=session_id)
         if questioning_context:
             system += f"\n\n{questioning_context}"
 
@@ -195,6 +195,28 @@ def coach_node(state: AgentState) -> AgentState:
                         system += f"  • {a['note_text']}\n"
             except Exception:
                 pass
+
+        # ★ Inject previous scores for score anchoring
+        if project_id := state.get("project_id"):
+            prev_scores = get_previous_scores(project_id)
+            if prev_scores:
+                dims = {
+                    "empathy": "痛点发现", "ideation": "方案策划",
+                    "business": "商业建模", "execution": "资源杠杆",
+                    "pitching": "路演表达",
+                }
+                score_lines = ", ".join(
+                    f"{dims.get(k, k)}={v}" for k, v in prev_scores.items()
+                    if isinstance(v, (int, float))
+                )
+                system += (
+                    "\n\n[上轮评分参考 — 请基于此进行渐进式调整]\n"
+                    f"上轮评分：{score_lines}\n"
+                    "重要规则：\n"
+                    "- 每个维度每轮变化幅度不超过±2分，除非学生表现有明显突破或严重退步\n"
+                    "- 若学生本轮未涉及某维度，该维度评分应与上轮保持一致\n"
+                    "- 评分应反映累积进展，不要因单轮表现完全重置\n"
+                )
 
         raw = chat_completion(system, messages)
 

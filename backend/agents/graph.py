@@ -1,11 +1,20 @@
 """
-LangGraph multi-agent graph definition.
+LangGraph multi-agent graph definition V2.
 
 Pipeline:
-  router → retriever → (coach | tutor | competition) → synthesizer → critic → END
+  router → retriever → (coach | tutor | competition | grader) → synthesizer → critic
+                                                                                 ↓
+                                                                          [redirect?]
+                                                                           ↓        ↓
+                                                                      tutor_redir → synthesizer_redir → END
+                                                                           (no)
+                                                                            ↓
+                                                                           END
 
-retriever 节点在 router 之后运行，查询超图获取相关案例和风险模式，
-将检索结果注入 state，供后续 coach/tutor/competition 节点作为 RAG 上下文使用。
+V2 改进:
+- critic 检测到高风险规则时，可选择跳转到 tutor 解释相关概念（critic_redirect）
+- 支持 hybrid 路由：tutor → coach → synthesizer
+- loop_count 防止无限循环（最多 1 次重定向）
 """
 
 from langgraph.graph import StateGraph, END
@@ -39,6 +48,55 @@ def _route_after_tutor(state: AgentState) -> str:
     return "synthesizer"
 
 
+def _route_after_critic(state: AgentState) -> str:
+    """
+    V2: critic 后的条件路由。
+    - 有 critic_redirect 且 loop_count <= 1 → tutor_redirect（插入概念解释）
+    - 否则 → END
+    """
+    redirect = state.get("critic_redirect")
+    loop_count = state.get("loop_count", 0)
+
+    if redirect and loop_count <= 1:
+        return "tutor_redirect"
+    return "end"
+
+
+def _tutor_redirect_node(state: AgentState) -> AgentState:
+    """
+    由 critic 触发的 tutor 微型节点。
+    只做一件事：用 critic_redirect 的概念调用 tutor，
+    将结果追加到 final_reply 尾部。
+    """
+    concept = state.get("critic_redirect", "")
+    if not concept:
+        return state
+
+    # 构造一个轻量 tutor 调用
+    tutor_state = {
+        **state,
+        "tutor_concept": concept,
+        "current_message": f"请帮我解释一下「{concept}」这个概念，以及它在创业项目中的具体应用。",
+    }
+    result = tutor_node(tutor_state)
+    tutor_output = result.get("tutor_output", "")
+
+    if tutor_output:
+        final_reply = state.get("final_reply", "")
+        final_reply += (
+            f"\n\n---\n\n### 💡 知识补充：{concept}\n\n"
+            f"{tutor_output}"
+        )
+        return {
+            **state,
+            "final_reply": final_reply,
+            "tutor_output": tutor_output,
+            "critic_redirect": None,  # 清除重定向信号
+        }
+
+    return {**state, "critic_redirect": None}
+
+
 def build_graph() -> StateGraph:
     graph = StateGraph(AgentState)
 
@@ -51,6 +109,7 @@ def build_graph() -> StateGraph:
     graph.add_node("grader", grader_node)
     graph.add_node("synthesizer", synthesizer_node)
     graph.add_node("critic", critic_node)
+    graph.add_node("tutor_redirect", _tutor_redirect_node)
 
     # Entry point
     graph.set_entry_point("router")
@@ -58,7 +117,7 @@ def build_graph() -> StateGraph:
     # router → retriever (always)
     graph.add_edge("router", "retriever")
 
-    # Conditional routing after retriever (was after router)
+    # Conditional routing after retriever
     graph.add_conditional_edges(
         "retriever",
         _route_after_retriever,
@@ -80,12 +139,24 @@ def build_graph() -> StateGraph:
         },
     )
 
-    # All terminal agents go to synthesizer, then critic, then END
+    # All terminal agents go to synthesizer, then critic
     graph.add_edge("coach", "synthesizer")
     graph.add_edge("competition", "synthesizer")
     graph.add_edge("grader", "synthesizer")
     graph.add_edge("synthesizer", "critic")
-    graph.add_edge("critic", END)
+
+    # V2: critic → conditional redirect or END
+    graph.add_conditional_edges(
+        "critic",
+        _route_after_critic,
+        {
+            "tutor_redirect": "tutor_redirect",
+            "end": END,
+        },
+    )
+
+    # tutor_redirect → END (no further loops)
+    graph.add_edge("tutor_redirect", END)
 
     return graph.compile()
 

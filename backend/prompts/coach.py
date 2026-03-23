@@ -58,6 +58,13 @@ COACH_SYSTEM_PROMPT = """# Role
 # Output Format
 每次回复后，在消息末尾以JSON格式输出隐性评分（用户不可见，系统解析用）：
 <!--SCORES:{"empathy":X,"ideation":X,"business":X,"execution":X,"pitching":X,"stage":"discovery|ideation|modeling|execution|pitching","diagnosis":["问题1","问题2"]}-->
+
+## 评分稳定性规则
+- 评分反映学生的**累积能力水平**，而非单轮表现快照
+- 如果系统提供了「上轮评分参考」，请以此为锚点进行微调（±0~2分）
+- 每维度每轮变化不超过2分，除非有明确证据表明重大突破或严重退步
+- 学生本轮未讨论的维度，评分保持与上轮一致
+- 分数只在学生提供了新的、有实质性的证据时才上调
 """
 
 COACH_GREETING = """你好！我是你的创新创业陪跑教练。🎯

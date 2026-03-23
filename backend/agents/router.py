@@ -59,6 +59,10 @@ def run_agent(session_id: str, message: str, agent_type: str = "coach", project_
         "extracted_techs": None,
         "extracted_industry": None,
         "extracted_concept": None,
+        # V2: flexible pipeline
+        "critic_redirect": None,
+        "knowledge_recommendations": None,
+        "loop_count": 0,
     }
 
     graph = get_graph()
@@ -81,6 +85,8 @@ def run_agent(session_id: str, message: str, agent_type: str = "coach", project_
         result["rubric_scores"] = final_state["rubric_scores"]
     if final_state.get("triggered_rules"):
         result["triggered_rules"] = final_state["triggered_rules"]
+    if final_state.get("knowledge_recommendations"):
+        result["knowledge_recommendations"] = final_state["knowledge_recommendations"]
 
     return result
 
@@ -117,6 +123,10 @@ def _build_initial_state(session_id: str, message: str, project_id: str) -> dict
         "extracted_techs": None,
         "extracted_industry": None,
         "extracted_concept": None,
+        # V2: flexible pipeline
+        "critic_redirect": None,
+        "knowledge_recommendations": None,
+        "loop_count": 0,
     }
 
 
@@ -133,7 +143,7 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
     from services.evidence_tracer import refresh_tracer
     from agents.adaptive_questioning import build_questioning_context
     from services.competition_mode import get_countdown_context
-    from services.database import get_competition_date, get_latest_annotations_for_coach
+    from services.database import get_competition_date, get_latest_annotations_for_coach, get_previous_scores
     from prompts.coach import COACH_SYSTEM_PROMPT
     from prompts.tutor import TUTOR_SYSTEM_PROMPT
     from prompts.competition import COMPETITION_SYSTEM_PROMPT
@@ -194,6 +204,27 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
                         system += f"  • {a['note_text']}\n"
             except Exception:
                 pass
+
+            # ★ Score anchoring: inject previous scores
+            prev_scores = get_previous_scores(project_id)
+            if prev_scores:
+                dims = {
+                    "empathy": "痛点发现", "ideation": "方案策划",
+                    "business": "商业建模", "execution": "资源杠杆",
+                    "pitching": "路演表达",
+                }
+                score_lines = ", ".join(
+                    f"{dims.get(k, k)}={v}" for k, v in prev_scores.items()
+                    if isinstance(v, (int, float))
+                )
+                system += (
+                    "\n\n[上轮评分参考 — 请基于此进行渐进式调整]\n"
+                    f"上轮评分：{score_lines}\n"
+                    "重要规则：\n"
+                    "- 每个维度每轮变化幅度不超过±2分，除非学生表现有明显突破或严重退步\n"
+                    "- 若学生本轮未涉及某维度，该维度评分应与上轮保持一致\n"
+                    "- 评分应反映累积进展，不要因单轮表现完全重置\n"
+                )
 
     # Phase 4: Send intent metadata
     yield f"data: {json.dumps({'type': 'meta', 'intent': intent})}\n\n"
@@ -297,14 +328,42 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
     state["scores"] = new_scores
     state["stage"] = stage
     state["diagnosis"] = diagnosis
+    state["loop_count"] = 0
     critic_result = critic_node(state)
     triggered = critic_result.get("triggered_rules") or []
 
-    # Save reply and update project scores
+    # V2: Handle critic redirect — if critic wants to redirect to tutor
+    critic_redirect = critic_result.get("critic_redirect")
+    knowledge_recs = critic_result.get("knowledge_recommendations")
+    if critic_redirect and critic_result.get("loop_count", 0) <= 1:
+        # Stream the redirect tutor output
+        from agents.nodes.tutor import tutor_node as _tutor_node
+        redirect_state = {
+            **critic_result,
+            "tutor_concept": critic_redirect,
+            "current_message": f"请帮我解释一下「{critic_redirect}」这个概念，以及它在创业项目中的具体应用。",
+        }
+        redirect_result = _tutor_node(redirect_state)
+        tutor_extra = redirect_result.get("tutor_output", "")
+        if tutor_extra:
+            redirect_block = f"\n\n---\n\n### 💡 知识补充：{critic_redirect}\n\n{tutor_extra}"
+            yield f"data: {json.dumps({'type': 'token', 'content': redirect_block})}\n\n"
+            clean_reply += redirect_block
+
+    # Update final_reply from critic (includes learning recommendations)
+    clean_reply = critic_result.get("final_reply", clean_reply)
+
+    # Save reply and update project scores (with EMA smoothing)
     append_chat(session_id, "assistant", clean_reply)
     if project_id and (new_scores or stage or diagnosis):
         from services.session_store import update_project_scores
         update_project_scores(project_id, new_scores, stage, diagnosis)
+    # Read back smoothed scores for frontend
+    if project_id and new_scores:
+        from services.database import get_previous_scores as _get_smoothed
+        smoothed = _get_smoothed(project_id)
+        if smoothed:
+            new_scores = smoothed
 
     # Phase 7: Send final metadata
     if rubric_full:
@@ -332,5 +391,7 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
         ]
         if fix_tasks:
             meta["fix_tasks"] = fix_tasks
+    if knowledge_recs:
+        meta["knowledge_recommendations"] = knowledge_recs
 
     yield f"data: {json.dumps(meta)}\n\n"

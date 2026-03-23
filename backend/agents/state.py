@@ -32,6 +32,11 @@ class AgentState(TypedDict):
     # Critic node output: triggered hyperedge rules
     triggered_rules: Optional[list]
 
+    # V2: Flexible pipeline control
+    critic_redirect: Optional[str]          # critic → tutor redirect concept (if any)
+    knowledge_recommendations: Optional[list]  # learning path recommendations from critic
+    loop_count: int                         # prevent infinite loops (max 1 redirect per turn)
+
     # Retriever node output: hypergraph context for RAG
     hypergraph_context: Optional[str]     # formatted text from hypergraph query
     extracted_techs: Optional[list]       # tech keywords found in conversation

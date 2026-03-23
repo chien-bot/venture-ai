@@ -55,7 +55,7 @@ def send_message(req: ChatRequest):
     project_id = req.project_id or get_project_for_session(req.session_id)
     result = run_agent(req.session_id, req.message, req.agent_type, project_id=project_id)
 
-    # P0-1 & P0-2: Write scores back to project
+    # P0-1 & P0-2: Write scores back to project (with EMA smoothing)
     if project_id and (result.get("scores") or result.get("stage") or result.get("diagnosis")):
         update_project_scores(
             project_id,
@@ -63,6 +63,12 @@ def send_message(req: ChatRequest):
             stage=result.get("stage"),
             diagnosis=result.get("diagnosis"),
         )
+        # Read back smoothed scores so frontend gets stable values
+        if result.get("scores"):
+            from services.database import get_previous_scores
+            smoothed = get_previous_scores(project_id)
+            if smoothed:
+                result["scores"] = smoothed
 
     # F5-adv: Auto-detect learning task completion
     if project_id:

@@ -68,10 +68,12 @@ class Evidence:
 
 class EvidenceTracer:
     """
-    Session-scoped evidence tracer.
+    Session-scoped evidence tracer with incremental ingestion.
+
     Usage:
         tracer = EvidenceTracer(session_id)
-        tracer.ingest(messages)
+        tracer.ingest(messages)          # first call: scans all
+        tracer.ingest(messages + [new])  # subsequent: only scans new messages
         evidences = tracer.get_by_rubric("R2_user_evidence")
         summary = tracer.summarize()
     """
@@ -79,17 +81,36 @@ class EvidenceTracer:
     def __init__(self, session_id: str = ""):
         self.session_id = session_id
         self._evidences: list[Evidence] = []
+        self._ingested_msg_count: int = 0  # how many messages already processed
+        self._ingested_user_turn: int = 0  # user turn counter at last ingest
 
     # ── Ingestion ────────────────────────────────────────────
 
     def ingest(self, messages: list[dict]) -> None:
         """
-        Scan full conversation history and extract evidence.
-        Idempotent — clears previous results first.
+        Incrementally scan conversation history and extract evidence.
+
+        Only processes messages beyond what was already ingested.
+        If the message list is shorter than previously ingested (e.g. new
+        session), performs a full re-scan.
         """
-        self._evidences = []
-        user_turn = 0
-        for msg in messages:
+        msg_count = len(messages)
+
+        # Detect if history was reset (shorter than before) → full re-scan
+        if msg_count < self._ingested_msg_count:
+            self._evidences = []
+            self._ingested_msg_count = 0
+            self._ingested_user_turn = 0
+
+        # Nothing new to process
+        if msg_count <= self._ingested_msg_count:
+            return
+
+        # Count user turns in already-processed prefix to set correct turn counter
+        user_turn = self._ingested_user_turn
+        new_messages = messages[self._ingested_msg_count:]
+
+        for msg in new_messages:
             if msg.get("role") != "user":
                 continue
             user_turn += 1
@@ -103,6 +124,9 @@ class EvidenceTracer:
                 ev = self._classify(sent, user_turn)
                 if ev:
                     self._evidences.append(ev)
+
+        self._ingested_msg_count = msg_count
+        self._ingested_user_turn = user_turn
 
     def _classify(self, text: str, turn: int) -> Optional[Evidence]:
         """Classify a sentence into an Evidence object."""

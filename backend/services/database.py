@@ -302,12 +302,54 @@ def save_project(project: dict):
         )
 
 
+def _smooth_scores(
+    prev: dict,
+    new: dict,
+    alpha: float = 0.6,
+    max_delta: float = 2.0,
+) -> dict:
+    """Apply EMA smoothing with per-dimension delta capping.
+
+    Args:
+        prev: previous round scores (may be empty).
+        new: raw LLM scores from current round.
+        alpha: weight for new score (0.6 = 60% new, 40% old).
+        max_delta: max allowed change per dimension per round.
+
+    Returns:
+        Smoothed scores dict (same keys as *new*).
+    """
+    if not prev:
+        return new  # first round — no smoothing possible
+
+    smoothed = {}
+    for dim, raw_val in new.items():
+        if not isinstance(raw_val, (int, float)):
+            smoothed[dim] = raw_val
+            continue
+        old_val = prev.get(dim)
+        if old_val is None or not isinstance(old_val, (int, float)):
+            smoothed[dim] = raw_val
+            continue
+        # EMA blend
+        blended = alpha * raw_val + (1 - alpha) * old_val
+        # Delta cap
+        delta = blended - old_val
+        if abs(delta) > max_delta:
+            blended = old_val + max_delta * (1 if delta > 0 else -1)
+        # Clamp to [0, 10]
+        smoothed[dim] = round(max(0, min(10, blended)), 1)
+    return smoothed
+
+
 def update_project_scores(project_id: str, scores: dict, stage: str | None, diagnosis: list):
     proj = get_project(project_id)
     if not proj:
         return
     if scores:
-        proj["scores"] = scores
+        # Apply EMA smoothing against previous scores
+        prev_scores = proj.get("scores") or {}
+        proj["scores"] = _smooth_scores(prev_scores, scores)
     if diagnosis:
         proj["diagnosis"] = diagnosis
     new_stage = proj.get("stage", "discovery")
@@ -316,8 +358,8 @@ def update_project_scores(project_id: str, scores: dict, stage: str | None, diag
         proj["stage"] = new_stage
     save_project(proj)
     # Auto-snapshot scores for timeline
-    if scores and any(v > 0 for v in scores.values()):
-        save_score_snapshot(project_id, scores, new_stage)
+    if proj.get("scores") and any(v > 0 for v in proj["scores"].values() if isinstance(v, (int, float))):
+        save_score_snapshot(project_id, proj["scores"], new_stage)
 
 
 def _auto_advance_stage(current: str, suggested: str) -> str:
@@ -480,6 +522,17 @@ def get_score_snapshots(project_id: str) -> list[dict]:
             d["scores"] = json.loads(d.pop("scores_json", "{}") or "{}")
             result.append(d)
         return result
+
+
+def get_previous_scores(project_id: str) -> dict | None:
+    """Return the latest stored scores for a project (for score anchoring)."""
+    proj = get_project(project_id)
+    if not proj:
+        return None
+    scores = proj.get("scores") or {}
+    if scores and any(isinstance(v, (int, float)) and v > 0 for v in scores.values()):
+        return scores
+    return None
 
 
 # ── Interview Analyses ──────────────────────────────────────────────
