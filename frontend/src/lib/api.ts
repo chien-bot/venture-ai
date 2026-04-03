@@ -159,6 +159,54 @@ export async function createProject(name: string, industry: string, description:
   });
 }
 
+// Intake Form (前置采集层)
+export async function getIntakeSchema() {
+  return request("/api/chat/intake/schema");
+}
+
+export async function submitIntake(sessionId: string, projectId: string, filledData: Record<string, string>) {
+  return request("/api/chat/intake/submit", {
+    method: "POST",
+    body: JSON.stringify({ session_id: sessionId, project_id: projectId, filled_data: filledData }),
+  });
+}
+
+export async function checkIntakeGaps(filledData: Record<string, string>) {
+  return request("/api/chat/intake/gaps", {
+    method: "POST",
+    body: JSON.stringify({ filled_data: filledData }),
+  });
+}
+
+// Knowledge Cards
+export async function searchKnowledgeCards(params: {
+  q?: string; card_type?: string; stage?: string;
+  dimension?: string; rubric?: string; industry?: string; limit?: number;
+} = {}) {
+  const qs = new URLSearchParams();
+  for (const [k, v] of Object.entries(params)) {
+    if (v !== undefined && v !== "") qs.set(k, String(v));
+  }
+  return request(`/api/knowledge/cards?${qs}`);
+}
+
+export async function getKnowledgeCard(cardId: string) {
+  return request(`/api/knowledge/cards/${cardId}`);
+}
+
+export async function getCardsForRubric(rubricId: string, dimension?: string) {
+  const qs = dimension ? `?dimension=${dimension}` : "";
+  return request(`/api/knowledge/cards/rubric/${rubricId}${qs}`);
+}
+
+export async function generateKnowledgeCards() {
+  return request("/api/knowledge/cards/generate", { method: "POST" });
+}
+
+export async function getKnowledgeStats() {
+  return request("/api/knowledge/stats");
+}
+
 // Teacher
 export async function getDashboard() {
   return request("/api/teacher/dashboard");
@@ -366,4 +414,24 @@ export async function addTeamMember(projectId: string, username: string) {
 
 export async function removeTeamMember(projectId: string, userId: string) {
   return request(`/api/projects/${projectId}/team/${userId}`, { method: "DELETE" });
+}
+
+// Playbooks (创业范式库)
+export async function listPlaybooks() {
+  return request("/api/playbooks/");
+}
+
+export async function getPlaybook(playbookId: string) {
+  return request(`/api/playbooks/${playbookId}`);
+}
+
+export async function matchPlaybook(description: string, industry: string = "", bizModel: string = "", techs: string[] = []) {
+  return request("/api/playbooks/match", {
+    method: "POST",
+    body: JSON.stringify({ description, industry, biz_model: bizModel, techs }),
+  });
+}
+
+export async function clusterPlaybooks() {
+  return request("/api/playbooks/cluster", { method: "POST" });
 }

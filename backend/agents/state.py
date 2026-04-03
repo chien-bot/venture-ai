@@ -37,6 +37,9 @@ class AgentState(TypedDict):
     knowledge_recommendations: Optional[list]  # learning path recommendations from critic
     loop_count: int                         # prevent infinite loops (max 1 redirect per turn)
 
+    # Floor score breakdown (可计算底分)
+    score_breakdown: Optional[dict]       # {dim: {floor_score, llm_delta, final_score, evidence_summary}}
+
     # Retriever node output: hypergraph context for RAG
     hypergraph_context: Optional[str]     # formatted text from hypergraph query
     extracted_techs: Optional[list]       # tech keywords found in conversation

@@ -16,6 +16,10 @@ from agents.adaptive_questioning import (
 )
 from services.competition_mode import get_countdown_context
 from services.database import get_competition_date, get_latest_annotations_for_coach, get_previous_scores
+from services.floor_scorer import compute_floor_scores, enforce_floor, format_breakdown_for_response
+from services.cheap_diagnostic import run_cheap_diagnostic, format_diagnostic_for_prompt, format_diagnostic_as_fallback
+from services.knowledge_cards import search_cards, format_cards_for_prompt
+from services.playbook_engine import match_playbook, format_playbook_for_prompt
 
 
 # ── 追问策略库 ─────────────────────────────────────────────────────
@@ -218,7 +222,75 @@ def coach_node(state: AgentState) -> AgentState:
                     "- 评分应反映累积进展，不要因单轮表现完全重置\n"
                 )
 
+        # ★ 前置采集层注入：如果本 session 有采集数据，注入到 prompt
+        from services.session_store import get_session
+        session_meta = get_session(session_id) or {}
+        intake_ctx = session_meta.get("intake_context")
+        if intake_ctx:
+            system += f"\n\n{intake_ctx}"
+
+        # ★ 范式库注入：根据项目信息匹配创业范式，注入 prompt
+        try:
+            intake_data = session_meta.get("intake_data") or {}
+            proj_desc = intake_data.get("solution_desc") or intake_data.get("pain_scenario") or ""
+            proj_industry = intake_data.get("industry_choice", "")
+            proj_biz = intake_data.get("revenue_model", "")
+            if not proj_desc and project_id:
+                from services.database import get_project
+                proj_info = get_project(project_id)
+                if proj_info:
+                    proj_desc = proj_info.get("description", "")
+                    proj_industry = proj_info.get("industry", proj_industry)
+            if proj_desc:
+                matched = match_playbook(proj_desc, proj_industry, proj_biz)
+                if matched:
+                    pb_prompt = format_playbook_for_prompt(matched[0]["playbook_id"])
+                    if pb_prompt:
+                        system += f"\n\n{pb_prompt}"
+        except Exception:
+            pass
+
+        # ★ Phase 1: Cheap-First 轻推理 — 注入结构化诊断到 LLM prompt
+        all_msgs_for_diag = list(messages)
+        if current_message:
+            all_msgs_for_diag.append({"role": "user", "content": current_message})
+        try:
+            diag = run_cheap_diagnostic(session_id, all_msgs_for_diag, current_scores=scores)
+            diag_prompt = format_diagnostic_for_prompt(diag)
+            if diag_prompt:
+                system += f"\n\n{diag_prompt}"
+        except Exception:
+            diag = None
+
+        # ★ 知识卡片注入：根据诊断缺口推荐相关知识卡片
+        try:
+            if diag and diag.top_gaps:
+                # 从最紧急的缺口维度搜索相关卡片
+                urgent_dims = [d for d in diag.dimensions.values() if d.priority == "urgent"]
+                if urgent_dims:
+                    dim = urgent_dims[0]
+                    gap_cards = search_cards(
+                        dimension=dim.dim,
+                        max_results=3,
+                    )
+                    card_prompt = format_cards_for_prompt(gap_cards, max_cards=2)
+                    if card_prompt:
+                        system += f"\n\n{card_prompt}"
+            elif current_message:
+                # 无诊断时按消息关键词搜索
+                kw_cards = search_cards(query=current_message[:50], max_results=2)
+                card_prompt = format_cards_for_prompt(kw_cards, max_cards=2)
+                if card_prompt:
+                    system += f"\n\n{card_prompt}"
+        except Exception:
+            pass
+
+        # Phase 2: LLM 生成回复（带诊断上下文）
         raw = chat_completion(system, messages)
+
+        # ★ Cheap-First fallback: LLM 失败时用规则层诊断生成回复
+        if raw.startswith("抱歉，AI 服务暂时无法响应") and diag:
+            raw = format_diagnostic_as_fallback(diag)
 
     scores_data = _parse_scores(raw)
     clean = _clean(raw)
@@ -226,11 +298,20 @@ def coach_node(state: AgentState) -> AgentState:
     new_scores = None
     stage = state.get("stage")
     diagnosis = state.get("diagnosis", [])
+    score_breakdown = None
 
     if scores_data:
         new_scores = {k: v for k, v in scores_data.items() if k not in ("stage", "diagnosis")}
         stage = scores_data.get("stage", stage)
         diagnosis = scores_data.get("diagnosis", diagnosis)
+
+        # ★ 可计算底分：用证据约束 LLM 评分
+        all_msgs = list(messages)
+        if current_message:
+            all_msgs.append({"role": "user", "content": current_message})
+        breakdowns = compute_floor_scores(session_id, all_msgs)
+        new_scores = enforce_floor(new_scores, breakdowns)
+        score_breakdown = format_breakdown_for_response(breakdowns)
 
     return {
         **state,
@@ -238,4 +319,5 @@ def coach_node(state: AgentState) -> AgentState:
         "scores": new_scores,
         "stage": stage,
         "diagnosis": diagnosis,
+        "score_breakdown": score_breakdown,
     }

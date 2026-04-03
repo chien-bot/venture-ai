@@ -72,6 +72,7 @@ class ChatResponse(BaseModel):
     knowledge_recommendations: Optional[list] = None
     fix_tasks: Optional[list] = None  # structured fix tasks from H1-H15 rules
     rubric_full: Optional[dict] = None  # detailed grader report {R1: {score, evidence, suggestion}}
+    score_breakdown: Optional[dict] = None  # floor score breakdown {dim: {floor_score, llm_delta, final_score, evidence_summary}}
 
 
 # ── Teacher Dashboard ──

@@ -52,6 +52,20 @@ def tutor_node(state: AgentState) -> AgentState:
                 f"{hypergraph_ctx}"
             )
 
+        # ★ 知识卡片注入：查找概念相关卡片，提供结构化知识
+        try:
+            from services.knowledge_cards import search_cards, format_cards_for_prompt
+            query = concept if concept else message[:50]
+            related_cards = search_cards(query=query, card_type="concept", max_results=2)
+            # 也搜索 mistake 和 template 卡片
+            related_cards += search_cards(query=query, card_type="mistake", max_results=1)
+            related_cards += search_cards(query=query, card_type="template", max_results=1)
+            card_prompt = format_cards_for_prompt(related_cards, max_cards=3)
+            if card_prompt:
+                system += f"\n\n{card_prompt}"
+        except Exception:
+            pass
+
         context = f"学生想了解的概念：{concept}\n学生原话：{message}" if concept else message
         tutor_messages = [{"role": "user", "content": context}]
         reply = chat_completion(system, tutor_messages)

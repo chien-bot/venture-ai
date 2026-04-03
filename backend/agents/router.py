@@ -63,6 +63,8 @@ def run_agent(session_id: str, message: str, agent_type: str = "coach", project_
         "critic_redirect": None,
         "knowledge_recommendations": None,
         "loop_count": 0,
+        # V3: floor score breakdown
+        "score_breakdown": None,
     }
 
     graph = get_graph()
@@ -87,6 +89,8 @@ def run_agent(session_id: str, message: str, agent_type: str = "coach", project_
         result["triggered_rules"] = final_state["triggered_rules"]
     if final_state.get("knowledge_recommendations"):
         result["knowledge_recommendations"] = final_state["knowledge_recommendations"]
+    if final_state.get("score_breakdown"):
+        result["score_breakdown"] = final_state["score_breakdown"]
 
     return result
 
@@ -127,6 +131,8 @@ def _build_initial_state(session_id: str, message: str, project_id: str) -> dict
         "critic_redirect": None,
         "knowledge_recommendations": None,
         "loop_count": 0,
+        # V3: floor score breakdown
+        "score_breakdown": None,
     }
 
 
@@ -226,6 +232,65 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
                     "- 评分应反映累积进展，不要因单轮表现完全重置\n"
                 )
 
+        # ★ 前置采集层注入：如果本 session 有采集数据，注入到 prompt
+        from services.session_store import get_session
+        session_meta = get_session(session_id) or {}
+        intake_ctx = session_meta.get("intake_context")
+        if intake_ctx:
+            system += f"\n\n{intake_ctx}"
+
+        # ★ 范式库注入：匹配学生项目的创业范式
+        try:
+            from services.playbook_engine import match_playbook as _match_pb, format_playbook_for_prompt as _fmt_pb
+            intake_data = session_meta.get("intake_data") or {}
+            _pb_desc = intake_data.get("solution_desc") or intake_data.get("pain_scenario") or ""
+            _pb_ind = intake_data.get("industry_choice", "")
+            _pb_biz = intake_data.get("revenue_model", "")
+            if not _pb_desc and project_id:
+                from services.database import get_project as _gp
+                _pi = _gp(project_id)
+                if _pi:
+                    _pb_desc = _pi.get("description", "")
+                    _pb_ind = _pi.get("industry", _pb_ind)
+            if _pb_desc:
+                _pb_matched = _match_pb(_pb_desc, _pb_ind, _pb_biz)
+                if _pb_matched:
+                    _pb_prompt = _fmt_pb(_pb_matched[0]["playbook_id"])
+                    if _pb_prompt:
+                        system += f"\n\n{_pb_prompt}"
+        except Exception:
+            pass
+
+        # ★ Phase 1: Cheap-First 轻推理 — 注入结构化诊断到 LLM prompt
+        from services.cheap_diagnostic import run_cheap_diagnostic, format_diagnostic_for_prompt, format_diagnostic_as_fallback
+        all_msgs_for_diag = list(state.get("messages", []))
+        all_msgs_for_diag.append({"role": "user", "content": message})
+        try:
+            cheap_diag = run_cheap_diagnostic(session_id, all_msgs_for_diag, current_scores=state.get("scores"))
+            diag_prompt = format_diagnostic_for_prompt(cheap_diag)
+            if diag_prompt:
+                system += f"\n\n{diag_prompt}"
+        except Exception:
+            cheap_diag = None
+
+        # ★ 知识卡片注入：根据诊断缺口或消息关键词推荐卡片
+        try:
+            from services.knowledge_cards import search_cards, format_cards_for_prompt
+            if cheap_diag and cheap_diag.top_gaps:
+                urgent_dims = [d for d in cheap_diag.dimensions.values() if d.priority == "urgent"]
+                if urgent_dims:
+                    gap_cards = search_cards(dimension=urgent_dims[0].dim, max_results=3)
+                    card_prompt = format_cards_for_prompt(gap_cards, max_cards=2)
+                    if card_prompt:
+                        system += f"\n\n{card_prompt}"
+            else:
+                kw_cards = search_cards(query=message[:50], max_results=2)
+                card_prompt = format_cards_for_prompt(kw_cards, max_cards=2)
+                if card_prompt:
+                    system += f"\n\n{card_prompt}"
+        except Exception:
+            pass
+
     # Phase 4: Send intent metadata
     yield f"data: {json.dumps({'type': 'meta', 'intent': intent})}\n\n"
 
@@ -269,6 +334,15 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
             if clean_buffer and not re.search(r"<!--SCORES:", clean_buffer):
                 yield f"data: {json.dumps({'type': 'token', 'content': clean_buffer})}\n\n"
 
+        # ★ Cheap-First fallback: LLM 失败时用规则层诊断生成回复
+        if full_text.startswith("抱歉，AI 服务暂时无法响应") and intent == "coach":
+            cheap_diag_local = locals().get("cheap_diag")
+            if cheap_diag_local:
+                fallback_text = format_diagnostic_as_fallback(cheap_diag_local)
+                full_text = fallback_text
+                # Re-stream the fallback to the frontend
+                yield f"data: {json.dumps({'type': 'token', 'content': fallback_text})}\n\n"
+
     # Phase 6: Parse scores from accumulated text, run critic
     scores_match = re.search(r"<!--SCORES:(.*?)-->", full_text)
     scores_data = None
@@ -296,10 +370,19 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
     new_scores = None
     stage = state.get("stage")
     diagnosis = state.get("diagnosis", [])
+    score_breakdown = None
     if scores_data:
         new_scores = {k: v for k, v in scores_data.items() if k not in ("stage", "diagnosis")}
         stage = scores_data.get("stage", stage)
         diagnosis = scores_data.get("diagnosis", diagnosis)
+
+        # ★ 可计算底分：用证据约束 LLM 评分（streaming path）
+        from services.floor_scorer import compute_floor_scores, enforce_floor, format_breakdown_for_response
+        all_msgs = list(state.get("messages", []))
+        all_msgs.append({"role": "user", "content": message})
+        breakdowns = compute_floor_scores(session_id, all_msgs)
+        new_scores = enforce_floor(new_scores, breakdowns)
+        score_breakdown = format_breakdown_for_response(breakdowns)
 
     # For hybrid: we only streamed the first agent (tutor). We need coach too.
     # For simplicity, hybrid falls back to non-streaming for the coach part.
@@ -393,5 +476,7 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
             meta["fix_tasks"] = fix_tasks
     if knowledge_recs:
         meta["knowledge_recommendations"] = knowledge_recs
+    if score_breakdown:
+        meta["score_breakdown"] = score_breakdown
 
     yield f"data: {json.dumps(meta)}\n\n"

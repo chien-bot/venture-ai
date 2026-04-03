@@ -1,0 +1,4305 @@
+[
+  {
+    "card_id": "case_48b910fb",
+    "card_type": "case",
+    "title": "数湖启智-项目书0411",
+    "summary": "通用行业竞赛案例，技术：知识图谱、机器学习、深度学习",
+    "content": "**痛点：** 当前核心瓶颈在于人工与自动化清洗的双重局限性形成治理真空：人工清洗需要投入大量专业人力进行重复性标注与规则制定，在面对海量异构数据时效率难以保证；而AI驱动的自动化清洗虽能缓解人力瓶颈，却受场景泛化能力，针对特定领域优化的算法在迁移至其他领域时，因数据模态差异与业务逻辑断层，往往产生误判或过度清洗，迫使企业为每\n\n**方案：** 本项目提出的技术能够有效应对多源异构数据湖所带来的挑战，并高质量完成数据管理任务。本项目研制了基于多源异构数据湖的数据智算平台。该系统综合运用前述研究成果，包括任务感知的关系透视、人机协作的数据提质、数据优选的模型提效，旨在真实贴近用户需求，广泛适应多个应用场景。系统为用户提供自助式数据发现，数据清洗融合以及高效模型训练功能。\n\n**商业模式：** 平台、数据服务、API\n\n**壁垒/护城河：** 专利、发明专利、SCI\n\n**成功要素：** 有用户验证；团队包含教授、院士\n\n**风险警示：** 存在合规/隐私风险需评估；未提供市场规模数据",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling",
+      "execution",
+      "pitching"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business",
+      "execution",
+      "pitching"
+    ],
+    "rubrics": [],
+    "industry": "通用",
+    "tags": [
+      "知识图谱",
+      "机器学习",
+      "深度学习",
+      "通用"
+    ],
+    "fields": {
+      "problem": "当前核心瓶颈在于人工与自动化清洗的双重局限性形成治理真空：人工清洗需要投入大量专业人力进行重复性标注与规则制定，在面对海量异构数据时效率难以保证；而AI驱动的自动化清洗虽能缓解人力瓶颈，却受场景泛化能力，针对特定领域优化的算法在迁移至其他领域时，因数据模态差异与业务逻辑断层，往往产生误判或过度清洗，迫使企业为每",
+      "solution": "本项目提出的技术能够有效应对多源异构数据湖所带来的挑战，并高质量完成数据管理任务。本项目研制了基于多源异构数据湖的数据智算平台。该系统综合运用前述研究成果，包括任务感知的关系透视、人机协作的数据提质、数据优选的模型提效，旨在真实贴近用户需求，广泛适应多个应用场景。系统为用户提供自助式数据发现，数据清洗融合以及高效模型训练功能。",
+      "market_size": "",
+      "biz_models": [
+        "平台",
+        "数据服务",
+        "API"
+      ],
+      "moat": [
+        "专利",
+        "发明专利",
+        "SCI"
+      ],
+      "technologies": [
+        "知识图谱",
+        "机器学习",
+        "深度学习"
+      ],
+      "success_factors": [
+        "有用户验证",
+        "团队包含教授、院士"
+      ],
+      "failure_risks": [
+        "存在合规/隐私风险需评估",
+        "未提供市场规模数据"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_case_study",
+    "related_cards": []
+  },
+  {
+    "card_id": "case_82349079",
+    "card_type": "case",
+    "title": "育见先贤—基于多模态_式教育系统",
+    "summary": "教育教学行业竞赛案例，技术：机器学习、Transformer、大模型",
+    "content": "**壁垒/护城河：** 核心技术\n\n**成功要素：** 团队包含工程师\n\n**风险警示：** 盈利模式不清晰；未提供市场规模数据",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling",
+      "execution",
+      "pitching"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business",
+      "execution",
+      "pitching"
+    ],
+    "rubrics": [],
+    "industry": "教育教学",
+    "tags": [
+      "机器学习",
+      "Transformer",
+      "大模型",
+      "教育教学"
+    ],
+    "fields": {
+      "problem": "",
+      "solution": "",
+      "market_size": "",
+      "biz_models": [],
+      "moat": [
+        "核心技术"
+      ],
+      "technologies": [
+        "机器学习",
+        "Transformer",
+        "大模型"
+      ],
+      "success_factors": [
+        "团队包含工程师"
+      ],
+      "failure_risks": [
+        "盈利模式不清晰",
+        "未提供市场规模数据"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_case_study",
+    "related_cards": []
+  },
+  {
+    "card_id": "case_da1b321e",
+    "card_type": "case",
+    "title": "低空智驭——大小模型_群智控系统",
+    "summary": "交通运输行业竞赛案例，技术：多模态、边缘计算、大模型",
+    "content": "**痛点：** 传统技术瓶颈，为低空经济的军事、民用与应急领域提供高效解决方案，助力\n\n**壁垒/护城河：** 核心技术\n\n**风险警示：** 盈利模式不清晰；未提供市场规模数据",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling",
+      "execution",
+      "pitching"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business",
+      "execution",
+      "pitching"
+    ],
+    "rubrics": [],
+    "industry": "交通运输",
+    "tags": [
+      "多模态",
+      "边缘计算",
+      "大模型",
+      "交通运输"
+    ],
+    "fields": {
+      "problem": "传统技术瓶颈，为低空经济的军事、民用与应急领域提供高效解决方案，助力",
+      "solution": "",
+      "market_size": "",
+      "biz_models": [],
+      "moat": [
+        "核心技术"
+      ],
+      "technologies": [
+        "多模态",
+        "边缘计算",
+        "大模型"
+      ],
+      "success_factors": [],
+      "failure_risks": [
+        "盈利模式不清晰",
+        "未提供市场规模数据"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_case_study",
+    "related_cards": []
+  },
+  {
+    "card_id": "case_030fe1e4",
+    "card_type": "case",
+    "title": "千帆助农：AI农业灾_警决策助手",
+    "summary": "农业发展行业竞赛案例，技术：未知",
+    "content": "**商业模式：** 咨询、API\n\n**成功要素：** 发表1篇论文；有用户验证\n\n**风险警示：** 缺乏明确技术壁垒；未提供市场规模数据",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling",
+      "execution",
+      "pitching"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business",
+      "execution",
+      "pitching"
+    ],
+    "rubrics": [],
+    "industry": "农业发展",
+    "tags": [
+      "农业发展"
+    ],
+    "fields": {
+      "problem": "",
+      "solution": "",
+      "market_size": "",
+      "biz_models": [
+        "咨询",
+        "API"
+      ],
+      "moat": [],
+      "technologies": [],
+      "success_factors": [
+        "发表1篇论文",
+        "有用户验证"
+      ],
+      "failure_risks": [
+        "缺乏明确技术壁垒",
+        "未提供市场规模数据"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_case_study",
+    "related_cards": []
+  },
+  {
+    "card_id": "case_4a60c8e0",
+    "card_type": "case",
+    "title": "物衡智判——基于DS_能推理系统",
+    "summary": "政务管理行业竞赛案例，技术：知识图谱、多模态、大模型",
+    "content": "**商业模式：** 咨询\n\n**成功要素：** 有用户验证\n\n**风险警示：** 缺乏明确技术壁垒；存在合规/隐私风险需评估；未提供市场规模数据",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling",
+      "execution",
+      "pitching"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business",
+      "execution",
+      "pitching"
+    ],
+    "rubrics": [],
+    "industry": "政务管理",
+    "tags": [
+      "知识图谱",
+      "多模态",
+      "大模型",
+      "政务管理"
+    ],
+    "fields": {
+      "problem": "",
+      "solution": "",
+      "market_size": "",
+      "biz_models": [
+        "咨询"
+      ],
+      "moat": [],
+      "technologies": [
+        "知识图谱",
+        "多模态",
+        "大模型"
+      ],
+      "success_factors": [
+        "有用户验证"
+      ],
+      "failure_risks": [
+        "缺乏明确技术壁垒",
+        "存在合规/隐私风险需评估",
+        "未提供市场规模数据"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_case_study",
+    "related_cards": []
+  },
+  {
+    "card_id": "case_80c57f7b",
+    "card_type": "case",
+    "title": "广寒天工——月基装备_人作业系统",
+    "summary": "工业制造行业竞赛案例，技术：传感器、AR、强化学习",
+    "content": "**痛点：** 亟需突破感知与导航、规划与决策等基础理论与关\n\n**商业模式：** 授权、平台\n\n**壁垒/护城河：** 专利、发明专利、SCI\n\n**成功要素：** 团队包含院士\n\n**风险警示：** 未提供市场规模数据",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling",
+      "execution",
+      "pitching"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business",
+      "execution",
+      "pitching"
+    ],
+    "rubrics": [],
+    "industry": "工业制造",
+    "tags": [
+      "传感器",
+      "AR",
+      "强化学习",
+      "工业制造"
+    ],
+    "fields": {
+      "problem": "亟需突破感知与导航、规划与决策等基础理论与关",
+      "solution": "",
+      "market_size": "",
+      "biz_models": [
+        "授权",
+        "平台"
+      ],
+      "moat": [
+        "专利",
+        "发明专利",
+        "SCI",
+        "EI",
+        "核心技术"
+      ],
+      "technologies": [
+        "传感器",
+        "AR",
+        "强化学习"
+      ],
+      "success_factors": [
+        "团队包含院士"
+      ],
+      "failure_risks": [
+        "未提供市场规模数据"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_case_study",
+    "related_cards": []
+  },
+  {
+    "card_id": "case_a9941030",
+    "card_type": "case",
+    "title": "脉语智鉴——结合视触_能脉诊系统",
+    "summary": "医疗健康行业竞赛案例，技术：传感器、大模型",
+    "content": "**商业模式：** 平台\n\n**壁垒/护城河：** 专利、发明专利、SCI\n\n**成功要素：** 有用户验证\n\n**风险警示：** 未提供市场规模数据",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling",
+      "execution",
+      "pitching"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business",
+      "execution",
+      "pitching"
+    ],
+    "rubrics": [],
+    "industry": "医疗健康",
+    "tags": [
+      "传感器",
+      "大模型",
+      "医疗健康"
+    ],
+    "fields": {
+      "problem": "",
+      "solution": "",
+      "market_size": "",
+      "biz_models": [
+        "平台"
+      ],
+      "moat": [
+        "专利",
+        "发明专利",
+        "SCI",
+        "核心技术"
+      ],
+      "technologies": [
+        "传感器",
+        "大模型"
+      ],
+      "success_factors": [
+        "有用户验证"
+      ],
+      "failure_risks": [
+        "未提供市场规模数据"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_case_study",
+    "related_cards": []
+  },
+  {
+    "card_id": "case_db8b8b77",
+    "card_type": "case",
+    "title": "碳索未来—智能化CO_技术与装备",
+    "summary": "环境保护行业竞赛案例，技术：机器学习",
+    "content": "**商业模式：** 授权\n\n**壁垒/护城河：** 专利、SCI、核心技术\n\n**成功要素：** 发表15篇论文\n\n**风险警示：** 未提供市场规模数据",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling",
+      "execution",
+      "pitching"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business",
+      "execution",
+      "pitching"
+    ],
+    "rubrics": [],
+    "industry": "环境保护",
+    "tags": [
+      "机器学习",
+      "环境保护"
+    ],
+    "fields": {
+      "problem": "",
+      "solution": "",
+      "market_size": "",
+      "biz_models": [
+        "授权"
+      ],
+      "moat": [
+        "专利",
+        "SCI",
+        "核心技术"
+      ],
+      "technologies": [
+        "机器学习"
+      ],
+      "success_factors": [
+        "发表15篇论文"
+      ],
+      "failure_risks": [
+        "未提供市场规模数据"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_case_study",
+    "related_cards": []
+  },
+  {
+    "card_id": "case_3264d357",
+    "card_type": "case",
+    "title": "Go2重塑入境游",
+    "summary": "文化旅游行业竞赛案例，技术：AR、强化学习",
+    "content": "**痛点：** 当前中国入境旅游行业正面临显著的供需结构性矛盾，外籍游客需求持续\n\n**商业模式：** 平台\n\n**壁垒/护城河：** 核心技术\n\n**风险警示：** 未提供市场规模数据",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling",
+      "execution",
+      "pitching"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business",
+      "execution",
+      "pitching"
+    ],
+    "rubrics": [],
+    "industry": "文化旅游",
+    "tags": [
+      "AR",
+      "强化学习",
+      "文化旅游"
+    ],
+    "fields": {
+      "problem": "当前中国入境旅游行业正面临显著的供需结构性矛盾，外籍游客需求持续",
+      "solution": "",
+      "market_size": "",
+      "biz_models": [
+        "平台"
+      ],
+      "moat": [
+        "核心技术"
+      ],
+      "technologies": [
+        "AR",
+        "强化学习"
+      ],
+      "success_factors": [],
+      "failure_risks": [
+        "未提供市场规模数据"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_case_study",
+    "related_cards": []
+  },
+  {
+    "card_id": "case_bad6ae35",
+    "card_type": "case",
+    "title": "数湖启智-项目书0410",
+    "summary": "通用行业竞赛案例，技术：知识图谱、机器学习、深度学习",
+    "content": "**痛点：** 当前核心瓶颈在于人工与自动化清洗的双重局限性形成治理真空：人工清洗需要投入大量专业人力进行重复性标注与规则制定，在面对海量异构数据时效率难以保证；而AI驱动的自动化清洗虽能缓解人力瓶颈，却受场景泛化能力，针对特定领域优化的算法在迁移至其他领域时时，因数据模态差异与业务逻辑断层，往往产生误判或过度清洗，迫使企业为\n\n**方案：** 本项目提出的技术能够有效应对多源异构数据湖所带来的挑战，并高质量完成数据管理任务。本项目研制了基于多源异构数据湖的数据智算平台。该系统综合运用前述研究成果，包括任务感知的关系透视、人机协作的数据提质、数据优选的模型提效，旨在真实贴近用户需求，广泛适应多个应用场景。系统为用户提供自助式数据发现，数据清洗融合以及高效模型训练功能。\n\n**商业模式：** 平台、数据服务、API\n\n**壁垒/护城河：** 专利、发明专利、SCI\n\n**成功要素：** 有用户验证；团队包含教授、院士\n\n**风险警示：** 存在合规/隐私风险需评估；未提供市场规模数据",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling",
+      "execution",
+      "pitching"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business",
+      "execution",
+      "pitching"
+    ],
+    "rubrics": [],
+    "industry": "通用",
+    "tags": [
+      "知识图谱",
+      "机器学习",
+      "深度学习",
+      "通用"
+    ],
+    "fields": {
+      "problem": "当前核心瓶颈在于人工与自动化清洗的双重局限性形成治理真空：人工清洗需要投入大量专业人力进行重复性标注与规则制定，在面对海量异构数据时效率难以保证；而AI驱动的自动化清洗虽能缓解人力瓶颈，却受场景泛化能力，针对特定领域优化的算法在迁移至其他领域时时，因数据模态差异与业务逻辑断层，往往产生误判或过度清洗，迫使企业为",
+      "solution": "本项目提出的技术能够有效应对多源异构数据湖所带来的挑战，并高质量完成数据管理任务。本项目研制了基于多源异构数据湖的数据智算平台。该系统综合运用前述研究成果，包括任务感知的关系透视、人机协作的数据提质、数据优选的模型提效，旨在真实贴近用户需求，广泛适应多个应用场景。系统为用户提供自助式数据发现，数据清洗融合以及高效模型训练功能。",
+      "market_size": "",
+      "biz_models": [
+        "平台",
+        "数据服务",
+        "API"
+      ],
+      "moat": [
+        "专利",
+        "发明专利",
+        "SCI"
+      ],
+      "technologies": [
+        "知识图谱",
+        "机器学习",
+        "深度学习"
+      ],
+      "success_factors": [
+        "有用户验证",
+        "团队包含教授、院士"
+      ],
+      "failure_risks": [
+        "存在合规/隐私风险需评估",
+        "未提供市场规模数据"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_case_study",
+    "related_cards": []
+  },
+  {
+    "card_id": "case_44acb8cc",
+    "card_type": "case",
+    "title": "推送家商业计划书2020-GACC",
+    "summary": "通用行业竞赛案例，技术：区块链、云计算、AR",
+    "content": "**市场规模：** 92亿\n\n**商业模式：** 订阅、平台、咨询\n\n**壁垒/护城河：** 专利、发明专利、核心技术\n\n**成功要素：** 有用户验证；市场规模92亿；团队包含教授\n\n**风险警示：** 存在合规/隐私风险需评估",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling",
+      "execution",
+      "pitching"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business",
+      "execution",
+      "pitching"
+    ],
+    "rubrics": [],
+    "industry": "通用",
+    "tags": [
+      "区块链",
+      "云计算",
+      "AR",
+      "通用"
+    ],
+    "fields": {
+      "problem": "",
+      "solution": "",
+      "market_size": "92亿",
+      "biz_models": [
+        "订阅",
+        "平台",
+        "咨询"
+      ],
+      "moat": [
+        "专利",
+        "发明专利",
+        "核心技术"
+      ],
+      "technologies": [
+        "区块链",
+        "云计算",
+        "AR"
+      ],
+      "success_factors": [
+        "有用户验证",
+        "市场规模92亿",
+        "团队包含教授"
+      ],
+      "failure_risks": [
+        "存在合规/隐私风险需评估"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_case_study",
+    "related_cards": []
+  },
+  {
+    "card_id": "case_d70fc4ee",
+    "card_type": "case",
+    "title": "“仪探究净”基于深度_损检测系统",
+    "summary": "工业制造行业竞赛案例，技术：红外、深度学习",
+    "content": "**方案：** 团队设计开发了一款可靠性强，操作简单，支持实时检测的基于深度学习\n\n**商业模式：** 平台\n\n**壁垒/护城河：** 专利\n\n**成功要素：** 团队包含教授\n\n**风险警示：** 未提供市场规模数据",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling",
+      "execution",
+      "pitching"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business",
+      "execution",
+      "pitching"
+    ],
+    "rubrics": [],
+    "industry": "工业制造",
+    "tags": [
+      "红外",
+      "深度学习",
+      "工业制造"
+    ],
+    "fields": {
+      "problem": "",
+      "solution": "团队设计开发了一款可靠性强，操作简单，支持实时检测的基于深度学习",
+      "market_size": "",
+      "biz_models": [
+        "平台"
+      ],
+      "moat": [
+        "专利"
+      ],
+      "technologies": [
+        "红外",
+        "深度学习"
+      ],
+      "success_factors": [
+        "团队包含教授"
+      ],
+      "failure_risks": [
+        "未提供市场规模数据"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_case_study",
+    "related_cards": []
+  },
+  {
+    "card_id": "case_584b627f",
+    "card_type": "case",
+    "title": "智卫天穹——面向复杂_机检测系统",
+    "summary": "交通运输行业竞赛案例，技术：LLM、Transformer、深度学习",
+    "content": "**市场规模：** 3.5万亿\n\n**商业模式：** 授权、平台\n\n**壁垒/护城河：** 专利、发明专利、SCI\n\n**成功要素：** 拥有10项专利；发表2篇论文；市场规模3.5万亿",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling",
+      "execution",
+      "pitching"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business",
+      "execution",
+      "pitching"
+    ],
+    "rubrics": [],
+    "industry": "交通运输",
+    "tags": [
+      "LLM",
+      "Transformer",
+      "深度学习",
+      "交通运输"
+    ],
+    "fields": {
+      "problem": "",
+      "solution": "",
+      "market_size": "3.5万亿",
+      "biz_models": [
+        "授权",
+        "平台"
+      ],
+      "moat": [
+        "专利",
+        "发明专利",
+        "SCI"
+      ],
+      "technologies": [
+        "LLM",
+        "Transformer",
+        "深度学习"
+      ],
+      "success_factors": [
+        "拥有10项专利",
+        "发表2篇论文",
+        "市场规模3.5万亿"
+      ],
+      "failure_risks": []
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_case_study",
+    "related_cards": []
+  },
+  {
+    "card_id": "case_425716be",
+    "card_type": "case",
+    "title": "智禾——以“小白菜”_态监测系统",
+    "summary": "农业发展行业竞赛案例，技术：YOLO、深度学习",
+    "content": "**成功要素：** 发表4篇论文\n\n**风险警示：** 盈利模式不清晰；缺乏明确技术壁垒；未提供市场规模数据",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling",
+      "execution",
+      "pitching"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business",
+      "execution",
+      "pitching"
+    ],
+    "rubrics": [],
+    "industry": "农业发展",
+    "tags": [
+      "YOLO",
+      "深度学习",
+      "农业发展"
+    ],
+    "fields": {
+      "problem": "",
+      "solution": "",
+      "market_size": "",
+      "biz_models": [],
+      "moat": [],
+      "technologies": [
+        "YOLO",
+        "深度学习"
+      ],
+      "success_factors": [
+        "发表4篇论文"
+      ],
+      "failure_risks": [
+        "盈利模式不清晰",
+        "缺乏明确技术壁垒",
+        "未提供市场规模数据"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_case_study",
+    "related_cards": []
+  },
+  {
+    "card_id": "case_f4d1c138",
+    "card_type": "case",
+    "title": "'智防·星火'——基_灾预警系统",
+    "summary": "环境保护行业竞赛案例，技术：IoT、大模型、深度学习",
+    "content": "**风险警示：** 盈利模式不清晰；缺乏明确技术壁垒；未提供市场规模数据",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling",
+      "execution",
+      "pitching"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business",
+      "execution",
+      "pitching"
+    ],
+    "rubrics": [],
+    "industry": "环境保护",
+    "tags": [
+      "IoT",
+      "大模型",
+      "深度学习",
+      "环境保护"
+    ],
+    "fields": {
+      "problem": "",
+      "solution": "",
+      "market_size": "",
+      "biz_models": [],
+      "moat": [],
+      "technologies": [
+        "IoT",
+        "大模型",
+        "深度学习"
+      ],
+      "success_factors": [],
+      "failure_risks": [
+        "盈利模式不清晰",
+        "缺乏明确技术壁垒",
+        "未提供市场规模数据"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_case_study",
+    "related_cards": []
+  },
+  {
+    "card_id": "concept_e93760af",
+    "card_type": "concept",
+    "title": "产品市场契合",
+    "summary": "创业核心概念：产品市场契合",
+    "content": "**产品市场契合** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "产品市场契合",
+      "定价策略",
+      "盈亏平衡点",
+      "精益画布"
+    ],
+    "fields": {
+      "prerequisites": [
+        "用户访谈",
+        "待办任务",
+        "价值主张",
+        "精益画布",
+        "定价策略",
+        "盈亏平衡点"
+      ],
+      "learning_order": [
+        "盈亏平衡点",
+        "定价策略",
+        "精益画布",
+        "价值主张",
+        "待办任务",
+        "用户访谈",
+        "产品市场契合"
+      ],
+      "related_concepts": [
+        "定价策略",
+        "盈亏平衡点",
+        "精益画布",
+        "待办任务",
+        "最小可行产品"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_f1df62ab",
+      "concept_93d9c50d",
+      "concept_2a4c879c"
+    ]
+  },
+  {
+    "card_id": "concept_3016bbf3",
+    "card_type": "concept",
+    "title": "总可寻址市场",
+    "summary": "创业核心概念：总可寻址市场",
+    "content": "**总可寻址市场** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "总可寻址市场",
+      "技术创新",
+      "精益画布",
+      "落地应用"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "总可寻址市场"
+      ],
+      "related_concepts": [
+        "技术创新",
+        "精益画布",
+        "落地应用",
+        "技术壁垒",
+        "护城河"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_b8aa2c74",
+      "concept_2a4c879c",
+      "concept_5feb0ddc"
+    ]
+  },
+  {
+    "card_id": "concept_6ee43acd",
+    "card_type": "concept",
+    "title": "价值主张",
+    "summary": "创业核心概念：价值主张",
+    "content": "**价值主张** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "价值主张",
+      "用户访谈",
+      "SWOT分析",
+      "产品市场契合"
+    ],
+    "fields": {
+      "prerequisites": [
+        "用户访谈",
+        "待办任务",
+        "产品市场契合",
+        "SWOT分析",
+        "护城河",
+        "精益画布"
+      ],
+      "learning_order": [
+        "精益画布",
+        "护城河",
+        "SWOT分析",
+        "产品市场契合",
+        "待办任务",
+        "用户访谈",
+        "价值主张"
+      ],
+      "related_concepts": [
+        "用户访谈",
+        "SWOT分析",
+        "产品市场契合",
+        "待办任务",
+        "护城河"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_124b431a",
+      "concept_bdb47d8d",
+      "concept_e93760af"
+    ]
+  },
+  {
+    "card_id": "concept_4aba1c37",
+    "card_type": "concept",
+    "title": "护城河",
+    "summary": "竞争壁垒：阻止竞争对手复制你的差异化优势",
+    "content": "**四大护城河类型：**\n\n1. **网络效应：** 用户越多越好用（如微信）\n2. **转换成本：** 迁移到竞品的成本很高\n3. **规模经济：** 规模越大边际成本越低\n4. **品牌/IP：** 用户认知和信任壁垒\n\n**创业公司常犯错误：** 把「先发优势」当护城河（它不是）",
+    "stage": [
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "ideation"
+    ],
+    "rubrics": [
+      "R7"
+    ],
+    "industry": "",
+    "tags": [
+      "护城河",
+      "精益画布",
+      "总可寻址市场",
+      "SWOT分析"
+    ],
+    "fields": {
+      "prerequisites": [
+        "SWOT分析",
+        "价值主张",
+        "用户访谈",
+        "待办任务",
+        "产品市场契合"
+      ],
+      "learning_order": [
+        "产品市场契合",
+        "待办任务",
+        "用户访谈",
+        "价值主张",
+        "SWOT分析",
+        "护城河"
+      ],
+      "related_concepts": [
+        "精益画布",
+        "总可寻址市场",
+        "SWOT分析",
+        "产品市场契合",
+        "价值主张"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_2a4c879c",
+      "concept_3016bbf3",
+      "concept_bdb47d8d"
+    ]
+  },
+  {
+    "card_id": "concept_f1df62ab",
+    "card_type": "concept",
+    "title": "定价策略",
+    "summary": "创业核心概念：定价策略",
+    "content": "**定价策略** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "定价策略",
+      "产品市场契合",
+      "盈亏平衡点",
+      "精益画布"
+    ],
+    "fields": {
+      "prerequisites": [
+        "产品市场契合",
+        "精益画布",
+        "盈亏平衡点",
+        "用户访谈",
+        "待办任务",
+        "价值主张"
+      ],
+      "learning_order": [
+        "价值主张",
+        "待办任务",
+        "用户访谈",
+        "盈亏平衡点",
+        "精益画布",
+        "产品市场契合",
+        "定价策略"
+      ],
+      "related_concepts": [
+        "产品市场契合",
+        "盈亏平衡点",
+        "精益画布"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_e93760af",
+      "concept_93d9c50d",
+      "concept_2a4c879c"
+    ]
+  },
+  {
+    "card_id": "concept_2a4c879c",
+    "card_type": "concept",
+    "title": "精益画布",
+    "summary": "Lean Canvas：一页纸快速梳理商业模式的核心假设",
+    "content": "**精益画布 9 个模块：**\n\n1. 问题（Top 3 痛点）\n2. 客户细分（目标用户）\n3. 独特价值主张\n4. 解决方案\n5. 渠道（如何触达用户）\n6. 收入来源\n7. 成本结构\n8. 关键指标\n9. 门槛优势（护城河）\n\n**使用场景：** 项目早期快速验证假设，比写50页商业计划书更有效",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [
+      "R1",
+      "R3",
+      "R4"
+    ],
+    "industry": "",
+    "tags": [
+      "精益画布",
+      "定价策略",
+      "盈亏平衡点",
+      "商业计划书"
+    ],
+    "fields": {
+      "prerequisites": [
+        "产品市场契合",
+        "定价策略",
+        "盈亏平衡点",
+        "最小可行产品",
+        "商业计划书",
+        "路演材料"
+      ],
+      "learning_order": [
+        "路演材料",
+        "商业计划书",
+        "最小可行产品",
+        "盈亏平衡点",
+        "定价策略",
+        "产品市场契合",
+        "精益画布"
+      ],
+      "related_concepts": [
+        "定价策略",
+        "盈亏平衡点",
+        "商业计划书",
+        "最小可行产品",
+        "总可寻址市场"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_f1df62ab",
+      "concept_93d9c50d",
+      "concept_613b207c"
+    ]
+  },
+  {
+    "card_id": "concept_c9f66fce",
+    "card_type": "concept",
+    "title": "待办任务",
+    "summary": "创业核心概念：待办任务",
+    "content": "**待办任务** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "待办任务",
+      "用户访谈",
+      "产品市场契合",
+      "价值主张"
+    ],
+    "fields": {
+      "prerequisites": [
+        "用户访谈",
+        "产品市场契合",
+        "价值主张",
+        "精益画布",
+        "定价策略",
+        "盈亏平衡点"
+      ],
+      "learning_order": [
+        "盈亏平衡点",
+        "定价策略",
+        "精益画布",
+        "价值主张",
+        "产品市场契合",
+        "用户访谈",
+        "待办任务"
+      ],
+      "related_concepts": [
+        "用户访谈",
+        "产品市场契合",
+        "价值主张"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_124b431a",
+      "concept_e93760af",
+      "concept_6ee43acd"
+    ]
+  },
+  {
+    "card_id": "concept_de68b585",
+    "card_type": "concept",
+    "title": "海盗指标",
+    "summary": "创业核心概念：海盗指标",
+    "content": "**海盗指标** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "海盗指标",
+      "用户终身价值",
+      "盈亏平衡点",
+      "客户获取成本"
+    ],
+    "fields": {
+      "prerequisites": [
+        "客户获取成本",
+        "用户终身价值",
+        "盈亏平衡点",
+        "产品市场契合",
+        "精益画布",
+        "定价策略"
+      ],
+      "learning_order": [
+        "定价策略",
+        "精益画布",
+        "产品市场契合",
+        "盈亏平衡点",
+        "用户终身价值",
+        "客户获取成本",
+        "海盗指标"
+      ],
+      "related_concepts": [
+        "用户终身价值",
+        "盈亏平衡点",
+        "客户获取成本"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_d4eb9dd6",
+      "concept_93d9c50d",
+      "concept_c1a612ec"
+    ]
+  },
+  {
+    "card_id": "concept_bdb47d8d",
+    "card_type": "concept",
+    "title": "SWOT分析",
+    "summary": "创业核心概念：SWOT分析",
+    "content": "**SWOT分析** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "SWOT分析",
+      "价值主张",
+      "护城河"
+    ],
+    "fields": {
+      "prerequisites": [
+        "护城河",
+        "价值主张",
+        "用户访谈",
+        "待办任务",
+        "产品市场契合"
+      ],
+      "learning_order": [
+        "产品市场契合",
+        "待办任务",
+        "用户访谈",
+        "价值主张",
+        "护城河",
+        "SWOT分析"
+      ],
+      "related_concepts": [
+        "价值主张",
+        "护城河"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_6ee43acd",
+      "concept_4aba1c37"
+    ]
+  },
+  {
+    "card_id": "concept_c1a612ec",
+    "card_type": "concept",
+    "title": "客户获取成本",
+    "summary": "创业核心概念：客户获取成本",
+    "content": "**客户获取成本** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "客户获取成本",
+      "盈亏平衡点",
+      "技术创新",
+      "标准化"
+    ],
+    "fields": {
+      "prerequisites": [
+        "用户终身价值",
+        "海盗指标",
+        "盈亏平衡点",
+        "产品市场契合",
+        "精益画布",
+        "定价策略"
+      ],
+      "learning_order": [
+        "定价策略",
+        "精益画布",
+        "产品市场契合",
+        "盈亏平衡点",
+        "海盗指标",
+        "用户终身价值",
+        "客户获取成本"
+      ],
+      "related_concepts": [
+        "盈亏平衡点",
+        "技术创新",
+        "标准化",
+        "用户终身价值",
+        "海盗指标"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_93d9c50d",
+      "concept_b8aa2c74",
+      "concept_346007a6"
+    ]
+  },
+  {
+    "card_id": "concept_d4eb9dd6",
+    "card_type": "concept",
+    "title": "用户终身价值",
+    "summary": "创业核心概念：用户终身价值",
+    "content": "**用户终身价值** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "用户终身价值",
+      "盈亏平衡点",
+      "海盗指标",
+      "客户获取成本"
+    ],
+    "fields": {
+      "prerequisites": [
+        "客户获取成本",
+        "海盗指标",
+        "盈亏平衡点",
+        "产品市场契合",
+        "精益画布",
+        "定价策略"
+      ],
+      "learning_order": [
+        "定价策略",
+        "精益画布",
+        "产品市场契合",
+        "盈亏平衡点",
+        "海盗指标",
+        "客户获取成本",
+        "用户终身价值"
+      ],
+      "related_concepts": [
+        "盈亏平衡点",
+        "海盗指标",
+        "客户获取成本"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_93d9c50d",
+      "concept_de68b585",
+      "concept_c1a612ec"
+    ]
+  },
+  {
+    "card_id": "concept_93d9c50d",
+    "card_type": "concept",
+    "title": "盈亏平衡点",
+    "summary": "创业核心概念：盈亏平衡点",
+    "content": "**盈亏平衡点** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "盈亏平衡点",
+      "客户获取成本",
+      "用户终身价值",
+      "产品市场契合"
+    ],
+    "fields": {
+      "prerequisites": [
+        "产品市场契合",
+        "精益画布",
+        "定价策略",
+        "客户获取成本",
+        "用户终身价值",
+        "海盗指标"
+      ],
+      "learning_order": [
+        "海盗指标",
+        "用户终身价值",
+        "客户获取成本",
+        "定价策略",
+        "精益画布",
+        "产品市场契合",
+        "盈亏平衡点"
+      ],
+      "related_concepts": [
+        "客户获取成本",
+        "用户终身价值",
+        "产品市场契合",
+        "海盗指标",
+        "定价策略"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_c1a612ec",
+      "concept_d4eb9dd6",
+      "concept_e93760af"
+    ]
+  },
+  {
+    "card_id": "concept_ed8a52e3",
+    "card_type": "concept",
+    "title": "最小可行产品",
+    "summary": "创业核心概念：最小可行产品",
+    "content": "**最小可行产品** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "最小可行产品",
+      "产品市场契合",
+      "精益画布"
+    ],
+    "fields": {
+      "prerequisites": [
+        "产品市场契合",
+        "精益画布",
+        "用户访谈",
+        "待办任务",
+        "价值主张",
+        "定价策略"
+      ],
+      "learning_order": [
+        "定价策略",
+        "价值主张",
+        "待办任务",
+        "用户访谈",
+        "精益画布",
+        "产品市场契合",
+        "最小可行产品"
+      ],
+      "related_concepts": [
+        "产品市场契合",
+        "精益画布"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_e93760af",
+      "concept_2a4c879c"
+    ]
+  },
+  {
+    "card_id": "concept_124b431a",
+    "card_type": "concept",
+    "title": "用户访谈",
+    "summary": "与潜在用户面对面交流，验证需求假设的核心方法",
+    "content": "**访谈原则（The Mom Test）：**\n\n1. 问他们的**行为**而非**意见**（「你上次怎么解决的？」而非「你觉得好不好？」）\n2. 问**过去**而非**未来**（「你昨天怎么做的？」而非「你会不会用？」）\n3. 少说多听，追问具体细节\n\n**最低标准：** 至少访谈 5 个人，3 个陌生人\n**黄金问题：** 「你上次遇到这个问题时做了什么？花了多少时间/钱？」",
+    "stage": [
+      "discovery"
+    ],
+    "dimensions": [
+      "empathy"
+    ],
+    "rubrics": [
+      "R1",
+      "R2"
+    ],
+    "industry": "",
+    "tags": [
+      "用户访谈",
+      "产品市场契合",
+      "价值主张",
+      "待办任务"
+    ],
+    "fields": {
+      "prerequisites": [
+        "待办任务",
+        "产品市场契合",
+        "价值主张",
+        "精益画布",
+        "定价策略",
+        "盈亏平衡点"
+      ],
+      "learning_order": [
+        "盈亏平衡点",
+        "定价策略",
+        "精益画布",
+        "价值主张",
+        "产品市场契合",
+        "待办任务",
+        "用户访谈"
+      ],
+      "related_concepts": [
+        "产品市场契合",
+        "价值主张",
+        "待办任务"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_e93760af",
+      "concept_6ee43acd",
+      "concept_c9f66fce"
+    ]
+  },
+  {
+    "card_id": "concept_613b207c",
+    "card_type": "concept",
+    "title": "商业计划书",
+    "summary": "创业核心概念：商业计划书",
+    "content": "**商业计划书** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "商业计划书",
+      "路演材料",
+      "精益画布"
+    ],
+    "fields": {
+      "prerequisites": [
+        "路演材料",
+        "精益画布",
+        "产品市场契合",
+        "定价策略",
+        "盈亏平衡点",
+        "最小可行产品"
+      ],
+      "learning_order": [
+        "最小可行产品",
+        "盈亏平衡点",
+        "定价策略",
+        "产品市场契合",
+        "精益画布",
+        "路演材料",
+        "商业计划书"
+      ],
+      "related_concepts": [
+        "路演材料",
+        "精益画布"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_96d29c79",
+      "concept_2a4c879c"
+    ]
+  },
+  {
+    "card_id": "concept_96d29c79",
+    "card_type": "concept",
+    "title": "路演材料",
+    "summary": "创业核心概念：路演材料",
+    "content": "**路演材料** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "路演材料",
+      "精益画布",
+      "商业计划书"
+    ],
+    "fields": {
+      "prerequisites": [
+        "商业计划书",
+        "精益画布",
+        "产品市场契合",
+        "定价策略",
+        "盈亏平衡点",
+        "最小可行产品"
+      ],
+      "learning_order": [
+        "最小可行产品",
+        "盈亏平衡点",
+        "定价策略",
+        "产品市场契合",
+        "精益画布",
+        "商业计划书",
+        "路演材料"
+      ],
+      "related_concepts": [
+        "精益画布",
+        "商业计划书"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_2a4c879c",
+      "concept_613b207c"
+    ]
+  },
+  {
+    "card_id": "concept_e4b38a11",
+    "card_type": "concept",
+    "title": "竞争分析",
+    "summary": "创业核心概念：竞争分析",
+    "content": "**竞争分析** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "竞争分析",
+      "技术创新",
+      "行业报告",
+      "股权结构"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "竞争分析"
+      ],
+      "related_concepts": [
+        "技术创新",
+        "行业报告",
+        "股权结构",
+        "需求分析",
+        "可行性分析"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_b8aa2c74",
+      "concept_287eabba",
+      "concept_36a40e09"
+    ]
+  },
+  {
+    "card_id": "concept_8857b829",
+    "card_type": "concept",
+    "title": "用户画像",
+    "summary": "创业核心概念：用户画像",
+    "content": "**用户画像** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "用户画像",
+      "技术创新",
+      "可持续发展",
+      "需求分析"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "用户画像"
+      ],
+      "related_concepts": [
+        "技术创新",
+        "可持续发展",
+        "需求分析",
+        "用户体验"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_b8aa2c74",
+      "concept_5e2872ce",
+      "concept_195af93f"
+    ]
+  },
+  {
+    "card_id": "concept_f2247d93",
+    "card_type": "concept",
+    "title": "用户体验",
+    "summary": "创业核心概念：用户体验",
+    "content": "**用户体验** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "用户体验",
+      "技术创新",
+      "团队建设",
+      "技术壁垒"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "用户体验"
+      ],
+      "related_concepts": [
+        "技术创新",
+        "团队建设",
+        "技术壁垒",
+        "产业链",
+        "知识产权"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_b8aa2c74",
+      "concept_05bd3f39",
+      "concept_bb25afca"
+    ]
+  },
+  {
+    "card_id": "concept_4843e25d",
+    "card_type": "concept",
+    "title": "技术路线图",
+    "summary": "创业核心概念：技术路线图",
+    "content": "**技术路线图** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "技术路线图",
+      "技术创新",
+      "落地应用",
+      "核心竞争力"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "技术路线图"
+      ],
+      "related_concepts": [
+        "技术创新",
+        "落地应用",
+        "核心竞争力",
+        "财务预测",
+        "成果转化"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_b8aa2c74",
+      "concept_5feb0ddc",
+      "concept_aef0f577"
+    ]
+  },
+  {
+    "card_id": "concept_36a40e09",
+    "card_type": "concept",
+    "title": "股权结构",
+    "summary": "创业核心概念：股权结构",
+    "content": "**股权结构** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "股权结构",
+      "技术创新",
+      "团队建设",
+      "技术壁垒"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "股权结构"
+      ],
+      "related_concepts": [
+        "技术创新",
+        "团队建设",
+        "技术壁垒",
+        "原型设计",
+        "渠道策略"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_b8aa2c74",
+      "concept_05bd3f39",
+      "concept_bb25afca"
+    ]
+  },
+  {
+    "card_id": "concept_111cd7aa",
+    "card_type": "concept",
+    "title": "融资策略",
+    "summary": "创业核心概念：融资策略",
+    "content": "**融资策略** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "融资策略",
+      "知识产权",
+      "标准化",
+      "股权结构"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "融资策略"
+      ],
+      "related_concepts": [
+        "知识产权",
+        "标准化",
+        "股权结构",
+        "可行性分析",
+        "盈利模式"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_92db866b",
+      "concept_346007a6",
+      "concept_36a40e09"
+    ]
+  },
+  {
+    "card_id": "concept_92db866b",
+    "card_type": "concept",
+    "title": "知识产权",
+    "summary": "创业核心概念：知识产权",
+    "content": "**知识产权** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "知识产权",
+      "技术创新",
+      "团队建设",
+      "产学研"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "知识产权"
+      ],
+      "related_concepts": [
+        "技术创新",
+        "团队建设",
+        "产学研",
+        "产品定位",
+        "用户体验"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_b8aa2c74",
+      "concept_05bd3f39",
+      "concept_0c941d9f"
+    ]
+  },
+  {
+    "card_id": "concept_8dbee167",
+    "card_type": "concept",
+    "title": "品牌定位",
+    "summary": "创业核心概念：品牌定位",
+    "content": "**品牌定位** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "品牌定位",
+      "产业链",
+      "股权结构",
+      "需求分析"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "品牌定位"
+      ],
+      "related_concepts": [
+        "产业链",
+        "股权结构",
+        "需求分析",
+        "市场调研",
+        "财务预测"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_1155c57b",
+      "concept_36a40e09",
+      "concept_195af93f"
+    ]
+  },
+  {
+    "card_id": "concept_9e64c0cb",
+    "card_type": "concept",
+    "title": "渠道策略",
+    "summary": "创业核心概念：渠道策略",
+    "content": "**渠道策略** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "渠道策略",
+      "知识产权",
+      "产品迭代",
+      "迭代优化"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "渠道策略"
+      ],
+      "related_concepts": [
+        "知识产权",
+        "产品迭代",
+        "迭代优化",
+        "技术创新",
+        "行业报告"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_92db866b",
+      "concept_70c01f7c",
+      "concept_628cbe11"
+    ]
+  },
+  {
+    "card_id": "concept_d5b619cf",
+    "card_type": "concept",
+    "title": "数据驱动",
+    "summary": "创业核心概念：数据驱动",
+    "content": "**数据驱动** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "数据驱动",
+      "技术创新",
+      "团队建设",
+      "用户体验"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "数据驱动"
+      ],
+      "related_concepts": [
+        "技术创新",
+        "团队建设",
+        "用户体验",
+        "落地应用",
+        "技术壁垒"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_b8aa2c74",
+      "concept_05bd3f39",
+      "concept_f2247d93"
+    ]
+  },
+  {
+    "card_id": "concept_70c01f7c",
+    "card_type": "concept",
+    "title": "产品迭代",
+    "summary": "创业核心概念：产品迭代",
+    "content": "**产品迭代** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "产品迭代",
+      "技术创新",
+      "产学研",
+      "产品定位"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "产品迭代"
+      ],
+      "related_concepts": [
+        "技术创新",
+        "产学研",
+        "产品定位",
+        "渠道策略",
+        "知识产权"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_b8aa2c74",
+      "concept_0c941d9f",
+      "concept_0304bced"
+    ]
+  },
+  {
+    "card_id": "concept_195af93f",
+    "card_type": "concept",
+    "title": "需求分析",
+    "summary": "创业核心概念：需求分析",
+    "content": "**需求分析** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "需求分析",
+      "技术创新",
+      "用户体验",
+      "技术壁垒"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "需求分析"
+      ],
+      "related_concepts": [
+        "技术创新",
+        "用户体验",
+        "技术壁垒",
+        "核心竞争力",
+        "原型设计"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_b8aa2c74",
+      "concept_f2247d93",
+      "concept_bb25afca"
+    ]
+  },
+  {
+    "card_id": "concept_d9f2335c",
+    "card_type": "concept",
+    "title": "可行性分析",
+    "summary": "创业核心概念：可行性分析",
+    "content": "**可行性分析** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "可行性分析",
+      "技术创新",
+      "产学研",
+      "技术壁垒"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "可行性分析"
+      ],
+      "related_concepts": [
+        "技术创新",
+        "产学研",
+        "技术壁垒",
+        "渠道策略",
+        "知识产权"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_b8aa2c74",
+      "concept_0c941d9f",
+      "concept_bb25afca"
+    ]
+  },
+  {
+    "card_id": "concept_190a18fd",
+    "card_type": "concept",
+    "title": "盈利模式",
+    "summary": "创业核心概念：盈利模式",
+    "content": "**盈利模式** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "盈利模式",
+      "技术创新",
+      "团队建设",
+      "产学研"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "盈利模式"
+      ],
+      "related_concepts": [
+        "技术创新",
+        "团队建设",
+        "产学研",
+        "用户体验",
+        "技术壁垒"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_b8aa2c74",
+      "concept_05bd3f39",
+      "concept_0c941d9f"
+    ]
+  },
+  {
+    "card_id": "concept_996748f5",
+    "card_type": "concept",
+    "title": "成本结构",
+    "summary": "创业核心概念：成本结构",
+    "content": "**成本结构** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "成本结构",
+      "产业链",
+      "用户增长",
+      "知识产权"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "成本结构"
+      ],
+      "related_concepts": [
+        "产业链",
+        "用户增长",
+        "知识产权",
+        "团队建设",
+        "用户体验"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_1155c57b",
+      "concept_6d8df7d5",
+      "concept_92db866b"
+    ]
+  },
+  {
+    "card_id": "concept_a8f3e2b3",
+    "card_type": "concept",
+    "title": "用户反馈",
+    "summary": "创业核心概念：用户反馈",
+    "content": "**用户反馈** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "用户反馈",
+      "知识产权",
+      "数据安全",
+      "用户体验"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "用户反馈"
+      ],
+      "related_concepts": [
+        "知识产权",
+        "数据安全",
+        "用户体验",
+        "数据驱动",
+        "隐私保护"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_92db866b",
+      "concept_1d3ba50c",
+      "concept_f2247d93"
+    ]
+  },
+  {
+    "card_id": "concept_3cb9d9ee",
+    "card_type": "concept",
+    "title": "市场调研",
+    "summary": "创业核心概念：市场调研",
+    "content": "**市场调研** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "市场调研",
+      "迭代优化",
+      "技术创新",
+      "团队建设"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "市场调研"
+      ],
+      "related_concepts": [
+        "迭代优化",
+        "技术创新",
+        "团队建设",
+        "产学研",
+        "用户体验"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_628cbe11",
+      "concept_b8aa2c74",
+      "concept_05bd3f39"
+    ]
+  },
+  {
+    "card_id": "concept_bb25afca",
+    "card_type": "concept",
+    "title": "技术壁垒",
+    "summary": "创业核心概念：技术壁垒",
+    "content": "**技术壁垒** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "技术壁垒",
+      "技术创新",
+      "团队建设",
+      "产学研"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "技术壁垒"
+      ],
+      "related_concepts": [
+        "技术创新",
+        "团队建设",
+        "产学研",
+        "用户体验",
+        "落地应用"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_b8aa2c74",
+      "concept_05bd3f39",
+      "concept_0c941d9f"
+    ]
+  },
+  {
+    "card_id": "concept_1155c57b",
+    "card_type": "concept",
+    "title": "产业链",
+    "summary": "创业核心概念：产业链",
+    "content": "**产业链** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "产业链",
+      "技术创新",
+      "团队建设",
+      "产学研"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "产业链"
+      ],
+      "related_concepts": [
+        "技术创新",
+        "团队建设",
+        "产学研",
+        "用户体验",
+        "落地应用"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_b8aa2c74",
+      "concept_05bd3f39",
+      "concept_0c941d9f"
+    ]
+  },
+  {
+    "card_id": "concept_5feb0ddc",
+    "card_type": "concept",
+    "title": "落地应用",
+    "summary": "创业核心概念：落地应用",
+    "content": "**落地应用** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "落地应用",
+      "技术创新",
+      "产品定位",
+      "技术壁垒"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "落地应用"
+      ],
+      "related_concepts": [
+        "技术创新",
+        "产品定位",
+        "技术壁垒",
+        "核心竞争力",
+        "产业链"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_b8aa2c74",
+      "concept_0304bced",
+      "concept_bb25afca"
+    ]
+  },
+  {
+    "card_id": "concept_b8aa2c74",
+    "card_type": "concept",
+    "title": "技术创新",
+    "summary": "创业核心概念：技术创新",
+    "content": "**技术创新** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "技术创新",
+      "核心竞争力",
+      "产业链",
+      "用户画像"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "技术创新"
+      ],
+      "related_concepts": [
+        "核心竞争力",
+        "产业链",
+        "用户画像",
+        "数据驱动",
+        "客户获取成本"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_aef0f577",
+      "concept_1155c57b",
+      "concept_8857b829"
+    ]
+  },
+  {
+    "card_id": "concept_780bb7b0",
+    "card_type": "concept",
+    "title": "社会价值",
+    "summary": "创业核心概念：社会价值",
+    "content": "**社会价值** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "社会价值",
+      "技术创新",
+      "用户体验",
+      "落地应用"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "社会价值"
+      ],
+      "related_concepts": [
+        "技术创新",
+        "用户体验",
+        "落地应用",
+        "技术壁垒",
+        "核心竞争力"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_b8aa2c74",
+      "concept_f2247d93",
+      "concept_5feb0ddc"
+    ]
+  },
+  {
+    "card_id": "concept_5e2872ce",
+    "card_type": "concept",
+    "title": "可持续发展",
+    "summary": "创业核心概念：可持续发展",
+    "content": "**可持续发展** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "可持续发展",
+      "技术创新",
+      "团队建设",
+      "产学研"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "可持续发展"
+      ],
+      "related_concepts": [
+        "技术创新",
+        "团队建设",
+        "产学研",
+        "产品定位",
+        "落地应用"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_b8aa2c74",
+      "concept_05bd3f39",
+      "concept_0c941d9f"
+    ]
+  },
+  {
+    "card_id": "concept_1d3ba50c",
+    "card_type": "concept",
+    "title": "数据安全",
+    "summary": "创业核心概念：数据安全",
+    "content": "**数据安全** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "数据安全",
+      "技术创新",
+      "用户体验",
+      "落地应用"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "数据安全"
+      ],
+      "related_concepts": [
+        "技术创新",
+        "用户体验",
+        "落地应用",
+        "技术壁垒",
+        "知识产权"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_b8aa2c74",
+      "concept_f2247d93",
+      "concept_5feb0ddc"
+    ]
+  },
+  {
+    "card_id": "concept_15be7f0f",
+    "card_type": "concept",
+    "title": "隐私保护",
+    "summary": "创业核心概念：隐私保护",
+    "content": "**隐私保护** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "隐私保护",
+      "知识产权",
+      "数据安全",
+      "用户体验"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "隐私保护"
+      ],
+      "related_concepts": [
+        "知识产权",
+        "数据安全",
+        "用户体验",
+        "用户反馈",
+        "数据驱动"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_92db866b",
+      "concept_1d3ba50c",
+      "concept_f2247d93"
+    ]
+  },
+  {
+    "card_id": "concept_f1f18a24",
+    "card_type": "concept",
+    "title": "合规性",
+    "summary": "创业核心概念：合规性",
+    "content": "**合规性** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "合规性",
+      "技术创新",
+      "数据安全",
+      "可持续发展"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "合规性"
+      ],
+      "related_concepts": [
+        "技术创新",
+        "数据安全",
+        "可持续发展",
+        "用户体验"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_b8aa2c74",
+      "concept_1d3ba50c",
+      "concept_5e2872ce"
+    ]
+  },
+  {
+    "card_id": "concept_346007a6",
+    "card_type": "concept",
+    "title": "标准化",
+    "summary": "创业核心概念：标准化",
+    "content": "**标准化** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "标准化",
+      "核心竞争力",
+      "数据驱动",
+      "客户获取成本"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "标准化"
+      ],
+      "related_concepts": [
+        "核心竞争力",
+        "数据驱动",
+        "客户获取成本",
+        "市场调研",
+        "产品迭代"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_aef0f577",
+      "concept_d5b619cf",
+      "concept_c1a612ec"
+    ]
+  },
+  {
+    "card_id": "concept_0c941d9f",
+    "card_type": "concept",
+    "title": "产学研",
+    "summary": "创业核心概念：产学研",
+    "content": "**产学研** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "产学研",
+      "技术创新",
+      "产品定位",
+      "技术壁垒"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "产学研"
+      ],
+      "related_concepts": [
+        "技术创新",
+        "产品定位",
+        "技术壁垒",
+        "核心竞争力",
+        "渠道策略"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_b8aa2c74",
+      "concept_0304bced",
+      "concept_bb25afca"
+    ]
+  },
+  {
+    "card_id": "concept_84ed7a33",
+    "card_type": "concept",
+    "title": "成果转化",
+    "summary": "创业核心概念：成果转化",
+    "content": "**成果转化** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "成果转化",
+      "技术创新",
+      "团队建设",
+      "产学研"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "成果转化"
+      ],
+      "related_concepts": [
+        "技术创新",
+        "团队建设",
+        "产学研",
+        "产品定位",
+        "用户体验"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_b8aa2c74",
+      "concept_05bd3f39",
+      "concept_0c941d9f"
+    ]
+  },
+  {
+    "card_id": "concept_f2ba0320",
+    "card_type": "concept",
+    "title": "原型设计",
+    "summary": "创业核心概念：原型设计",
+    "content": "**原型设计** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "原型设计",
+      "产业链",
+      "股权结构",
+      "需求分析"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "原型设计"
+      ],
+      "related_concepts": [
+        "产业链",
+        "股权结构",
+        "需求分析",
+        "市场调研",
+        "财务预测"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_1155c57b",
+      "concept_36a40e09",
+      "concept_195af93f"
+    ]
+  },
+  {
+    "card_id": "concept_6d8df7d5",
+    "card_type": "concept",
+    "title": "用户增长",
+    "summary": "创业核心概念：用户增长",
+    "content": "**用户增长** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "用户增长",
+      "产业链",
+      "知识产权",
+      "团队建设"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "用户增长"
+      ],
+      "related_concepts": [
+        "产业链",
+        "知识产权",
+        "团队建设",
+        "成本结构",
+        "用户体验"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_1155c57b",
+      "concept_92db866b",
+      "concept_05bd3f39"
+    ]
+  },
+  {
+    "card_id": "concept_aef0f577",
+    "card_type": "concept",
+    "title": "核心竞争力",
+    "summary": "创业核心概念：核心竞争力",
+    "content": "**核心竞争力** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "核心竞争力",
+      "技术创新",
+      "产学研",
+      "落地应用"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "核心竞争力"
+      ],
+      "related_concepts": [
+        "技术创新",
+        "产学研",
+        "落地应用",
+        "技术壁垒",
+        "产业链"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_b8aa2c74",
+      "concept_0c941d9f",
+      "concept_5feb0ddc"
+    ]
+  },
+  {
+    "card_id": "concept_8e1a8eda",
+    "card_type": "concept",
+    "title": "战略合作",
+    "summary": "创业核心概念：战略合作",
+    "content": "**战略合作** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "战略合作",
+      "技术创新",
+      "产学研",
+      "产品定位"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "战略合作"
+      ],
+      "related_concepts": [
+        "技术创新",
+        "产学研",
+        "产品定位",
+        "原型设计",
+        "渠道策略"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_b8aa2c74",
+      "concept_0c941d9f",
+      "concept_0304bced"
+    ]
+  },
+  {
+    "card_id": "concept_e4121eee",
+    "card_type": "concept",
+    "title": "技术验证",
+    "summary": "创业核心概念：技术验证",
+    "content": "**技术验证** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "技术验证",
+      "迭代优化"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "技术验证"
+      ],
+      "related_concepts": [
+        "迭代优化"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_628cbe11"
+    ]
+  },
+  {
+    "card_id": "concept_0304bced",
+    "card_type": "concept",
+    "title": "产品定位",
+    "summary": "创业核心概念：产品定位",
+    "content": "**产品定位** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "产品定位",
+      "知识产权",
+      "产品迭代",
+      "技术创新"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "产品定位"
+      ],
+      "related_concepts": [
+        "知识产权",
+        "产品迭代",
+        "技术创新",
+        "行业报告",
+        "标准化"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_92db866b",
+      "concept_70c01f7c",
+      "concept_b8aa2c74"
+    ]
+  },
+  {
+    "card_id": "concept_05bd3f39",
+    "card_type": "concept",
+    "title": "团队建设",
+    "summary": "创业核心概念：团队建设",
+    "content": "**团队建设** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "团队建设",
+      "产业链",
+      "用户增长",
+      "知识产权"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "团队建设"
+      ],
+      "related_concepts": [
+        "产业链",
+        "用户增长",
+        "知识产权",
+        "标准化",
+        "股权结构"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_1155c57b",
+      "concept_6d8df7d5",
+      "concept_92db866b"
+    ]
+  },
+  {
+    "card_id": "concept_628cbe11",
+    "card_type": "concept",
+    "title": "迭代优化",
+    "summary": "创业核心概念：迭代优化",
+    "content": "**迭代优化** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "迭代优化",
+      "技术创新",
+      "渠道策略",
+      "技术验证"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "迭代优化"
+      ],
+      "related_concepts": [
+        "技术创新",
+        "渠道策略",
+        "技术验证",
+        "财务预测",
+        "市场调研"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_b8aa2c74",
+      "concept_9e64c0cb",
+      "concept_e4121eee"
+    ]
+  },
+  {
+    "card_id": "concept_287eabba",
+    "card_type": "concept",
+    "title": "行业报告",
+    "summary": "创业核心概念：行业报告",
+    "content": "**行业报告** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "行业报告",
+      "知识产权",
+      "产品迭代",
+      "技术创新"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "行业报告"
+      ],
+      "related_concepts": [
+        "知识产权",
+        "产品迭代",
+        "技术创新",
+        "产学研",
+        "产品定位"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_92db866b",
+      "concept_70c01f7c",
+      "concept_b8aa2c74"
+    ]
+  },
+  {
+    "card_id": "concept_e153fe6a",
+    "card_type": "concept",
+    "title": "财务预测",
+    "summary": "创业核心概念：财务预测",
+    "content": "**财务预测** — 创新创业领域的核心概念。",
+    "stage": [
+      "discovery",
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "empathy",
+      "ideation",
+      "business"
+    ],
+    "rubrics": [],
+    "industry": "",
+    "tags": [
+      "财务预测",
+      "迭代优化",
+      "技术创新",
+      "产学研"
+    ],
+    "fields": {
+      "prerequisites": [],
+      "learning_order": [
+        "财务预测"
+      ],
+      "related_concepts": [
+        "迭代优化",
+        "技术创新",
+        "产学研",
+        "技术壁垒",
+        "核心竞争力"
+      ]
+    },
+    "evidence_refs": [],
+    "source": "hypergraph_concept",
+    "related_cards": [
+      "concept_628cbe11",
+      "concept_b8aa2c74",
+      "concept_0c941d9f"
+    ]
+  },
+  {
+    "card_id": "mistake_9c2b159a",
+    "card_type": "mistake",
+    "title": "常见错误：痛点模糊",
+    "summary": "痛点定义 (Problem Definition)维度的常见问题",
+    "content": "学生描述的痛点过于笼统（如「不方便」「体验不好」），缺少具体场景和量化描述。\n\n**修复方法：** 用 JTBD 框架重新定义：「在[场景]下，[用户]想要[完成任务]，但因为[具体障碍]，导致[可量化的损失]」",
+    "stage": [
+      "discovery"
+    ],
+    "dimensions": [
+      "empathy"
+    ],
+    "rubrics": [
+      "R1"
+    ],
+    "industry": "",
+    "tags": [
+      "痛点模糊",
+      "痛点定义 (Problem Definition)"
+    ],
+    "fields": {
+      "rubric_id": "R1",
+      "rubric_name": "痛点定义 (Problem Definition)",
+      "severity": "high"
+    },
+    "evidence_refs": [],
+    "source": "rubric_common_mistakes",
+    "related_cards": []
+  },
+  {
+    "card_id": "mistake_fdae1428",
+    "card_type": "mistake",
+    "title": "常见错误：假设性需求",
+    "summary": "痛点定义 (Problem Definition)维度的常见问题",
+    "content": "学生只是「觉得」用户需要，但没有实际访谈或数据支撑。\n\n**修复方法：** 至少做 5 次用户访谈，遵循 The Mom Test 原则。",
+    "stage": [
+      "discovery"
+    ],
+    "dimensions": [
+      "empathy"
+    ],
+    "rubrics": [
+      "R1"
+    ],
+    "industry": "",
+    "tags": [
+      "假设性需求",
+      "痛点定义 (Problem Definition)"
+    ],
+    "fields": {
+      "rubric_id": "R1",
+      "rubric_name": "痛点定义 (Problem Definition)",
+      "severity": "high"
+    },
+    "evidence_refs": [],
+    "source": "rubric_common_mistakes",
+    "related_cards": []
+  },
+  {
+    "card_id": "mistake_a4d47bcb",
+    "card_type": "mistake",
+    "title": "常见错误：主观验证",
+    "summary": "用户证据 (User Evidence)维度的常见问题",
+    "content": "只调研了身边朋友/同学，或只收集正面反馈。\n\n**修复方法：** 样本中至少包含 3 个陌生人，记录拒绝/负面反馈占比。",
+    "stage": [
+      "discovery"
+    ],
+    "dimensions": [
+      "empathy"
+    ],
+    "rubrics": [
+      "R2"
+    ],
+    "industry": "",
+    "tags": [
+      "主观验证",
+      "用户证据 (User Evidence)"
+    ],
+    "fields": {
+      "rubric_id": "R2",
+      "rubric_name": "用户证据 (User Evidence)",
+      "severity": "high"
+    },
+    "evidence_refs": [],
+    "source": "rubric_common_mistakes",
+    "related_cards": []
+  },
+  {
+    "card_id": "mistake_d9e0d706",
+    "card_type": "mistake",
+    "title": "常见错误：过度工程化",
+    "summary": "方案可行性 (Solution Feasibility)维度的常见问题",
+    "content": "方案过于复杂，一上来就要做全平台/全功能系统。\n\n**修复方法：** 先做 MVP（最小可行产品），只保留核心功能验证核心假设。",
+    "stage": [
+      "ideation"
+    ],
+    "dimensions": [
+      "ideation"
+    ],
+    "rubrics": [
+      "R3"
+    ],
+    "industry": "",
+    "tags": [
+      "过度工程化",
+      "方案可行性 (Solution Feasibility)"
+    ],
+    "fields": {
+      "rubric_id": "R3",
+      "rubric_name": "方案可行性 (Solution Feasibility)",
+      "severity": "high"
+    },
+    "evidence_refs": [],
+    "source": "rubric_common_mistakes",
+    "related_cards": []
+  },
+  {
+    "card_id": "mistake_3e059142",
+    "card_type": "mistake",
+    "title": "常见错误：渠道-用户不匹配",
+    "summary": "商业模式一致性 (Business Model Consistency)维度的常见问题",
+    "content": "选择的渠道无法有效触达目标用户。\n\n**修复方法：** 列出用户花时间的 Top 3 场所/平台，从中选渠道。",
+    "stage": [
+      "modeling"
+    ],
+    "dimensions": [
+      "business"
+    ],
+    "rubrics": [
+      "R4"
+    ],
+    "industry": "",
+    "tags": [
+      "渠道-用户不匹配",
+      "商业模式一致性 (Business Model Consistency)"
+    ],
+    "fields": {
+      "rubric_id": "R4",
+      "rubric_name": "商业模式一致性 (Business Model Consistency)",
+      "severity": "high"
+    },
+    "evidence_refs": [],
+    "source": "rubric_common_mistakes",
+    "related_cards": []
+  },
+  {
+    "card_id": "mistake_511417f1",
+    "card_type": "mistake",
+    "title": "常见错误：市场规模虚高",
+    "summary": "市场与竞争 (Market & Competition)维度的常见问题",
+    "content": "用「中国有14亿人，只需要1%」式的自上而下估算。\n\n**修复方法：** 改用自下而上估算：单客价值 × 可触达客户数 = SOM。",
+    "stage": [
+      "modeling"
+    ],
+    "dimensions": [
+      "business"
+    ],
+    "rubrics": [
+      "R5"
+    ],
+    "industry": "",
+    "tags": [
+      "市场规模虚高",
+      "市场与竞争 (Market & Competition)"
+    ],
+    "fields": {
+      "rubric_id": "R5",
+      "rubric_name": "市场与竞争 (Market & Competition)",
+      "severity": "high"
+    },
+    "evidence_refs": [],
+    "source": "rubric_common_mistakes",
+    "related_cards": []
+  },
+  {
+    "card_id": "mistake_4f635665",
+    "card_type": "mistake",
+    "title": "常见错误：LTV < CAC",
+    "summary": "财务逻辑 (Financial Logic)维度的常见问题",
+    "content": "获客成本超过用户终身价值，商业模式不可持续。\n\n**修复方法：** 1) 降低 CAC（优化渠道）；2) 提高 LTV（提价/提频/提留存）；目标 LTV/CAC > 3。",
+    "stage": [
+      "modeling"
+    ],
+    "dimensions": [
+      "business"
+    ],
+    "rubrics": [
+      "R6"
+    ],
+    "industry": "",
+    "tags": [
+      "LTV < CAC",
+      "财务逻辑 (Financial Logic)"
+    ],
+    "fields": {
+      "rubric_id": "R6",
+      "rubric_name": "财务逻辑 (Financial Logic)",
+      "severity": "high"
+    },
+    "evidence_refs": [],
+    "source": "rubric_common_mistakes",
+    "related_cards": []
+  },
+  {
+    "card_id": "mistake_2784efa8",
+    "card_type": "mistake",
+    "title": "常见错误：伪创新",
+    "summary": "创新与差异化 (Innovation & Differentiation)维度的常见问题",
+    "content": "差异化仅是「我们用了AI」但核心价值没变。\n\n**修复方法：** 做竞品对比矩阵，在 3 个以上维度标注与竞品的实质差异。",
+    "stage": [
+      "ideation"
+    ],
+    "dimensions": [
+      "ideation"
+    ],
+    "rubrics": [
+      "R7"
+    ],
+    "industry": "",
+    "tags": [
+      "伪创新",
+      "创新与差异化 (Innovation & Differentiation)"
+    ],
+    "fields": {
+      "rubric_id": "R7",
+      "rubric_name": "创新与差异化 (Innovation & Differentiation)",
+      "severity": "high"
+    },
+    "evidence_refs": [],
+    "source": "rubric_common_mistakes",
+    "related_cards": []
+  },
+  {
+    "card_id": "mistake_0b2f48b6",
+    "card_type": "mistake",
+    "title": "常见错误：技能不匹配",
+    "summary": "团队与执行 (Team & Execution)维度的常见问题",
+    "content": "团队能力与项目技术需求不匹配。\n\n**修复方法：** 列出项目所需的 Top 3 技能，标注团队覆盖情况，缺口写招聘/合作计划。",
+    "stage": [
+      "execution"
+    ],
+    "dimensions": [
+      "execution"
+    ],
+    "rubrics": [
+      "R8"
+    ],
+    "industry": "",
+    "tags": [
+      "技能不匹配",
+      "团队与执行 (Team & Execution)"
+    ],
+    "fields": {
+      "rubric_id": "R8",
+      "rubric_name": "团队与执行 (Team & Execution)",
+      "severity": "medium"
+    },
+    "evidence_refs": [],
+    "source": "rubric_common_mistakes",
+    "related_cards": []
+  },
+  {
+    "card_id": "mistake_56a51fdc",
+    "card_type": "mistake",
+    "title": "常见错误：叙事断裂",
+    "summary": "表达与材料 (Presentation & Materials)维度的常见问题",
+    "content": "路演材料逻辑不连贯，痛点-方案-市场-盈利之间缺乏因果链。\n\n**修复方法：** 用 7 幕结构：① 现状 → ② 痛点 → ③ 方案 → ④ 市场 → ⑤ 商业模式 → ⑥ 团队 → ⑦ 愿景",
+    "stage": [
+      "pitching"
+    ],
+    "dimensions": [
+      "pitching"
+    ],
+    "rubrics": [
+      "R9"
+    ],
+    "industry": "",
+    "tags": [
+      "叙事断裂",
+      "表达与材料 (Presentation & Materials)"
+    ],
+    "fields": {
+      "rubric_id": "R9",
+      "rubric_name": "表达与材料 (Presentation & Materials)",
+      "severity": "medium"
+    },
+    "evidence_refs": [],
+    "source": "rubric_common_mistakes",
+    "related_cards": []
+  },
+  {
+    "card_id": "method_9422ffd4",
+    "card_type": "method",
+    "title": "修复策略：价值主张",
+    "summary": "当H1问题触发时的修复方法",
+    "content": "**触发条件：** H1\n\n**修复任务：** 重新定义目标客户或调整价值主张\n\n**学习问题：** 什么是价值主张画布，如何用它对齐客户需求和产品功能？",
+    "stage": [
+      "discovery"
+    ],
+    "dimensions": [
+      "empathy"
+    ],
+    "rubrics": [
+      ""
+    ],
+    "industry": "",
+    "tags": [
+      "价值主张",
+      "H1"
+    ],
+    "fields": {
+      "rule_id": "H1",
+      "concept": "价值主张",
+      "severity": "high",
+      "fix_task": "重新定义目标客户或调整价值主张",
+      "learning_query": "什么是价值主张画布，如何用它对齐客户需求和产品功能？"
+    },
+    "evidence_refs": [],
+    "source": "h_rules",
+    "related_cards": []
+  },
+  {
+    "card_id": "method_b3864291",
+    "card_type": "method",
+    "title": "修复策略：渠道策略",
+    "summary": "当H2问题触发时的修复方法",
+    "content": "**触发条件：** H2\n\n**修复任务：** 验证渠道可达性，提供触达证据\n\n**学习问题：** 如何选择和验证用户获取渠道？什么是Go-To-Market策略？",
+    "stage": [
+      "discovery"
+    ],
+    "dimensions": [
+      "empathy"
+    ],
+    "rubrics": [
+      ""
+    ],
+    "industry": "",
+    "tags": [
+      "渠道策略",
+      "H2"
+    ],
+    "fields": {
+      "rule_id": "H2",
+      "concept": "渠道策略",
+      "severity": "high",
+      "fix_task": "验证渠道可达性，提供触达证据",
+      "learning_query": "如何选择和验证用户获取渠道？什么是Go-To-Market策略？"
+    },
+    "evidence_refs": [],
+    "source": "h_rules",
+    "related_cards": []
+  },
+  {
+    "card_id": "method_8dfea4af",
+    "card_type": "method",
+    "title": "修复策略：定价策略",
+    "summary": "当H3问题触发时的修复方法",
+    "content": "**触发条件：** H3\n\n**修复任务：** 进行支付意愿调研或预售测试\n\n**学习问题：** 如何通过预售和访谈验证用户真实的支付意愿？",
+    "stage": [
+      "discovery"
+    ],
+    "dimensions": [
+      "empathy"
+    ],
+    "rubrics": [
+      ""
+    ],
+    "industry": "",
+    "tags": [
+      "定价策略",
+      "H3"
+    ],
+    "fields": {
+      "rule_id": "H3",
+      "concept": "定价策略",
+      "severity": "medium",
+      "fix_task": "进行支付意愿调研或预售测试",
+      "learning_query": "如何通过预售和访谈验证用户真实的支付意愿？"
+    },
+    "evidence_refs": [],
+    "source": "h_rules",
+    "related_cards": []
+  },
+  {
+    "card_id": "method_97b39f92",
+    "card_type": "method",
+    "title": "修复策略：总可寻址市场",
+    "summary": "当H4问题触发时的修复方法",
+    "content": "**触发条件：** H4\n\n**修复任务：** 统一数据口径，自下而上重新估算\n\n**学习问题：** 如何自下而上估算市场规模TAM、SAM、SOM？",
+    "stage": [
+      "discovery"
+    ],
+    "dimensions": [
+      "empathy"
+    ],
+    "rubrics": [
+      ""
+    ],
+    "industry": "",
+    "tags": [
+      "总可寻址市场",
+      "H4"
+    ],
+    "fields": {
+      "rule_id": "H4",
+      "concept": "总可寻址市场",
+      "severity": "medium",
+      "fix_task": "统一数据口径，自下而上重新估算",
+      "learning_query": "如何自下而上估算市场规模TAM、SAM、SOM？"
+    },
+    "evidence_refs": [],
+    "source": "h_rules",
+    "related_cards": []
+  },
+  {
+    "card_id": "method_9d39c227",
+    "card_type": "method",
+    "title": "修复策略：用户访谈",
+    "summary": "当H5问题触发时的修复方法",
+    "content": "**触发条件：** H5\n\n**修复任务：** 补充用户访谈或行为数据\n\n**学习问题：** 如何设计和执行高质量的用户访谈？有哪些常见错误？",
+    "stage": [
+      "discovery"
+    ],
+    "dimensions": [
+      "empathy"
+    ],
+    "rubrics": [
+      ""
+    ],
+    "industry": "",
+    "tags": [
+      "用户访谈",
+      "H5"
+    ],
+    "fields": {
+      "rule_id": "H5",
+      "concept": "用户访谈",
+      "severity": "high",
+      "fix_task": "补充用户访谈或行为数据",
+      "learning_query": "如何设计和执行高质量的用户访谈？有哪些常见错误？"
+    },
+    "evidence_refs": [],
+    "source": "h_rules",
+    "related_cards": []
+  },
+  {
+    "card_id": "method_3dc6d2bf",
+    "card_type": "method",
+    "title": "修复策略：竞争分析",
+    "summary": "当H6问题触发时的修复方法",
+    "content": "**触发条件：** H6\n\n**修复任务：** 按统一维度重构竞品对比矩阵\n\n**学习问题：** 如何系统做竞品对比分析？竞品分析矩阵怎么建？",
+    "stage": [
+      "discovery"
+    ],
+    "dimensions": [
+      "empathy"
+    ],
+    "rubrics": [
+      ""
+    ],
+    "industry": "",
+    "tags": [
+      "竞争分析",
+      "H6"
+    ],
+    "fields": {
+      "rule_id": "H6",
+      "concept": "竞争分析",
+      "severity": "medium",
+      "fix_task": "按统一维度重构竞品对比矩阵",
+      "learning_query": "如何系统做竞品对比分析？竞品分析矩阵怎么建？"
+    },
+    "evidence_refs": [],
+    "source": "h_rules",
+    "related_cards": []
+  },
+  {
+    "card_id": "method_6e02de26",
+    "card_type": "method",
+    "title": "修复策略：护城河",
+    "summary": "当H7问题触发时的修复方法",
+    "content": "**触发条件：** H7\n\n**修复任务：** 设计验证实验或提供对比数据\n\n**学习问题：** 什么是护城河？创业公司如何建立和量化差异化优势？",
+    "stage": [
+      "discovery"
+    ],
+    "dimensions": [
+      "empathy"
+    ],
+    "rubrics": [
+      ""
+    ],
+    "industry": "",
+    "tags": [
+      "护城河",
+      "H7"
+    ],
+    "fields": {
+      "rule_id": "H7",
+      "concept": "护城河",
+      "severity": "medium",
+      "fix_task": "设计验证实验或提供对比数据",
+      "learning_query": "什么是护城河？创业公司如何建立和量化差异化优势？"
+    },
+    "evidence_refs": [],
+    "source": "h_rules",
+    "related_cards": []
+  },
+  {
+    "card_id": "method_36d9727d",
+    "card_type": "method",
+    "title": "修复策略：用户终身价值",
+    "summary": "当H8问题触发时的修复方法",
+    "content": "**触发条件：** H8\n\n**修复任务：** 重新计算单位经济，调整定价或降低获客成本\n\n**学习问题：** 如何计算LTV、CAC，单位经济模型怎么验证？",
+    "stage": [
+      "discovery"
+    ],
+    "dimensions": [
+      "empathy"
+    ],
+    "rubrics": [
+      ""
+    ],
+    "industry": "",
+    "tags": [
+      "用户终身价值",
+      "H8"
+    ],
+    "fields": {
+      "rule_id": "H8",
+      "concept": "用户终身价值",
+      "severity": "high",
+      "fix_task": "重新计算单位经济，调整定价或降低获客成本",
+      "learning_query": "如何计算LTV、CAC，单位经济模型怎么验证？"
+    },
+    "evidence_refs": [],
+    "source": "h_rules",
+    "related_cards": []
+  },
+  {
+    "card_id": "method_7924e9cc",
+    "card_type": "method",
+    "title": "修复策略：海盗指标",
+    "summary": "当H9问题触发时的修复方法",
+    "content": "**触发条件：** H9\n\n**修复任务：** 拆解增长为种子期、扩展期、规模期分别规划\n\n**学习问题：** 什么是AARRR增长漏斗？如何设计增长策略？",
+    "stage": [
+      "discovery"
+    ],
+    "dimensions": [
+      "empathy"
+    ],
+    "rubrics": [
+      ""
+    ],
+    "industry": "",
+    "tags": [
+      "海盗指标",
+      "H9"
+    ],
+    "fields": {
+      "rule_id": "H9",
+      "concept": "海盗指标",
+      "severity": "medium",
+      "fix_task": "拆解增长为种子期、扩展期、规模期分别规划",
+      "learning_query": "什么是AARRR增长漏斗？如何设计增长策略？"
+    },
+    "evidence_refs": [],
+    "source": "h_rules",
+    "related_cards": []
+  },
+  {
+    "card_id": "method_174a26fb",
+    "card_type": "method",
+    "title": "修复策略：技术路线图",
+    "summary": "当H10问题触发时的修复方法",
+    "content": "**触发条件：** H10\n\n**修复任务：** 定义SMART指标的具体交付物\n\n**学习问题：** 如何制定SMART里程碑计划？项目阶段如何划分？",
+    "stage": [
+      "discovery"
+    ],
+    "dimensions": [
+      "empathy"
+    ],
+    "rubrics": [
+      ""
+    ],
+    "industry": "",
+    "tags": [
+      "技术路线图",
+      "H10"
+    ],
+    "fields": {
+      "rule_id": "H10",
+      "concept": "技术路线图",
+      "severity": "medium",
+      "fix_task": "定义SMART指标的具体交付物",
+      "learning_query": "如何制定SMART里程碑计划？项目阶段如何划分？"
+    },
+    "evidence_refs": [],
+    "source": "h_rules",
+    "related_cards": []
+  },
+  {
+    "card_id": "method_335ccff2",
+    "card_type": "method",
+    "title": "修复策略：合规性",
+    "summary": "当H11问题触发时的修复方法",
+    "content": "**触发条件：** H11\n\n**修复任务：** 补充合规分析和伦理风险评估\n\n**学习问题：** 数据隐私和行业合规如何评估？哪些行业有特殊监管？",
+    "stage": [
+      "discovery"
+    ],
+    "dimensions": [
+      "empathy"
+    ],
+    "rubrics": [
+      ""
+    ],
+    "industry": "",
+    "tags": [
+      "合规性",
+      "H11"
+    ],
+    "fields": {
+      "rule_id": "H11",
+      "concept": "合规性",
+      "severity": "high",
+      "fix_task": "补充合规分析和伦理风险评估",
+      "learning_query": "数据隐私和行业合规如何评估？哪些行业有特殊监管？"
+    },
+    "evidence_refs": [],
+    "source": "h_rules",
+    "related_cards": []
+  },
+  {
+    "card_id": "method_3b176df4",
+    "card_type": "method",
+    "title": "修复策略：技术验证",
+    "summary": "当H12问题触发时的修复方法",
+    "content": "**触发条件：** H12\n\n**修复任务：** 调整技术方案或补充资源获取计划\n\n**学习问题：** 如何评估技术路线与团队能力的匹配度？",
+    "stage": [
+      "discovery"
+    ],
+    "dimensions": [
+      "empathy"
+    ],
+    "rubrics": [
+      ""
+    ],
+    "industry": "",
+    "tags": [
+      "技术验证",
+      "H12"
+    ],
+    "fields": {
+      "rule_id": "H12",
+      "concept": "技术验证",
+      "severity": "high",
+      "fix_task": "调整技术方案或补充资源获取计划",
+      "learning_query": "如何评估技术路线与团队能力的匹配度？"
+    },
+    "evidence_refs": [],
+    "source": "h_rules",
+    "related_cards": []
+  },
+  {
+    "card_id": "method_ef715715",
+    "card_type": "method",
+    "title": "修复策略：最小可行产品",
+    "summary": "当H13问题触发时的修复方法",
+    "content": "**触发条件：** H13\n\n**修复任务：** 重新设计实验方案\n\n**学习问题：** 如何设计有效的A/B测试和最小化验证实验？",
+    "stage": [
+      "discovery"
+    ],
+    "dimensions": [
+      "empathy"
+    ],
+    "rubrics": [
+      ""
+    ],
+    "industry": "",
+    "tags": [
+      "最小可行产品",
+      "H13"
+    ],
+    "fields": {
+      "rule_id": "H13",
+      "concept": "最小可行产品",
+      "severity": "medium",
+      "fix_task": "重新设计实验方案",
+      "learning_query": "如何设计有效的A/B测试和最小化验证实验？"
+    },
+    "evidence_refs": [],
+    "source": "h_rules",
+    "related_cards": []
+  },
+  {
+    "card_id": "method_b5a306cf",
+    "card_type": "method",
+    "title": "修复策略：路演材料",
+    "summary": "当H14问题触发时的修复方法",
+    "content": "**触发条件：** H14\n\n**修复任务：** 按 问题→方案→市场→模式→团队 重构叙事\n\n**学习问题：** 如何构建完整的路演故事线？7幕叙事结构是什么？",
+    "stage": [
+      "discovery"
+    ],
+    "dimensions": [
+      "empathy"
+    ],
+    "rubrics": [
+      ""
+    ],
+    "industry": "",
+    "tags": [
+      "路演材料",
+      "H14"
+    ],
+    "fields": {
+      "rule_id": "H14",
+      "concept": "路演材料",
+      "severity": "low",
+      "fix_task": "按 问题→方案→市场→模式→团队 重构叙事",
+      "learning_query": "如何构建完整的路演故事线？7幕叙事结构是什么？"
+    },
+    "evidence_refs": [],
+    "source": "h_rules",
+    "related_cards": []
+  },
+  {
+    "card_id": "method_377790f7",
+    "card_type": "method",
+    "title": "修复策略：精益画布",
+    "summary": "当H15问题触发时的修复方法",
+    "content": "**触发条件：** H15\n\n**修复任务：** 针对缺失项逐一补充证据材料\n\n**学习问题：** 如何为每个评分维度构建完整的证据材料？",
+    "stage": [
+      "discovery"
+    ],
+    "dimensions": [
+      "empathy"
+    ],
+    "rubrics": [
+      ""
+    ],
+    "industry": "",
+    "tags": [
+      "精益画布",
+      "H15"
+    ],
+    "fields": {
+      "rule_id": "H15",
+      "concept": "精益画布",
+      "severity": "medium",
+      "fix_task": "针对缺失项逐一补充证据材料",
+      "learning_query": "如何为每个评分维度构建完整的证据材料？"
+    },
+    "evidence_refs": [],
+    "source": "h_rules",
+    "related_cards": []
+  },
+  {
+    "card_id": "template_563c1c21",
+    "card_type": "template",
+    "title": "路演PPT七幕结构",
+    "summary": "投资人/竞赛评委期待的路演叙事结构",
+    "content": "**七幕结构：**\n\n1. **开场Hook：** 一个吸引注意的故事或数据\n2. **痛点：** 谁，在什么场景下，遇到什么问题\n3. **方案：** 你怎么解决，核心差异化\n4. **市场：** TAM/SAM/SOM，为什么是现在\n5. **商业模式：** 谁付钱，怎么赚钱\n6. **团队：** 为什么是你们\n7. **Ask：** 你需要什么资源/想达到什么目标\n\n**时间分配：** 每幕1-2分钟，总计不超过10分钟",
+    "stage": [
+      "pitching"
+    ],
+    "dimensions": [
+      "pitching"
+    ],
+    "rubrics": [
+      "R9"
+    ],
+    "industry": "",
+    "tags": [
+      "路演",
+      "PPT",
+      "叙事结构"
+    ],
+    "fields": {},
+    "evidence_refs": [],
+    "source": "built_in_template",
+    "related_cards": []
+  },
+  {
+    "card_id": "template_149633b0",
+    "card_type": "template",
+    "title": "单位经济模型模板",
+    "summary": "验证商业模式可持续性的核心计算模板",
+    "content": "**关键指标：**\n\n| 指标 | 公式 | 健康标准 |\n|------|------|----------|\n| CAC | 总获客成本/新客数 | 越低越好 |\n| LTV | ARPU × 平均留存月数 | LTV/CAC > 3 |\n| 毛利率 | (收入-直接成本)/收入 | > 50% |\n| 回收期 | CAC/月均收入 | < 12个月 |\n\n**验证顺序：** 先验证有人付费(PMF) → 再算单位经济 → 最后做增长",
+    "stage": [
+      "modeling"
+    ],
+    "dimensions": [
+      "business"
+    ],
+    "rubrics": [
+      "R6"
+    ],
+    "industry": "",
+    "tags": [
+      "财务",
+      "单位经济",
+      "LTV",
+      "CAC"
+    ],
+    "fields": {},
+    "evidence_refs": [],
+    "source": "built_in_template",
+    "related_cards": []
+  },
+  {
+    "card_id": "template_4ba023cf",
+    "card_type": "template",
+    "title": "竞品对比矩阵模板",
+    "summary": "系统化的竞品分析框架",
+    "content": "**对比维度建议：**\n\n| 维度 | 我们 | 竞品A | 竞品B | 替代方案 |\n|------|------|-------|-------|----------|\n| 核心功能 | | | | |\n| 价格 | | | | |\n| 目标用户 | | | | |\n| 技术方案 | | | | |\n| 获客渠道 | | | | |\n\n**注意：** '替代方案'列很重要——用户在你出现之前怎么解决的？Excel、微信群、线下方式都是你的竞争对手。",
+    "stage": [
+      "ideation",
+      "modeling"
+    ],
+    "dimensions": [
+      "ideation",
+      "business"
+    ],
+    "rubrics": [
+      "R5",
+      "R7"
+    ],
+    "industry": "",
+    "tags": [
+      "竞品分析",
+      "对比矩阵",
+      "差异化"
+    ],
+    "fields": {},
+    "evidence_refs": [],
+    "source": "built_in_template",
+    "related_cards": []
+  },
+  {
+    "card_id": "template_82c12c75",
+    "card_type": "template",
+    "title": "用户访谈记录模板",
+    "summary": "结构化的用户访谈记录框架",
+    "content": "**访谈记录表：**\n\n- **受访者：** [姓名/编号] | [年龄/职业] | [是否陌生人]\n- **场景：** [在什么场景下遇到问题]\n- **痛点描述：** [用户原话]\n- **现有解决方案：** [用户目前怎么解决]\n- **付费意愿：** [是否愿意付费/付多少]\n- **关键引用：** [最有价值的一句话]\n\n**黄金规则：** 问行为不问意见，问过去不问未来",
+    "stage": [
+      "discovery"
+    ],
+    "dimensions": [
+      "empathy"
+    ],
+    "rubrics": [
+      "R1",
+      "R2"
+    ],
+    "industry": "",
+    "tags": [
+      "用户访谈",
+      "调研",
+      "The Mom Test"
+    ],
+    "fields": {},
+    "evidence_refs": [],
+    "source": "built_in_template",
+    "related_cards": []
+  }
+]

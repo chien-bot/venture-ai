@@ -14,6 +14,10 @@ from services.session_store import (
     get_project,
 )
 from services.database import save_session_rating, get_rating_for_session, auto_detect_task_completion
+from services.intake_form import (
+    get_intake_schema, predict_gaps, extract_evidence_from_intake,
+    format_intake_for_prompt, format_intake_summary_for_student,
+)
 from hypergraph.knowledge_recommendations import get_recommendations
 import uuid
 
@@ -96,6 +100,7 @@ def send_message(req: ChatRequest):
         intent=result.get("intent"),
         knowledge_recommendations=knowledge_recs or None,
         fix_tasks=fix_tasks,
+        score_breakdown=result.get("score_breakdown"),
     )
 
 
@@ -134,6 +139,107 @@ def send_message_stream(req: ChatRequest):
 def get_history(session_id: str):
     history = get_chat_history(session_id)
     return {"session_id": session_id, "messages": history}
+
+
+# ── Intake Form (前置采集层) ──────────────────────────────────────────
+
+@router.get("/intake/schema")
+def get_intake_form_schema():
+    """返回前置采集表单的 schema，前端用于渲染表单。"""
+    return {"groups": get_intake_schema()}
+
+
+class IntakeSubmitRequest(BaseModel):
+    session_id: str
+    project_id: str
+    filled_data: dict  # {field_key: value}
+
+
+@router.post("/intake/submit")
+def submit_intake(req: IntakeSubmitRequest):
+    """
+    提交前置采集数据。
+
+    处理流程：
+    1. 预测信息缺口（top 3）
+    2. 提取证据并预填充到 EvidenceTracer
+    3. 生成面向学生的摘要（作为第一条 AI 消息）
+    4. 生成注入 coach prompt 的上下文块（存到 session 元数据）
+    """
+    from services.evidence_tracer import refresh_tracer
+    from services.session_store import set_session, get_session
+
+    # 1. 缺口预测
+    gaps = predict_gaps(req.filled_data, max_gaps=3)
+
+    # 2. 提取证据
+    evidences = extract_evidence_from_intake(req.filled_data)
+
+    # 3. 预填充证据到 tracer（通过构造一条虚拟的用户消息）
+    intake_text_parts = []
+    for ev in evidences:
+        intake_text_parts.append(ev.text)
+    if intake_text_parts:
+        intake_message = "\n".join(intake_text_parts)
+        append_chat(req.session_id, "user", f"[项目信息采集]\n{intake_message}")
+        # Refresh tracer so it picks up the intake evidence
+        history = get_chat_history(req.session_id)
+        refresh_tracer(req.session_id, history)
+
+    # 4. 生成面向学生的摘要
+    student_summary = format_intake_summary_for_student(req.filled_data, gaps)
+    append_chat(req.session_id, "assistant", student_summary)
+
+    # 5. 生成 prompt 注入块，存到 session 元数据
+    prompt_context = format_intake_for_prompt(req.filled_data, gaps)
+    session_meta = get_session(req.session_id) or {}
+    session_meta["intake_context"] = prompt_context
+    session_meta["intake_data"] = req.filled_data
+    set_session(req.session_id, session_meta)
+
+    # 6. 如果有项目绑定，更新项目描述
+    if req.project_id:
+        project = get_project(req.project_id)
+        if project:
+            # 用采集数据丰富项目描述
+            desc_parts = []
+            if req.filled_data.get("target_user"):
+                desc_parts.append(f"目标用户：{req.filled_data['target_user']}")
+            if req.filled_data.get("pain_scenario"):
+                desc_parts.append(f"痛点：{req.filled_data['pain_scenario'][:100]}")
+            if req.filled_data.get("solution_desc"):
+                desc_parts.append(f"方案：{req.filled_data['solution_desc'][:100]}")
+            if desc_parts and not project.get("description"):
+                from services.session_store import set_project
+                project["description"] = " | ".join(desc_parts)
+                set_project(req.project_id, project)
+
+    return {
+        "session_id": req.session_id,
+        "student_summary": student_summary,
+        "gaps": [
+            {"field_key": g.field_key, "label": g.label, "reason": g.reason}
+            for g in gaps
+        ],
+        "evidence_count": len(evidences),
+        "intake_complete": True,
+    }
+
+
+class IntakeGapCheckRequest(BaseModel):
+    filled_data: dict
+
+
+@router.post("/intake/gaps")
+def check_intake_gaps(req: IntakeGapCheckRequest):
+    """实时缺口预测 — 前端在用户填写过程中调用，动态显示缺口。"""
+    gaps = predict_gaps(req.filled_data, max_gaps=5)
+    return {
+        "gaps": [
+            {"field_key": g.field_key, "label": g.label, "reason": g.reason, "dimension": g.dimension}
+            for g in gaps
+        ],
+    }
 
 
 # ── Mock Investor Defense ─────────────────────────────────────────────

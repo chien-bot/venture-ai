@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { startChat, sendMessage, sendMessageStream, listProjects, createProject, submitRating, getLatestSession, uploadFile, getMySessions, getChatHistory, deleteSession } from "@/lib/api";
+import { startChat, sendMessage, sendMessageStream, listProjects, createProject, submitRating, getLatestSession, uploadFile, getMySessions, getChatHistory, deleteSession, getIntakeSchema, submitIntake } from "@/lib/api";
 import { ChatMessage, Scores, Project } from "@/lib/types";
 import ChatWindow from "@/components/ChatWindow";
 import ScoreRadar from "@/components/ScoreRadar";
@@ -78,6 +78,12 @@ export default function StudentChatPageContent() {
   const [historySessions, setHistorySessions] = useState<any[]>([]);
   const [historyCollapsed, setHistoryCollapsed] = useState(false);
   const [activeSessionProject, setActiveSessionProject] = useState<{name: string; industry?: string} | null>(null);
+  // Intake form (前置采集层)
+  const [showIntakeForm, setShowIntakeForm] = useState(false);
+  const [intakeSchema, setIntakeSchema] = useState<any[]>([]);
+  const [intakeData, setIntakeData] = useState<Record<string, string>>({});
+  const [intakeSubmitting, setIntakeSubmitting] = useState(false);
+  const [intakeGaps, setIntakeGaps] = useState<any[]>([]);
 
   const handleFileUpload = async (file: File) => {
     if (!file || !selectedProjectId) return;
@@ -116,9 +122,46 @@ export default function StudentChatPageContent() {
       setScores(null); setDiagnosis([]); setStage("discovery");
       setRubricScores(null); setIntent("coach");
       refreshHistory();
+      // Show intake form for new sessions with a project
+      if (projectId) {
+        try {
+          const schema = await getIntakeSchema();
+          if (schema.groups?.length > 0) {
+            setIntakeSchema(schema.groups);
+            setIntakeData({});
+            setIntakeGaps([]);
+            setShowIntakeForm(true);
+          }
+        } catch { /* intake schema fetch failed, skip form */ }
+      }
     } catch {
       setMessages([{ role: "assistant", content: "连接失败，请检查后端服务是否已启动。" }]);
     }
+  };
+
+  const handleIntakeSubmit = async () => {
+    if (!sessionId) return;
+    setIntakeSubmitting(true);
+    try {
+      const res = await submitIntake(sessionId, selectedProjectId, intakeData);
+      // Replace the greeting with the intake summary
+      if (res.student_summary) {
+        setMessages([
+          { role: "assistant", content: res.student_summary },
+        ]);
+      }
+      setIntakeGaps(res.gaps || []);
+      setShowIntakeForm(false);
+    } catch {
+      // If intake submit fails, just close the form and continue normally
+      setShowIntakeForm(false);
+    }
+    setIntakeSubmitting(false);
+  };
+
+  const handleIntakeSkip = () => {
+    setShowIntakeForm(false);
+    setIntakeData({});
   };
 
   const restoreOrInit = async (pid: string) => {
@@ -553,6 +596,91 @@ export default function StudentChatPageContent() {
                 className="flex-1 py-2.5 rounded-xl text-sm btn-glow disabled:opacity-40"
               >
                 {creatingProject ? "创建中..." : "创建并开始对话 →"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Intake Form Modal (前置采集层) */}
+      {showIntakeForm && intakeSchema.length > 0 && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center"
+             style={{ background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)" }}>
+          <div className="w-full max-w-2xl max-h-[85vh] rounded-2xl flex flex-col"
+               style={{ background: "rgba(10,14,28,0.98)", border: "1px solid rgba(99,102,241,0.3)", boxShadow: "0 0 60px rgba(99,102,241,0.15)" }}>
+            {/* Header */}
+            <div className="px-6 py-4 flex-shrink-0" style={{ borderBottom: "1px solid var(--border)" }}>
+              <h2 className="text-base font-bold" style={{ color: "var(--text-primary)" }}>
+                项目信息采集
+              </h2>
+              <p className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>
+                填写越详细，AI 教练的诊断越精准。可以跳过不确定的项目，后续在对话中补充。
+              </p>
+            </div>
+            {/* Form Body */}
+            <div className="flex-1 overflow-y-auto px-6 py-4 space-y-5">
+              {intakeSchema.map((group: any) => (
+                <div key={group.group}>
+                  <h3 className="text-xs font-bold uppercase tracking-wider mb-3"
+                      style={{ color: "#a5b4fc" }}>
+                    {group.group}
+                  </h3>
+                  <div className="space-y-3">
+                    {group.fields.map((field: any) => (
+                      <div key={field.key}>
+                        <label className="block text-xs font-semibold mb-1" style={{ color: "var(--text-muted)" }}>
+                          {field.label} {field.required && <span style={{ color: "#ef4444" }}>*</span>}
+                        </label>
+                        {field.input_type === "select" ? (
+                          <select
+                            value={intakeData[field.key] || ""}
+                            onChange={(e) => setIntakeData(prev => ({ ...prev, [field.key]: e.target.value }))}
+                            className="w-full px-3 py-2.5 rounded-xl text-sm outline-none"
+                            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid var(--border)", color: "var(--text-primary)" }}
+                          >
+                            <option value="">请选择...</option>
+                            {field.options?.map((opt: string) => (
+                              <option key={opt} value={opt}>{opt}</option>
+                            ))}
+                          </select>
+                        ) : field.input_type === "textarea" ? (
+                          <textarea
+                            value={intakeData[field.key] || ""}
+                            onChange={(e) => setIntakeData(prev => ({ ...prev, [field.key]: e.target.value }))}
+                            placeholder={field.placeholder}
+                            rows={2}
+                            className="w-full px-3 py-2.5 rounded-xl text-sm outline-none resize-none"
+                            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid var(--border)", color: "var(--text-primary)" }}
+                          />
+                        ) : (
+                          <input
+                            value={intakeData[field.key] || ""}
+                            onChange={(e) => setIntakeData(prev => ({ ...prev, [field.key]: e.target.value }))}
+                            placeholder={field.placeholder}
+                            className="w-full px-3 py-2.5 rounded-xl text-sm outline-none"
+                            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid var(--border)", color: "var(--text-primary)" }}
+                          />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+            {/* Footer */}
+            <div className="px-6 py-4 flex gap-3 flex-shrink-0" style={{ borderTop: "1px solid var(--border)" }}>
+              <button
+                onClick={handleIntakeSkip}
+                className="flex-1 py-2.5 rounded-xl text-sm"
+                style={{ background: "rgba(255,255,255,0.04)", border: "1px solid var(--border)", color: "var(--text-muted)" }}
+              >
+                跳过，直接开始对话
+              </button>
+              <button
+                onClick={handleIntakeSubmit}
+                disabled={intakeSubmitting}
+                className="flex-1 py-2.5 rounded-xl text-sm btn-glow disabled:opacity-40"
+              >
+                {intakeSubmitting ? "分析中..." : "提交并开始智能诊断 →"}
               </button>
             </div>
           </div>

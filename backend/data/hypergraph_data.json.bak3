@@ -41,6 +41,45 @@
       }
     },
     {
+      "id": "proj_b7a0e0af",
+      "type": "Project",
+      "label": "非物质文化遗产的商业_与保护策略",
+      "properties": {
+        "industry": "文化旅游",
+        "source": "科技创新类2",
+        "technologies": [
+          "AR"
+        ],
+        "biz_model": [
+          "平台"
+        ],
+        "moat": []
+      }
+    },
+    {
+      "id": "proj_78f2d606",
+      "type": "Project",
+      "label": "基于人工智能的雷达微弱目标检测",
+      "properties": {
+        "industry": "工业制造",
+        "source": "科技创新类2",
+        "technologies": [
+          "光学",
+          "目标检测",
+          "AR",
+          "多模态",
+          "计算机视觉",
+          "红外",
+          "无人机"
+        ],
+        "biz_model": [],
+        "moat": [
+          "EI",
+          "SCI"
+        ]
+      }
+    },
+    {
       "id": "proj_68515984",
       "type": "Project",
       "label": "基于YOLO的AI视_能感知系统",
@@ -149,6 +188,94 @@
       }
     },
     {
+      "id": "proj_a85743aa",
+      "type": "Project",
+      "label": "多场感知，孪生驱动—_技术引领者",
+      "properties": {
+        "industry": "工业制造",
+        "source": "科技创新类2",
+        "technologies": [
+          "数字孪生",
+          "深度学习",
+          "神经网络",
+          "卷积神经网络",
+          "超声",
+          "LSTM",
+          "GAN",
+          "红外"
+        ],
+        "biz_model": [
+          "平台"
+        ],
+        "moat": [
+          "知识产权",
+          "核心技术",
+          "SCI",
+          "发明专利",
+          "专利"
+        ]
+      }
+    },
+    {
+      "id": "proj_8b88aaad",
+      "type": "Project",
+      "label": "鲲澜芯动：多模态水下_能决策方案",
+      "properties": {
+        "industry": "工业制造",
+        "source": "科技创新类2",
+        "technologies": [
+          "强化学习",
+          "光学",
+          "目标检测",
+          "深度学习",
+          "芯片",
+          "AR",
+          "多模态",
+          "预训练"
+        ],
+        "biz_model": [
+          "平台"
+        ],
+        "moat": [
+          "核心技术",
+          "发明专利",
+          "专利",
+          "论文",
+          "壁垒"
+        ]
+      }
+    },
+    {
+      "id": "proj_30115f05",
+      "type": "Project",
+      "label": "EvoRobo：下一_智能机器人",
+      "properties": {
+        "industry": "工业制造",
+        "source": "科技创新类2",
+        "technologies": [
+          "强化学习",
+          "AR",
+          "多模态",
+          "预训练",
+          "VR",
+          "智能制造",
+          "大模型",
+          "SoC"
+        ],
+        "biz_model": [
+          "API",
+          "平台"
+        ],
+        "moat": [
+          "核心技术",
+          "EI",
+          "SCI",
+          "专利",
+          "论文"
+        ]
+      }
+    },
+    {
       "id": "proj_a9941030",
       "type": "Project",
       "label": "脉语智鉴——结合视触_能脉诊系统",
@@ -184,6 +311,41 @@
           "未提供市场规模数据"
         ],
         "is_detailed_case": true
+      }
+    },
+    {
+      "id": "proj_8c46705e",
+      "type": "Project",
+      "label": "臻视赋医——面向真实_强算法研究",
+      "properties": {
+        "industry": "医疗健康",
+        "source": "科技创新类2",
+        "technologies": [
+          "注意力机制",
+          "光学",
+          "生成对抗",
+          "深度学习",
+          "神经网络",
+          "AR",
+          "卷积神经网络",
+          "多模态"
+        ],
+        "biz_model": [
+          "授权"
+        ],
+        "moat": [
+          "SCI",
+          "EI",
+          "发明专利",
+          "专利"
+        ],
+        "problem": "医学影像AI算法在实验室效果好但临床部署后性能下降，主要因为训练数据与真实场景分布不一致",
+        "solution": "面向真实临床环境的鲁棒医学影像分析算法，通过域自适应和数据增强技术提升临床适用性",
+        "market_size": "医学影像AI市场约150亿元",
+        "failure_risks": [
+          "NMPA审批周期长",
+          "医院IT基础设施参差不齐"
+        ]
       }
     },
     {
@@ -270,6 +432,29 @@
       }
     },
     {
+      "id": "proj_b4230f04",
+      "type": "Project",
+      "label": "超晰视界——手持超声_域增强技术",
+      "properties": {
+        "industry": "医疗健康",
+        "source": "科技创新类2",
+        "technologies": [
+          "注意力机制",
+          "生成对抗",
+          "深度学习",
+          "AR",
+          "计算机视觉",
+          "超声",
+          "GAN",
+          "传感器"
+        ],
+        "biz_model": [],
+        "moat": [
+          "EI"
+        ]
+      }
+    },
+    {
       "id": "proj_e86f23f2",
       "type": "Project",
       "label": "智眸明析——眼底临床_准化大模型",
@@ -346,6 +531,59 @@
         "moat": [
           "核心技术",
           "论文"
+        ]
+      }
+    },
+    {
+      "id": "proj_98bb8d5c",
+      "type": "Project",
+      "label": "稳定不倒——非同轴两_衡控制技术",
+      "properties": {
+        "industry": "交通运输",
+        "source": "科技创新类2",
+        "technologies": [
+          "AR",
+          "单片机",
+          "机器人",
+          "传感器",
+          "无人机",
+          "无人车"
+        ],
+        "biz_model": [
+          "平台"
+        ],
+        "moat": [
+          "算法优势",
+          "EI"
+        ]
+      }
+    },
+    {
+      "id": "proj_ea85a5d3",
+      "type": "Project",
+      "label": "面向低空经济的人工智_感知与应用",
+      "properties": {
+        "industry": "交通运输",
+        "source": "科技创新类2",
+        "technologies": [
+          "数字孪生",
+          "神经网络",
+          "AR",
+          "卷积神经网络",
+          "GAN",
+          "嵌入式",
+          "CNN",
+          "智能制造"
+        ],
+        "biz_model": [
+          "授权",
+          "广告",
+          "平台"
+        ],
+        "moat": [
+          "核心技术",
+          "自主研发",
+          "专利"
         ]
       }
     },
@@ -674,6 +912,25 @@
       }
     },
     {
+      "id": "proj_89ef2bce",
+      "type": "Project",
+      "label": "面向南南合作国家的智_稻种植系统",
+      "properties": {
+        "industry": "农业发展",
+        "source": "科技创新类2",
+        "technologies": [
+          "AR",
+          "低碳",
+          "无人机"
+        ],
+        "biz_model": [],
+        "moat": [
+          "EI",
+          "专利"
+        ]
+      }
+    },
+    {
       "id": "proj_032fa339",
       "type": "Project",
       "label": "零碳智汇-适用多行业_化评价系统",
@@ -701,6 +958,46 @@
           "SCI",
           "论文"
         ]
+      }
+    },
+    {
+      "id": "proj_db8b8b77",
+      "type": "Project",
+      "label": "碳索未来—智能化CO_技术与装备",
+      "properties": {
+        "industry": "环境保护",
+        "source": "科技创新类2",
+        "technologies": [
+          "GAN",
+          "AR",
+          "机器学习"
+        ],
+        "biz_model": [
+          "授权",
+          "商业模式",
+          "盈利模式"
+        ],
+        "moat": [
+          "核心技术",
+          "EI",
+          "SCI",
+          "专利",
+          "论文"
+        ],
+        "problem": "工业碳排放监测和碳捕集过程高度依赖人工操作，效率低、成本高、精度不稳定",
+        "solution": "智能化CO2捕集与碳排放评价系统，通过AI优化碳捕集工艺参数，降低能耗和运营成本",
+        "market_size": "碳捕集市场（CCUS）全球约500亿美元，中国约300亿元",
+        "biz_detail": "..................................................................................................................................28",
+        "patent_count": 0,
+        "paper_count": 15,
+        "team_backgrounds": [],
+        "success_factors": [
+          "发表15篇论文"
+        ],
+        "failure_risks": [
+          "未提供市场规模数据"
+        ],
+        "is_detailed_case": true
       }
     },
     {
@@ -767,6 +1064,30 @@
           "未提供市场规模数据"
         ],
         "is_detailed_case": true
+      }
+    },
+    {
+      "id": "proj_169abfde",
+      "type": "Project",
+      "label": "面向湿地生态监测的多_能解译技术",
+      "properties": {
+        "industry": "环境保护",
+        "source": "科技创新类2",
+        "technologies": [
+          "光学",
+          "深度学习",
+          "激光雷达",
+          "神经网络",
+          "AR",
+          "卷积神经网络",
+          "多模态",
+          "红外"
+        ],
+        "biz_model": [],
+        "moat": [
+          "EI",
+          "论文"
+        ]
       }
     },
     {
@@ -1199,6 +1520,47 @@
       }
     },
     {
+      "id": "proj_80c57f7b",
+      "type": "Project",
+      "label": "广寒天工——月基装备_人作业系统",
+      "properties": {
+        "industry": "工业制造",
+        "source": "科技创新类2",
+        "technologies": [
+          "强化学习",
+          "传感器",
+          "AR"
+        ],
+        "biz_model": [
+          "授权",
+          "平台"
+        ],
+        "moat": [
+          "核心技术",
+          "EI",
+          "发明专利",
+          "专利",
+          "SCI"
+        ],
+        "problem": "亟需突破感知与导航、规划与决策等基础理论与关",
+        "solution": "面向月球基地建设的智能装备与无人作业系统，集成自主导航、远程操控和协同作业能力",
+        "market_size": "航天装备制造市场约3000亿元，月球探测相关约200亿（政府主导）",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [
+          "院士"
+        ],
+        "success_factors": [
+          "团队包含院士"
+        ],
+        "failure_risks": [
+          "未提供市场规模数据"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
       "id": "proj_6449bc5b",
       "type": "Project",
       "label": "极端环境勘测革新——_主巡检系统",
@@ -1578,6 +1940,67 @@
       }
     },
     {
+      "id": "proj_5b849f1d",
+      "type": "Project",
+      "label": "商业计划书-讯海智航——全流程新闻写作AI辅助平台.pdf",
+      "properties": {
+        "industry": "通用",
+        "source": "创新创业赛",
+        "technologies": [
+          "自然语言处理",
+          "NLP",
+          "多模态",
+          "BERT",
+          "边缘计算",
+          "大模型",
+          "大数据"
+        ],
+        "biz_model": [
+          "商业模式",
+          "平台",
+          "盈利模式",
+          "收入来源"
+        ],
+        "moat": [
+          "专利",
+          "独创",
+          "知识产权"
+        ]
+      }
+    },
+    {
+      "id": "proj_81af83ec",
+      "type": "Project",
+      "label": "元界创生云上交互空间智能生成技术领跑者_计划书",
+      "properties": {
+        "industry": "文化旅游",
+        "source": "创新创业赛",
+        "technologies": [
+          "数字孪生",
+          "实时渲染",
+          "芯片",
+          "AR",
+          "多模态",
+          "计算机视觉",
+          "VR",
+          "5G"
+        ],
+        "biz_model": [
+          "商业模式",
+          "平台",
+          "盈利模式",
+          "营收"
+        ],
+        "moat": [
+          "独创",
+          "核心技术",
+          "自主研发",
+          "发明专利",
+          "专利"
+        ]
+      }
+    },
+    {
       "id": "proj_44aa5890",
       "type": "Project",
       "label": "夜视鹰瞳项目",
@@ -1608,6 +2031,29 @@
           "自主研发",
           "发明专利"
         ]
+      }
+    },
+    {
+      "id": "proj_4a5d64aa",
+      "type": "Project",
+      "label": "推送家2020Q2",
+      "properties": {
+        "industry": "政务管理",
+        "source": "创新创业赛",
+        "technologies": [
+          "神经网络",
+          "图像识别",
+          "云计算",
+          "LSTM",
+          "机器学习"
+        ],
+        "biz_model": [
+          "订阅",
+          "平台",
+          "商业模式",
+          "会员"
+        ],
+        "moat": []
       }
     },
     {
@@ -1671,6 +2117,153 @@
       }
     },
     {
+      "id": "proj_fb6c9c33",
+      "type": "Project",
+      "label": "星哨科技--新一代卫星互联网应用系统，开启全域全时快响预警新时代",
+      "properties": {
+        "industry": "交通运输",
+        "source": "创新创业赛",
+        "technologies": [
+          "FPGA"
+        ],
+        "biz_model": [
+          "授权",
+          "平台"
+        ],
+        "moat": [
+          "独创",
+          "知识产权",
+          "发明专利",
+          "专利",
+          "首创"
+        ]
+      }
+    },
+    {
+      "id": "proj_c5de69af",
+      "type": "Project",
+      "label": "精微智控--面向智能_环调控系统",
+      "properties": {
+        "industry": "工业制造",
+        "source": "科技创新类1",
+        "technologies": [
+          "光学",
+          "芯片",
+          "AR",
+          "偏振",
+          "量子",
+          "红外",
+          "增材制造",
+          "新能源"
+        ],
+        "biz_model": [
+          "平台"
+        ],
+        "moat": [
+          "核心技术",
+          "SCI"
+        ]
+      }
+    },
+    {
+      "id": "proj_4d9da4f3",
+      "type": "Project",
+      "label": "银构芯生——3D异质_连材料技术",
+      "properties": {
+        "industry": "工业制造",
+        "source": "科技创新类1",
+        "technologies": [
+          "芯片",
+          "纳米",
+          "FPGA"
+        ],
+        "biz_model": [],
+        "moat": [
+          "知识产权",
+          "EI",
+          "发明专利",
+          "专利",
+          "论文"
+        ]
+      }
+    },
+    {
+      "id": "proj_8c2f4b96",
+      "type": "Project",
+      "label": "灵枢微创--人体自然_手术机器人",
+      "properties": {
+        "industry": "医疗健康",
+        "source": "科技创新类1",
+        "technologies": [
+          "内窥镜",
+          "AR",
+          "VR",
+          "5G",
+          "SoC",
+          "机器人"
+        ],
+        "biz_model": [
+          "平台"
+        ],
+        "moat": [
+          "核心技术",
+          "EI",
+          "论文",
+          "专利"
+        ]
+      }
+    },
+    {
+      "id": "proj_37d3d154",
+      "type": "Project",
+      "label": "医联农村，e路助农—_化路径研究",
+      "properties": {
+        "industry": "医疗健康",
+        "source": "科技创新类1",
+        "technologies": [
+          "数字孪生",
+          "物联网",
+          "大模型"
+        ],
+        "biz_model": [
+          "平台"
+        ],
+        "moat": [
+          "论文",
+          "壁垒"
+        ]
+      }
+    },
+    {
+      "id": "proj_9a2fbaa3",
+      "type": "Project",
+      "label": "千钧问鼎——尖端超高_自主化研制",
+      "properties": {
+        "industry": "工业制造",
+        "source": "科技创新类1",
+        "technologies": [
+          "光学",
+          "YOLO",
+          "芯片",
+          "AR",
+          "多模态",
+          "VR",
+          "量子",
+          "新能源"
+        ],
+        "biz_model": [
+          "平台"
+        ],
+        "moat": [
+          "核心技术",
+          "EI",
+          "SCI",
+          "发明专利",
+          "专利"
+        ]
+      }
+    },
+    {
       "id": "proj_bf910931",
       "type": "Project",
       "label": "禾光智能--精准制导_机器人系统",
@@ -1696,6 +2289,84 @@
           "发明专利",
           "专利",
           "SCI"
+        ]
+      }
+    },
+    {
+      "id": "proj_bad6ae35",
+      "type": "Project",
+      "label": "数湖启智-项目书0410",
+      "properties": {
+        "industry": "政务管理",
+        "source": "科技创新类1",
+        "technologies": [
+          "自动驾驶",
+          "AR",
+          "MR",
+          "知识图谱",
+          "IoT",
+          "数据湖",
+          "大模型",
+          "多模态"
+        ],
+        "biz_model": [
+          "数据服务",
+          "API",
+          "平台"
+        ],
+        "moat": [
+          "知识产权",
+          "SCI",
+          "发明专利",
+          "专利",
+          "论文"
+        ],
+        "problem": "当前核心瓶颈在于人工与自动化清洗的双重局限性形成治理真空：人工清洗需要投入大量专业人力进行重复性标注与规则制定，在面对海量异构数据时效率难以保证；而AI驱动的自动化清洗虽能缓解人力瓶颈，却受场景泛化能力，针对特定领域优化的算法在迁移至其他领域时时，因数据模态差异与业务逻辑断层，往往产生误判或过度清洗，迫使企业为",
+        "solution": "本项目提出的技术能够有效应对多源异构数据湖所带来的挑战，并高质量完成数据管理任务。本项目研制了基于多源异构数据湖的数据智算平台。该系统综合运用前述研究成果，包括任务感知的关系透视、人机协作的数据提质、数据优选的模型提效，旨在真实贴近用户需求，广泛适应多个应用场景。系统为用户提供自助式数据发现，数据清洗融合以及高效模型训练功能。",
+        "market_size": "数据治理与数据湖市场约500亿元，智能数据清洗细分约80亿",
+        "biz_detail": "",
+        "patent_count": 0,
+        "paper_count": 0,
+        "team_backgrounds": [
+          "教授",
+          "院士"
+        ],
+        "success_factors": [
+          "有用户验证",
+          "团队包含教授、院士"
+        ],
+        "failure_risks": [
+          "存在合规/隐私风险需评估",
+          "未提供市场规模数据"
+        ],
+        "is_detailed_case": true
+      }
+    },
+    {
+      "id": "proj_30972c83",
+      "type": "Project",
+      "label": "禾光智能——智能激光除草机器人系统",
+      "properties": {
+        "industry": "农业发展",
+        "source": "科技创新类1",
+        "technologies": [
+          "自动驾驶",
+          "芯片",
+          "AR",
+          "图像识别",
+          "CNN",
+          "神经网络",
+          "IoT",
+          "边缘计算"
+        ],
+        "biz_model": [
+          "数据服务",
+          "平台"
+        ],
+        "moat": [
+          "EI",
+          "论文",
+          "技术门槛"
         ]
       }
     },
@@ -2028,6 +2699,14 @@
       }
     },
     {
+      "id": "tech_ec71b9d7",
+      "type": "Technology",
+      "label": "氢能",
+      "properties": {
+        "usage_count": 2
+      }
+    },
+    {
       "id": "tech_61bb1751",
       "type": "Technology",
       "label": "机器学习",
@@ -2049,6 +2728,14 @@
       "label": "生成对抗",
       "properties": {
         "usage_count": 5
+      }
+    },
+    {
+      "id": "tech_eb8dc8ec",
+      "type": "Technology",
+      "label": "量子",
+      "properties": {
+        "usage_count": 3
       }
     },
     {
@@ -2108,6 +2795,14 @@
       }
     },
     {
+      "id": "tech_733252b8",
+      "type": "Technology",
+      "label": "三维重建",
+      "properties": {
+        "usage_count": 2
+      }
+    },
+    {
       "id": "tech_8bf07aa8",
       "type": "Technology",
       "label": "纳米",
@@ -2156,9 +2851,25 @@
       }
     },
     {
+      "id": "tech_22d26052",
+      "type": "Technology",
+      "label": "MEMS",
+      "properties": {
+        "usage_count": 2
+      }
+    },
+    {
       "id": "tech_f86ba531",
       "type": "Technology",
       "label": "内窥镜",
+      "properties": {
+        "usage_count": 2
+      }
+    },
+    {
+      "id": "tech_6470d266",
+      "type": "Technology",
+      "label": "偏振",
       "properties": {
         "usage_count": 2
       }
@@ -2204,6 +2915,14 @@
       }
     },
     {
+      "id": "tech_824d97b2",
+      "type": "Technology",
+      "label": "碳交易",
+      "properties": {
+        "usage_count": 2
+      }
+    },
+    {
       "id": "tech_d9c9cfab",
       "type": "Technology",
       "label": "语音合成",
@@ -2233,6 +2952,14 @@
       "label": "元宇宙",
       "properties": {
         "usage_count": 4
+      }
+    },
+    {
+      "id": "tech_345903e2",
+      "type": "Technology",
+      "label": "工业互联网",
+      "properties": {
+        "usage_count": 2
       }
     },
     {
@@ -2322,6 +3049,22 @@
       }
     },
     {
+      "id": "concept_SAM",
+      "type": "Concept",
+      "label": "可服务市场",
+      "properties": {
+        "en": "SAM"
+      }
+    },
+    {
+      "id": "concept_SOM",
+      "type": "Concept",
+      "label": "可获得市场",
+      "properties": {
+        "en": "SOM"
+      }
+    },
+    {
       "id": "concept_Value_Proposition",
       "type": "Concept",
       "label": "价值主张",
@@ -2375,6 +3118,14 @@
       "label": "SWOT分析",
       "properties": {
         "en": "SWOT"
+      }
+    },
+    {
+      "id": "concept_BCG",
+      "type": "Concept",
+      "label": "BCG矩阵",
+      "properties": {
+        "en": "BCG"
       }
     },
     {
@@ -2470,11 +3221,29 @@
       }
     },
     {
+      "id": "risk_team_mismatch",
+      "type": "RiskPattern",
+      "label": "团队能力不匹配",
+      "properties": {
+        "dimension": "资源杠杆",
+        "severity": "medium"
+      }
+    },
+    {
       "id": "risk_compliance",
       "type": "RiskPattern",
       "label": "合规风险",
       "properties": {
         "dimension": "商业建模",
+        "severity": "high"
+      }
+    },
+    {
+      "id": "risk_tech_infeasible",
+      "type": "RiskPattern",
+      "label": "技术路线不可行",
+      "properties": {
+        "dimension": "方案策划",
         "severity": "high"
       }
     },
@@ -2485,6 +3254,24 @@
       "properties": {
         "dimension": "商业建模",
         "severity": "medium"
+      }
+    },
+    {
+      "id": "risk_channel_unreachable",
+      "type": "RiskPattern",
+      "label": "渠道不可达",
+      "properties": {
+        "dimension": "商业建模",
+        "severity": "medium"
+      }
+    },
+    {
+      "id": "risk_pitch_weak",
+      "type": "RiskPattern",
+      "label": "路演叙事薄弱",
+      "properties": {
+        "dimension": "路演表达",
+        "severity": "low"
       }
     },
     {
@@ -9059,6 +9846,7 @@
       "id": "he_pmf_proj_b7a0e0af",
       "type": "Product_Market_Fit",
       "nodes": [
+        "proj_b7a0e0af",
         "mkt_a5f2e466",
         "tech_5b61a1b2"
       ],
@@ -9077,6 +9865,7 @@
       "id": "he_pmf_proj_78f2d606",
       "type": "Product_Market_Fit",
       "nodes": [
+        "proj_78f2d606",
         "mkt_aa05fd09",
         "tech_ad6a23ef",
         "tech_7692bbdb",
@@ -9191,6 +9980,7 @@
       "id": "he_pmf_proj_a85743aa",
       "type": "Product_Market_Fit",
       "nodes": [
+        "proj_a85743aa",
         "mkt_aa05fd09",
         "tech_01a78881",
         "tech_8c5f70f8",
@@ -9213,6 +10003,7 @@
       "id": "he_pmf_proj_8b88aaad",
       "type": "Product_Market_Fit",
       "nodes": [
+        "proj_8b88aaad",
         "mkt_aa05fd09",
         "tech_6964a395",
         "tech_ad6a23ef",
@@ -9235,6 +10026,7 @@
       "id": "he_pmf_proj_30115f05",
       "type": "Product_Market_Fit",
       "nodes": [
+        "proj_30115f05",
         "mkt_aa05fd09",
         "tech_6964a395",
         "tech_5b61a1b2",
@@ -9280,6 +10072,7 @@
       "id": "he_pmf_proj_8c46705e",
       "type": "Product_Market_Fit",
       "nodes": [
+        "proj_8c46705e",
         "mkt_d1c2b24c",
         "tech_7b4e730d",
         "tech_ad6a23ef",
@@ -9371,6 +10164,7 @@
       "id": "he_pmf_proj_b4230f04",
       "type": "Product_Market_Fit",
       "nodes": [
+        "proj_b4230f04",
         "mkt_d1c2b24c",
         "tech_7b4e730d",
         "tech_068f6874",
@@ -9462,6 +10256,7 @@
       "id": "he_pmf_proj_98bb8d5c",
       "type": "Product_Market_Fit",
       "nodes": [
+        "proj_98bb8d5c",
         "mkt_f55b5c48",
         "tech_5b61a1b2",
         "tech_d1f314cc",
@@ -9484,6 +10279,7 @@
       "id": "he_pmf_proj_ea85a5d3",
       "type": "Product_Market_Fit",
       "nodes": [
+        "proj_ea85a5d3",
         "mkt_f55b5c48",
         "tech_01a78881",
         "tech_40850cca",
@@ -9732,6 +10528,7 @@
       "id": "he_pmf_proj_89ef2bce",
       "type": "Product_Market_Fit",
       "nodes": [
+        "proj_89ef2bce",
         "mkt_8a964c7a",
         "tech_5b61a1b2",
         "tech_fddfe09e",
@@ -9777,6 +10574,7 @@
       "id": "he_pmf_proj_db8b8b77",
       "type": "Product_Market_Fit",
       "nodes": [
+        "proj_db8b8b77",
         "mkt_131e4e3b",
         "tech_787700a5",
         "tech_5b61a1b2",
@@ -9845,6 +10643,7 @@
       "id": "he_pmf_proj_169abfde",
       "type": "Product_Market_Fit",
       "nodes": [
+        "proj_169abfde",
         "mkt_131e4e3b",
         "tech_ad6a23ef",
         "tech_8c5f70f8",
@@ -10212,6 +11011,7 @@
       "id": "he_pmf_proj_80c57f7b",
       "type": "Product_Market_Fit",
       "nodes": [
+        "proj_80c57f7b",
         "mkt_daf8ab76",
         "tech_6964a395",
         "tech_4d9b6b90",
@@ -10529,6 +11329,7 @@
       "id": "he_pmf_proj_5b849f1d",
       "type": "Product_Market_Fit",
       "nodes": [
+        "proj_5b849f1d",
         "mkt_aa05fd09",
         "tech_f48c43f5",
         "tech_85587c49",
@@ -10551,6 +11352,7 @@
       "id": "he_pmf_proj_81af83ec",
       "type": "Product_Market_Fit",
       "nodes": [
+        "proj_81af83ec",
         "mkt_aa05fd09",
         "tech_01a78881",
         "tech_3f39d677",
@@ -10596,6 +11398,7 @@
       "id": "he_pmf_proj_4a5d64aa",
       "type": "Product_Market_Fit",
       "nodes": [
+        "proj_4a5d64aa",
         "mkt_aa05fd09",
         "tech_40850cca",
         "tech_7ab147fc",
@@ -10664,6 +11467,7 @@
       "id": "he_pmf_proj_fb6c9c33",
       "type": "Product_Market_Fit",
       "nodes": [
+        "proj_fb6c9c33",
         "mkt_aa05fd09",
         "tech_a1b5c56e"
       ],
@@ -10682,6 +11486,7 @@
       "id": "he_pmf_proj_c5de69af",
       "type": "Product_Market_Fit",
       "nodes": [
+        "proj_c5de69af",
         "mkt_aa05fd09",
         "tech_ad6a23ef",
         "tech_1088e767",
@@ -10704,6 +11509,7 @@
       "id": "he_pmf_proj_4d9da4f3",
       "type": "Product_Market_Fit",
       "nodes": [
+        "proj_4d9da4f3",
         "mkt_aa05fd09",
         "tech_1088e767",
         "tech_8bf07aa8",
@@ -10726,6 +11532,7 @@
       "id": "he_pmf_proj_8c2f4b96",
       "type": "Product_Market_Fit",
       "nodes": [
+        "proj_8c2f4b96",
         "mkt_aa05fd09",
         "tech_f86ba531",
         "tech_5b61a1b2",
@@ -10748,6 +11555,7 @@
       "id": "he_pmf_proj_37d3d154",
       "type": "Product_Market_Fit",
       "nodes": [
+        "proj_37d3d154",
         "mkt_aa05fd09",
         "tech_01a78881",
         "tech_3d13e1c0",
@@ -10770,6 +11578,7 @@
       "id": "he_pmf_proj_9a2fbaa3",
       "type": "Product_Market_Fit",
       "nodes": [
+        "proj_9a2fbaa3",
         "mkt_aa05fd09",
         "tech_ad6a23ef",
         "tech_2d664feb",
@@ -10815,6 +11624,7 @@
       "id": "he_pmf_proj_bad6ae35",
       "type": "Product_Market_Fit",
       "nodes": [
+        "proj_bad6ae35",
         "mkt_aa05fd09",
         "tech_f64736b9",
         "tech_5b61a1b2",
@@ -10837,6 +11647,7 @@
       "id": "he_pmf_proj_30972c83",
       "type": "Product_Market_Fit",
       "nodes": [
+        "proj_30972c83",
         "mkt_aa05fd09",
         "tech_f64736b9",
         "tech_1088e767",
@@ -10859,6 +11670,7 @@
       "id": "he_risk_proj_b7a0e0af_risk_no_moat",
       "type": "Risk_Pattern",
       "nodes": [
+        "proj_b7a0e0af",
         "risk_no_moat",
         "concept_Moat",
         "concept_SWOT"
@@ -10874,6 +11686,7 @@
       "id": "he_risk_proj_78f2d606_risk_biz_unclear",
       "type": "Risk_Pattern",
       "nodes": [
+        "proj_78f2d606",
         "risk_biz_unclear",
         "concept_Lean_Canvas",
         "concept_Pricing",
@@ -10890,6 +11703,7 @@
       "id": "he_risk_proj_78f2d606_risk_compliance",
       "type": "Risk_Pattern",
       "nodes": [
+        "proj_78f2d606",
         "risk_compliance",
         "concept_Business_Plan"
       ],
@@ -10935,6 +11749,7 @@
       "id": "he_risk_proj_8c46705e_risk_compliance",
       "type": "Risk_Pattern",
       "nodes": [
+        "proj_8c46705e",
         "risk_compliance",
         "concept_Business_Plan"
       ],
@@ -10981,6 +11796,7 @@
       "id": "he_risk_proj_b4230f04_risk_biz_unclear",
       "type": "Risk_Pattern",
       "nodes": [
+        "proj_b4230f04",
         "risk_biz_unclear",
         "concept_Lean_Canvas",
         "concept_Pricing",
@@ -10997,6 +11813,7 @@
       "id": "he_risk_proj_b4230f04_risk_compliance",
       "type": "Risk_Pattern",
       "nodes": [
+        "proj_b4230f04",
         "risk_compliance",
         "concept_Business_Plan"
       ],
@@ -11156,6 +11973,7 @@
       "id": "he_risk_proj_89ef2bce_risk_biz_unclear",
       "type": "Risk_Pattern",
       "nodes": [
+        "proj_89ef2bce",
         "risk_biz_unclear",
         "concept_Lean_Canvas",
         "concept_Pricing",
@@ -11187,6 +12005,7 @@
       "id": "he_risk_proj_169abfde_risk_biz_unclear",
       "type": "Risk_Pattern",
       "nodes": [
+        "proj_169abfde",
         "risk_biz_unclear",
         "concept_Lean_Canvas",
         "concept_Pricing",
@@ -11429,6 +12248,7 @@
       "id": "he_risk_proj_5b849f1d_risk_compliance",
       "type": "Risk_Pattern",
       "nodes": [
+        "proj_5b849f1d",
         "risk_compliance",
         "concept_Business_Plan"
       ],
@@ -11443,6 +12263,7 @@
       "id": "he_risk_proj_4a5d64aa_risk_no_moat",
       "type": "Risk_Pattern",
       "nodes": [
+        "proj_4a5d64aa",
         "risk_no_moat",
         "concept_Moat",
         "concept_SWOT"
@@ -11473,6 +12294,7 @@
       "id": "he_risk_proj_4d9da4f3_risk_biz_unclear",
       "type": "Risk_Pattern",
       "nodes": [
+        "proj_4d9da4f3",
         "risk_biz_unclear",
         "concept_Lean_Canvas",
         "concept_Pricing",
@@ -11489,6 +12311,7 @@
       "id": "he_risk_proj_37d3d154_risk_compliance",
       "type": "Risk_Pattern",
       "nodes": [
+        "proj_37d3d154",
         "risk_compliance",
         "concept_Business_Plan"
       ],
@@ -11503,6 +12326,7 @@
       "id": "he_risk_proj_bad6ae35_risk_compliance",
       "type": "Risk_Pattern",
       "nodes": [
+        "proj_bad6ae35",
         "risk_compliance",
         "concept_Business_Plan"
       ],
@@ -11520,11 +12344,14 @@
         "tech_6964a395",
         "proj_3264d357",
         "proj_da4802e7",
+        "proj_8b88aaad",
+        "proj_30115f05",
         "proj_da1b321e",
         "proj_9ab84361",
         "proj_77caca55",
         "proj_30ec7a4f",
-        "proj_5a2dedef"
+        "proj_5a2dedef",
+        "proj_80c57f7b"
       ],
       "properties": {
         "technology": "强化学习",
@@ -11560,9 +12387,14 @@
       "nodes": [
         "tech_5b61a1b2",
         "proj_3264d357",
+        "proj_b7a0e0af",
+        "proj_78f2d606",
         "proj_68515984",
         "proj_bfdfddb2",
         "proj_da4802e7",
+        "proj_8b88aaad",
+        "proj_30115f05",
+        "proj_8c46705e",
         "proj_66045892"
       ],
       "properties": {
@@ -11577,13 +12409,15 @@
       "nodes": [
         "tech_a5cad1b3",
         "proj_3264d357",
+        "proj_30115f05",
         "proj_5fd1180b",
         "proj_584b627f",
         "proj_fdf41c66",
         "proj_007b2ce8",
         "proj_53fc061a",
         "proj_db0dd5e1",
-        "proj_4b72d252"
+        "proj_4b72d252",
+        "proj_8c2f4b96"
       ],
       "properties": {
         "technology": "SoC",
@@ -11596,11 +12430,15 @@
       "type": "Technology_Cluster",
       "nodes": [
         "tech_ad6a23ef",
+        "proj_78f2d606",
         "proj_68515984",
+        "proj_8b88aaad",
+        "proj_8c46705e",
         "proj_5323f05f",
         "proj_e86f23f2",
         "proj_5fd1180b",
         "proj_584b627f",
+        "proj_169abfde",
         "proj_5712b727"
       ],
       "properties": {
@@ -11614,7 +12452,9 @@
       "type": "Technology_Cluster",
       "nodes": [
         "tech_7692bbdb",
+        "proj_78f2d606",
         "proj_68515984",
+        "proj_8b88aaad",
         "proj_5323f05f",
         "proj_ddac4c3d",
         "proj_584b627f",
@@ -11632,9 +12472,13 @@
       "type": "Technology_Cluster",
       "nodes": [
         "tech_37acc94c",
+        "proj_78f2d606",
         "proj_bfdfddb2",
         "proj_da4802e7",
         "proj_b47acad4",
+        "proj_8b88aaad",
+        "proj_30115f05",
+        "proj_8c46705e",
         "proj_66045892",
         "proj_5323f05f",
         "proj_f05baed2"
@@ -11650,12 +12494,15 @@
       "type": "Technology_Cluster",
       "nodes": [
         "tech_ffb93bb5",
+        "proj_78f2d606",
+        "proj_b4230f04",
         "proj_464de40f",
         "proj_ddac4c3d",
         "proj_15e82e24",
         "proj_53fc061a",
         "proj_6449bc5b",
         "proj_2270f15b",
+        "proj_81af83ec",
         "proj_44aa5890"
       ],
       "properties": {
@@ -11669,8 +12516,11 @@
       "type": "Technology_Cluster",
       "nodes": [
         "tech_b8c7cd66",
+        "proj_78f2d606",
         "proj_68515984",
+        "proj_a85743aa",
         "proj_15e82e24",
+        "proj_169abfde",
         "proj_d70fc4ee",
         "proj_de7f6865",
         "proj_6449bc5b",
@@ -11688,11 +12538,15 @@
       "type": "Technology_Cluster",
       "nodes": [
         "tech_fce4b7d0",
+        "proj_78f2d606",
         "proj_68515984",
         "proj_b47acad4",
+        "proj_98bb8d5c",
+        "proj_ea85a5d3",
         "proj_da1b321e",
         "proj_584b627f",
         "proj_15e82e24",
+        "proj_89ef2bce",
         "proj_30ec7a4f"
       ],
       "properties": {
@@ -11712,7 +12566,8 @@
         "proj_ddac4c3d",
         "proj_425716be",
         "proj_fdf41c66",
-        "proj_de7f6865"
+        "proj_de7f6865",
+        "proj_9a2fbaa3"
       ],
       "properties": {
         "technology": "YOLO",
@@ -11726,8 +12581,12 @@
       "nodes": [
         "tech_8c5f70f8",
         "proj_68515984",
+        "proj_a85743aa",
+        "proj_8b88aaad",
+        "proj_8c46705e",
         "proj_5323f05f",
         "proj_f05baed2",
+        "proj_b4230f04",
         "proj_ddac4c3d",
         "proj_584b627f",
         "proj_425716be"
@@ -11745,10 +12604,13 @@
         "tech_40850cca",
         "proj_68515984",
         "proj_bfdfddb2",
+        "proj_a85743aa",
+        "proj_8c46705e",
         "proj_66045892",
         "proj_5323f05f",
         "proj_f05baed2",
         "proj_5fd1180b",
+        "proj_ea85a5d3",
         "proj_da1b321e"
       ],
       "properties": {
@@ -11764,8 +12626,12 @@
         "tech_1121be28",
         "proj_68515984",
         "proj_bfdfddb2",
+        "proj_a85743aa",
+        "proj_8c46705e",
         "proj_66045892",
         "proj_5fd1180b",
+        "proj_ea85a5d3",
+        "proj_169abfde",
         "proj_24ce12b6"
       ],
       "properties": {
@@ -11786,6 +12652,7 @@
         "proj_b4180a0f",
         "proj_4a60c8e0",
         "proj_7565890d",
+        "proj_4a5d64aa",
         "proj_b9e8e5d3",
         "proj_bf910931"
       ],
@@ -11823,8 +12690,10 @@
       "nodes": [
         "tech_62f8a8e2",
         "proj_68515984",
+        "proj_8b88aaad",
         "proj_f05baed2",
         "proj_5fd1180b",
+        "proj_ea85a5d3",
         "proj_f4d1c138",
         "proj_77caca55"
       ],
@@ -11840,12 +12709,14 @@
       "nodes": [
         "tech_e8308900",
         "proj_68515984",
+        "proj_8b88aaad",
         "proj_82349079",
         "proj_53fc061a",
         "proj_30ec7a4f",
         "proj_bef4e3a0",
         "proj_5ea0860e",
-        "proj_2270f15b"
+        "proj_2270f15b",
+        "proj_81af83ec"
       ],
       "properties": {
         "technology": "渲染",
@@ -11860,9 +12731,13 @@
         "tech_2435a45b",
         "proj_68515984",
         "proj_bfdfddb2",
+        "proj_a85743aa",
+        "proj_8c46705e",
         "proj_f05baed2",
         "proj_5fd1180b",
+        "proj_ea85a5d3",
         "proj_fdf41c66",
+        "proj_169abfde",
         "proj_5712b727"
       ],
       "properties": {
@@ -11877,6 +12752,8 @@
       "nodes": [
         "tech_7b4e730d",
         "proj_bfdfddb2",
+        "proj_8c46705e",
+        "proj_b4230f04",
         "proj_ddac4c3d",
         "proj_584b627f",
         "proj_5712b727",
@@ -11912,9 +12789,13 @@
         "tech_40decf73",
         "proj_bfdfddb2",
         "proj_da4802e7",
+        "proj_8b88aaad",
+        "proj_30115f05",
+        "proj_8c46705e",
         "proj_82349079",
         "proj_fa9eb484",
-        "proj_ec67fd58"
+        "proj_ec67fd58",
+        "proj_bad6ae35"
       ],
       "properties": {
         "technology": "预训练",
@@ -11952,6 +12833,8 @@
         "proj_bfdfddb2",
         "proj_da4802e7",
         "proj_b47acad4",
+        "proj_a85743aa",
+        "proj_30115f05",
         "proj_a9941030",
         "proj_f05baed2",
         "proj_e86f23f2",
@@ -11970,8 +12853,10 @@
       "nodes": [
         "tech_bbca2718",
         "proj_bfdfddb2",
+        "proj_8c46705e",
         "proj_f05baed2",
         "proj_5fd1180b",
+        "proj_ea85a5d3",
         "proj_ddac4c3d",
         "proj_584b627f",
         "proj_5712b727",
@@ -11990,6 +12875,8 @@
       "nodes": [
         "tech_481d5b5c",
         "proj_bfdfddb2",
+        "proj_30115f05",
+        "proj_8c46705e",
         "proj_82349079",
         "proj_de7f6865"
       ],
@@ -12022,6 +12909,7 @@
         "proj_da4802e7",
         "proj_5fd1180b",
         "proj_36ccff73",
+        "proj_169abfde",
         "proj_de7f6865",
         "proj_6449bc5b"
       ],
@@ -12037,9 +12925,13 @@
       "nodes": [
         "tech_ef8a9f75",
         "proj_da4802e7",
+        "proj_30115f05",
         "proj_5fd1180b",
         "proj_bef4e3a0",
-        "proj_2270f15b"
+        "proj_2270f15b",
+        "proj_81af83ec",
+        "proj_8c2f4b96",
+        "proj_9a2fbaa3"
       ],
       "properties": {
         "technology": "VR",
@@ -12060,7 +12952,8 @@
         "proj_82349079",
         "proj_53fc061a",
         "proj_0c15a722",
-        "proj_7565890d"
+        "proj_7565890d",
+        "proj_bad6ae35"
       ],
       "properties": {
         "technology": "GPT",
@@ -12074,10 +12967,15 @@
       "nodes": [
         "tech_0f4aae79",
         "proj_da4802e7",
+        "proj_30115f05",
+        "proj_ea85a5d3",
         "proj_36ccff73",
         "proj_d70fc4ee",
         "proj_fa9eb484",
-        "proj_44aa5890"
+        "proj_44aa5890",
+        "proj_c5de69af",
+        "proj_9a2fbaa3",
+        "proj_bad6ae35"
       ],
       "properties": {
         "technology": "智能制造",
@@ -12091,8 +12989,12 @@
       "nodes": [
         "tech_1f097591",
         "proj_da4802e7",
+        "proj_8b88aaad",
+        "proj_30115f05",
         "proj_66045892",
         "proj_f05baed2",
+        "proj_b4230f04",
+        "proj_98bb8d5c",
         "proj_36ccff73",
         "proj_62456949",
         "proj_53fc061a"
@@ -12109,9 +13011,14 @@
       "nodes": [
         "tech_4d9b6b90",
         "proj_da4802e7",
+        "proj_a85743aa",
+        "proj_8b88aaad",
         "proj_a9941030",
+        "proj_b4230f04",
         "proj_aea25081",
         "proj_5fd1180b",
+        "proj_98bb8d5c",
+        "proj_ea85a5d3",
         "proj_ddac4c3d"
       ],
       "properties": {
@@ -12141,6 +13048,8 @@
       "nodes": [
         "tech_cf85a8cb",
         "proj_da4802e7",
+        "proj_a85743aa",
+        "proj_30115f05",
         "proj_6449bc5b"
       ],
       "properties": {
@@ -12155,12 +13064,15 @@
       "nodes": [
         "tech_01a78881",
         "proj_b47acad4",
+        "proj_a85743aa",
+        "proj_ea85a5d3",
         "proj_30ec7a4f",
         "proj_5a2dedef",
         "proj_62995efb",
         "proj_bef4e3a0",
         "proj_5ea0860e",
-        "proj_2270f15b"
+        "proj_2270f15b",
+        "proj_81af83ec"
       ],
       "properties": {
         "technology": "数字孪生",
@@ -12192,7 +13104,10 @@
         "tech_8a68be7b",
         "proj_b47acad4",
         "proj_464de40f",
-        "proj_bf910931"
+        "proj_c5de69af",
+        "proj_9a2fbaa3",
+        "proj_bf910931",
+        "proj_30972c83"
       ],
       "properties": {
         "technology": "新能源",
@@ -12205,7 +13120,10 @@
       "type": "Technology_Cluster",
       "nodes": [
         "tech_fb2353f9",
+        "proj_a85743aa",
+        "proj_8c46705e",
         "proj_5323f05f",
+        "proj_b4230f04",
         "proj_aea25081",
         "proj_15e82e24"
       ],
@@ -12220,11 +13138,13 @@
       "type": "Technology_Cluster",
       "nodes": [
         "tech_eca9158c",
+        "proj_a85743aa",
         "proj_f05baed2",
         "proj_032fa339",
         "proj_82349079",
         "proj_24ce12b6",
-        "proj_4b72d252"
+        "proj_4b72d252",
+        "proj_4a5d64aa"
       ],
       "properties": {
         "technology": "LSTM",
@@ -12237,8 +13157,13 @@
       "type": "Technology_Cluster",
       "nodes": [
         "tech_787700a5",
+        "proj_a85743aa",
+        "proj_8c46705e",
         "proj_5323f05f",
+        "proj_b4230f04",
+        "proj_ea85a5d3",
         "proj_62456949",
+        "proj_db8b8b77",
         "proj_5712b727",
         "proj_82349079",
         "proj_53fc061a"
@@ -12254,10 +13179,14 @@
       "type": "Technology_Cluster",
       "nodes": [
         "tech_61bb1751",
+        "proj_a85743aa",
+        "proj_30115f05",
         "proj_5fd1180b",
         "proj_464de40f",
         "proj_62456949",
         "proj_032fa339",
+        "proj_db8b8b77",
+        "proj_169abfde",
         "proj_82349079",
         "proj_5a2dedef"
       ],
@@ -12272,11 +13201,16 @@
       "type": "Technology_Cluster",
       "nodes": [
         "tech_1088e767",
+        "proj_8b88aaad",
         "proj_aea25081",
         "proj_5712b727",
         "proj_7565890d",
         "proj_f654c4c6",
-        "proj_2270f15b"
+        "proj_2270f15b",
+        "proj_81af83ec",
+        "proj_c5de69af",
+        "proj_4d9da4f3",
+        "proj_9a2fbaa3"
       ],
       "properties": {
         "technology": "芯片",
@@ -12289,8 +13223,11 @@
       "type": "Technology_Cluster",
       "nodes": [
         "tech_068f6874",
+        "proj_8c46705e",
         "proj_66045892",
-        "proj_82349079"
+        "proj_b4230f04",
+        "proj_82349079",
+        "proj_bad6ae35"
       ],
       "properties": {
         "technology": "生成对抗",
@@ -12299,16 +13236,35 @@
       }
     },
     {
+      "id": "he_techcluster_tech_eb8dc8ec",
+      "type": "Technology_Cluster",
+      "nodes": [
+        "tech_eb8dc8ec",
+        "proj_8c46705e",
+        "proj_c5de69af",
+        "proj_9a2fbaa3"
+      ],
+      "properties": {
+        "technology": "量子",
+        "project_count": 3,
+        "teaching_note": "技术'量子'被3个项目采用，属于热门技术方向。学生如选择此技术需考虑差异化。"
+      }
+    },
+    {
       "id": "he_techcluster_tech_d5c44258",
       "type": "Technology_Cluster",
       "nodes": [
         "tech_d5c44258",
+        "proj_8c46705e",
         "proj_66045892",
         "proj_5323f05f",
+        "proj_b4230f04",
         "proj_e86f23f2",
         "proj_82349079",
         "proj_ec67fd58",
-        "proj_2270f15b"
+        "proj_2270f15b",
+        "proj_81af83ec",
+        "proj_9a2fbaa3"
       ],
       "properties": {
         "technology": "MR",
@@ -12339,7 +13295,9 @@
         "proj_66045892",
         "proj_ddac4c3d",
         "proj_82349079",
-        "proj_52142b98"
+        "proj_52142b98",
+        "proj_5b849f1d",
+        "proj_bad6ae35"
       ],
       "properties": {
         "technology": "BERT",
@@ -12357,6 +13315,7 @@
         "proj_0c15a722",
         "proj_ec67fd58",
         "proj_5ea0860e",
+        "proj_4a5d64aa",
         "proj_b9e8e5d3"
       ],
       "properties": {
@@ -12376,7 +13335,9 @@
         "proj_24ce12b6",
         "proj_62995efb",
         "proj_2270f15b",
-        "proj_b9e8e5d3"
+        "proj_81af83ec",
+        "proj_b9e8e5d3",
+        "proj_8c2f4b96"
       ],
       "properties": {
         "technology": "5G",
@@ -12391,7 +13352,8 @@
         "tech_75d8fafb",
         "proj_66045892",
         "proj_ddac4c3d",
-        "proj_b9e8e5d3"
+        "proj_b9e8e5d3",
+        "proj_30972c83"
       ],
       "properties": {
         "technology": "区块链",
@@ -12411,7 +13373,8 @@
         "proj_77caca55",
         "proj_fa9eb484",
         "proj_4a60c8e0",
-        "proj_52142b98"
+        "proj_52142b98",
+        "proj_bad6ae35"
       ],
       "properties": {
         "technology": "知识图谱",
@@ -12427,7 +13390,10 @@
         "proj_5323f05f",
         "proj_aea25081",
         "proj_5fd1180b",
-        "proj_cf0f1605"
+        "proj_cf0f1605",
+        "proj_c5de69af",
+        "proj_4d9da4f3",
+        "proj_9a2fbaa3"
       ],
       "properties": {
         "technology": "纳米",
@@ -12443,7 +13409,10 @@
         "proj_f05baed2",
         "proj_15e82e24",
         "proj_30ec7a4f",
-        "proj_0c15a722"
+        "proj_0c15a722",
+        "proj_37d3d154",
+        "proj_bad6ae35",
+        "proj_30972c83"
       ],
       "properties": {
         "technology": "物联网",
@@ -12456,10 +13425,13 @@
       "type": "Technology_Cluster",
       "nodes": [
         "tech_166c215f",
+        "proj_b4230f04",
         "proj_e86f23f2",
         "proj_aea25081",
         "proj_5a2dedef",
-        "proj_bf910931"
+        "proj_bf910931",
+        "proj_bad6ae35",
+        "proj_30972c83"
       ],
       "properties": {
         "technology": "联邦学习",
@@ -12480,6 +13452,7 @@
         "proj_53fc061a",
         "proj_b4180a0f",
         "proj_ec67fd58",
+        "proj_5b849f1d",
         "proj_44aa5890"
       ],
       "properties": {
@@ -12510,7 +13483,8 @@
       "nodes": [
         "tech_68368d8b",
         "proj_e86f23f2",
-        "proj_0c15a722"
+        "proj_0c15a722",
+        "proj_bad6ae35"
       ],
       "properties": {
         "technology": "数据湖",
@@ -12524,6 +13498,7 @@
       "nodes": [
         "tech_fddfe09e",
         "proj_464de40f",
+        "proj_89ef2bce",
         "proj_007b2ce8",
         "proj_d70fc4ee",
         "proj_5a2dedef"
@@ -12542,7 +13517,8 @@
         "proj_ddac4c3d",
         "proj_032fa339",
         "proj_007b2ce8",
-        "proj_9ab84361"
+        "proj_9ab84361",
+        "proj_5b849f1d"
       ],
       "properties": {
         "technology": "NLP",
@@ -12557,7 +13533,9 @@
         "tech_f64736b9",
         "proj_ddac4c3d",
         "proj_0c15a722",
-        "proj_44aa5890"
+        "proj_44aa5890",
+        "proj_bad6ae35",
+        "proj_30972c83"
       ],
       "properties": {
         "technology": "自动驾驶",
@@ -12571,7 +13549,9 @@
       "nodes": [
         "tech_589f8ced",
         "proj_425716be",
-        "proj_f4d1c138"
+        "proj_f4d1c138",
+        "proj_bad6ae35",
+        "proj_30972c83"
       ],
       "properties": {
         "technology": "IoT",
@@ -12600,7 +13580,8 @@
       "nodes": [
         "tech_8f5a5dfc",
         "proj_9ab84361",
-        "proj_2270f15b"
+        "proj_2270f15b",
+        "proj_81af83ec"
       ],
       "properties": {
         "technology": "AIGC",
@@ -12615,7 +13596,8 @@
         "tech_3e86ca88",
         "proj_b4180a0f",
         "proj_bef4e3a0",
-        "proj_2270f15b"
+        "proj_2270f15b",
+        "proj_81af83ec"
       ],
       "properties": {
         "technology": "元宇宙",
@@ -12628,7 +13610,9 @@
       "type": "Technology_Cluster",
       "nodes": [
         "tech_a1b5c56e",
-        "proj_f654c4c6"
+        "proj_f654c4c6",
+        "proj_fb6c9c33",
+        "proj_4d9da4f3"
       ],
       "properties": {
         "technology": "FPGA",
@@ -12643,7 +13627,8 @@
         "tech_3f39d677",
         "proj_bef4e3a0",
         "proj_5ea0860e",
-        "proj_2270f15b"
+        "proj_2270f15b",
+        "proj_81af83ec"
       ],
       "properties": {
         "technology": "实时渲染",
@@ -12656,7 +13641,8 @@
       "type": "Industry_Competition",
       "nodes": [
         "mkt_a5f2e466",
-        "proj_3264d357"
+        "proj_3264d357",
+        "proj_b7a0e0af"
       ],
       "properties": {
         "industry": "文化旅游",
@@ -12669,20 +13655,35 @@
       "type": "Industry_Competition",
       "nodes": [
         "mkt_aa05fd09",
+        "proj_78f2d606",
         "proj_68515984",
         "proj_bfdfddb2",
         "proj_da4802e7",
         "proj_b47acad4",
+        "proj_a85743aa",
+        "proj_8b88aaad",
+        "proj_30115f05",
         "proj_ec67fd58",
         "proj_f654c4c6",
         "proj_62995efb",
         "proj_bef4e3a0",
         "proj_5ea0860e",
         "proj_2270f15b",
+        "proj_5b849f1d",
+        "proj_81af83ec",
         "proj_44aa5890",
+        "proj_4a5d64aa",
         "proj_b9e8e5d3",
         "proj_cf0f1605",
-        "proj_bf910931"
+        "proj_fb6c9c33",
+        "proj_c5de69af",
+        "proj_4d9da4f3",
+        "proj_8c2f4b96",
+        "proj_37d3d154",
+        "proj_9a2fbaa3",
+        "proj_bf910931",
+        "proj_bad6ae35",
+        "proj_30972c83"
       ],
       "properties": {
         "industry": "通用",
@@ -12696,9 +13697,11 @@
       "nodes": [
         "mkt_d1c2b24c",
         "proj_a9941030",
+        "proj_8c46705e",
         "proj_66045892",
         "proj_5323f05f",
         "proj_f05baed2",
+        "proj_b4230f04",
         "proj_e86f23f2",
         "proj_aea25081",
         "proj_5fd1180b"
@@ -12714,6 +13717,8 @@
       "type": "Industry_Competition",
       "nodes": [
         "mkt_f55b5c48",
+        "proj_98bb8d5c",
+        "proj_ea85a5d3",
         "proj_464de40f",
         "proj_ddac4c3d",
         "proj_da1b321e",
@@ -12736,7 +13741,8 @@
         "proj_030fe1e4",
         "proj_fdf41c66",
         "proj_45e6b8d1",
-        "proj_15e82e24"
+        "proj_15e82e24",
+        "proj_89ef2bce"
       ],
       "properties": {
         "industry": "农业发展",
@@ -12750,8 +13756,10 @@
       "nodes": [
         "mkt_131e4e3b",
         "proj_032fa339",
+        "proj_db8b8b77",
         "proj_007b2ce8",
         "proj_f4d1c138",
+        "proj_169abfde",
         "proj_5712b727"
       ],
       "properties": {
@@ -12791,6 +13799,7 @@
         "proj_24ce12b6",
         "proj_8c2ff2c8",
         "proj_fa9eb484",
+        "proj_80c57f7b",
         "proj_6449bc5b"
       ],
       "properties": {
@@ -13084,6 +14093,7 @@
         "concept_PMF",
         "concept_Lean_Canvas",
         "tech_4d9b6b90",
+        "proj_80c57f7b",
         "mkt_daf8ab76",
         "concept_Moat",
         "tech_5b61a1b2",
@@ -13158,6 +14168,7 @@
       "id": "he_case_proj_db8b8b77",
       "type": "Case_Study",
       "nodes": [
+        "proj_db8b8b77",
         "mkt_131e4e3b",
         "tech_61bb1751",
         "concept_Lean_Canvas",
@@ -13233,6 +14244,7 @@
         "concept_Moat",
         "risk_compliance",
         "tech_8c5f70f8",
+        "proj_bad6ae35",
         "risk_market_inflate"
       ],
       "properties": {
@@ -13663,6 +14675,22 @@
       }
     },
     {
+      "id": "he_bizstrat_3f6ddf0d",
+      "type": "Business_Strategy",
+      "nodes": [
+        "proj_b7a0e0af",
+        "biz_4981287f"
+      ],
+      "properties": {
+        "project": "非物质文化遗产的商业_与保护策略",
+        "biz_models": [
+          "平台"
+        ],
+        "moat_types": [],
+        "teaching_note": "非物质文化遗产的商业_与保护策略采用平台模式，为壁垒"
+      }
+    },
+    {
       "id": "he_bizstrat_0ce58882",
       "type": "Business_Strategy",
       "nodes": [
@@ -13759,6 +14787,7 @@
       "id": "he_bizstrat_55767139",
       "type": "Business_Strategy",
       "nodes": [
+        "proj_a85743aa",
         "biz_4981287f",
         "moat_b80823f4",
         "moat_8d35aac9",
@@ -13787,6 +14816,7 @@
       "id": "he_bizstrat_b64e6b91",
       "type": "Business_Strategy",
       "nodes": [
+        "proj_8b88aaad",
         "biz_4981287f",
         "moat_c0f4fc73",
         "moat_b80823f4",
@@ -13813,6 +14843,7 @@
       "id": "he_bizstrat_44aa807e",
       "type": "Business_Strategy",
       "nodes": [
+        "proj_30115f05",
         "biz_4981287f",
         "biz_db974238",
         "moat_55de946f",
@@ -13868,6 +14899,7 @@
       "id": "he_bizstrat_9afe661f",
       "type": "Business_Strategy",
       "nodes": [
+        "proj_8c46705e",
         "biz_98a315c0",
         "moat_8d35aac9",
         "moat_f4975d0e",
@@ -14010,6 +15042,7 @@
       "id": "he_bizstrat_0b3de9c3",
       "type": "Business_Strategy",
       "nodes": [
+        "proj_98bb8d5c",
         "biz_4981287f",
         "moat_55de946f",
         "moat_286e36c8"
@@ -14030,6 +15063,7 @@
       "id": "he_bizstrat_7c842bb5",
       "type": "Business_Strategy",
       "nodes": [
+        "proj_ea85a5d3",
         "biz_4981287f",
         "biz_98a315c0",
         "biz_bacd6f47",
@@ -14301,6 +15335,7 @@
       "id": "he_bizstrat_5b2ecd48",
       "type": "Business_Strategy",
       "nodes": [
+        "proj_db8b8b77",
         "biz_190a18fd",
         "biz_98a315c0",
         "biz_e7ddacbc",
@@ -14658,6 +15693,7 @@
       "id": "he_bizstrat_fdd70ea2",
       "type": "Business_Strategy",
       "nodes": [
+        "proj_80c57f7b",
         "biz_4981287f",
         "biz_98a315c0",
         "moat_55de946f",
@@ -15031,6 +16067,7 @@
       "id": "he_bizstrat_255da397",
       "type": "Business_Strategy",
       "nodes": [
+        "proj_5b849f1d",
         "biz_beb100b0",
         "biz_4981287f",
         "biz_190a18fd",
@@ -15059,6 +16096,7 @@
       "id": "he_bizstrat_70f3ab32",
       "type": "Business_Strategy",
       "nodes": [
+        "proj_81af83ec",
         "biz_4981287f",
         "biz_190a18fd",
         "biz_a883e8d5",
@@ -15140,6 +16178,7 @@
       "id": "he_bizstrat_9e655884",
       "type": "Business_Strategy",
       "nodes": [
+        "proj_4a5d64aa",
         "biz_4981287f",
         "biz_02daf71f",
         "biz_4d9dd5e4",
@@ -15233,6 +16272,7 @@
       "id": "he_bizstrat_f68cd269",
       "type": "Business_Strategy",
       "nodes": [
+        "proj_fb6c9c33",
         "biz_4981287f",
         "biz_98a315c0",
         "moat_c0f4fc73",
@@ -15265,6 +16305,7 @@
       "id": "he_bizstrat_9bb976d8",
       "type": "Business_Strategy",
       "nodes": [
+        "proj_c5de69af",
         "biz_4981287f",
         "moat_b80823f4",
         "moat_f4975d0e"
@@ -15285,6 +16326,7 @@
       "id": "he_bizstrat_7c2e8323",
       "type": "Business_Strategy",
       "nodes": [
+        "proj_8c2f4b96",
         "biz_4981287f",
         "moat_b80823f4",
         "moat_0b7dcde9",
@@ -15309,6 +16351,7 @@
       "id": "he_bizstrat_e2b39ae9",
       "type": "Business_Strategy",
       "nodes": [
+        "proj_37d3d154",
         "biz_4981287f",
         "moat_0b7dcde9",
         "moat_c0f4fc73"
@@ -15329,6 +16372,7 @@
       "id": "he_bizstrat_28e5f9c3",
       "type": "Business_Strategy",
       "nodes": [
+        "proj_9a2fbaa3",
         "biz_4981287f",
         "moat_c0f4fc73",
         "moat_55de946f",
@@ -15392,6 +16436,7 @@
       "id": "he_bizstrat_49548ea7",
       "type": "Business_Strategy",
       "nodes": [
+        "proj_bad6ae35",
         "biz_4981287f",
         "biz_db974238",
         "biz_5fd032b3",
@@ -15422,6 +16467,7 @@
       "id": "he_bizstrat_f6f88510",
       "type": "Business_Strategy",
       "nodes": [
+        "proj_30972c83",
         "biz_4981287f",
         "biz_5fd032b3",
         "moat_2e05ed92",
@@ -15446,6 +16492,7 @@
       "id": "he_bizstrat_b96207d6",
       "type": "Business_Strategy",
       "nodes": [
+        "proj_78f2d606",
         "moat_f4975d0e",
         "moat_55de946f"
       ],
@@ -15475,6 +16522,22 @@
           "EI"
         ],
         "teaching_note": "析光知理——快速脑瘤_能分析系统采用模式，SCI、EI为壁垒"
+      }
+    },
+    {
+      "id": "he_bizstrat_7ee2cfff",
+      "type": "Business_Strategy",
+      "nodes": [
+        "proj_b4230f04",
+        "moat_55de946f"
+      ],
+      "properties": {
+        "project": "超晰视界——手持超声_域增强技术",
+        "biz_models": [],
+        "moat_types": [
+          "EI"
+        ],
+        "teaching_note": "超晰视界——手持超声_域增强技术采用模式，EI为壁垒"
       }
     },
     {
@@ -15515,6 +16578,7 @@
       "id": "he_bizstrat_49782a46",
       "type": "Business_Strategy",
       "nodes": [
+        "proj_89ef2bce",
         "moat_8d35aac9",
         "moat_55de946f"
       ],
@@ -15532,6 +16596,7 @@
       "id": "he_bizstrat_ddd2086c",
       "type": "Business_Strategy",
       "nodes": [
+        "proj_169abfde",
         "moat_0b7dcde9",
         "moat_55de946f"
       ],
@@ -15627,6 +16692,7 @@
       "id": "he_bizstrat_391b0e63",
       "type": "Business_Strategy",
       "nodes": [
+        "proj_4d9da4f3",
         "moat_55de946f",
         "moat_8d35aac9",
         "moat_0b7dcde9",
@@ -15681,6 +16747,7 @@
       "id": "he_psf_3f6ddf0d",
       "type": "Pain_Solution_Fit",
       "nodes": [
+        "proj_b7a0e0af",
         "pain_f6b362e6",
         "pain_590d8b17",
         "pain_5dc99f6e",
@@ -15826,6 +16893,7 @@
       "id": "he_psf_55767139",
       "type": "Pain_Solution_Fit",
       "nodes": [
+        "proj_a85743aa",
         "pain_590d8b17",
         "pain_f6b362e6",
         "pain_afda6c35",
@@ -15852,6 +16920,7 @@
       "id": "he_psf_b64e6b91",
       "type": "Pain_Solution_Fit",
       "nodes": [
+        "proj_8b88aaad",
         "pain_590d8b17",
         "pain_f6b362e6",
         "pain_7f56244b",
@@ -15888,6 +16957,7 @@
       "id": "he_psf_44aa807e",
       "type": "Pain_Solution_Fit",
       "nodes": [
+        "proj_30115f05",
         "pain_590d8b17",
         "pain_f6b362e6",
         "pain_7f56244b",
@@ -15946,6 +17016,7 @@
       "id": "he_psf_9afe661f",
       "type": "Pain_Solution_Fit",
       "nodes": [
+        "proj_8c46705e",
         "pain_590d8b17",
         "pain_f6b362e6",
         "pain_7f56244b",
@@ -16096,6 +17167,7 @@
       "id": "he_psf_0b3de9c3",
       "type": "Pain_Solution_Fit",
       "nodes": [
+        "proj_98bb8d5c",
         "pain_f6b362e6",
         "pain_590d8b17",
         "pain_619bd0f4",
@@ -16116,6 +17188,7 @@
       "id": "he_psf_7c842bb5",
       "type": "Pain_Solution_Fit",
       "nodes": [
+        "proj_ea85a5d3",
         "pain_d28f5f79",
         "pain_f6b362e6",
         "pain_7f56244b",
@@ -16422,6 +17495,7 @@
       "id": "he_psf_5b2ecd48",
       "type": "Pain_Solution_Fit",
       "nodes": [
+        "proj_db8b8b77",
         "pain_f6b362e6",
         "pain_590d8b17",
         "pain_5dc99f6e"
@@ -16792,6 +17866,7 @@
       "id": "he_psf_fdd70ea2",
       "type": "Pain_Solution_Fit",
       "nodes": [
+        "proj_80c57f7b",
         "pain_f6b362e6",
         "pain_cbf04045",
         "pain_0b5964e6",
@@ -17106,6 +18181,7 @@
       "id": "he_psf_255da397",
       "type": "Pain_Solution_Fit",
       "nodes": [
+        "proj_5b849f1d",
         "pain_590d8b17",
         "pain_f6b362e6",
         "pain_7f56244b",
@@ -17131,6 +18207,7 @@
       "id": "he_psf_70f3ab32",
       "type": "Pain_Solution_Fit",
       "nodes": [
+        "proj_81af83ec",
         "pain_590d8b17",
         "pain_d28f5f79",
         "pain_f6b362e6",
@@ -17181,6 +18258,7 @@
       "id": "he_psf_9e655884",
       "type": "Pain_Solution_Fit",
       "nodes": [
+        "proj_4a5d64aa",
         "pain_fdcfc601",
         "pain_f6b362e6",
         "pain_d28f5f79",
@@ -17244,6 +18322,7 @@
       "id": "he_psf_f68cd269",
       "type": "Pain_Solution_Fit",
       "nodes": [
+        "proj_fb6c9c33",
         "pain_f6b362e6",
         "pain_0b5964e6",
         "pain_5dc99f6e",
@@ -17264,6 +18343,7 @@
       "id": "he_psf_9bb976d8",
       "type": "Pain_Solution_Fit",
       "nodes": [
+        "proj_c5de69af",
         "pain_590d8b17",
         "pain_afda6c35",
         "pain_fdcfc601",
@@ -17286,6 +18366,7 @@
       "id": "he_psf_7c2e8323",
       "type": "Pain_Solution_Fit",
       "nodes": [
+        "proj_8c2f4b96",
         "pain_590d8b17",
         "pain_f6b362e6",
         "pain_7f56244b",
@@ -17311,6 +18392,7 @@
       "id": "he_psf_e2b39ae9",
       "type": "Pain_Solution_Fit",
       "nodes": [
+        "proj_37d3d154",
         "pain_590d8b17",
         "pain_f6b362e6",
         "pain_7f56244b",
@@ -17341,6 +18423,7 @@
       "id": "he_psf_28e5f9c3",
       "type": "Pain_Solution_Fit",
       "nodes": [
+        "proj_9a2fbaa3",
         "pain_f6b362e6",
         "pain_590d8b17",
         "pain_619bd0f4",
@@ -17396,6 +18479,7 @@
       "id": "he_psf_49548ea7",
       "type": "Pain_Solution_Fit",
       "nodes": [
+        "proj_bad6ae35",
         "pain_590d8b17",
         "pain_f6b362e6",
         "pain_7f56244b",
@@ -17430,6 +18514,7 @@
       "id": "he_psf_f6f88510",
       "type": "Pain_Solution_Fit",
       "nodes": [
+        "proj_30972c83",
         "pain_590d8b17",
         "pain_f6b362e6",
         "pain_7f56244b",
@@ -17459,6 +18544,7 @@
       "id": "he_psf_b96207d6",
       "type": "Pain_Solution_Fit",
       "nodes": [
+        "proj_78f2d606",
         "pain_f6b362e6",
         "pain_590d8b17",
         "pain_5dc99f6e",
@@ -17517,6 +18603,7 @@
       "id": "he_psf_7ee2cfff",
       "type": "Pain_Solution_Fit",
       "nodes": [
+        "proj_b4230f04",
         "pain_590d8b17",
         "pain_619bd0f4",
         "pain_7f56244b",
@@ -17598,6 +18685,7 @@
       "id": "he_psf_49782a46",
       "type": "Pain_Solution_Fit",
       "nodes": [
+        "proj_89ef2bce",
         "pain_590d8b17",
         "pain_7f56244b",
         "pain_afda6c35",
@@ -17622,6 +18710,7 @@
       "id": "he_psf_ddd2086c",
       "type": "Pain_Solution_Fit",
       "nodes": [
+        "proj_169abfde",
         "pain_590d8b17",
         "pain_f6b362e6",
         "pain_7f56244b",
@@ -17774,6 +18863,7 @@
       "id": "he_psf_391b0e63",
       "type": "Pain_Solution_Fit",
       "nodes": [
+        "proj_4d9da4f3",
         "pain_590d8b17",
         "pain_afda6c35",
         "pain_619bd0f4",
@@ -17876,6 +18966,21 @@
       }
     },
     {
+      "id": "he_team_fdd70ea2",
+      "type": "Team_Composition",
+      "nodes": [
+        "proj_80c57f7b",
+        "role_df28e5bb"
+      ],
+      "properties": {
+        "project": "广寒天工——月基装备_人作业系统",
+        "roles": [
+          "院士"
+        ],
+        "teaching_note": "广寒天工——月基装备_人作业系统团队包含院士"
+      }
+    },
+    {
       "id": "he_team_fe57d321",
       "type": "Team_Composition",
       "nodes": [
@@ -17894,6 +18999,7 @@
       "id": "he_team_49548ea7",
       "type": "Team_Composition",
       "nodes": [
+        "proj_bad6ae35",
         "role_97e6f361",
         "role_df28e5bb"
       ],
@@ -17927,19 +19033,23 @@
       "nodes": [
         "track_06c733ef",
         "proj_a9941030",
+        "proj_8c46705e",
         "proj_e86f23f2",
         "proj_62456949",
         "proj_5a2dedef",
         "proj_5323f05f",
         "proj_8c2ff2c8",
+        "proj_ea85a5d3",
         "proj_db0dd5e1",
         "proj_36ccff73",
+        "proj_78f2d606",
         "proj_aea25081",
         "proj_584b627f",
         "proj_425716be",
         "proj_45e6b8d1",
         "proj_bfdfddb2",
         "proj_15e82e24",
+        "proj_b7a0e0af",
         "proj_4b72d252",
         "proj_030fe1e4",
         "proj_b47acad4",
@@ -17947,17 +19057,23 @@
         "proj_f05baed2",
         "proj_5712b727",
         "proj_ddac4c3d",
+        "proj_80c57f7b",
         "proj_de7f6865",
         "proj_66045892",
         "proj_d70fc4ee",
         "proj_f4d1c138",
         "proj_6449bc5b",
         "proj_464de40f",
+        "proj_b4230f04",
+        "proj_a85743aa",
+        "proj_169abfde",
         "proj_032fa339",
         "proj_0e6feb68",
         "proj_da4802e7",
         "proj_24ce12b6",
         "proj_fa9eb484",
+        "proj_89ef2bce",
+        "proj_98bb8d5c",
         "proj_007b2ce8",
         "proj_30ec7a4f",
         "proj_5fd1180b",
@@ -17966,12 +19082,15 @@
         "proj_b4180a0f",
         "proj_3264d357",
         "proj_fdf41c66",
+        "proj_30115f05",
         "proj_da1b321e",
         "proj_82349079",
         "proj_77caca55",
         "proj_76e96798",
         "proj_53fc061a",
         "proj_68515984",
+        "proj_8b88aaad",
+        "proj_db8b8b77",
         "proj_7565890d",
         "proj_4a60c8e0"
       ],
@@ -17987,11 +19106,15 @@
       "nodes": [
         "track_b54c80cf",
         "proj_cf0f1605",
+        "proj_fb6c9c33",
+        "proj_81af83ec",
         "proj_f654c4c6",
+        "proj_4a5d64aa",
         "proj_bef4e3a0",
         "proj_ec67fd58",
         "proj_44aa5890",
         "proj_5ea0860e",
+        "proj_5b849f1d",
         "proj_2270f15b",
         "proj_62995efb",
         "proj_b9e8e5d3"
@@ -18007,7 +19130,14 @@
       "type": "Competition_Track_Group",
       "nodes": [
         "track_7e00b1e2",
-        "proj_bf910931"
+        "proj_30972c83",
+        "proj_4d9da4f3",
+        "proj_bad6ae35",
+        "proj_8c2f4b96",
+        "proj_9a2fbaa3",
+        "proj_bf910931",
+        "proj_c5de69af",
+        "proj_37d3d154"
       ],
       "properties": {
         "track": "科技创新类1",
@@ -19176,31 +20306,47 @@
       "type": "Application_Domain_Map",
       "nodes": [
         "domain_001d3b89",
+        "proj_30972c83",
         "proj_5a2dedef",
+        "proj_8c46705e",
         "proj_e86f23f2",
         "proj_62456949",
+        "proj_8c2f4b96",
         "proj_5323f05f",
         "proj_8c2ff2c8",
+        "proj_ea85a5d3",
         "proj_db0dd5e1",
         "proj_36ccff73",
+        "proj_78f2d606",
         "proj_425716be",
         "proj_584b627f",
+        "proj_5b849f1d",
         "proj_2270f15b",
         "proj_bfdfddb2",
         "proj_15e82e24",
+        "proj_b7a0e0af",
         "proj_4b72d252",
         "proj_b47acad4",
         "proj_9ab84361",
         "proj_f05baed2",
         "proj_5712b727",
         "proj_ddac4c3d",
+        "proj_80c57f7b",
+        "proj_81af83ec",
         "proj_6449bc5b",
         "proj_de7f6865",
         "proj_464de40f",
+        "proj_b4230f04",
         "proj_5ea0860e",
+        "proj_c5de69af",
+        "proj_a85743aa",
+        "proj_169abfde",
         "proj_032fa339",
         "proj_da4802e7",
         "proj_24ce12b6",
+        "proj_89ef2bce",
+        "proj_4d9da4f3",
+        "proj_98bb8d5c",
         "proj_007b2ce8",
         "proj_30ec7a4f",
         "proj_f654c4c6",
@@ -19210,10 +20356,16 @@
         "proj_bf910931",
         "proj_3264d357",
         "proj_fdf41c66",
+        "proj_37d3d154",
         "proj_cf0f1605",
+        "proj_30115f05",
         "proj_da1b321e",
+        "proj_bad6ae35",
         "proj_77caca55",
+        "proj_9a2fbaa3",
         "proj_68515984",
+        "proj_8b88aaad",
+        "proj_db8b8b77",
         "proj_7565890d",
         "proj_bef4e3a0",
         "proj_44aa5890",
@@ -19231,32 +20383,42 @@
       "type": "Application_Domain_Map",
       "nodes": [
         "domain_28b94afd",
+        "proj_30972c83",
         "proj_a9941030",
+        "proj_8c46705e",
         "proj_e86f23f2",
+        "proj_8c2f4b96",
         "proj_5a2dedef",
         "proj_5323f05f",
         "proj_8c2ff2c8",
+        "proj_ea85a5d3",
         "proj_db0dd5e1",
+        "proj_78f2d606",
         "proj_aea25081",
         "proj_584b627f",
+        "proj_5b849f1d",
         "proj_2270f15b",
         "proj_15e82e24",
         "proj_bfdfddb2",
+        "proj_b7a0e0af",
         "proj_4b72d252",
         "proj_030fe1e4",
         "proj_b47acad4",
         "proj_9ab84361",
+        "proj_81af83ec",
         "proj_de7f6865",
         "proj_ddac4c3d",
         "proj_66045892",
         "proj_d70fc4ee",
         "proj_f4d1c138",
         "proj_5ea0860e",
+        "proj_c5de69af",
         "proj_032fa339",
         "proj_62995efb",
         "proj_0e6feb68",
         "proj_da4802e7",
         "proj_24ce12b6",
+        "proj_89ef2bce",
         "proj_30ec7a4f",
         "proj_007b2ce8",
         "proj_5fd1180b",
@@ -19265,10 +20427,15 @@
         "proj_ec67fd58",
         "proj_bf910931",
         "proj_3264d357",
+        "proj_37d3d154",
         "proj_cf0f1605",
+        "proj_30115f05",
         "proj_da1b321e",
+        "proj_bad6ae35",
         "proj_82349079",
         "proj_53fc061a",
+        "proj_9a2fbaa3",
+        "proj_db8b8b77",
         "proj_bef4e3a0",
         "proj_44aa5890",
         "proj_4a60c8e0",
@@ -19285,21 +20452,32 @@
       "type": "Application_Domain_Map",
       "nodes": [
         "domain_3e86ca88",
+        "proj_8c46705e",
         "proj_e86f23f2",
+        "proj_8c2f4b96",
         "proj_5323f05f",
+        "proj_78f2d606",
         "proj_584b627f",
         "proj_2270f15b",
+        "proj_80c57f7b",
+        "proj_81af83ec",
         "proj_66045892",
         "proj_6449bc5b",
+        "proj_b4230f04",
         "proj_da4802e7",
+        "proj_89ef2bce",
         "proj_5fd1180b",
         "proj_b4180a0f",
         "proj_ec67fd58",
         "proj_3264d357",
         "proj_cf0f1605",
+        "proj_30115f05",
         "proj_da1b321e",
+        "proj_bad6ae35",
         "proj_82349079",
         "proj_76e96798",
+        "proj_9a2fbaa3",
+        "proj_8b88aaad",
         "proj_bef4e3a0",
         "proj_b9e8e5d3"
       ],
@@ -19314,6 +20492,8 @@
       "type": "Application_Domain_Map",
       "nodes": [
         "domain_d99ba2e2",
+        "proj_b7a0e0af",
+        "proj_81af83ec",
         "proj_f4d1c138",
         "proj_bef4e3a0",
         "proj_3264d357",
@@ -19330,8 +20510,12 @@
       "type": "Application_Domain_Map",
       "nodes": [
         "domain_29e17ba0",
+        "proj_b7a0e0af",
+        "proj_bad6ae35",
         "proj_ddac4c3d",
+        "proj_4a5d64aa",
         "proj_0c15a722",
+        "proj_78f2d606",
         "proj_bfdfddb2",
         "proj_62995efb",
         "proj_b9e8e5d3"
@@ -19351,6 +20535,7 @@
         "proj_5a2dedef",
         "proj_62456949",
         "proj_8c2ff2c8",
+        "proj_ea85a5d3",
         "proj_36ccff73",
         "proj_425716be",
         "proj_15e82e24",
@@ -19359,17 +20544,25 @@
         "proj_f05baed2",
         "proj_6449bc5b",
         "proj_464de40f",
+        "proj_b4230f04",
+        "proj_c5de69af",
+        "proj_a85743aa",
+        "proj_169abfde",
         "proj_032fa339",
         "proj_0e6feb68",
         "proj_24ce12b6",
+        "proj_98bb8d5c",
         "proj_007b2ce8",
         "proj_52142b98",
         "proj_5fd1180b",
         "proj_b4180a0f",
         "proj_bf910931",
         "proj_da1b321e",
+        "proj_bad6ae35",
         "proj_77caca55",
+        "proj_9a2fbaa3",
         "proj_68515984",
+        "proj_8b88aaad",
         "proj_7565890d"
       ],
       "properties": {
@@ -19385,6 +20578,8 @@
         "domain_4fcfbb03",
         "proj_da4802e7",
         "proj_cf0f1605",
+        "proj_30972c83",
+        "proj_4d9da4f3",
         "proj_b47acad4",
         "proj_30ec7a4f",
         "proj_5323f05f",
@@ -19393,6 +20588,8 @@
         "proj_584b627f",
         "proj_15e82e24",
         "proj_b4180a0f",
+        "proj_c5de69af",
+        "proj_169abfde",
         "proj_bfdfddb2"
       ],
       "properties": {
@@ -19406,16 +20603,23 @@
       "type": "Application_Domain_Map",
       "nodes": [
         "domain_6c5f0e25",
+        "proj_89ef2bce",
+        "proj_30972c83",
+        "proj_8c46705e",
         "proj_da1b321e",
         "proj_b47acad4",
+        "proj_98bb8d5c",
         "proj_30ec7a4f",
         "proj_f654c4c6",
         "proj_68515984",
+        "proj_ea85a5d3",
         "proj_6449bc5b",
+        "proj_78f2d606",
         "proj_584b627f",
         "proj_b4180a0f",
         "proj_bf910931",
         "proj_fdf41c66",
+        "proj_a85743aa",
         "proj_15e82e24"
       ],
       "properties": {
@@ -19429,14 +20633,18 @@
       "type": "Application_Domain_Map",
       "nodes": [
         "domain_b8266013",
+        "proj_89ef2bce",
+        "proj_30972c83",
         "proj_030fe1e4",
         "proj_30ec7a4f",
         "proj_f654c4c6",
+        "proj_78f2d606",
         "proj_425716be",
         "proj_15e82e24",
         "proj_bf910931",
         "proj_44aa5890",
         "proj_fdf41c66",
+        "proj_169abfde",
         "proj_bfdfddb2"
       ],
       "properties": {
@@ -19450,19 +20658,25 @@
       "type": "Application_Domain_Map",
       "nodes": [
         "domain_f013d8f0",
+        "proj_8c46705e",
         "proj_e86f23f2",
+        "proj_8c2f4b96",
         "proj_5323f05f",
         "proj_aea25081",
         "proj_15e82e24",
         "proj_bfdfddb2",
         "proj_de7f6865",
         "proj_66045892",
+        "proj_b4230f04",
+        "proj_a85743aa",
         "proj_62995efb",
         "proj_da4802e7",
+        "proj_89ef2bce",
         "proj_5fd1180b",
         "proj_f654c4c6",
         "proj_ec67fd58",
         "proj_fdf41c66",
+        "proj_9a2fbaa3",
         "proj_b9e8e5d3"
       ],
       "properties": {
@@ -19479,11 +20693,15 @@
         "proj_da4802e7",
         "proj_24ce12b6",
         "proj_da1b321e",
+        "proj_80c57f7b",
+        "proj_98bb8d5c",
         "proj_30ec7a4f",
         "proj_ddac4c3d",
+        "proj_9a2fbaa3",
         "proj_66045892",
         "proj_d70fc4ee",
         "proj_6449bc5b",
+        "proj_78f2d606",
         "proj_584b627f",
         "proj_44aa5890",
         "proj_b9e8e5d3"
@@ -19501,6 +20719,7 @@
         "domain_d06e1915",
         "proj_da4802e7",
         "proj_cf0f1605",
+        "proj_8c2f4b96",
         "proj_f05baed2",
         "proj_f654c4c6"
       ],
@@ -19518,6 +20737,7 @@
         "proj_da4802e7",
         "proj_24ce12b6",
         "proj_b47acad4",
+        "proj_98bb8d5c",
         "proj_9ab84361",
         "proj_53fc061a",
         "proj_ddac4c3d",
@@ -19525,6 +20745,7 @@
         "proj_de7f6865",
         "proj_66045892",
         "proj_7565890d",
+        "proj_b4230f04",
         "proj_5ea0860e"
       ],
       "properties": {
@@ -19541,16 +20762,27 @@
         "proj_a9941030",
         "proj_5a2dedef",
         "proj_62456949",
+        "proj_8c2f4b96",
+        "proj_ea85a5d3",
         "proj_2270f15b",
         "proj_b47acad4",
+        "proj_80c57f7b",
+        "proj_81af83ec",
         "proj_5ea0860e",
+        "proj_a85743aa",
         "proj_62995efb",
         "proj_fa9eb484",
+        "proj_4d9da4f3",
+        "proj_98bb8d5c",
         "proj_30ec7a4f",
         "proj_f654c4c6",
         "proj_b4180a0f",
+        "proj_37d3d154",
+        "proj_30115f05",
         "proj_82349079",
         "proj_77caca55",
+        "proj_9a2fbaa3",
+        "proj_8b88aaad",
         "proj_bef4e3a0"
       ],
       "properties": {
@@ -19564,10 +20796,14 @@
       "type": "Application_Domain_Map",
       "nodes": [
         "domain_8a68be7b",
+        "proj_30972c83",
         "proj_5a2dedef",
         "proj_b47acad4",
+        "proj_9a2fbaa3",
         "proj_464de40f",
-        "proj_bf910931"
+        "proj_bf910931",
+        "proj_c5de69af",
+        "proj_a85743aa"
       ],
       "properties": {
         "domain": "新能源",
@@ -19580,10 +20816,16 @@
       "type": "Application_Domain_Map",
       "nodes": [
         "domain_1e39751b",
+        "proj_30972c83",
+        "proj_4d9da4f3",
+        "proj_81af83ec",
         "proj_5712b727",
         "proj_f654c4c6",
+        "proj_9a2fbaa3",
+        "proj_8b88aaad",
         "proj_7565890d",
         "proj_aea25081",
+        "proj_c5de69af",
         "proj_2270f15b"
       ],
       "properties": {
@@ -19597,8 +20839,10 @@
       "type": "Application_Domain_Map",
       "nodes": [
         "domain_3048e360",
+        "proj_9a2fbaa3",
         "proj_b4180a0f",
-        "proj_62456949"
+        "proj_62456949",
+        "proj_8b88aaad"
       ],
       "properties": {
         "domain": "水下探测",
@@ -19613,7 +20857,8 @@
         "domain_fe7c7d8d",
         "proj_030fe1e4",
         "proj_62456949",
-        "proj_f654c4c6"
+        "proj_f654c4c6",
+        "proj_8b88aaad"
       ],
       "properties": {
         "domain": "水产养殖",
@@ -19627,8 +20872,10 @@
       "nodes": [
         "domain_e298e518",
         "proj_a9941030",
+        "proj_8c46705e",
         "proj_5fd1180b",
-        "proj_66045892"
+        "proj_66045892",
+        "proj_b4230f04"
       ],
       "properties": {
         "domain": "心血管",
@@ -19642,6 +20889,7 @@
       "nodes": [
         "domain_ab5129ad",
         "proj_aea25081",
+        "proj_8c46705e",
         "proj_e86f23f2"
       ],
       "properties": {
@@ -19657,6 +20905,7 @@
         "domain_9012f911",
         "proj_9ab84361",
         "proj_ec67fd58",
+        "proj_8c46705e",
         "proj_5323f05f"
       ],
       "properties": {
@@ -19688,12 +20937,16 @@
       "type": "Application_Domain_Map",
       "nodes": [
         "domain_47753164",
+        "proj_30972c83",
+        "proj_bad6ae35",
         "proj_30ec7a4f",
         "proj_ddac4c3d",
+        "proj_db8b8b77",
         "proj_36ccff73",
         "proj_0c15a722",
         "proj_584b627f",
-        "proj_44aa5890"
+        "proj_44aa5890",
+        "proj_c5de69af"
       ],
       "properties": {
         "domain": "无人驾驶",
@@ -19706,6 +20959,7 @@
       "type": "Application_Domain_Map",
       "nodes": [
         "domain_0e099944",
+        "proj_c5de69af",
         "proj_b4180a0f"
       ],
       "properties": {
@@ -19764,6 +21018,7 @@
       "id": "he_profile_3f6ddf0d",
       "type": "Project_Profile",
       "nodes": [
+        "proj_b7a0e0af",
         "level_40b14fc5",
         "kw_fc6c4c40",
         "kw_84c70f4b",
@@ -20002,6 +21257,7 @@
       "id": "he_profile_55767139",
       "type": "Project_Profile",
       "nodes": [
+        "proj_a85743aa",
         "concept_Standardization",
         "kw_15944350",
         "subtech_eca9158c",
@@ -20051,6 +21307,7 @@
       "id": "he_profile_b64e6b91",
       "type": "Project_Profile",
       "nodes": [
+        "proj_8b88aaad",
         "concept_Standardization",
         "kw_15944350",
         "domain_01a78881",
@@ -20104,6 +21361,7 @@
       "id": "he_profile_44aa807e",
       "type": "Project_Profile",
       "nodes": [
+        "proj_30115f05",
         "hw_a5cad1b3",
         "domain_01a78881",
         "kw_6802fb37",
@@ -20193,6 +21451,7 @@
       "id": "he_profile_9afe661f",
       "type": "Project_Profile",
       "nodes": [
+        "proj_8c46705e",
         "kw_8f3b32a2",
         "domain_e298e518",
         "subtech_bbca2718",
@@ -20430,6 +21689,7 @@
       "id": "he_profile_0b3de9c3",
       "type": "Project_Profile",
       "nodes": [
+        "proj_98bb8d5c",
         "domain_01a78881",
         "kw_6802fb37",
         "risk_0d93ab13",
@@ -20464,6 +21724,7 @@
       "id": "he_profile_7c842bb5",
       "type": "Project_Profile",
       "nodes": [
+        "proj_ea85a5d3",
         "kw_15944350",
         "risk_1a46c31e",
         "domain_01a78881",
@@ -20938,6 +22199,7 @@
       "id": "he_profile_5b2ecd48",
       "type": "Project_Profile",
       "nodes": [
+        "proj_db8b8b77",
         "kw_59898171",
         "fr_3bf3bd6b",
         "concept_Financial_Projection",
@@ -21552,6 +22814,7 @@
       "id": "he_profile_fdd70ea2",
       "type": "Project_Profile",
       "nodes": [
+        "proj_80c57f7b",
         "fr_3bf3bd6b",
         "domain_01a78881",
         "kw_87f62d94",
@@ -22066,6 +23329,7 @@
       "id": "he_profile_255da397",
       "type": "Project_Profile",
       "nodes": [
+        "proj_5b849f1d",
         "kw_1fd02a90",
         "concept_Standardization",
         "kw_1d9c15c5",
@@ -22112,6 +23376,7 @@
       "id": "he_profile_70f3ab32",
       "type": "Project_Profile",
       "nodes": [
+        "proj_81af83ec",
         "kw_1fd02a90",
         "risk_1a46c31e",
         "domain_01a78881",
@@ -22215,6 +23480,7 @@
       "id": "he_profile_9e655884",
       "type": "Project_Profile",
       "nodes": [
+        "proj_4a5d64aa",
         "kw_104ec0d7",
         "kw_ff793cc3",
         "riskcat_49078a4b",
@@ -22343,9 +23609,23 @@
       }
     },
     {
+      "id": "he_profile_f68cd269",
+      "type": "Project_Profile",
+      "nodes": [
+        "proj_fb6c9c33",
+        "riskcat_fdbc77bd"
+      ],
+      "properties": {
+        "project": "星哨科技--新一代卫星互联网应用系统，开启全域全时快响预警新时代",
+        "attribute_count": 1,
+        "teaching_note": "星哨科技--新一代卫星互联网应用系统，开启全域全时快响预警新时代的详细属性画像，包含1个属性节点"
+      }
+    },
+    {
       "id": "he_profile_9bb976d8",
       "type": "Project_Profile",
       "nodes": [
+        "proj_c5de69af",
         "kw_8ed32071",
         "domain_8a68be7b",
         "risk_0d93ab13",
@@ -22384,6 +23664,7 @@
       "id": "he_profile_7c2e8323",
       "type": "Project_Profile",
       "nodes": [
+        "proj_8c2f4b96",
         "concept_Standardization",
         "hw_a5cad1b3",
         "domain_d06e1915",
@@ -22428,6 +23709,7 @@
       "id": "he_profile_e2b39ae9",
       "type": "Project_Profile",
       "nodes": [
+        "proj_37d3d154",
         "domain_01a78881",
         "subtech_01a78881",
         "kw_a54847e9",
@@ -22467,6 +23749,7 @@
       "id": "he_profile_28e5f9c3",
       "type": "Project_Profile",
       "nodes": [
+        "proj_9a2fbaa3",
         "domain_01a78881",
         "kw_8ed32071",
         "domain_8a68be7b",
@@ -22575,6 +23858,7 @@
       "id": "he_profile_49548ea7",
       "type": "Project_Profile",
       "nodes": [
+        "proj_bad6ae35",
         "subtech_8cde774d",
         "kw_8bedce4e",
         "concept_Standardization",
@@ -22661,6 +23945,7 @@
       "id": "he_profile_f6f88510",
       "type": "Project_Profile",
       "nodes": [
+        "proj_30972c83",
         "hw_a5cad1b3",
         "kw_2cfcded0",
         "domain_8a68be7b",
@@ -22711,6 +23996,7 @@
       "id": "he_profile_b96207d6",
       "type": "Project_Profile",
       "nodes": [
+        "proj_78f2d606",
         "kw_ab4a85fc",
         "kw_046a899e",
         "kw_93bae42f",
@@ -22796,6 +24082,7 @@
       "id": "he_profile_7ee2cfff",
       "type": "Project_Profile",
       "nodes": [
+        "proj_b4230f04",
         "level_40b14fc5",
         "kw_8f3b32a2",
         "domain_e298e518",
@@ -22917,6 +24204,7 @@
       "id": "he_profile_49782a46",
       "type": "Project_Profile",
       "nodes": [
+        "proj_89ef2bce",
         "riskcat_fdbc77bd",
         "riskcat_c47d7a21",
         "kw_2b6bc0f2",
@@ -22944,6 +24232,7 @@
       "id": "he_profile_ddd2086c",
       "type": "Project_Profile",
       "nodes": [
+        "proj_169abfde",
         "level_7d27be00",
         "risk_0d93ab13",
         "domain_bd593ebe",
@@ -23186,6 +24475,7 @@
       "id": "he_profile_391b0e63",
       "type": "Project_Profile",
       "nodes": [
+        "proj_4d9da4f3",
         "kw_e477af01",
         "domain_01a78881",
         "kw_62cea749",
@@ -23333,9 +24623,11 @@
       "nodes": [
         "kw_8fc42c6d",
         "kw_be5d5d37",
+        "proj_30115f05",
         "proj_da1b321e",
         "proj_584b627f",
-        "proj_fdf41c66"
+        "proj_fdf41c66",
+        "proj_db8b8b77"
       ],
       "properties": {
         "keywords": [
@@ -23352,6 +24644,7 @@
       "nodes": [
         "kw_2cfcded0",
         "kw_421ed1a3",
+        "proj_30115f05",
         "proj_9ab84361",
         "proj_db0dd5e1",
         "proj_0c15a722",
@@ -23414,6 +24707,7 @@
       "nodes": [
         "kw_cba46dfa",
         "kw_d83ea84c",
+        "proj_30115f05",
         "proj_9ab84361",
         "proj_0c15a722",
         "proj_bf910931",
@@ -23434,6 +24728,7 @@
       "nodes": [
         "kw_6802fb37",
         "kw_69724359",
+        "proj_30115f05",
         "proj_9ab84361",
         "proj_0c15a722",
         "proj_bf910931"
@@ -23454,6 +24749,7 @@
         "kw_e058de1b",
         "kw_fd4bef54",
         "proj_a9941030",
+        "proj_8c46705e",
         "proj_ec67fd58",
         "proj_e86f23f2"
       ],
@@ -23494,6 +24790,7 @@
         "kw_1fd02a90",
         "proj_030fe1e4",
         "proj_2270f15b",
+        "proj_81af83ec",
         "proj_4a60c8e0"
       ],
       "properties": {
@@ -23531,6 +24828,7 @@
       "nodes": [
         "kw_1ca9d263",
         "kw_3d078fbc",
+        "proj_30115f05",
         "proj_bf910931",
         "proj_45e6b8d1"
       ],
@@ -23568,6 +24866,7 @@
       "nodes": [
         "kw_c5a99375",
         "kw_c63ace06",
+        "proj_8c46705e",
         "proj_15e82e24",
         "proj_44aa5890"
       ],
@@ -23587,7 +24886,8 @@
         "kw_7fd0896e",
         "kw_9393511a",
         "proj_15e82e24",
-        "proj_bf910931"
+        "proj_bf910931",
+        "proj_30972c83"
       ],
       "properties": {
         "keywords": [
@@ -23623,7 +24923,9 @@
       "nodes": [
         "kw_a4851768",
         "kw_a57fd81f",
-        "proj_2270f15b"
+        "proj_2270f15b",
+        "proj_5b849f1d",
+        "proj_81af83ec"
       ],
       "properties": {
         "keywords": [
@@ -23640,6 +24942,7 @@
       "nodes": [
         "kw_f10f74bf",
         "kw_f9f7bb66",
+        "proj_b7a0e0af",
         "proj_bef4e3a0"
       ],
       "properties": {
@@ -23693,7 +24996,8 @@
       "nodes": [
         "kw_20fdb193",
         "kw_41f0e6ca",
-        "proj_bfdfddb2"
+        "proj_bfdfddb2",
+        "proj_169abfde"
       ],
       "properties": {
         "keywords": [
@@ -23710,7 +25014,8 @@
       "nodes": [
         "kw_85bbb64b",
         "kw_c931653c",
-        "proj_da4802e7"
+        "proj_da4802e7",
+        "proj_30115f05"
       ],
       "properties": {
         "keywords": [
@@ -23727,6 +25032,7 @@
       "nodes": [
         "kw_8a95a6d1",
         "kw_c3318eaa",
+        "proj_a85743aa",
         "proj_b4180a0f"
       ],
       "properties": {
@@ -23744,6 +25050,7 @@
       "nodes": [
         "kw_37b6debe",
         "kw_3999846e",
+        "proj_8b88aaad",
         "proj_62456949"
       ],
       "properties": {
@@ -23761,6 +25068,7 @@
       "nodes": [
         "kw_4a8ab455",
         "kw_664b515d",
+        "proj_8b88aaad",
         "proj_62456949"
       ],
       "properties": {
