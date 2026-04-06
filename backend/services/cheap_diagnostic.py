@@ -41,14 +41,16 @@ _RUBRIC_META: dict[str, dict] = {
     "R7_innovation":     {"name": "创新差异化", "required": ["对比矩阵"]},
     "R8_execution":      {"name": "团队执行", "required": ["团队简介", "里程碑"]},
     "R9_pitch":          {"name": "表达材料", "required": ["路演PPT"]},
+    "R10_compliance":    {"name": "合规与社会责任", "required": ["合规分析报告", "伦理风险评估", "知识产权清单"]},
+    "R11_growth":        {"name": "增长与规模化", "required": ["增长漏斗模型", "阶段性扩张计划"]},
 }
 
 # ── 维度→Rubric 映射（与 floor_scorer 一致） ──
 _DIM_TO_RUBRICS: dict[str, list[str]] = {
     "empathy":   ["R1_pain_point", "R2_user_evidence"],
     "ideation":  ["R3_solution", "R7_innovation"],
-    "business":  ["R4_business_model", "R6_finance"],
-    "execution": ["R8_execution"],
+    "business":  ["R4_business_model", "R6_finance", "R11_growth"],
+    "execution": ["R8_execution", "R10_compliance"],
     "pitching":  ["R9_pitch"],
 }
 

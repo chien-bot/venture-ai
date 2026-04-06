@@ -1,5 +1,16 @@
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
+function handleSessionExpired() {
+  if (typeof window !== "undefined") {
+    sessionStorage.clear();
+    document.cookie = "token=; path=/; max-age=0";
+    // Avoid redirect loop if already on login page
+    if (window.location.pathname !== "/") {
+      window.location.href = "/?expired=1";
+    }
+  }
+}
+
 async function request(path: string, options: RequestInit = {}) {
   const token = typeof window !== "undefined" ? sessionStorage.getItem("token") : null;
   const res = await fetch(`${API_BASE}${path}`, {
@@ -10,6 +21,10 @@ async function request(path: string, options: RequestInit = {}) {
       ...options.headers,
     },
   });
+  if (res.status === 401 && !path.includes("/auth/")) {
+    handleSessionExpired();
+    throw new Error("登录已过期，请重新登录");
+  }
   if (!res.ok) {
     const err = await res.json().catch(() => ({ detail: "请求失败" }));
     throw new Error(err.detail || "请求失败");
@@ -18,11 +33,33 @@ async function request(path: string, options: RequestInit = {}) {
 }
 
 // Auth
-export async function login(username: string, password: string, role: string) {
+export async function login(username: string, password: string, role: string = "student") {
   return request("/api/auth/login", {
     method: "POST",
     body: JSON.stringify({ username, password, role }),
   });
+}
+
+export async function refreshToken() {
+  const data = await request("/api/auth/refresh", { method: "POST" });
+  if (typeof window !== "undefined") {
+    sessionStorage.setItem("token", data.token);
+    sessionStorage.setItem("user", JSON.stringify(data));
+    document.cookie = `token=${data.token}; path=/`;
+  }
+  return data;
+}
+
+export async function logout() {
+  try {
+    await request("/api/auth/logout", { method: "POST" });
+  } catch {
+    // Even if the API call fails, clear local state
+  }
+  if (typeof window !== "undefined") {
+    sessionStorage.clear();
+    document.cookie = "token=; path=/; max-age=0";
+  }
 }
 
 export async function register(username: string, password: string, displayName: string = "", classId: string = "") {
@@ -80,6 +117,10 @@ export async function sendMessageStream(
     }),
   });
 
+  if (res.status === 401) {
+    handleSessionExpired();
+    throw new Error("登录已过期，请重新登录");
+  }
   if (!res.ok) {
     const err = await res.json().catch(() => ({ detail: "请求失败" }));
     throw new Error(err.detail || "请求失败");
@@ -106,7 +147,9 @@ export async function sendMessageStream(
       try {
         const data = JSON.parse(jsonStr);
         if (data.type === "token") {
-          const clean = data.content.replace(/<!--SCORES:[\s\S]*?-->/g, '');
+          const clean = data.content
+            .replace(/<!--\s*(?:SCORES|RUBRIC_FULL|RUBRIC|CAPABILITY_PROFILE)\s*:[\s\S]*?-->/gi, '')
+            .replace(/<!--\s*(?:SCORES|RUBRIC_FULL|RUBRIC|CAPABILITY_PROFILE)\s*:[\s\S]*/gi, '');
           if (!clean) continue;
           onToken(clean);
         } else if (data.type === "meta") {
@@ -220,6 +263,10 @@ export async function getProjectReview(projectId: string) {
   return request(`/api/teacher/project/${projectId}/review`);
 }
 
+export async function getCapabilityProfile(projectId: string) {
+  return request(`/api/teacher/project/${projectId}/capability-profile`);
+}
+
 export async function getProjectConversations(projectId: string) {
   return request(`/api/teacher/project/${projectId}/conversations`);
 }
@@ -301,6 +348,27 @@ export async function createAnnotation(
 
 export async function getProjectAnnotations(projectId: string) {
   return request(`/api/teacher/project/${projectId}/annotations`);
+}
+
+// Teacher Interventions
+export async function createIntervention(
+  projectId: string, triggerKeyword: string, instruction: string, priority: number = 1
+) {
+  return request("/api/teacher/interventions", {
+    method: "POST",
+    body: JSON.stringify({
+      project_id: projectId, trigger_keyword: triggerKeyword,
+      instruction, priority,
+    }),
+  });
+}
+
+export async function getInterventions(projectId: string) {
+  return request(`/api/teacher/interventions/${projectId}`);
+}
+
+export async function deleteIntervention(interventionId: string) {
+  return request(`/api/teacher/interventions/${interventionId}`, { method: "DELETE" });
 }
 
 // Session Memory

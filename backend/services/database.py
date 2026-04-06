@@ -33,7 +33,8 @@ def init_db():
             CREATE TABLE IF NOT EXISTS auth_tokens (
                 token       TEXT PRIMARY KEY,
                 user_id     TEXT NOT NULL,
-                created_at  TEXT DEFAULT (datetime('now'))
+                created_at  TEXT DEFAULT (datetime('now')),
+                expires_at  TEXT
             );
 
             CREATE TABLE IF NOT EXISTS projects (
@@ -176,6 +177,26 @@ def init_db():
                 completed_at        TEXT,
                 created_at          TEXT DEFAULT (datetime('now'))
             );
+
+            CREATE TABLE IF NOT EXISTS instructor_review_notes (
+                id          INTEGER PRIMARY KEY AUTOINCREMENT,
+                project_id  TEXT NOT NULL UNIQUE,
+                teacher_id  TEXT NOT NULL,
+                notes_json  TEXT NOT NULL DEFAULT '{}',
+                updated_at  TEXT DEFAULT (datetime('now'))
+            );
+
+            CREATE TABLE IF NOT EXISTS teacher_interventions (
+                id              INTEGER PRIMARY KEY AUTOINCREMENT,
+                intervention_id TEXT UNIQUE NOT NULL,
+                teacher_id      TEXT NOT NULL,
+                project_id      TEXT NOT NULL,
+                trigger_keyword TEXT NOT NULL,
+                instruction     TEXT NOT NULL,
+                priority        INTEGER DEFAULT 1,
+                active          INTEGER DEFAULT 1,
+                created_at      TEXT DEFAULT (datetime('now'))
+            );
         """)
 
         # Add competition_date column if not exists (safe migration)
@@ -190,13 +211,39 @@ def init_db():
         except Exception:
             pass  # column already exists
 
+        # Add rubric_full_json to projects for grader evaluations (safe migration)
+        try:
+            conn.execute("ALTER TABLE projects ADD COLUMN rubric_full_json TEXT DEFAULT '{}'")
+        except Exception:
+            pass  # column already exists
+
+        # Add expires_at column to auth_tokens if not exists (safe migration)
+        try:
+            conn.execute("ALTER TABLE auth_tokens ADD COLUMN expires_at TEXT")
+        except Exception:
+            pass  # column already exists
+
+        # Clean up expired tokens on startup
+        conn.execute("DELETE FROM auth_tokens WHERE expires_at IS NOT NULL AND expires_at <= datetime('now')")
+
+        # Migrate plaintext passwords to bcrypt hashes
+        import bcrypt
+        plain_users = conn.execute(
+            "SELECT user_id, password FROM users WHERE password NOT LIKE '$2b$%' AND password NOT LIKE '$2a$%'"
+        ).fetchall()
+        for pu in plain_users:
+            hashed = bcrypt.hashpw(pu["password"].encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+            conn.execute("UPDATE users SET password=? WHERE user_id=?", (hashed, pu["user_id"]))
+
         # Seed users
         existing = conn.execute("SELECT COUNT(*) FROM users").fetchone()[0]
         if existing == 0:
+            import bcrypt
             for user in MOCK_USERS.values():
+                hashed = bcrypt.hashpw(user["password"].encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
                 conn.execute(
                     "INSERT OR IGNORE INTO users (user_id, username, password, role, display_name, class_id) VALUES (?,?,?,?,?,?)",
-                    (user["user_id"], user["username"], user["password"],
+                    (user["user_id"], user["username"], hashed,
                      user["role"], user["display_name"], user["class_id"])
                 )
 
@@ -249,15 +296,41 @@ def get_user_by_username(username: str) -> dict | None:
         return dict(row) if row else None
 
 
-def save_token(token: str, user_id: str):
+TOKEN_EXPIRE_HOURS = 24
+TOKEN_EXPIRE_MINUTES_DEBUG = 0  # Set >0 to override hours with minutes (for testing)
+
+
+def save_token(token: str, user_id: str, expire_hours: int = TOKEN_EXPIRE_HOURS):
     with get_conn() as conn:
-        conn.execute("INSERT OR REPLACE INTO auth_tokens (token, user_id) VALUES (?,?)", (token, user_id))
+        if TOKEN_EXPIRE_MINUTES_DEBUG > 0:
+            conn.execute(
+                "INSERT OR REPLACE INTO auth_tokens (token, user_id, expires_at) VALUES (?, ?, datetime('now', '+' || ? || ' minutes'))",
+                (token, user_id, TOKEN_EXPIRE_MINUTES_DEBUG),
+            )
+        else:
+            conn.execute(
+                "INSERT OR REPLACE INTO auth_tokens (token, user_id, expires_at) VALUES (?, ?, datetime('now', '+' || ? || ' hours'))",
+                (token, user_id, expire_hours),
+            )
+
+
+def refresh_token(old_token: str) -> tuple[str, dict] | None:
+    """Refresh an existing token. Returns (new_token, user_dict) or None if invalid/expired."""
+    user = get_user_by_token(old_token)
+    if not user:
+        return None
+    import uuid
+    new_token = str(uuid.uuid4())
+    delete_token(old_token)
+    save_token(new_token, user["user_id"])
+    return new_token, user
 
 
 def get_user_by_token(token: str) -> dict | None:
     with get_conn() as conn:
         row = conn.execute(
-            "SELECT u.* FROM users u JOIN auth_tokens t ON u.user_id=t.user_id WHERE t.token=?",
+            "SELECT u.* FROM users u JOIN auth_tokens t ON u.user_id=t.user_id "
+            "WHERE t.token=? AND (t.expires_at IS NULL OR t.expires_at > datetime('now'))",
             (token,)
         ).fetchone()
         return dict(row) if row else None
@@ -266,6 +339,12 @@ def get_user_by_token(token: str) -> dict | None:
 def delete_token(token: str):
     with get_conn() as conn:
         conn.execute("DELETE FROM auth_tokens WHERE token=?", (token,))
+
+
+def cleanup_expired_tokens():
+    """Delete all expired tokens."""
+    with get_conn() as conn:
+        conn.execute("DELETE FROM auth_tokens WHERE expires_at IS NOT NULL AND expires_at <= datetime('now')")
 
 
 # ── Projects ───────────────────────────────────────────────────────
@@ -291,13 +370,14 @@ def save_project(project: dict):
     with get_conn() as conn:
         conn.execute(
             """INSERT OR REPLACE INTO projects
-               (project_id, owner_id, name, industry, description, stage, scores_json, diagnosis_json, created_at)
-               VALUES (?,?,?,?,?,?,?,?,?)""",
+               (project_id, owner_id, name, industry, description, stage, scores_json, diagnosis_json, rubric_full_json, created_at)
+               VALUES (?,?,?,?,?,?,?,?,?,?)""",
             (project["project_id"], project["owner_id"], project["name"],
              project.get("industry", ""), project.get("description", ""),
              project.get("stage", "discovery"),
              json.dumps(project.get("scores", {})),
              json.dumps(project.get("diagnosis", [])),
+             json.dumps(project.get("rubric_full", {})),
              project.get("created_at", ""))
         )
 
@@ -372,6 +452,7 @@ def _auto_advance_stage(current: str, suggested: str) -> str:
 def _hydrate_project(row: dict) -> dict:
     row["scores"] = json.loads(row.pop("scores_json", "{}") or "{}")
     row["diagnosis"] = json.loads(row.pop("diagnosis_json", "[]") or "[]")
+    row["rubric_full"] = json.loads(row.pop("rubric_full_json", "{}") or "{}")
     return row
 
 
@@ -970,3 +1051,62 @@ def auto_detect_task_completion(project_id: str, message_text: str) -> list[str]
             update_learning_task_status(task["task_id"], "completed")
             completed.append(task["task_id"])
     return completed
+
+
+# ── Instructor Review Notes (A6-1) ──────────────────────────────────
+
+def save_instructor_review_notes(project_id: str, teacher_id: str, notes: dict):
+    with get_conn() as conn:
+        conn.execute(
+            """INSERT INTO instructor_review_notes (project_id, teacher_id, notes_json, updated_at)
+               VALUES (?, ?, ?, datetime('now'))
+               ON CONFLICT(project_id) DO UPDATE SET
+                   teacher_id=excluded.teacher_id,
+                   notes_json=excluded.notes_json,
+                   updated_at=excluded.updated_at""",
+            (project_id, teacher_id, json.dumps(notes, ensure_ascii=False))
+        )
+
+
+def get_instructor_review_notes(project_id: str) -> dict | None:
+    with get_conn() as conn:
+        row = conn.execute(
+            "SELECT * FROM instructor_review_notes WHERE project_id=?", (project_id,)
+        ).fetchone()
+        if not row:
+            return None
+        d = dict(row)
+        d["notes"] = json.loads(d.pop("notes_json", "{}") or "{}")
+        return d
+
+
+# ── Teacher Interventions (A6-3) ──────────────────────────────────────
+
+def save_teacher_intervention(intervention_id: str, teacher_id: str, project_id: str,
+                               trigger_keyword: str, instruction: str, priority: int = 1):
+    with get_conn() as conn:
+        conn.execute(
+            """INSERT OR REPLACE INTO teacher_interventions
+               (intervention_id, teacher_id, project_id, trigger_keyword, instruction, priority)
+               VALUES (?,?,?,?,?,?)""",
+            (intervention_id, teacher_id, project_id, trigger_keyword, instruction, priority)
+        )
+
+
+def get_teacher_interventions(project_id: str, active_only: bool = True) -> list[dict]:
+    with get_conn() as conn:
+        query = "SELECT * FROM teacher_interventions WHERE project_id=?"
+        params = [project_id]
+        if active_only:
+            query += " AND active=1"
+        query += " ORDER BY priority DESC, id"
+        rows = conn.execute(query, params).fetchall()
+        return [dict(r) for r in rows]
+
+
+def delete_teacher_intervention(intervention_id: str):
+    with get_conn() as conn:
+        conn.execute(
+            "DELETE FROM teacher_interventions WHERE intervention_id=?",
+            (intervention_id,)
+        )

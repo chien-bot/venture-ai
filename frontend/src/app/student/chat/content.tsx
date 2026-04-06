@@ -5,6 +5,7 @@ import { startChat, sendMessage, sendMessageStream, listProjects, createProject,
 import { ChatMessage, Scores, Project } from "@/lib/types";
 import ChatWindow from "@/components/ChatWindow";
 import ScoreRadar from "@/components/ScoreRadar";
+import RubricRadar from "@/components/RubricRadar";
 import LearningPath from "@/components/LearningPath";
 
 const STAGE_MAP: Record<string, { label: string; color: string }> = {
@@ -24,6 +25,7 @@ const INTENT_META: Record<string, { label: string; icon: string; badgeClass: str
   coach:       { label: "项目教练",  icon: "🎯", badgeClass: "badge-blue" },
   tutor:       { label: "概念辅导",  icon: "📚", badgeClass: "badge-purple" },
   competition: { label: "竞赛评分",  icon: "🏆", badgeClass: "badge-amber" },
+  grader:      { label: "批改评估",  icon: "📝", badgeClass: "badge-red" },
   hybrid:      { label: "混合模式",  icon: "⚡", badgeClass: "badge-green" },
 };
 
@@ -31,17 +33,20 @@ const RUBRIC_NAMES: Record<string, string> = {
   R1: "痛点定义", R2: "用户证据", R3: "方案可行性",
   R4: "商业模式", R5: "市场竞争", R6: "财务逻辑",
   R7: "创新差异化", R8: "团队执行", R9: "表达材料",
+  R10: "合规与社会责任", R11: "增长与规模化",
 };
 
+const RUBRIC_MAX = 5;
+
 function scoreGradient(v: number) {
-  if (v >= 7) return "linear-gradient(90deg, #10b981, #34d399)";
-  if (v >= 5) return "linear-gradient(90deg, #f59e0b, #fbbf24)";
+  if (v >= 4) return "linear-gradient(90deg, #10b981, #34d399)";
+  if (v >= 3) return "linear-gradient(90deg, #f59e0b, #fbbf24)";
   return "linear-gradient(90deg, #ef4444, #f87171)";
 }
 
 function scoreTextColor(v: number) {
-  if (v >= 7) return "#6ee7b7";
-  if (v >= 5) return "#fcd34d";
+  if (v >= 4) return "#6ee7b7";
+  if (v >= 3) return "#fcd34d";
   return "#fca5a5";
 }
 
@@ -58,6 +63,7 @@ export default function StudentChatPageContent() {
   const [diagnosis, setDiagnosis] = useState<string[]>([]);
   const [rubricScores, setRubricScores] = useState<Record<string, number> | null>(null);
   const [intent, setIntent] = useState<string>("coach");
+  const [selectedAgentType, setSelectedAgentType] = useState<string>("auto");
   const [projects, setProjects] = useState<Project[]>([]);
   const [selectedProjectId, setSelectedProjectId] = useState("");
   const [ratingValue, setRatingValue] = useState(0);
@@ -74,6 +80,8 @@ export default function StudentChatPageContent() {
   const [creatingProject, setCreatingProject] = useState(false);
   // Track if we've already auto-created a project for this session
   const autoCreatedRef = useRef(false);
+  // Prevent concurrent/duplicate initChat calls
+  const initLockRef = useRef(false);
   // Chat history sidebar
   const [historySessions, setHistorySessions] = useState<any[]>([]);
   const [historyCollapsed, setHistoryCollapsed] = useState(false);
@@ -114,28 +122,35 @@ export default function StudentChatPageContent() {
     URL.revokeObjectURL(url);
   };
 
-  const initChat = async (projectId = selectedProjectId): Promise<void> => {
+  const initChat = async (projectId = selectedProjectId, agentType = selectedAgentType): Promise<void> => {
+    if (initLockRef.current) return;
+    initLockRef.current = true;
     try {
-      const res = await startChat("auto", projectId);
+      const res = await startChat(agentType, projectId);
       setSessionId(res.session_id);
       setMessages([{ role: "assistant", content: res.greeting }]);
       setScores(null); setDiagnosis([]); setStage("discovery");
-      setRubricScores(null); setIntent("coach");
+      setRubricScores(null); setRubricFull(null); setIntent("coach");
       refreshHistory();
-      // Show intake form for new sessions with a project
+      // Show intake form only once per project (tracked via localStorage)
       if (projectId) {
-        try {
-          const schema = await getIntakeSchema();
-          if (schema.groups?.length > 0) {
-            setIntakeSchema(schema.groups);
-            setIntakeData({});
-            setIntakeGaps([]);
-            setShowIntakeForm(true);
-          }
-        } catch { /* intake schema fetch failed, skip form */ }
+        const doneKey = `intake_done_${projectId}`;
+        if (!localStorage.getItem(doneKey)) {
+          try {
+            const schema = await getIntakeSchema();
+            if (schema.groups?.length > 0) {
+              setIntakeSchema(schema.groups);
+              setIntakeData({});
+              setIntakeGaps([]);
+              setShowIntakeForm(true);
+            }
+          } catch { /* intake schema fetch failed, skip form */ }
+        }
       }
     } catch {
       setMessages([{ role: "assistant", content: "连接失败，请检查后端服务是否已启动。" }]);
+    } finally {
+      initLockRef.current = false;
     }
   };
 
@@ -144,7 +159,6 @@ export default function StudentChatPageContent() {
     setIntakeSubmitting(true);
     try {
       const res = await submitIntake(sessionId, selectedProjectId, intakeData);
-      // Replace the greeting with the intake summary
       if (res.student_summary) {
         setMessages([
           { role: "assistant", content: res.student_summary },
@@ -152,8 +166,8 @@ export default function StudentChatPageContent() {
       }
       setIntakeGaps(res.gaps || []);
       setShowIntakeForm(false);
+      if (selectedProjectId) localStorage.setItem(`intake_done_${selectedProjectId}`, "1");
     } catch {
-      // If intake submit fails, just close the form and continue normally
       setShowIntakeForm(false);
     }
     setIntakeSubmitting(false);
@@ -162,6 +176,7 @@ export default function StudentChatPageContent() {
   const handleIntakeSkip = () => {
     setShowIntakeForm(false);
     setIntakeData({});
+    if (selectedProjectId) localStorage.setItem(`intake_done_${selectedProjectId}`, "1");
   };
 
   const restoreOrInit = async (pid: string) => {
@@ -187,7 +202,25 @@ export default function StudentChatPageContent() {
     refreshHistory();
   }, []);
 
+  // Re-initialize chat when ?mode= changes in URL (but skip on initial load)
+  const initialModeRef = useRef<string | null>(null);
+  const initDoneRef = useRef(false);
   useEffect(() => {
+    const urlMode = searchParams.get("mode");
+    // Only re-init if mode actually changed (not on initial load)
+    if (initDoneRef.current && initialModeRef.current !== null && initialModeRef.current !== urlMode) {
+      setSelectedAgentType(urlMode || "auto");
+      initChat(selectedProjectId, urlMode || "auto");
+    }
+    initialModeRef.current = urlMode;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams.get("mode")]);
+
+  useEffect(() => {
+    // Read ?mode= from URL and set agent type
+    const urlMode = searchParams.get("mode");
+    if (urlMode) setSelectedAgentType(urlMode);
+
     listProjects().then((r) => {
       const projs = r.projects || [];
       setProjects(projs);
@@ -195,8 +228,9 @@ export default function StudentChatPageContent() {
       const firstPid = urlPid || (projs.length > 0 ? projs[0].project_id : "");
       if (firstPid) {
         setSelectedProjectId(firstPid);
-        if (!urlPid) router.replace(`/student/chat?project_id=${firstPid}`);
+        if (!urlPid) router.replace(`/student/chat?project_id=${firstPid}${urlMode ? `&mode=${urlMode}` : ""}`);
         restoreOrInit(firstPid).then(() => {
+          initDoneRef.current = true;
           if (pendingQuery.current) {
             const q = pendingQuery.current;
             pendingQuery.current = null;
@@ -205,6 +239,7 @@ export default function StudentChatPageContent() {
         });
       } else {
         initChat("").then(() => {
+          initDoneRef.current = true;
           if (pendingQuery.current) {
             const q = pendingQuery.current;
             pendingQuery.current = null;
@@ -212,7 +247,7 @@ export default function StudentChatPageContent() {
           }
         });
       }
-    }).catch(() => { initChat(""); });
+    }).catch(() => { initChat(""); initDoneRef.current = true; });
   }, []);
 
   const handleProjectChange = async (pid: string) => {
@@ -257,12 +292,23 @@ export default function StudentChatPageContent() {
       setMessages((res.messages || []).map((m: any) => ({ role: m.role, content: m.content })));
       if (session.project_id) setSelectedProjectId(session.project_id);
       setActiveSessionProject(session.project_name ? { name: session.project_name } : null);
-      setScores(null); setDiagnosis([]); setStage("discovery");
-      setRubricScores(null); setIntent("coach");
+      // Restore scores and rubric from project
+      setScores(res.scores || null);
+      setDiagnosis(res.diagnosis || []);
+      setStage(res.stage || "discovery");
+      setRubricFull(res.rubric_full || null);
+      // If rubric_full exists, set intent to grader; otherwise use agent_type
+      const agentType = res.agent_type || "coach";
+      if (res.rubric_full && Object.keys(res.rubric_full).length > 0) {
+        setIntent("grader");
+      } else {
+        setIntent(agentType);
+      }
     } catch {}
   };
 
   const handleSend = async (msg: string) => {
+    const currentAgentType = searchParams.get("mode") || selectedAgentType || "auto";
     setMessages((prev) => [...prev, { role: "user", content: msg }]);
     setLoading(true);
     // Add empty assistant message that we'll stream into
@@ -272,14 +318,16 @@ export default function StudentChatPageContent() {
         sessionId,
         selectedProjectId,
         msg,
-        "auto",
+        currentAgentType,
         // onToken: append text chunk to the last assistant message
         (token) => {
           setMessages((prev) => {
             const updated = [...prev];
             const last = updated[updated.length - 1];
             if (last && last.role === "assistant") {
-              const newContent = (last.content + token).replace(/<!--SCORES:[\s\S]*?-->/g, '');
+              const newContent = (last.content + token)
+                .replace(/<!--\s*(?:SCORES|RUBRIC_FULL|RUBRIC|CAPABILITY_PROFILE)\s*:[\s\S]*?-->/gi, '')
+                .replace(/<!--\s*(?:SCORES|RUBRIC_FULL|RUBRIC|CAPABILITY_PROFILE)\s*:[\s\S]*/gi, '');
               updated[updated.length - 1] = { ...last, content: newContent };
             }
             return updated;
@@ -425,90 +473,100 @@ export default function StudentChatPageContent() {
     <div className="flex h-full overflow-hidden" style={{ background: "var(--bg-base)" }}>
 
       {/* ── History Sidebar ── */}
-      <div className="flex-shrink-0 flex flex-col transition-all duration-200"
-           style={{
-             width: historyCollapsed ? 0 : 220,
-             minWidth: historyCollapsed ? 0 : 220,
-             borderRight: historyCollapsed ? "none" : "1px solid var(--border)",
-             background: "rgba(8,13,26,0.9)",
-             overflow: "hidden",
-           }}>
-        {/* Header */}
-        <div className="px-3 py-3 flex items-center justify-between flex-shrink-0"
-             style={{ borderBottom: "1px solid var(--border)" }}>
-          <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>历史对话</p>
-          <button
-            onClick={handleNewSession}
-            className="btn-glow text-xs px-2 py-1 rounded-lg flex items-center gap-1"
-          >
-            <span>+</span> 新建
-          </button>
-        </div>
-
-        {/* Session list */}
-        <div className="flex-1 overflow-y-auto p-2 space-y-1">
-          {historySessions.length === 0 ? (
-            <div className="text-center py-8">
-              <p className="text-xs" style={{ color: "var(--text-muted)" }}>暂无历史对话</p>
-            </div>
-          ) : historySessions.map((s) => {
-            const isActive = s.session_id === sessionId;
-            const date = s.created_at ? new Date(s.created_at).toLocaleDateString("zh-CN", { month: "numeric", day: "numeric" }) : "";
-            return (
-              <div
-                key={s.session_id}
-                className="group relative"
-              >
-                <button
-                  onClick={() => handleLoadSession(s)}
-                  className="w-full text-left px-3 py-2.5 rounded-xl transition-all pr-8"
-                  style={{
-                    background: isActive ? "rgba(99,102,241,0.15)" : "transparent",
-                    border: `1px solid ${isActive ? "rgba(99,102,241,0.4)" : "transparent"}`,
-                  }}
-                >
-                  <p className="text-xs font-medium truncate mb-0.5"
-                     style={{ color: isActive ? "#a5b4fc" : "var(--text-primary)" }}>
-                    {s.preview || "新对话"}
-                  </p>
-                  <div className="flex items-center gap-1.5">
-                    <p className="text-xs truncate" style={{ color: "var(--text-muted)", maxWidth: 100 }}>
-                      {s.project_name || "未关联项目"}
-                    </p>
-                    <span className="text-xs flex-shrink-0" style={{ color: "var(--text-muted)" }}>· {date}</span>
-                  </div>
+      <div className={`flex flex-col flex-shrink-0 overflow-hidden transition-all duration-200 ${historyCollapsed ? "w-0" : "w-56"}`}
+           style={{ borderRight: historyCollapsed ? "none" : "1px solid var(--border)", background: "rgba(8,13,26,0.85)" }}>
+        {!historyCollapsed && (
+          <>
+            {/* Header */}
+            <div className="flex items-center justify-between px-3 py-2.5 flex-shrink-0"
+                 style={{ borderBottom: "1px solid var(--border)" }}>
+              <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>
+                对话历史
+              </p>
+              <div className="flex items-center gap-1">
+                <button onClick={handleNewSession} title="新建对话"
+                        className="w-6 h-6 flex items-center justify-center rounded-md text-xs transition-all"
+                        style={{ color: "var(--text-muted)", background: "rgba(255,255,255,0.04)" }}
+                        onMouseEnter={e => { (e.target as HTMLElement).style.background = "rgba(99,102,241,0.2)"; (e.target as HTMLElement).style.color = "#a5b4fc"; }}
+                        onMouseLeave={e => { (e.target as HTMLElement).style.background = "rgba(255,255,255,0.04)"; (e.target as HTMLElement).style.color = "var(--text-muted)"; }}>
+                  +
                 </button>
-                <button
-                  onClick={(e) => handleDeleteSession(e, s.session_id)}
-                  className="absolute right-1.5 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity rounded p-1"
-                  style={{ color: "var(--text-muted)" }}
-                  title="删除对话"
-                >
-                  ✕
+                <button onClick={() => setHistoryCollapsed(true)} title="收起"
+                        className="w-6 h-6 flex items-center justify-center rounded-md text-xs transition-all"
+                        style={{ color: "var(--text-muted)", background: "rgba(255,255,255,0.04)" }}
+                        onMouseEnter={e => { (e.target as HTMLElement).style.background = "rgba(255,255,255,0.08)"; }}
+                        onMouseLeave={e => { (e.target as HTMLElement).style.background = "rgba(255,255,255,0.04)"; }}>
+                  &lsaquo;
                 </button>
               </div>
-            );
-          })}
-        </div>
+            </div>
+            {/* Session list */}
+            <div className="flex-1 overflow-y-auto p-2 space-y-1">
+              {historySessions.length === 0 && (
+                <p className="text-xs text-center py-6" style={{ color: "var(--text-muted)" }}>暂无历史对话</p>
+              )}
+              {historySessions.map((s) => {
+                const isActive = s.session_id === sessionId;
+                const agentMeta = INTENT_META[s.agent_type] || INTENT_META.coach;
+                const timeStr = s.created_at ? new Date(s.created_at).toLocaleDateString("zh-CN", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }) : "";
+                return (
+                  <div key={s.session_id}
+                       onClick={() => handleLoadSession(s)}
+                       className="group rounded-lg px-2.5 py-2 cursor-pointer transition-all duration-150 relative"
+                       style={{
+                         background: isActive ? "rgba(99,102,241,0.12)" : "transparent",
+                         border: `1px solid ${isActive ? "rgba(99,102,241,0.3)" : "transparent"}`,
+                       }}
+                       onMouseEnter={e => { if (!isActive) (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.03)"; }}
+                       onMouseLeave={e => { if (!isActive) (e.currentTarget as HTMLElement).style.background = "transparent"; }}>
+                    <div className="flex items-start gap-1.5">
+                      <span className="text-xs flex-shrink-0 mt-0.5">{agentMeta.icon}</span>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs font-medium truncate"
+                           style={{ color: isActive ? "#a5b4fc" : "var(--text-primary)" }}>
+                          {s.preview || "新对话"}
+                        </p>
+                        <div className="flex items-center gap-1 mt-0.5">
+                          {s.project_name && (
+                            <span className="text-xs truncate" style={{ color: "var(--text-muted)", fontSize: "0.65rem", maxWidth: "80px" }}>
+                              {s.project_name}
+                            </span>
+                          )}
+                          <span className="text-xs" style={{ color: "var(--text-muted)", fontSize: "0.6rem" }}>
+                            {s.message_count || 0}条
+                          </span>
+                        </div>
+                        <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)", fontSize: "0.6rem" }}>
+                          {timeStr}
+                        </p>
+                      </div>
+                    </div>
+                    {/* Delete button */}
+                    <button
+                      onClick={(e) => handleDeleteSession(e, s.session_id)}
+                      className="absolute top-1.5 right-1.5 w-5 h-5 flex items-center justify-center rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity"
+                      style={{ color: "#fca5a5", background: "rgba(239,68,68,0.1)" }}
+                      title="删除对话"
+                    >
+                      &times;
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          </>
+        )}
       </div>
-
-      {/* Collapse toggle */}
-      <div className="flex-shrink-0 flex items-center" style={{ width: 12, position: "relative" }}>
-        <button
-          onClick={() => setHistoryCollapsed(c => !c)}
-          style={{
-            position: "absolute", left: -8, zIndex: 10,
-            width: 16, height: 32, borderRadius: 8,
-            background: "rgba(255,255,255,0.08)",
-            border: "1px solid var(--border)",
-            color: "var(--text-muted)",
-            cursor: "pointer", fontSize: 10,
-            display: "flex", alignItems: "center", justifyContent: "center",
-          }}
-        >
-          {historyCollapsed ? "›" : "‹"}
+      {/* Collapse toggle (when collapsed) */}
+      {historyCollapsed && (
+        <button onClick={() => setHistoryCollapsed(false)} title="展开对话历史"
+                className="flex-shrink-0 w-6 h-full flex items-center justify-center transition-all"
+                style={{ background: "rgba(8,13,26,0.6)", borderRight: "1px solid var(--border)", color: "var(--text-muted)" }}
+                onMouseEnter={e => { (e.target as HTMLElement).style.background = "rgba(99,102,241,0.08)"; }}
+                onMouseLeave={e => { (e.target as HTMLElement).style.background = "rgba(8,13,26,0.6)"; }}>
+          <span style={{ fontSize: "0.7rem" }}>&rsaquo;</span>
         </button>
-      </div>
+      )}
 
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden relative">
         {/* Current project indicator bar */}
@@ -528,6 +586,30 @@ export default function StudentChatPageContent() {
             </span>
           )}
           <div className="ml-auto flex items-center gap-1.5">
+            {/* Agent mode selector */}
+            {(["auto","coach","tutor","competition","grader"] as const).map((mode) => {
+              const meta = mode === "auto"
+                ? { label: "自动", icon: "🤖" }
+                : INTENT_META[mode] ?? { label: mode, icon: "" };
+              const active = selectedAgentType === mode;
+              return (
+                <button
+                  key={mode}
+                  onClick={async () => {
+                    setSelectedAgentType(mode);
+                    await initChat(selectedProjectId, mode);
+                  }}
+                  className="text-xs px-2 py-1 rounded-lg transition-all"
+                  style={{
+                    background: active ? "rgba(99,102,241,0.25)" : "rgba(255,255,255,0.04)",
+                    border: `1px solid ${active ? "rgba(99,102,241,0.5)" : "var(--border)"}`,
+                    color: active ? "#a5b4fc" : "var(--text-muted)",
+                  }}
+                >
+                  {meta.icon} {meta.label}
+                </button>
+              );
+            })}
             <button
               onClick={() => setShowNewProjectModal(true)}
               className="text-xs px-2.5 py-1 rounded-lg transition-all"
@@ -538,18 +620,20 @@ export default function StudentChatPageContent() {
           </div>
         </div>
 
-        <ChatWindow
-          messages={messages}
-          onSend={handleSend}
-          loading={loading}
-          agentLabel="AI 助手"
-          onUpload={selectedProjectId ? handleFileUpload : undefined}
-          uploading={uploading}
-          projects={projects}
-          selectedProjectId={selectedProjectId}
-          onSelectProject={(pid) => { setSelectedProjectId(pid); restoreOrInit(pid); }}
-          onNewProject={() => setShowNewProjectModal(true)}
-        />
+        <div className="flex-1 min-h-0">
+          <ChatWindow
+            messages={messages}
+            onSend={handleSend}
+            loading={loading}
+            agentLabel="AI 助手"
+            onUpload={selectedProjectId ? handleFileUpload : undefined}
+            uploading={uploading}
+            projects={projects}
+            selectedProjectId={selectedProjectId}
+            onSelectProject={(pid) => { setSelectedProjectId(pid); restoreOrInit(pid); }}
+            onNewProject={() => setShowNewProjectModal(true)}
+          />
+        </div>
       </div>
 
       {/* New Project Modal */}
@@ -698,10 +782,12 @@ export default function StudentChatPageContent() {
             </p>
           </div>
           <div className="flex-1 overflow-y-auto p-4 space-y-3">
+            {/* Radar chart */}
+            <RubricRadar data={rubricFull} maxScore={RUBRIC_MAX} />
             {/* Total score */}
             {(() => {
               const total = Object.values(rubricFull).reduce((s, v) => s + (v.score || 0), 0);
-              const max = Object.keys(rubricFull).length * 10;
+              const max = Object.keys(rubricFull).length * RUBRIC_MAX;
               return (
                 <div className="text-center py-3 rounded-xl mb-2"
                      style={{ background: "rgba(99,102,241,0.08)", border: "1px solid rgba(99,102,241,0.2)" }}>
@@ -717,12 +803,12 @@ export default function StudentChatPageContent() {
                   <span className="text-xs font-semibold" style={{ color: "var(--text-primary)" }}>
                     {key} {RUBRIC_NAMES[key] || key}
                   </span>
-                  <span className="text-sm font-bold" style={{ color: item.score >= 7 ? "#6ee7b7" : item.score >= 5 ? "#fcd34d" : "#fca5a5" }}>
-                    {item.score}/10
+                  <span className="text-sm font-bold" style={{ color: item.score >= 4 ? "#6ee7b7" : item.score >= 3 ? "#fcd34d" : "#fca5a5" }}>
+                    {item.score}/{RUBRIC_MAX}
                   </span>
                 </div>
                 <div className="h-1 rounded-full" style={{ background: "rgba(255,255,255,0.06)" }}>
-                  <div className="h-1 rounded-full" style={{ width: `${item.score * 10}%`, background: item.score >= 7 ? "linear-gradient(90deg, #10b981, #34d399)" : item.score >= 5 ? "linear-gradient(90deg, #f59e0b, #fbbf24)" : "linear-gradient(90deg, #ef4444, #f87171)" }} />
+                  <div className="h-1 rounded-full" style={{ width: `${(item.score / RUBRIC_MAX) * 100}%`, background: item.score >= 4 ? "linear-gradient(90deg, #10b981, #34d399)" : item.score >= 3 ? "linear-gradient(90deg, #f59e0b, #fbbf24)" : "linear-gradient(90deg, #ef4444, #f87171)" }} />
                 </div>
                 {item.evidence && (
                   <p className="text-xs" style={{ color: "var(--text-muted)" }}>
@@ -858,17 +944,17 @@ export default function StudentChatPageContent() {
                     <div key={key}>
                       <div className="flex items-center justify-between mb-1">
                         <span className="text-xs" style={{ color: "var(--text-secondary)" }}>{RUBRIC_NAMES[key] || key}</span>
-                        <span className="text-xs font-bold" style={{ color: scoreTextColor(val) }}>{val}/10</span>
+                        <span className="text-xs font-bold" style={{ color: scoreTextColor(val) }}>{val}/{RUBRIC_MAX}</span>
                       </div>
                       <div className="h-1.5 rounded-full" style={{ background: "rgba(255,255,255,0.06)" }}>
-                        <div className="h-1.5 rounded-full score-bar-fill" style={{ width: `${val * 10}%`, background: scoreGradient(val) }} />
+                        <div className="h-1.5 rounded-full score-bar-fill" style={{ width: `${(val / RUBRIC_MAX) * 100}%`, background: scoreGradient(val) }} />
                       </div>
                     </div>
                   ))}
                 </div>
                 <div className="mt-4 pt-3 flex justify-between items-center" style={{ borderTop: "1px solid var(--border)" }}>
                   <span className="text-xs" style={{ color: "var(--text-muted)" }}>总分</span>
-                  <span className="font-bold gradient-text">{Object.values(rubricScores as Record<string, number>).reduce((a, b) => a + b, 0)} / {Object.keys(rubricScores as Record<string, number>).length * 10}</span>
+                  <span className="font-bold gradient-text">{Object.values(rubricScores as Record<string, number>).reduce((a, b) => a + b, 0)} / {Object.keys(rubricScores as Record<string, number>).length * RUBRIC_MAX}</span>
                 </div>
               </div>
             ) : (

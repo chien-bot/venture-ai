@@ -43,7 +43,7 @@ def run_agent(session_id: str, message: str, agent_type: str = "coach", project_
         "project_id": project_id,
         "messages": history,
         "current_message": current_msg,
-        "intent": "",
+        "intent": agent_type if agent_type not in ("auto", "") else "",
         "tutor_concept": None,
         "coach_output": None,
         "tutor_output": None,
@@ -71,6 +71,11 @@ def run_agent(session_id: str, message: str, agent_type: str = "coach", project_
     final_state = graph.invoke(initial_state)
 
     reply = final_state.get("final_reply", "")
+
+    # Clean JSON/rubric markers from reply
+    from services.marker_parser import clean_reply as mp_clean
+    reply = mp_clean(reply)
+
     append_chat(session_id, "assistant", reply)
 
     result: dict = {
@@ -85,6 +90,8 @@ def run_agent(session_id: str, message: str, agent_type: str = "coach", project_
         result["diagnosis"] = final_state["diagnosis"]
     if final_state.get("rubric_scores"):
         result["rubric_scores"] = final_state["rubric_scores"]
+    if final_state.get("rubric_full"):
+        result["rubric_full"] = final_state["rubric_full"]
     if final_state.get("triggered_rules"):
         result["triggered_rules"] = final_state["triggered_rules"]
     if final_state.get("knowledge_recommendations"):
@@ -158,9 +165,14 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
     append_chat(session_id, "user", message)
     state = _build_initial_state(session_id, message, project_id)
 
-    # Phase 1: Router (fast — lightweight LLM or keyword-based)
-    state = {**state, **router_node(state)}
-    intent = state.get("intent", "coach")
+    # Pre-set intent from agent_type if explicitly specified (not auto)
+    if agent_type and agent_type not in ("auto", ""):
+        state = {**state, "intent": agent_type}
+        intent = agent_type
+    else:
+        # Phase 1: Router (fast — lightweight LLM or keyword-based)
+        state = {**state, **router_node(state)}
+        intent = state.get("intent", "coach")
 
     # Phase 2: Retriever (no LLM, pure data lookup)
     state = {**state, **retriever_node(state)}
@@ -344,28 +356,10 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
                 yield f"data: {json.dumps({'type': 'token', 'content': fallback_text})}\n\n"
 
     # Phase 6: Parse scores from accumulated text, run critic
-    scores_match = re.search(r"<!--SCORES:(.*?)-->", full_text)
-    scores_data = None
-    if scores_match:
-        try:
-            scores_data = json.loads(scores_match.group(1))
-        except json.JSONDecodeError:
-            pass
-
-    # Parse full rubric from grader
-    rubric_full = None
-    rubric_full_match = re.search(r"<!--RUBRIC_FULL:\s*([\s\S]*?)-->", full_text)
-    if rubric_full_match:
-        try:
-            rubric_full = json.loads(rubric_full_match.group(1).strip())
-        except json.JSONDecodeError:
-            pass
-
-    clean_reply = re.sub(r"<!--SCORES:.*?-->", "", full_text).strip()
-    # Also clean rubric scores marker
-    clean_reply = re.sub(r"<!--RUBRIC:.*?-->", "", clean_reply).strip()
-    # Clean full rubric marker
-    clean_reply = re.sub(r"<!--RUBRIC_FULL:[\s\S]*?-->", "", clean_reply).strip()
+    from services.marker_parser import parse_scores, parse_rubric_full, clean_reply as mp_clean
+    scores_data = parse_scores(full_text)
+    rubric_full = parse_rubric_full(full_text)
+    clean_reply = mp_clean(full_text)
 
     new_scores = None
     stage = state.get("stage")
@@ -419,12 +413,16 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
     critic_redirect = critic_result.get("critic_redirect")
     knowledge_recs = critic_result.get("knowledge_recommendations")
     if critic_redirect and critic_result.get("loop_count", 0) <= 1:
-        # Stream the redirect tutor output
+        # Stream the redirect tutor output — include project context so tutor uses correct project
         from agents.nodes.tutor import tutor_node as _tutor_node
+        _redirect_msg = f"请帮我解释一下「{critic_redirect}」这个概念，以及它在创业项目中的具体应用。"
+        # Inject project context from the student's original message so tutor examples use the right project
+        if message:
+            _redirect_msg += f"\n\n[学生项目背景（请基于此项目举例）]\n{message[:500]}"
         redirect_state = {
             **critic_result,
             "tutor_concept": critic_redirect,
-            "current_message": f"请帮我解释一下「{critic_redirect}」这个概念，以及它在创业项目中的具体应用。",
+            "current_message": _redirect_msg,
         }
         redirect_result = _tutor_node(redirect_state)
         tutor_extra = redirect_result.get("tutor_output", "")
@@ -438,9 +436,16 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
 
     # Save reply and update project scores (with EMA smoothing)
     append_chat(session_id, "assistant", clean_reply)
-    if project_id and (new_scores or stage or diagnosis):
+    if project_id and (new_scores or stage or diagnosis or rubric_full):
         from services.session_store import update_project_scores
+        from services.database import get_project, save_project
         update_project_scores(project_id, new_scores, stage, diagnosis)
+        # Also save rubric_full if grader produced it
+        if rubric_full:
+            proj = get_project(project_id)
+            if proj:
+                proj["rubric_full"] = rubric_full
+                save_project(proj)
     # Read back smoothed scores for frontend
     if project_id and new_scores:
         from services.database import get_previous_scores as _get_smoothed

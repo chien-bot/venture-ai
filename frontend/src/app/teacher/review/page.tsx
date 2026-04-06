@@ -1,8 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
-import { getTeacherProjects, getProjectReview, setCompetitionDate, createAnnotation } from "@/lib/api";
+import { getTeacherProjects, getProjectReview, setCompetitionDate, createAnnotation, getCapabilityProfile } from "@/lib/api";
 import { Project, ProjectReview } from "@/lib/types";
 import { ProjectListSkeleton } from "@/components/Skeleton";
+import RubricRadar from "@/components/RubricRadar";
 
 const RUBRIC_NAMES: Record<string, string> = {
   R1: "痛点定义",
@@ -33,6 +34,8 @@ export default function TeacherReviewPage() {
   const [noteText, setNoteText] = useState("");
   const [noteSaved, setNoteSaved] = useState(false);
   const [expandedRubric, setExpandedRubric] = useState<string | null>(null);
+  const [capProfile, setCapProfile] = useState<any>(null);
+  const [capLoading, setCapLoading] = useState(false);
 
   const toggleRubric = (key: string) =>
     setExpandedRubric((prev) => (prev === key ? null : key));
@@ -47,6 +50,7 @@ export default function TeacherReviewPage() {
   const loadReview = async (projectId: string) => {
     setSelectedId(projectId);
     setLoading(true);
+    setCapProfile(null);
     setCompDate(""); setCompDateSaved(false); setNoteText(""); setNoteSaved(false);
     try {
       const res = await getProjectReview(projectId);
@@ -56,6 +60,12 @@ export default function TeacherReviewPage() {
     } finally {
       setLoading(false);
     }
+    // Fetch capability profile in background
+    setCapLoading(true);
+    getCapabilityProfile(projectId)
+      .then((res) => setCapProfile(res))
+      .catch(() => {})
+      .finally(() => setCapLoading(false));
   };
 
   const handleSaveCompDate = async () => {
@@ -146,6 +156,11 @@ export default function TeacherReviewPage() {
                 </div>
               </div>
 
+              {/* Radar chart */}
+              <div className="py-3" style={{ borderBottom: "1px solid var(--border)" }}>
+                <RubricRadar data={review.rubric_scores} maxScore={10} />
+              </div>
+
               {/* Collapsible rows */}
               {Object.entries(review.rubric_scores).map(([key, item], idx, arr) => {
                 const c = scoreColor(item.score);
@@ -232,6 +247,86 @@ export default function TeacherReviewPage() {
                 ))}
               </div>
             </div>
+
+            {/* Capability Profile */}
+            {capLoading && (
+              <div className="glass rounded-2xl p-5 text-center">
+                <p className="text-xs" style={{ color: "var(--text-muted)" }}>正在生成能力画像...</p>
+              </div>
+            )}
+            {capProfile?.capability_profile && (
+              <div className="glass rounded-2xl overflow-hidden">
+                <div className="flex items-center justify-between px-5 py-4"
+                     style={{ borderBottom: "1px solid var(--border)" }}>
+                  <div className="flex items-center gap-2">
+                    <span className="badge badge-amber">画像</span>
+                    <h3 className="text-sm font-semibold" style={{ color: "var(--text-secondary)" }}>学生能力画像</h3>
+                  </div>
+                  {capProfile.session_count != null && (
+                    <span className="text-xs" style={{ color: "var(--text-muted)" }}>
+                      基于 {capProfile.session_count} 轮对话
+                    </span>
+                  )}
+                </div>
+                <div className="p-5 space-y-3">
+                  {Object.entries(capProfile.capability_profile)
+                    .filter(([k]) => k !== "overall_comment")
+                    .map(([dim, detail]: [string, any]) => {
+                      const score = detail?.score ?? 0;
+                      const maxScore = 10;
+                      const pct = Math.min((score / maxScore) * 100, 100);
+                      const c = scoreColor(score);
+                      const DIM_LABELS: Record<string, string> = {
+                        empathy: "同理心", ideation: "方案策划", business: "商业建模",
+                        execution: "执行力", logic: "逻辑论证", pitching: "表达力", expression: "表达力",
+                      };
+                      return (
+                        <div key={dim}>
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="text-xs font-medium" style={{ color: "var(--text-primary)" }}>
+                              {DIM_LABELS[dim] || dim}
+                            </span>
+                            <span className="text-xs font-bold px-1.5 py-0.5 rounded-md"
+                                  style={{ background: c.bg, color: c.color }}>
+                              {score}/{maxScore}
+                            </span>
+                          </div>
+                          <div className="h-2 rounded-full mb-1" style={{ background: "rgba(255,255,255,0.06)" }}>
+                            <div className="h-2 rounded-full transition-all" style={{ width: `${pct}%`, background: c.bar }} />
+                          </div>
+                          {detail?.evidence && (
+                            <p className="text-xs" style={{ color: "var(--text-muted)", fontSize: "0.65rem" }}>
+                              <span style={{ color: "#6ee7b7" }}>证据：</span>{detail.evidence}
+                            </p>
+                          )}
+                          {detail?.suggestion && (
+                            <p className="text-xs" style={{ color: "var(--text-muted)", fontSize: "0.65rem" }}>
+                              <span style={{ color: "#fcd34d" }}>建议：</span>{detail.suggestion}
+                            </p>
+                          )}
+                        </div>
+                      );
+                    })}
+                  {capProfile.capability_profile.overall_comment && (
+                    <div className="mt-3 px-3 py-2.5 rounded-xl"
+                         style={{ background: "rgba(99,102,241,0.06)", border: "1px solid rgba(99,102,241,0.15)" }}>
+                      <p className="text-xs" style={{ color: "var(--text-secondary)" }}>
+                        {capProfile.capability_profile.overall_comment}
+                      </p>
+                    </div>
+                  )}
+                  {capProfile.summary && !capProfile.capability_profile.overall_comment && (
+                    <div className="mt-2 px-3 py-2.5 rounded-xl"
+                         style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)" }}>
+                      <p className="text-xs font-semibold mb-1" style={{ color: "var(--text-muted)" }}>AI 综合分析</p>
+                      <p className="text-xs whitespace-pre-wrap" style={{ color: "var(--text-secondary)" }}>
+                        {capProfile.summary}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
 
             {/* Competition Date + Annotation — side by side */}
             <div className="grid grid-cols-2 gap-3 no-print">

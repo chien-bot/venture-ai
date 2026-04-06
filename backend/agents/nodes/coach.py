@@ -15,11 +15,14 @@ from agents.adaptive_questioning import (
     DIM_LABELS,
 )
 from services.competition_mode import get_countdown_context
-from services.database import get_competition_date, get_latest_annotations_for_coach, get_previous_scores
+from services.database import get_competition_date, get_latest_annotations_for_coach, get_previous_scores, get_teacher_interventions
 from services.floor_scorer import compute_floor_scores, enforce_floor, format_breakdown_for_response
 from services.cheap_diagnostic import run_cheap_diagnostic, format_diagnostic_for_prompt, format_diagnostic_as_fallback
 from services.knowledge_cards import search_cards, format_cards_for_prompt
 from services.playbook_engine import match_playbook, format_playbook_for_prompt
+from services.debug_logger import DebugLogger
+
+_dbg = DebugLogger("coach_node")
 
 
 # ── 追问策略库 ─────────────────────────────────────────────────────
@@ -91,31 +94,157 @@ _FALLACY_STRATEGIES: list[tuple[list[str], str]] = [
 关键追问模板："如果政策支持减少50%，你的项目生存概率是多少？用什么数据支撑这个判断？"
 """
     ),
+    (
+        ["免费", "不收费", "先不赚钱", "先做流量", "先积累用户", "暂时不考虑盈利"],
+        """[追问策略 - 现金流生存逻辑]
+学生计划前期免费运营，先做用户再考虑盈利。需要验证现金流生存能力。
+请采用以下策略追问：
+1. 现金流压力测试：如果没有外部融资，你的账上资金能支撑你"不赚钱"跑多久？盈亏平衡点在哪里？
+2. API/服务成本追问：免费用户越多，你的服务成本越高（如API调用费）——用户量增长是在"烧钱"还是"赚钱"？
+3. 融资依赖风险：如果投资人不投，你有Plan B吗？
+关键追问模板："假设你一年内拿不到任何融资，你的产品还能活着吗？你每月的固定支出是多少？"
+"""
+    ),
+    (
+        ["精准获客", "投放", "转化率", "漏斗", "引流", "小红书", "抖音", "B站", "博主"],
+        """[追问策略 - 精准获客逻辑]
+学生提到了获客渠道，需要验证渠道选择与目标用户的匹配度。
+请采用以下策略追问：
+1. 渠道-用户匹配：你的目标用户真的活跃在这个平台吗？有数据证明吗？
+2. 获客成本估算：通过这个渠道获取一个付费用户的成本是多少？
+3. 转化漏斗量化：从曝光→点击→注册→付费，每一步的预计转化率是多少？
+关键追问模板："你的目标用户画像是什么？他们每天花多少时间在你选的这个渠道上？这个数据从哪来的？"
+"""
+    ),
+    (
+        ["痛点", "需要", "需求", "想要", "用户想", "用户要", "大家都需要"],
+        """[追问策略 - 伪需求识别]
+学生描述了用户需求，需要验证这是"真痛点"还是"伪需求"。
+请采用以下策略追问：
+1. 频率与强度：这个痛点多久发生一次？用户为此付出了什么代价（时间/金钱/情绪）？
+2. 现有替代方案：用户现在是怎么解决这个问题的？如果你的产品消失了，他们会怎么办？
+3. 支付验证：用户是否愿意为此付费？你做过预售或意向调查吗？
+关键追问模板："你能描述一个具体的用户场景吗——谁，在什么时候，遇到了什么问题，损失了什么？"
+"""
+    ),
+    (
+        ["规模", "扩张", "全国", "全球", "覆盖", "所有", "百万用户", "千万用户"],
+        """[追问策略 - 规模化路径质疑]
+学生提到了大规模扩张计划，需要验证规模化的可行性。
+请采用以下策略追问：
+1. 阶段性规划：从1个城市到全国，你的扩张路径是什么？每个阶段的关键指标？
+2. 边际成本分析：规模扩大10倍，你的单位成本是下降还是上升？
+3. 运营复杂度：跨区域运营会带来什么新问题？你准备好了吗？
+关键追问模板："你打算先从哪一个城市/社区开始？服务好100个用户的方法，和服务10万用户的方法一样吗？"
+"""
+    ),
+    (
+        ["团队", "我们两个", "两个人", "一个人", "大二", "大三", "本科"],
+        """[追问策略 - 团队-野心匹配度]
+学生的团队规模与项目野心可能不匹配。
+请采用以下策略追问：
+1. 能力缺口分析：你的项目需要哪些核心能力？团队现在具备哪些？缺哪些？
+2. 时间资源约束：作为在校学生，你每周能投入多少小时？这够完成计划吗？
+3. 关键岗位缺失：如果需要招人，你用什么吸引他们加入（股权？薪资？愿景？）？
+关键追问模板："你列出的里程碑，以你现在的团队规模和每周可用时间，能在期限内完成吗？具体怎么分工？"
+"""
+    ),
+    (
+        ["合规", "法律", "版权", "授权", "隐私", "数据保护", "许可", "资质"],
+        """[追问策略 - 合规风险追问]
+学生的项目涉及合规相关议题。
+请采用以下策略追问：
+1. 法规识别：你的业务涉及哪些法律法规？你查阅过具体条文吗？
+2. 授权链条：你使用的数据/内容/技术，授权链条完整吗？有书面协议吗？
+3. 风险预案：如果被监管叫停或收到法律函件，你的应对方案是什么？
+关键追问模板："你能列出你的项目需要获得的所有许可证、授权和资质吗？哪些已经拿到了？"
+"""
+    ),
+    (
+        ["差异化", "优势", "不同", "独特", "特色", "我们比", "竞争优势"],
+        """[追问策略 - 差异化壁垒深挖]
+学生声称具有差异化优势，需要验证这是"真壁垒"还是"短期功能差异"。
+请采用以下策略追问：
+1. 可复制性测试：竞争对手需要多长时间、多少资金复制你的差异化？
+2. 用户感知：用户真的在乎你说的这个差异化吗？他们的选择标准是什么？
+3. 持续性：这个差异化优势6个月后还在吗？12个月后呢？
+关键追问模板："如果竞争对手明天抄了你最核心的功能，你还剩什么？用户为什么不会流失？"
+"""
+    ),
+    (
+        ["融资", "投资", "天使轮", "种子轮", "VC", "投资人", "估值"],
+        """[追问策略 - 融资依赖风险]
+学生的商业计划严重依赖外部融资。
+请采用以下策略追问：
+1. 自我造血能力：如果永远拿不到融资，你的项目能靠自身营收活下来吗？
+2. 融资节点清晰度：你需要多少钱？什么时候需要？用在哪里？
+3. 投资人视角：你认为投资人最关心什么指标？你现在有这些数据吗？
+关键追问模板："投资人通常只投100个项目中的1个——你凭什么是那个1个？你有哪些数据能说服他？"
+"""
+    ),
+    (
+        ["出海", "海外", "跨境", "外国人", "国际化", "欧美", "东南亚"],
+        """[追问策略 - 跨境落地质疑]
+学生计划进行跨境业务，需要验证海外落地的可行性。
+请采用以下策略追问：
+1. 本地化挑战：目标市场的用户习惯、支付方式、法规和国内有什么不同？
+2. 物流与供应链：跨境的物流成本、关税、退货处理怎么解决？
+3. 团队本地化能力：你的团队有人了解目标市场吗？语言、文化、渠道？
+关键追问模板："你有没有和目标市场的真实用户交流过？他们是怎么评价你的产品概念的？"
+"""
+    ),
+    (
+        ["MVP", "最小可行", "原型", "第一版", "demo", "测试版"],
+        """[追问策略 - MVP范围控制]
+学生提到了MVP或原型开发，需要验证MVP的范围是否合理。
+请采用以下策略追问：
+1. 核心假设：你的MVP要验证的最关键假设是什么？只能选一个。
+2. 范围控制：你描述的MVP功能列表，真的是"最小"的吗？哪些可以砍掉？
+3. 验证标准：MVP上线后，什么样的数据结果算"验证成功"？什么算"失败"？
+关键追问模板："如果你的MVP只能有一个按钮、一个页面，你选什么？为什么这个功能最能验证你的核心假设？"
+"""
+    ),
 ]
 
 
-def _detect_fallacy_strategy(message: str) -> str:
-    """检测消息中的常见创业谬误，返回需要注入的策略提示（如有）。"""
-    detected = []
-    message_lower = message.lower()
+def _enforce_single_next_task(text: str) -> str:
+    """A2-1: Ensure coach reply contains at most one '下一步' task block."""
+    pattern = r"(#{1,4}\s*下一步[：:][^\n]*\n(?:(?!#{1,4}\s*下一步).)*)"
+    matches = list(re.finditer(pattern, text, re.DOTALL))
+    if len(matches) <= 1:
+        return text
+    first_end = matches[0].end()
+    cleaned = text[:first_end]
+    tail_start = matches[-1].end()
+    cleaned += text[tail_start:]
+    return cleaned.strip()
+
+
+def _detect_fallacy_strategy(message: str) -> tuple[str, list[str]]:
+    """
+    检测消息中的常见创业谬误，返回 (注入策略文本, 触发策略名称列表)。
+    策略名称用于 Debug 日志输出。
+    """
+    detected_prompts = []
+    detected_names = []
     for keywords, strategy_prompt in _FALLACY_STRATEGIES:
         if any(kw in message for kw in keywords):
-            detected.append(strategy_prompt)
-    return "\n".join(detected)
+            detected_prompts.append(strategy_prompt)
+            # 从策略文本第一行提取名称，如 "[追问策略 - 竞争幻觉识别]"
+            first_line = strategy_prompt.strip().split("\n")[0]
+            name = first_line.strip("[]").replace("追问策略 - ", "")
+            detected_names.append(name)
+    return "\n".join(detected_prompts), detected_names
 
 
 def _parse_scores(text: str) -> dict | None:
-    match = re.search(r"<!--SCORES:(.*?)-->", text)
-    if match:
-        try:
-            return json.loads(match.group(1))
-        except json.JSONDecodeError:
-            return None
-    return None
+    from services.marker_parser import parse_scores
+    return parse_scores(text)
 
 
 def _clean(text: str) -> str:
-    return re.sub(r"<!--SCORES:.*?-->", "", text).strip()
+    from services.marker_parser import clean_reply
+    return clean_reply(text)
 
 
 def _mock_coach(state: AgentState) -> str:
@@ -150,6 +279,8 @@ def coach_node(state: AgentState) -> AgentState:
     scores = state.get("scores")
     current_message = state.get("current_message", "")
 
+    _dbg.agent_start(session_id=session_id, intent="coach", message_preview=current_message)
+
     # Refresh evidence tracer
     tracer = refresh_tracer(session_id, messages)
 
@@ -177,11 +308,21 @@ def coach_node(state: AgentState) -> AgentState:
         questioning_context = build_questioning_context(scores, messages, current_message, session_id=session_id)
         if questioning_context:
             system += f"\n\n{questioning_context}"
+            _dbg.info(f"adaptive_questioning_context injected: {questioning_context[:200]}")
 
         # ★ Inject fallacy strategy library (追问策略库)
-        fallacy_strategy = _detect_fallacy_strategy(current_message)
+        fallacy_strategy, detected_strategy_names = _detect_fallacy_strategy(current_message)
         if fallacy_strategy:
             system += f"\n\n{fallacy_strategy}"
+            for strategy_name in detected_strategy_names:
+                _dbg.fallacy_detected(
+                    fallacy_label=strategy_name,
+                    triggered_by=current_message[:100],
+                )
+                _dbg.strategy_selected(
+                    strategy_name=strategy_name,
+                    question=f"[将由LLM基于策略生成追问，策略={strategy_name}]",
+                )
 
         # Inject competition countdown mode
         if project_id := state.get("project_id"):
@@ -197,6 +338,21 @@ def coach_node(state: AgentState) -> AgentState:
                     system += "\n\n[教师批注 - 请在本轮对话中体现以下教师指导意见]\n"
                     for a in notes[:3]:
                         system += f"  • {a['note_text']}\n"
+            except Exception:
+                pass
+
+            # ★ A6-3: Inject teacher interventions — keyword-triggered instructions
+            try:
+                interventions = get_teacher_interventions(project_id)
+                matched_instructions = [
+                    iv["instruction"] for iv in interventions
+                    if iv.get("trigger_keyword") and iv["trigger_keyword"] in current_message
+                ]
+                if matched_instructions:
+                    system += "\n\n[教师干预指令 - 请在本轮严格遵守以下教师设定的辅导策略]\n"
+                    for instr in matched_instructions[:3]:
+                        system += f"  • {instr}\n"
+                    _dbg.info(f"Injected {len(matched_instructions)} teacher intervention(s) for project {project_id}")
             except Exception:
                 pass
 
@@ -292,6 +448,9 @@ def coach_node(state: AgentState) -> AgentState:
         if raw.startswith("抱歉，AI 服务暂时无法响应") and diag:
             raw = format_diagnostic_as_fallback(diag)
 
+    # A2-1: enforce single next-task constraint before score parsing
+    raw = _enforce_single_next_task(raw)
+
     scores_data = _parse_scores(raw)
     clean = _clean(raw)
 
@@ -312,6 +471,8 @@ def coach_node(state: AgentState) -> AgentState:
         breakdowns = compute_floor_scores(session_id, all_msgs)
         new_scores = enforce_floor(new_scores, breakdowns)
         score_breakdown = format_breakdown_for_response(breakdowns)
+
+    _dbg.agent_done(scores=new_scores, stage=stage or "", diagnosis=diagnosis)
 
     return {
         **state,

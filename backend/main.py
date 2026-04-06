@@ -8,6 +8,7 @@ from routers import upload as upload_router
 from routers import peer_review as peer_review_router
 from routers import knowledge as knowledge_router
 from routers import playbook as playbook_router
+from routers import admin as admin_router
 from services.database import init_db
 from graph_db.neo4j_client import sync_knowledge_graph, is_available
 from pathlib import Path
@@ -52,6 +53,7 @@ app.include_router(upload_router.router)
 app.include_router(peer_review_router.router)
 app.include_router(knowledge_router.router)
 app.include_router(playbook_router.router)
+app.include_router(admin_router.router)
 
 
 @app.get("/health")

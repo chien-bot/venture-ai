@@ -1,12 +1,13 @@
 "use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { login, register } from "@/lib/api";
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [tab, setTab] = useState<"login" | "register">("login");
-  const [role, setRole] = useState<"student" | "teacher">("student");
+  const [role, setRole] = useState<"student" | "teacher" | "admin">("student");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
@@ -14,18 +15,46 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    if (searchParams.get("expired") === "1") {
+      setError("登录已过期，请重新登录");
+    }
+  }, [searchParams]);
+
+  const ROLE_STYLE: Record<string, { gradient: string; color: string; border: string; shadow: string }> = {
+    student: {
+      gradient: "linear-gradient(135deg, rgba(99,102,241,0.3), rgba(99,102,241,0.15))",
+      color: "#a5b4fc", border: "rgba(99,102,241,0.4)", shadow: "0 0 20px rgba(99,102,241,0.15)",
+    },
+    teacher: {
+      gradient: "linear-gradient(135deg, rgba(16,185,129,0.3), rgba(16,185,129,0.15))",
+      color: "#6ee7b7", border: "rgba(16,185,129,0.4)", shadow: "0 0 20px rgba(16,185,129,0.1)",
+    },
+    admin: {
+      gradient: "linear-gradient(135deg, rgba(168,85,247,0.3), rgba(168,85,247,0.15))",
+      color: "#c4b5fd", border: "rgba(168,85,247,0.4)", shadow: "0 0 20px rgba(168,85,247,0.1)",
+    },
+  };
+
+  const rs = ROLE_STYLE[role];
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setLoading(true);
     try {
       const res = await login(username, password, role);
+      if (res.role !== role) {
+        setError(role === "student" ? "该账号不是学生账号" : role === "teacher" ? "该账号不是教师账号" : "该账号不是管理员账号");
+        return;
+      }
       sessionStorage.setItem("token", res.token);
       sessionStorage.setItem("user", JSON.stringify(res));
       document.cookie = `token=${res.token}; path=/`;
-      router.push(role === "teacher" ? "/teacher/dashboard" : "/student/chat");
+      router.push(role === "admin" ? "/admin/dashboard" : role === "teacher" ? "/teacher/dashboard" : "/student/projects");
     } catch (err: any) {
-      setError(err.message || "登录失败");
+      const msg = typeof err === "string" ? err : err?.message || err?.detail || "登录失败";
+      setError(typeof msg === "string" ? msg : "登录失败");
     } finally {
       setLoading(false);
     }
@@ -40,7 +69,7 @@ export default function LoginPage() {
       sessionStorage.setItem("token", res.token);
       sessionStorage.setItem("user", JSON.stringify(res));
       document.cookie = `token=${res.token}; path=/`;
-      router.push("/student/chat");
+      router.push("/student/projects");
     } catch (err: any) {
       setError(err.message || "注册失败");
     } finally {
@@ -48,7 +77,8 @@ export default function LoginPage() {
     }
   };
 
-  const isTeacher = role === "teacher";
+  const roleLabel = role === "student" ? "学生" : role === "teacher" ? "教师" : "管理员";
+  const placeholderUser = role === "student" ? "student01" : role === "teacher" ? "teacher01" : "admin01";
 
   return (
     <div className="min-h-screen relative flex items-center justify-center p-4 overflow-hidden"
@@ -106,24 +136,29 @@ export default function LoginPage() {
           {tab === "login" && (
           <div className="flex rounded-xl p-1 mb-6"
                style={{ background: "rgba(255,255,255,0.04)", border: "1px solid var(--border)" }}>
-            {(["student", "teacher"] as const).map((r) => (
-              <button
-                key={r}
-                type="button"
-                onClick={() => setRole(r)}
-                className="flex-1 py-2.5 rounded-lg text-sm font-medium transition-all duration-200"
-                style={role === r ? {
-                  background: r === "teacher"
-                    ? "linear-gradient(135deg, rgba(16,185,129,0.3), rgba(16,185,129,0.15))"
-                    : "linear-gradient(135deg, rgba(99,102,241,0.3), rgba(99,102,241,0.15))",
-                  color: r === "teacher" ? "#6ee7b7" : "#a5b4fc",
-                  border: `1px solid ${r === "teacher" ? "rgba(16,185,129,0.4)" : "rgba(99,102,241,0.4)"}`,
-                  boxShadow: r === "teacher" ? "0 0 20px rgba(16,185,129,0.1)" : "0 0 20px rgba(99,102,241,0.15)"
-                } : { color: "var(--text-muted)" }}
-              >
-                {r === "student" ? "🎓 学生端" : "📊 教师端"}
-              </button>
-            ))}
+            {([
+              { key: "student" as const, label: "🎓 学生端" },
+              { key: "teacher" as const, label: "📊 教师端" },
+              { key: "admin" as const,   label: "⚙️ 管理端" },
+            ]).map((r) => {
+              const s = ROLE_STYLE[r.key];
+              return (
+                <button
+                  key={r.key}
+                  type="button"
+                  onClick={() => setRole(r.key)}
+                  className="flex-1 py-2.5 rounded-lg text-sm font-medium transition-all duration-200"
+                  style={role === r.key ? {
+                    background: s.gradient,
+                    color: s.color,
+                    border: `1px solid ${s.border}`,
+                    boxShadow: s.shadow,
+                  } : { color: "var(--text-muted)" }}
+                >
+                  {r.label}
+                </button>
+              );
+            })}
           </div>
           )}
 
@@ -131,7 +166,7 @@ export default function LoginPage() {
           {tab === "login" && (
           <form onSubmit={handleLogin} className="space-y-4">
             {[
-              { label: "用户名", type: "text", value: username, setter: setUsername, placeholder: isTeacher ? "teacher01" : "student01" },
+              { label: "用户名", type: "text", value: username, setter: setUsername, placeholder: placeholderUser },
               { label: "密码",   type: "password", value: password, setter: setPassword, placeholder: "123456" },
             ].map(({ label, type, value, setter, placeholder }) => (
               <div key={label}>
@@ -174,10 +209,10 @@ export default function LoginPage() {
               type="submit"
               disabled={loading || !username || !password}
               className="btn-glow w-full py-3 rounded-xl text-sm disabled:opacity-40 disabled:cursor-not-allowed mt-2"
-              style={isTeacher ? {
-                background: "linear-gradient(135deg, #059669, #10b981)",
-                borderColor: "rgba(16,185,129,0.5)"
-              } : {}}
+              style={{
+                background: rs.gradient,
+                borderColor: rs.border,
+              }}
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
@@ -185,7 +220,7 @@ export default function LoginPage() {
                   登录中...
                 </span>
               ) : (
-                `以${isTeacher ? "教师" : "学生"}身份登录 →`
+                `以${roleLabel}身份登录 →`
               )}
             </button>
           </form>
@@ -246,7 +281,8 @@ export default function LoginPage() {
                style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)" }}>
             <p className="font-semibold mb-1" style={{ color: "var(--text-secondary)" }}>测试账号</p>
             <p style={{ color: "var(--text-muted)" }}>学生：student01 / student02 / student03</p>
-            <p style={{ color: "var(--text-muted)" }}>教师：teacher01 &nbsp;|&nbsp; 密码均为 123456</p>
+            <p style={{ color: "var(--text-muted)" }}>教师：teacher01 &nbsp;|&nbsp; 管理员：admin01</p>
+            <p style={{ color: "var(--text-muted)" }}>密码均为 123456</p>
           </div>
           )}
         </div>

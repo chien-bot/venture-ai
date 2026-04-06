@@ -23,6 +23,131 @@ import uuid
 
 router = APIRouter(prefix="/api/chat", tags=["chat"])
 
+# ── A1-2 / A2-2 反代写拦截层 ─────────────────────────────────────
+# 检测到以下关键词时，直接返回苏格拉底引导，不走 LLM
+_GHOSTWRITE_PATTERNS = [
+    "直接帮我写", "帮我写完", "帮我写好", "帮我生成", "生成可以直接提交",
+    "直接写", "帮我弄个", "你直接写", "代写", "直接给我写",
+    "写个800字", "写个500字", "写完给我", "直接出一份",
+    "你来写", "替我写", "帮我完成商业计划", "写完整的BP",
+    "帮我写", "帮我出", "帮我做完", "帮我完成",
+]
+
+_GHOSTWRITE_REPLY = """我理解你现在可能感到压力很大，但我没办法直接替你写——这是我的底线，也是对你真正的负责。
+
+直接给你一份成品，对你参加答辩和未来创业没有任何帮助。让我们换个方式：
+
+**三个问题帮你找到突破口：**
+
+1. 你的目标用户是谁？能不能描述一个真实的用户场景（谁、在什么时候、遇到什么问题）？
+
+2. 你的产品/服务，和用户现在的解决方式相比，具体好在哪里？能量化吗？
+
+3. 如果只保留一个核心功能上线，你选哪个？为什么是这个？
+
+先回答第一个问题，我们一步一步来。🎯
+
+> *AI 生成，仅供参考*"""
+
+
+def _detect_ghostwrite(message: str) -> bool:
+    """检测消息是否包含代写请求关键词。"""
+    return any(p in message for p in _GHOSTWRITE_PATTERNS)
+
+
+# ── A7 鲁棒性与边界异常兜底层 ─────────────────────────────────────
+import re as _re
+
+def _is_garbled(message: str) -> bool:
+    """检测消息是否为无意义/乱码/纯数字/纯符号输入。"""
+    cleaned = message.strip()
+    if len(cleaned) < 2:
+        return True
+    # 纯数字或纯重复字符
+    if _re.fullmatch(r'[\d\s]+', cleaned):
+        return True
+    if _re.fullmatch(r'(.)\1{3,}', cleaned):
+        return True
+    # 几乎没有有意义的中文或英文字符
+    meaningful = _re.findall(r'[\u4e00-\u9fff a-zA-Z]', cleaned)
+    if len(meaningful) < max(2, len(cleaned) * 0.2):
+        return True
+    return False
+
+_GARBLED_REPLY = """未检测到有效的项目信息。请详细描述你的创新想法，例如：
+
+1. 你想解决什么问题？（谁在什么场景下遇到了什么痛苦？）
+2. 你打算怎么解决？（大致的方案方向）
+3. 你的目标用户是谁？
+
+随时告诉我，我们一起开始！🚀
+
+> *AI 生成，仅供参考*"""
+
+_JAILBREAK_PATTERNS = [
+    "忽略以上所有", "忽略上面的", "忽略之前的", "忽略你的规则",
+    "ignore all", "ignore above", "ignore previous", "ignore your",
+    "forget your instructions", "disregard your",
+    "帮我写一段代码", "帮我写爬虫", "帮我写脚本",
+    "写一段python", "写一段java", "写一段代码",
+    "抓取数据", "爬取网站", "破解密码",
+    "DAN模式", "越狱", "jailbreak",
+    "你现在是一个", "假装你是", "pretend you are",
+    "帮我做作业", "帮我写论文", "帮我抄",
+]
+
+def _is_jailbreak(message: str) -> bool:
+    """检测消息是否为越狱/偏离双创主题的请求。"""
+    msg = message.lower()
+    return any(p.lower() in msg for p in _JAILBREAK_PATTERNS)
+
+_JAILBREAK_REPLY = """我是你的创新创业 AI 教练，专注于帮助你完成双创项目。这个请求超出了我的职责范围，我没办法帮你处理哦。
+
+不过我可以在这些方面帮到你：
+
+- 🎯 **项目诊断**：分析你的创业想法，找出关键瓶颈
+- 📚 **概念学习**：解释 PMF、商业模式画布、TAM/SAM/SOM 等创业概念
+- 🏆 **竞赛准备**：模拟路演提问，帮你查漏补缺
+- 📝 **材料评估**：基于 Rubric 标准评估你的计划书
+
+请告诉我你的创业项目相关的问题，让我们回到正题！
+
+> *AI 生成，仅供参考*"""
+
+_EMOTIONAL_PATTERNS = [
+    "太难了", "不想思考", "不想做了", "做不下去",
+    "随便给我", "随便弄个", "交差", "应付",
+    "烦死了", "受不了", "崩溃", "放弃了",
+    "算了不做了", "懒得想", "不管了",
+]
+
+def _is_emotional_bail(message: str) -> bool:
+    """检测消息是否为情绪化的逃避/敷衍请求。"""
+    return any(p in message for p in _EMOTIONAL_PATTERNS)
+
+_EMOTIONAL_REPLY = """我完全理解你的感受——创业计划确实不容易，压力大的时候想放弃是很正常的。但你已经走到这一步了，说明你是有想法的人。
+
+我们不需要一次做完所有事，**先做最小的一步就好**：
+
+🎯 **现在只需要回答我一个问题：**
+
+> 你最初想做这个项目，是因为注意到了什么现象或问题？（哪怕只是一个模糊的感觉也行）
+
+从这一个点出发，我带你一步一步把思路理清。不着急，我们慢慢来。
+
+> *AI 生成，仅供参考*"""
+
+
+def _robustness_check(message: str) -> tuple[str, str] | None:
+    """A7 鲁棒性检查：返回 (reply, intent) 或 None（正常放行）。"""
+    if _is_garbled(message):
+        return _GARBLED_REPLY, "guardrail_garbled"
+    if _is_jailbreak(message):
+        return _JAILBREAK_REPLY, "guardrail_jailbreak"
+    if _is_emotional_bail(message):
+        return _EMOTIONAL_REPLY, "guardrail_emotional"
+    return None
+
 
 @router.post("/start")
 def start_chat(request: Request, agent_type: str = "auto", project_id: str = ""):
@@ -52,6 +177,24 @@ def send_message(req: ChatRequest):
     if not req.message.strip():
         raise HTTPException(status_code=400, detail="消息不能为空")
 
+    # ── A7 鲁棒性兜底检查 ──
+    robustness = _robustness_check(req.message)
+    if robustness:
+        reply, intent = robustness
+        append_chat(req.session_id, "user", req.message)
+        append_chat(req.session_id, "assistant", reply)
+        return ChatResponse(session_id=req.session_id, reply=reply, intent=intent)
+
+    # ── A1-2 / A2-2 反代写拦截 ──
+    if _detect_ghostwrite(req.message):
+        append_chat(req.session_id, "user", req.message)
+        append_chat(req.session_id, "assistant", _GHOSTWRITE_REPLY)
+        return ChatResponse(
+            session_id=req.session_id,
+            reply=_GHOSTWRITE_REPLY,
+            intent="guardrail_ghostwrite",
+        )
+
     # Bind project if provided and not already bound
     if req.project_id:
         bind_session_to_project(req.session_id, req.project_id)
@@ -73,6 +216,14 @@ def send_message(req: ChatRequest):
             smoothed = get_previous_scores(project_id)
             if smoothed:
                 result["scores"] = smoothed
+
+    # Save rubric_full if grader produced it
+    if project_id and result.get("rubric_full"):
+        from services.database import get_project, save_project
+        proj = get_project(project_id)
+        if proj:
+            proj["rubric_full"] = result["rubric_full"]
+            save_project(proj)
 
     # F5-adv: Auto-detect learning task completion
     if project_id:
@@ -110,6 +261,42 @@ def send_message_stream(req: ChatRequest):
     if not req.message.strip():
         raise HTTPException(status_code=400, detail="消息不能为空")
 
+    # ── A7 鲁棒性兜底检查（流式版） ──
+    robustness = _robustness_check(req.message)
+    if robustness:
+        reply, intent = robustness
+        append_chat(req.session_id, "user", req.message)
+        append_chat(req.session_id, "assistant", reply)
+
+        def robustness_stream():
+            import json as _json
+            yield f"data: {_json.dumps({'type': 'meta', 'intent': intent})}\n\n"
+            yield f"data: {_json.dumps({'type': 'token', 'content': reply})}\n\n"
+            yield f"data: {_json.dumps({'type': 'done', 'intent': intent, 'reply': reply})}\n\n"
+
+        return StreamingResponse(
+            robustness_stream(),
+            media_type="text/event-stream",
+            headers={"Cache-Control": "no-cache", "Connection": "keep-alive", "X-Accel-Buffering": "no"},
+        )
+
+    # ── A1-2 / A2-2 反代写拦截（流式版） ──
+    if _detect_ghostwrite(req.message):
+        append_chat(req.session_id, "user", req.message)
+        append_chat(req.session_id, "assistant", _GHOSTWRITE_REPLY)
+
+        def guardrail_stream():
+            import json as _json
+            yield f"data: {_json.dumps({'type': 'meta', 'intent': 'guardrail_ghostwrite'})}\n\n"
+            yield f"data: {_json.dumps({'type': 'token', 'content': _GHOSTWRITE_REPLY})}\n\n"
+            yield f"data: {_json.dumps({'type': 'done', 'intent': 'guardrail_ghostwrite', 'reply': _GHOSTWRITE_REPLY})}\n\n"
+
+        return StreamingResponse(
+            guardrail_stream(),
+            media_type="text/event-stream",
+            headers={"Cache-Control": "no-cache", "Connection": "keep-alive", "X-Accel-Buffering": "no"},
+        )
+
     if req.project_id:
         bind_session_to_project(req.session_id, req.project_id)
 
@@ -137,8 +324,30 @@ def send_message_stream(req: ChatRequest):
 
 @router.get("/history/{session_id}")
 def get_history(session_id: str):
+    from services.database import get_project, get_conn
     history = get_chat_history(session_id)
-    return {"session_id": session_id, "messages": history}
+    project_id = get_project_for_session(session_id)
+    proj = get_project(project_id) if project_id else None
+
+    # Get session agent_type from database
+    agent_type = "coach"
+    try:
+        with get_conn() as conn:
+            row = conn.execute("SELECT agent_type FROM chat_sessions WHERE session_id=?", (session_id,)).fetchone()
+            if row:
+                agent_type = row["agent_type"] or "coach"
+    except Exception:
+        pass
+
+    return {
+        "session_id": session_id,
+        "messages": history,
+        "agent_type": agent_type,
+        "scores": proj.get("scores") if proj else None,
+        "stage": proj.get("stage") if proj else None,
+        "diagnosis": proj.get("diagnosis") if proj else None,
+        "rubric_full": proj.get("rubric_full") if proj else None,
+    }
 
 
 # ── Intake Form (前置采集层) ──────────────────────────────────────────

@@ -70,5 +70,21 @@
     "required_evidence": ["路演PPT"],
     "common_mistakes": ["叙事断裂"],
     "weight": 0.05
+  },
+  {
+    "id": "R10",
+    "name": "合规与社会责任 (Compliance & Social Responsibility)",
+    "description": "项目是否充分评估了法律合规、伦理风险与社会影响",
+    "required_evidence": ["合规分析报告", "伦理风险评估", "知识产权清单"],
+    "common_mistakes": ["忽视数据隐私法规", "缺乏知识产权授权", "未评估社会负面影响"],
+    "weight": 0.05
+  },
+  {
+    "id": "R11",
+    "name": "增长与规模化策略 (Growth & Scalability)",
+    "description": "增长路径是否有阶段性逻辑，规模化策略是否可行",
+    "required_evidence": ["增长漏斗模型", "阶段性扩张计划", "单位经济随规模变化分析"],
+    "common_mistakes": ["增长路径跳跃", "忽略规模化瓶颈", "无阶段性里程碑"],
+    "weight": 0.05
   }
 ]

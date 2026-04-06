@@ -1,10 +1,27 @@
 """Tutor node: explains entrepreneurship concepts."""
 
+import re
 from agents.state import AgentState
 from config import USE_MOCK_API
 from services.claude_client import chat_completion
 from prompts.tutor import TUTOR_SYSTEM_PROMPT
 from mock.responses import MOCK_TUTOR_REPLIES
+
+
+def _enforce_single_practice_task(text: str) -> str:
+    """A1-1: Ensure tutor reply contains at most one practice task block."""
+    # Match all practice task sections (练习任务 heading)
+    pattern = r"(#{1,4}\s*练习任务[：:][^\n]*\n(?:(?!#{1,4}\s*练习任务).)*)"
+    matches = list(re.finditer(pattern, text, re.DOTALL))
+    if len(matches) <= 1:
+        return text
+    # Keep only the first match; remove subsequent ones
+    first_end = matches[0].end()
+    cleaned = text[:first_end]
+    # Append everything after the last practice task block
+    tail_start = matches[-1].end()
+    cleaned += text[tail_start:]
+    return cleaned.strip()
 
 
 def _mock_tutor(concept: str | None, message: str) -> str:
@@ -69,6 +86,9 @@ def tutor_node(state: AgentState) -> AgentState:
         context = f"学生想了解的概念：{concept}\n学生原话：{message}" if concept else message
         tutor_messages = [{"role": "user", "content": context}]
         reply = chat_completion(system, tutor_messages)
+
+    # A1-1: enforce single practice task constraint
+    reply = _enforce_single_practice_task(reply)
 
     return {
         **state,

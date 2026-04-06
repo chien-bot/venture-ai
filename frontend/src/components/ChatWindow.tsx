@@ -204,8 +204,8 @@ export default function ChatWindow({ messages, onSend, loading, agentLabel, onUp
           </div>
         ))}
 
-        {/* Typing indicator */}
-        {loading && (
+        {/* Typing indicator — hide when already streaming into last assistant message */}
+        {loading && !(messages.length > 0 && messages[messages.length - 1].role === "assistant") && (
           <div className="flex gap-3 justify-start animate-fadeInUp">
             <div className="w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center text-sm"
                  style={{

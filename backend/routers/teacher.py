@@ -8,6 +8,8 @@ from services.database import (
     set_competition_date as db_set_competition_date,
     save_annotation, get_annotations_for_project,
     get_all_ratings,
+    save_instructor_review_notes, get_instructor_review_notes,
+    save_teacher_intervention, get_teacher_interventions, delete_teacher_intervention,
 )
 from services.evidence_tracer import EvidenceTracer
 from collections import Counter
@@ -86,6 +88,32 @@ def get_dashboard(class_id: str = "class_2026_spring"):
 
     suggestions = _generate_suggestions(avg_scores, top_mistakes, high_risk)
 
+    # A6-2: average_rubric_score — computed from rubric_scores stored in projects
+    rubric_totals: dict[str, list[float]] = {}
+    for p in projects:
+        rs = p.get("rubric_scores") or {}
+        for k, v in rs.items():
+            rubric_totals.setdefault(k, []).append(float(v))
+    average_rubric_score = {
+        k: round(sum(v) / len(v), 2) for k, v in rubric_totals.items()
+    } if rubric_totals else {}
+
+    # A6-2: rule_trigger_frequency — count H-rule triggers across all sessions
+    from services.database import get_conn
+    rule_freq: dict[str, int] = {}
+    try:
+        with get_conn() as conn:
+            rows = conn.execute(
+                "SELECT content FROM chat_messages WHERE role='assistant'"
+            ).fetchall()
+        import re as _re
+        for row in rows:
+            for m in _re.finditer(r"\b(H\d{1,2})\b", row["content"]):
+                rule_id = m.group(1)
+                rule_freq[rule_id] = rule_freq.get(rule_id, 0) + 1
+    except Exception:
+        pass
+
     return {
         "class_id": class_id,
         "total_students": len(owner_ids),
@@ -94,6 +122,8 @@ def get_dashboard(class_id: str = "class_2026_spring"):
         "top_mistakes": top_mistakes,
         "high_risk_projects": high_risk,
         "suggestions": suggestions,
+        "average_rubric_score": average_rubric_score,
+        "rule_trigger_frequency": rule_freq,
     }
 
 
@@ -189,13 +219,18 @@ def get_project_review(project_id: str):
     except Exception:
         pass
 
+    # A6-1: instructor_review_notes
+    review_notes_row = get_instructor_review_notes(project_id)
+    instructor_review_notes = review_notes_row["notes"] if review_notes_row else {}
+
     return {
         "project_id": project_id,
         "rubric_scores": rubric_scores,
         "total_score": total,
-        "max_score": len(rubric_scores) * 10,
+        "max_score": len(rubric_scores) * 10,  # rubric here uses 5-dim scores (0-10 each)
         "evidence_trace": evidence,
         "revision_suggestions": suggestions,
+        "instructor_review_notes": instructor_review_notes,
     }
 
 
@@ -378,6 +413,16 @@ def _scores_to_rubric(scores: dict, diagnosis: list) -> dict:
             "justification": "表达与材料" + ("优秀" if p >= 7 else "一般" if p >= 5 else "需加强"),
             "missing": missing_if(["叙事", "表达"], "路演PPT"),
         },
+        "R10": {
+            "score": max(1, round((b + x) / 2 - 1)),
+            "justification": "合规与社会责任" + ("已评估" if b >= 7 else "需补充"),
+            "missing": missing_if(["合规", "数据", "隐私"], "合规清单与知识产权说明"),
+        },
+        "R11": {
+            "score": max(1, round((i_score + x) / 2 - 1)),
+            "justification": "增长与规模化" + ("路径清晰" if i_score >= 7 else "规划不足"),
+            "missing": missing_if(["规模", "增长"], "阶段性增长路线图"),
+        },
     }
 
 
@@ -460,6 +505,136 @@ CONCEPT_MENTION_PATTERNS = {
     "股权结构": ["股权", "股权结构", "cap table"],
     "精益创业": ["精益创业", "lean startup"],
 }
+
+
+# ── A6-1: Instructor Review Notes ───────────────────────────────────
+
+class ReviewNotesRequest(BaseModel):
+    teacher_id: str = "teacher"
+    notes: dict  # {R1: "...", overall: "...", ...}
+
+
+@router.post("/project/{project_id}/review-notes")
+def save_review_notes(project_id: str, req: ReviewNotesRequest):
+    """Save instructor review notes for a project."""
+    save_instructor_review_notes(project_id, req.teacher_id, req.notes)
+    return {"ok": True, "project_id": project_id}
+
+
+# ── A6-3: Teacher Interventions ──────────────────────────────────────
+
+class InterventionRequest(BaseModel):
+    teacher_id: str = "teacher"
+    project_id: str
+    trigger_keyword: str  # keyword in student message that triggers this instruction
+    instruction: str      # instruction injected into coach system prompt
+    priority: int = 1     # higher = injected first
+
+
+@router.post("/interventions")
+def create_intervention(req: InterventionRequest):
+    """Save a teacher intervention rule."""
+    import uuid as _uuid
+    intervention_id = str(_uuid.uuid4())
+    save_teacher_intervention(
+        intervention_id, req.teacher_id, req.project_id,
+        req.trigger_keyword, req.instruction, req.priority
+    )
+    return {"ok": True, "intervention_id": intervention_id}
+
+
+@router.get("/interventions/{project_id}")
+def list_interventions(project_id: str):
+    """List all active intervention rules for a project."""
+    items = get_teacher_interventions(project_id)
+    return {"interventions": items}
+
+
+@router.delete("/interventions/{intervention_id}")
+def remove_intervention(intervention_id: str):
+    """Delete an intervention rule."""
+    delete_teacher_intervention(intervention_id)
+    return {"ok": True}
+
+
+# ── A6-4: Capability Profile ─────────────────────────────────────────
+
+_CAPABILITY_SYSTEM = """你是一位创新创业教育分析专家。
+请根据学生在以下对话记录中的表现，生成一份五维能力画像评分报告。
+
+五个维度（每项 0-10 分，10为最高）：
+1. 同理心（Empathy）：识别用户真实痛点、站在用户角度思考的能力
+2. 创意发散（Ideation）：提出有创意、有价值的解决方案的能力
+3. 商业建模（Business）：理解商业逻辑、收入模型、市场策略的能力
+4. 执行规划（Execution）：制定可行计划、分配资源、管理里程碑的能力
+5. 逻辑表达（Logic）：清晰论证、数据支撑、结构化表达的能力
+
+请严格按以下 JSON 格式输出：
+<!--CAPABILITY_PROFILE:
+{
+  "empathy": {"score": 7, "evidence": "学生提到...", "suggestion": "建议..."},
+  "ideation": {"score": 6, "evidence": "...", "suggestion": "..."},
+  "business": {"score": 5, "evidence": "...", "suggestion": "..."},
+  "execution": {"score": 4, "evidence": "...", "suggestion": "..."},
+  "logic": {"score": 6, "evidence": "...", "suggestion": "..."},
+  "overall_comment": "综合评价..."
+}
+-->
+
+在 JSON 之前，给出 1-2 段整体能力评价。"""
+
+
+@router.get("/project/{project_id}/capability-profile")
+def get_capability_profile(project_id: str):
+    """
+    A6-4: 从项目对话历史生成五维能力画像。
+    最多取最近 3 轮会话 (window) 进行分析。
+    """
+    import re as _re
+    import json as _json
+    from config import USE_MOCK_API
+    from services.claude_client import chat_completion
+
+    proj = get_project(project_id)
+    if not proj:
+        return {"error": "项目不存在"}
+
+    # Gather recent conversation messages (up to 3 sessions)
+    sessions = get_sessions_for_project(project_id)
+    all_msgs: list[dict] = []
+    for sess in sessions[-3:]:
+        all_msgs.extend(get_chat_history(sess["session_id"]))
+
+    if not all_msgs:
+        return {
+            "project_id": project_id,
+            "capability_profile": None,
+            "message": "暂无对话记录，请先与AI教练进行对话",
+        }
+
+    if USE_MOCK_API:
+        profile = {
+            "empathy": {"score": 7, "evidence": "学生能描述具体用户场景", "suggestion": "尝试量化痛点频率"},
+            "ideation": {"score": 6, "evidence": "方案有一定创意", "suggestion": "拓展差异化方向"},
+            "business": {"score": 5, "evidence": "商业模式基本清晰", "suggestion": "补充CAC/LTV分析"},
+            "execution": {"score": 5, "evidence": "有初步时间线规划", "suggestion": "细化里程碑指标"},
+            "logic": {"score": 6, "evidence": "论述结构较清晰", "suggestion": "增加数据支撑"},
+            "overall_comment": "学生展现出较好的同理心和表达能力，商业和执行维度有较大提升空间。",
+        }
+        return {"project_id": project_id, "capability_profile": profile, "session_count": len(sessions)}
+
+    raw = chat_completion(_CAPABILITY_SYSTEM, all_msgs)
+
+    from services.marker_parser import parse_capability_profile, clean_reply
+    profile = parse_capability_profile(raw)
+    clean = clean_reply(raw)
+
+    return {
+        "project_id": project_id,
+        "capability_profile": profile,
+        "summary": clean,
+        "session_count": len(sessions),
+    }
 
 
 @router.get("/knowledge-coverage")

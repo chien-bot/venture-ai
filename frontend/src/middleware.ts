@@ -9,7 +9,7 @@ export function middleware(request: NextRequest) {
   // teacher portals to be open simultaneously in different browser tabs.
   const token = request.cookies.get("token")?.value;
 
-  const isProtectedRoute = pathname.startsWith("/teacher") || pathname.startsWith("/student");
+  const isProtectedRoute = pathname.startsWith("/teacher") || pathname.startsWith("/student") || pathname.startsWith("/admin");
 
   // Not logged in → redirect to login
   if (isProtectedRoute && !token) {
@@ -20,5 +20,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/student/:path*", "/teacher/:path*"],
+  matcher: ["/student/:path*", "/teacher/:path*", "/admin/:path*"],
 };

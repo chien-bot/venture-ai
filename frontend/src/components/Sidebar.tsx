@@ -1,7 +1,15 @@
 "use client";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { User } from "@/lib/types";
+
+const CHAT_MODES = [
+  { label: "自动模式",  mode: "auto",        icon: "🤖" },
+  { label: "项目教练",  mode: "coach",       icon: "🎯" },
+  { label: "概念辅导",  mode: "tutor",       icon: "📚" },
+  { label: "竞赛评分",  mode: "competition", icon: "🏆" },
+  { label: "批改评估",  mode: "grader",      icon: "📝" },
+];
 
 const STUDENT_NAV = [
   { label: "AI 教练",  path: "/student/chat",        icon: "💬", desc: "智能对话" },
@@ -21,7 +29,10 @@ const TEACHER_NAV = [
 export default function Sidebar() {
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const currentMode = searchParams.get("mode") || "auto";
   const [user, setUser] = useState<User | null>(null);
+  const [chatExpanded, setChatExpanded] = useState(true);
 
   useEffect(() => {
     const stored = sessionStorage.getItem("user");
@@ -32,7 +43,16 @@ export default function Sidebar() {
   const nav = isTeacher ? TEACHER_NAV : STUDENT_NAV;
   const accentColor = isTeacher ? "#10b981" : "#6366f1";
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      const token = typeof window !== "undefined" ? sessionStorage.getItem("token") : null;
+      if (token) {
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/api/auth/logout`, {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` },
+        });
+      }
+    } catch {}
     sessionStorage.clear();
     document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     router.push("/");
@@ -73,29 +93,33 @@ export default function Sidebar() {
           导航
         </p>
         {nav.map((item) => {
-          const isActive = pathname === item.path;
+          const isActive = pathname === item.path || pathname.startsWith(item.path + "?");
+          const isChatItem = item.path === "/student/chat" && !isTeacher;
           return (
-            <button
-              key={item.path}
-              onClick={() => router.push(item.path)}
-              className={`nav-item ${isActive ? "active" : ""}`}
-              style={isActive ? {
-                background: `${accentColor}15`,
-                borderColor: `${accentColor}40`,
-                color: isTeacher ? "#6ee7b7" : "#a5b4fc",
-                boxShadow: `0 0 20px ${accentColor}10`,
-              } : {}}
-            >
-              <span className="text-base leading-none">{item.icon}</span>
-              <div className="flex-1 text-left">
-                <div className="text-sm font-medium">{item.label}</div>
-                <div className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>{item.desc}</div>
+            <div key={item.path}>
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={() => router.push(item.path)}
+                  className={`nav-item flex-1 ${isActive ? "active" : ""}`}
+                  style={isActive ? {
+                    background: `${accentColor}15`,
+                    borderColor: `${accentColor}40`,
+                    color: isTeacher ? "#6ee7b7" : "#a5b4fc",
+                    boxShadow: `0 0 20px ${accentColor}10`,
+                  } : {}}
+                >
+                  <span className="text-base leading-none">{item.icon}</span>
+                  <div className="flex-1 text-left">
+                    <div className="text-sm font-medium">{item.label}</div>
+                    <div className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>{item.desc}</div>
+                  </div>
+                  {isActive && !isChatItem && (
+                    <div className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                         style={{ background: accentColor, boxShadow: `0 0 8px ${accentColor}` }} />
+                  )}
+                </button>
               </div>
-              {isActive && (
-                <div className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                     style={{ background: accentColor, boxShadow: `0 0 8px ${accentColor}` }} />
-              )}
-            </button>
+            </div>
           );
         })}
       </nav>

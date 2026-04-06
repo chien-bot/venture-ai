@@ -6,6 +6,7 @@ from enum import Enum
 class UserRole(str, Enum):
     STUDENT = "student"
     TEACHER = "teacher"
+    ADMIN = "admin"
 
 
 class LoginRequest(BaseModel):
@@ -70,7 +71,7 @@ class ChatResponse(BaseModel):
     rubric_scores: Optional[dict] = None
     intent: Optional[str] = None
     knowledge_recommendations: Optional[list] = None
-    fix_tasks: Optional[list] = None  # structured fix tasks from H1-H15 rules
+    fix_tasks: Optional[list] = None  # structured fix tasks from H1-H22 rules
     rubric_full: Optional[dict] = None  # detailed grader report {R1: {score, evidence, suggestion}}
     score_breakdown: Optional[dict] = None  # floor score breakdown {dim: {floor_score, llm_delta, final_score, evidence_summary}}
 

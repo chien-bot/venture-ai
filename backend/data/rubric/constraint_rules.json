@@ -13,5 +13,12 @@
   {"rule_id": "H12", "type": "技术路线与资源不匹配", "severity": "high", "trigger_message": "技术方案超出团队现有能力和资源", "fix_task": "调整技术方案或补充资源获取计划"},
   {"rule_id": "H13", "type": "实验设计不合格", "severity": "medium", "trigger_message": "验证实验缺乏对照组或样本量不足", "fix_task": "重新设计实验方案"},
   {"rule_id": "H14", "type": "路演叙事断裂", "severity": "low", "trigger_message": "路演材料的故事线不连贯", "fix_task": "按 问题→方案→市场→模式→团队 重构叙事"},
-  {"rule_id": "H15", "type": "评分项证据覆盖不足", "severity": "medium", "trigger_message": "多个评分维度缺乏支撑证据", "fix_task": "针对缺失项逐一补充证据材料"}
+  {"rule_id": "H15", "type": "评分项证据覆盖不足", "severity": "medium", "trigger_message": "多个评分维度缺乏支撑证据", "fix_task": "针对缺失项逐一补充证据材料"},
+  {"rule_id": "H16", "type": "客户获取成本幻觉", "severity": "high", "trigger_message": "声称获客成本(CAC)为零或接近零，缺乏合理依据", "fix_task": "列出每个获客渠道的预估成本，计算加权平均CAC"},
+  {"rule_id": "H17", "type": "用户终身价值虚高", "severity": "high", "trigger_message": "LTV假设过于乐观，缺乏留存数据和复购率支撑", "fix_task": "基于行业基准和实际留存率重新估算LTV"},
+  {"rule_id": "H18", "type": "市场规模自上而下推算", "severity": "medium", "trigger_message": "仅用TAM×渗透率推算市场，未做自下而上验证", "fix_task": "补充自下而上的市场规模估算：具体渠道×转化率×客单价"},
+  {"rule_id": "H19", "type": "知识产权/版权风险", "severity": "high", "trigger_message": "项目涉及他人作品、数据或技术但未获得授权许可", "fix_task": "梳理知识产权依赖清单，获取书面授权或替换方案"},
+  {"rule_id": "H20", "type": "海外落地合规缺失", "severity": "high", "trigger_message": "跨境业务未评估目标市场的法规、关税和资质要求", "fix_task": "调研目标市场准入法规，列出合规清单和时间线"},
+  {"rule_id": "H21", "type": "团队能力与项目野心不匹配", "severity": "medium", "trigger_message": "项目规划超出团队当前人员规模、技术能力或资金储备", "fix_task": "缩小MVP范围或制定明确的人才/资源获取计划"},
+  {"rule_id": "H22", "type": "隐形替代品忽视", "severity": "medium", "trigger_message": "竞争分析仅考虑直接竞品，忽视了用户现有解决方案和替代方式", "fix_task": "补充替代品分析：用户目前如何解决该问题？迁移成本多高？"}
 ]

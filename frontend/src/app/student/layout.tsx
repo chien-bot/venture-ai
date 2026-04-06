@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { useRouter } from "next/navigation";
 import Sidebar from "@/components/Sidebar";
 
@@ -15,7 +15,9 @@ export default function StudentLayout({ children }: { children: React.ReactNode 
 
   return (
     <div className="flex h-screen">
-      <Sidebar />
+      <Suspense fallback={<div className="w-60 h-screen" style={{ background: "rgba(8,13,26,0.95)" }} />}>
+        <Sidebar />
+      </Suspense>
       <main className="flex-1 overflow-hidden">{children}</main>
     </div>
   );

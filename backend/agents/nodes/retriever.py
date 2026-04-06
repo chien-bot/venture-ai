@@ -26,8 +26,10 @@ from agents.state import AgentState
 from hypergraph.engine import query_hypergraph, format_context_for_prompt
 from hypergraph.semantic_retriever import search_projects, detect_technologies, detect_industry, detect_concepts
 from hypergraph.llm_extractor import extract_from_conversation
+from services.debug_logger import DebugLogger
 
 logger = logging.getLogger(__name__)
+_dbg = DebugLogger("retriever_node")
 
 
 # ── V3: Session-level retrieval cache ────────────────────────
@@ -130,6 +132,9 @@ def retriever_node(state: AgentState) -> AgentState:
         f"Retriever extracted: techs={tech_kws}, "
         f"industry={industry}, concept={concept}, desc={project_desc}"
     )
+    _dbg.agent_start(session_id=session_id, intent="retrieval",
+                     message_preview=current)
+    _dbg.retrieved_nodes(tech_kws + ([concept] if concept else []), source="llm_extraction")
 
     # ── Step 2: 缓存检查 ──
     cache_key = _make_cache_key(tech_kws, industry, concept)
@@ -138,6 +143,7 @@ def retriever_node(state: AgentState) -> AgentState:
     if cache and cache.cache_key == cache_key:
         # Cache hit — same extraction, reuse previous search results
         logger.info(f"Retriever cache HIT for session {session_id}")
+        _dbg.info(f"Cache HIT for session {session_id} — reusing previous retrieval results")
         return {
             **state,
             "hypergraph_context": cache.context_text,
@@ -148,8 +154,23 @@ def retriever_node(state: AgentState) -> AgentState:
 
     # ── Step 3: 缓存未命中 — 执行完整检索 ──
     logger.info(f"Retriever cache MISS for session {session_id}")
+    _dbg.info(f"Cache MISS — executing full hypergraph search (techs={tech_kws}, industry={industry}, concept={concept})")
     context_text = _run_search(
         current, messages, tech_kws, industry, concept, project_desc,
+    )
+    # Log retrieved hyperedge types inferred from context
+    edge_types_detected = []
+    if "价值闭环" in context_text or "商业模式" in context_text:
+        edge_types_detected.append("Value_Loop_Edge")
+    if "风险" in context_text or "失败" in context_text:
+        edge_types_detected.append("Risk_Pattern_Edge")
+    if "竞争" in context_text or "替代" in context_text:
+        edge_types_detected.append("Competition_Edge")
+    if tech_kws:
+        edge_types_detected.append("Technology_Hierarchy_Edge")
+    _dbg.retrieved_hyperedges(
+        [{"type": et, "query_context": f"techs={tech_kws}, industry={industry}"} for et in edge_types_detected],
+        edge_types=edge_types_detected,
     )
 
     # ── Step 4: 写入缓存 ──

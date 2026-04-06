@@ -10,6 +10,7 @@ from services.knowledge_cards import (
     generate_cards_from_hypergraph,
     get_cards_for_rubric_gap,
 )
+from services.competition_templates import get_all_templates, match_template, get_template_by_id
 
 router = APIRouter(prefix="/api/knowledge", tags=["knowledge"])
 
@@ -75,6 +76,31 @@ def generate_cards():
     """
     stats = generate_cards_from_hypergraph()
     return {"ok": True, **stats}
+
+
+@router.get("/competition-templates")
+def list_competition_templates():
+    """获取所有赛事评估模板。"""
+    templates = get_all_templates()
+    return {"templates": templates, "total": len(templates)}
+
+
+@router.get("/competition-templates/{template_id}")
+def get_competition_template(template_id: str):
+    """获取单个赛事模板详情。"""
+    tpl = get_template_by_id(template_id)
+    if not tpl:
+        raise HTTPException(status_code=404, detail="赛事模板不存在")
+    return tpl
+
+
+@router.post("/competition-templates/match")
+def match_competition_template(query: str = ""):
+    """根据用户输入匹配赛事模板。"""
+    tpl = match_template(query)
+    if not tpl:
+        return {"matched": False, "template": None}
+    return {"matched": True, "template": tpl}
 
 
 @router.get("/stats")

@@ -3,7 +3,7 @@ hypergraph/consistency_check.py
 ────────────────────────────────────────────────────────────────
 运行时超图路径校验器 V3
 
-在每轮对话后检测用户描述的项目是否触发 H1-H15 约束规则。
+在每轮对话后检测用户描述的项目是否触发 H1-H22 约束规则。
 返回触发的规则列表，供 critic_node 或 coach_node 使用。
 
 V2 改进：
@@ -22,6 +22,9 @@ import json
 import re
 from pathlib import Path
 from typing import NamedTuple
+from services.debug_logger import DebugLogger
+
+_dbg = DebugLogger("consistency_check")
 
 # ── Load constraint rules from JSON ──────────────────────────
 _RULES_PATH = Path(__file__).parent.parent / "data" / "rubric" / "constraint_rules.json"
@@ -30,14 +33,14 @@ with open(_RULES_PATH, encoding="utf-8") as f:
 
 # ── Trigger keyword map: rule_id → list of signal phrases ────
 _TRIGGER_SIGNALS: dict[str, list[str]] = {
-    "H1": ["目标客户", "用户群", "客户群", "价值主张", "痛点", "用户需求"],
-    "H2": ["渠道", "触达", "获客渠道", "推广", "分发"],
-    "H3": ["定价", "收费", "价格", "支付意愿", "付费", "多少钱"],
+    "H1": ["目标客户", "用户群", "客户群", "价值主张", "痛点", "用户需求", "目标用户", "服务对象"],
+    "H2": ["渠道", "触达", "获客渠道", "推广", "分发", "抖音", "微信", "小红书", "地推", "引流", "宣传"],
+    "H3": ["定价", "收费", "价格", "支付意愿", "付费", "多少钱", "愿意付", "应该会买", "肯定会用", "收费模式"],
     "H4": ["TAM", "SAM", "SOM", "市场规模", "市场大小", "亿", "万亿"],
-    "H5": ["用户访谈", "调研", "问卷", "一手数据", "用户反馈", "痛点验证"],
+    "H5": ["用户访谈", "调研", "问卷", "一手数据", "用户反馈", "痛点验证", "市场潜力", "需求很大", "前景", "很大的市场", "潜力巨大", "刚需"],
     "H6": ["竞争对手", "竞品", "对比", "差异化", "竞争分析"],
     "H7": ["创新", "独特", "差异", "专利", "技术壁垒", "护城河"],
-    "H8": ["LTV", "CAC", "获客成本", "终身价值", "单位经济", "盈利"],
+    "H8": ["LTV", "CAC", "获客成本", "终身价值", "单位经济", "盈利", "成本低", "成本很低", "利润高", "利润率"],
     "H9": ["增长", "用户增长", "扩张", "规模化", "增长策略"],
     "H10": ["里程碑", "时间节点", "计划", "交付", "阶段"],
     "H11": ["数据隐私", "合规", "监管", "许可证", "资质", "伦理"],
@@ -45,6 +48,13 @@ _TRIGGER_SIGNALS: dict[str, list[str]] = {
     "H13": ["实验", "A/B测试", "验证", "测试", "对照组", "样本"],
     "H14": ["路演", "PPT", "演示", "Pitch", "投资人", "故事"],
     "H15": ["证据", "数据支撑", "材料", "来源", "引用"],
+    "H16": ["获客成本", "CAC", "获客", "零成本", "免费获客", "自然流量", "不花钱", "容易火", "自然增长", "口碑传播", "几乎为0", "成本为零", "很容易获客", "不需要花钱获客"],
+    "H17": ["LTV", "终身价值", "复购", "留存", "粘性", "用一辈子", "终身", "终身购买", "一直用", "不会换", "忠诚度高", "用了就离不开"],
+    "H18": ["市场规模", "TAM", "万亿", "千亿", "百亿", "中国有", "全球有", "总产值", "潜力巨大", "前景广阔", "规模很大", "市场巨大"],
+    "H19": ["版权", "授权", "知识产权", "IP", "原创", "抄袭", "扫描", "复制", "翻版"],
+    "H20": ["出海", "海外", "跨境", "国际", "欧美", "东南亚", "越南", "关税", "进出口"],
+    "H21": ["团队", "人手", "两个人", "一个人", "大二", "大三", "本科生", "学生团队"],
+    "H22": ["没有对手", "没有竞争", "唯一", "空白市场", "第一家", "没有替代"],
 }
 
 # ── H 规则 → Rubric 维度映射 ──────────────────────────────────
@@ -65,6 +75,13 @@ _H_TO_RUBRIC: dict[str, list[str]] = {
     "H13": ["R2_user_evidence"],
     "H14": ["R9_pitch"],
     "H15": ["R2_user_evidence"],
+    "H16": ["R6_finance"],
+    "H17": ["R6_finance"],
+    "H18": ["R5_market"],
+    "H19": ["R10_compliance"],
+    "H20": ["R10_compliance"],
+    "H21": ["R8_execution"],
+    "H22": ["R5_market", "R7_innovation"],
 }
 
 # ── Evasion / weak phrases (used for penalty factor) ──────────
@@ -297,6 +314,18 @@ def check_conversation(
     # Sort: high > medium > low, then by confidence desc
     _order = {"high": 0, "medium": 1, "low": 2}
     triggered.sort(key=lambda r: (_order.get(r.severity, 3), -r.confidence))
+
+    # ── 结构化 Debug 日志输出 ──
+    if triggered:
+        _dbg.info(f"H规则检测完成：共触发 {len(triggered)} 条规则 (session={session_id})")
+        for rule in triggered:
+            _dbg.rule_triggered(
+                rule_id=rule.rule_id,
+                rule_type=rule.rule_type,
+                severity=rule.severity,
+                confidence=rule.confidence,
+            )
+
     return triggered
 
 

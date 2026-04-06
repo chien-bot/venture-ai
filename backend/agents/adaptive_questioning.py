@@ -18,6 +18,9 @@ V2 改进：
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from services.debug_logger import DebugLogger
+
+_dbg = DebugLogger("adaptive_questioning")
 
 # ─────────────────────────────────────────────────────────────
 # 追问链定义
@@ -379,6 +382,13 @@ def build_questioning_context(
         question = {1: chain.l1, 2: chain.l2, 3: chain.l3}[level]
         is_evading = detect_evasion(messages, dim, session_id=session_id)
 
+        # ★ Debug log: 记录选中的追问策略和问题
+        level_label = {1: "L1_温和引导", 2: "L2_压力测试", 3: "L3_直接挑战"}[level]
+        _dbg.strategy_selected(
+            strategy_name=f"{chain.label}_{level_label}",
+            question=question[:200],
+        )
+
         # 构建状态摘要
         status_parts = [f"当前得分 {scores.get(dim, 0):.1f}/10"]
         if ds.consecutive_weak > 1:
@@ -406,6 +416,10 @@ def build_questioning_context(
 
         if is_evading:
             lines.append(f"  ⚠️ 回避检测：{chain.evasion_tip}")
+            _dbg.fallacy_detected(
+                fallacy_label=f"回避检测_{chain.label}",
+                triggered_by=f"连续{ds.consecutive_weak}轮薄弱且使用回避性词汇",
+            )
 
         # 记录本次追问
         tracker.record_ask(dim, level)
@@ -417,6 +431,14 @@ def build_questioning_context(
         lines.append("  [指令] 必须触发竞品追问链：")
         lines.append("  → 追问：'真的没有吗？用户现在用什么替代方案解决这个问题？免费的、手动的、习惯性的都算竞争对手。'")
         lines.append("  → 追问：'如果你说的市场空白是真实的，为什么至今没有人填补？是时机问题、技术问题还是市场太小？'")
+        _dbg.fallacy_detected(
+            fallacy_label="竞品回避_无竞争对手声称",
+            triggered_by=current_message[:100],
+        )
+        _dbg.strategy_selected(
+            strategy_name="竞品追问链",
+            question="真的没有吗？用户现在用什么替代方案解决这个问题？",
+        )
 
     # 特殊检测：学生声称已做了访谈，但得分仍低
     interview_phrases = ["访谈了", "调研了", "问卷", "用户说", "反馈"]
@@ -425,6 +447,14 @@ def build_questioning_context(
         lines.append("  [指令] 学生声称做了访谈，但痛点发现得分仍低，追问访谈质量：")
         lines.append("  → '你访谈了多少人？是否有录音/笔记？他们是陌生人还是朋友/家人？'")
         lines.append("  → '在所有受访者中，有多少人表示愿意现在就花钱解决这个问题？'")
+        _dbg.fallacy_detected(
+            fallacy_label="访谈质量可疑_确认偏差风险",
+            triggered_by=current_message[:100],
+        )
+        _dbg.strategy_selected(
+            strategy_name="访谈质量追问",
+            question="你访谈了多少人？是否有录音/笔记？他们是陌生人还是朋友/家人？",
+        )
 
     if len(lines) <= 1:
         return ""
