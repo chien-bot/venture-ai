@@ -82,6 +82,8 @@ export default function StudentChatPageContent() {
   const autoCreatedRef = useRef(false);
   // Prevent concurrent/duplicate initChat calls
   const initLockRef = useRef(false);
+  // AbortController for cancelling in-flight stream requests
+  const abortRef = useRef<AbortController | null>(null);
   // Chat history sidebar
   const [historySessions, setHistorySessions] = useState<any[]>([]);
   const [historyCollapsed, setHistoryCollapsed] = useState(false);
@@ -125,6 +127,9 @@ export default function StudentChatPageContent() {
   const initChat = async (projectId = selectedProjectId, agentType = selectedAgentType): Promise<void> => {
     if (initLockRef.current) return;
     initLockRef.current = true;
+    // Cancel any in-flight stream
+    if (abortRef.current) { abortRef.current.abort(); abortRef.current = null; }
+    setLoading(false);
     try {
       const res = await startChat(agentType, projectId);
       setSessionId(res.session_id);
@@ -281,6 +286,9 @@ export default function StudentChatPageContent() {
   };
 
   const handleLoadSession = async (session: any) => {
+    // Cancel any in-flight stream before switching
+    if (abortRef.current) { abortRef.current.abort(); abortRef.current = null; }
+    setLoading(false);
     try {
       const [res, projRes] = await Promise.all([
         getChatHistory(session.session_id),
@@ -308,6 +316,11 @@ export default function StudentChatPageContent() {
   };
 
   const handleSend = async (msg: string) => {
+    // Cancel any in-flight stream
+    if (abortRef.current) abortRef.current.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
+
     const currentAgentType = searchParams.get("mode") || selectedAgentType || "auto";
     setMessages((prev) => [...prev, { role: "user", content: msg }]);
     setLoading(true);
@@ -356,8 +369,11 @@ export default function StudentChatPageContent() {
             });
           }
         },
+        controller.signal,
       );
-    } catch {
+    } catch (err: any) {
+      // Don't show error if request was intentionally aborted (user switched chat)
+      if (err?.name === "AbortError") return;
       setMessages((prev) => {
         const updated = [...prev];
         const last = updated[updated.length - 1];

@@ -1,6 +1,6 @@
 "use client";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { User } from "@/lib/types";
 
 const CHAT_MODES = [
@@ -27,6 +27,14 @@ const TEACHER_NAV = [
 ];
 
 export default function Sidebar() {
+  return (
+    <Suspense>
+      <SidebarContent />
+    </Suspense>
+  );
+}
+
+function SidebarContent() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();

@@ -197,7 +197,80 @@ def parse_rubric_full(text: str) -> dict | None:
         if obj and _looks_like_rubric_full(obj):
             return obj
 
+    # Ultimate fallback: parse R1-R11 scores from plain-text markdown
+    # Matches patterns like "R1: ... Estimated Score 预估得分: 3" or "**预估得分**: 3"
+    result = _parse_rubric_from_plaintext(text)
+    if result and _looks_like_rubric_full(result):
+        return result
+
     return None
+
+
+def _parse_rubric_from_plaintext(text: str) -> dict | None:
+    """Parse R1-R11 rubric scores from plain-text LLM output when markers are missing."""
+    result = {}
+    # Split text into sections by R1-R11 headers
+    # Match patterns like "R1:", "R1: 痛点定义", "### R1", "**R1**" etc.
+    sections = re.split(r"(?=(?:^|\n)[\s#*]*R(\d{1,2})[\s:：*])", text)
+
+    for i, section in enumerate(sections):
+        # Find R-number at the start of each section
+        r_match = re.match(r"(\d{1,2})", section.strip())
+        if not r_match:
+            continue
+        r_num = int(r_match.group(1))
+        if r_num < 1 or r_num > 11:
+            continue
+        r_key = f"R{r_num}"
+
+        # Get the full section content (current + next part)
+        section_text = section
+        if i + 1 < len(sections):
+            section_text = section + sections[i + 1]
+
+        # Extract score: look for patterns like "预估得分: 3", "Score: 3", "得分：3"
+        score_match = re.search(
+            r"(?:Estimated\s*Score|预估得分|得分|Score|评分)\s*[:：]\s*(\d)",
+            section_text, re.IGNORECASE
+        )
+        if not score_match:
+            continue
+        score = int(score_match.group(1))
+
+        # Extract missing evidence
+        evidence = ""
+        ev_match = re.search(
+            r"(?:Missing\s*Evidence|缺失证据|缺少证据)\s*[:：]\s*([\s\S]*?)(?=Minimal\s*Fix|最小修复|24h|$)",
+            section_text, re.IGNORECASE
+        )
+        if ev_match:
+            evidence = ev_match.group(1).strip()
+            # Clean up markdown formatting
+            evidence = re.sub(r"[\n\r]+", " ", evidence)
+            evidence = re.sub(r"\s+", " ", evidence).strip()
+            if len(evidence) > 200:
+                evidence = evidence[:200] + "..."
+
+        # Extract suggestion from Minimal Fix
+        suggestion = ""
+        fix_match = re.search(
+            r"(?:Minimal\s*Fix|最小修复方案|修复方案)\s*[:：]\s*([\s\S]*?)(?=R\d{1,2}[\s:：]|$)",
+            section_text, re.IGNORECASE
+        )
+        if fix_match:
+            suggestion = fix_match.group(1).strip()
+            suggestion = re.sub(r"[\n\r]+", " ", suggestion)
+            suggestion = re.sub(r"\s+", " ", suggestion).strip()
+            if len(suggestion) > 200:
+                suggestion = suggestion[:200] + "..."
+
+        result[r_key] = {
+            "score": score,
+            "evidence": evidence or f"详见{r_key}评估内容",
+            "suggestion": suggestion or f"请参考{r_key}的修复建议",
+        }
+
+    return result if len(result) >= 3 else None
 
 
 def _looks_like_rubric_full(obj: dict) -> bool:

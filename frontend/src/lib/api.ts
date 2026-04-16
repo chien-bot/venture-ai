@@ -101,6 +101,7 @@ export async function sendMessageStream(
   onToken: (text: string) => void,
   onMeta: (data: any) => void,
   onDone: (data: any) => void,
+  signal?: AbortSignal,
 ) {
   const token = typeof window !== "undefined" ? sessionStorage.getItem("token") : null;
   const res = await fetch(`${API_BASE}/api/chat/message/stream`, {
@@ -115,6 +116,7 @@ export async function sendMessageStream(
       message,
       agent_type: agentType,
     }),
+    signal,
   });
 
   if (res.status === 401) {
