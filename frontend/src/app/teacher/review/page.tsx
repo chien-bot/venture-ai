@@ -15,6 +15,8 @@ const RUBRIC_NAMES: Record<string, string> = {
   R7: "创新与差异化",
   R8: "团队与执行",
   R9: "表达与材料",
+  R10: "合规与社会责任",
+  R11: "增长与规模化",
 };
 
 function scoreColor(score: number) {

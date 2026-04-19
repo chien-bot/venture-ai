@@ -14,6 +14,7 @@ const CHAT_MODES = [
 const STUDENT_NAV = [
   { label: "AI 教练",  path: "/student/chat",        icon: "💬", desc: "智能对话" },
   { label: "我的项目", path: "/student/projects",     icon: "📋", desc: "项目管理" },
+  { label: "能力画像", path: "/student/profile",      icon: "📊", desc: "个人画像" },
   { label: "模拟答辩", path: "/student/defense",      icon: "🎤", desc: "投资人问答" },
   { label: "同学互评", path: "/student/peer-review",  icon: "👥", desc: "匿名评审" },
 ];

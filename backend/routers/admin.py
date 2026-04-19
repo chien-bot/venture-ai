@@ -17,6 +17,8 @@ from services.database import (
     get_user_by_token,
     get_all_projects,
     get_conn,
+    get_teacher_class_ids,
+    set_teacher_class_ids,
 )
 
 router = APIRouter(prefix="/api/admin", tags=["admin"])
@@ -89,13 +91,39 @@ def update_user_class(user_id: str, req: UpdateClassRequest, request: Request):
     return {"ok": True, "user_id": user_id, "new_class_id": req.class_id}
 
 
+class TeacherClassesRequest(BaseModel):
+    class_ids: list
+
+
+@router.put("/users/{user_id}/teacher-classes")
+def update_teacher_classes(user_id: str, req: TeacherClassesRequest, request: Request):
+    """为教师分配多个班级（仅管理员）。"""
+    _require_admin(request)
+    with get_conn() as conn:
+        row = conn.execute("SELECT role FROM users WHERE user_id=?", (user_id,)).fetchone()
+    if not row:
+        raise HTTPException(status_code=404, detail="用户不存在")
+    if dict(row)["role"] != "teacher":
+        raise HTTPException(status_code=400, detail="该用户不是教师")
+    clean_ids = [c.strip() for c in req.class_ids if c and c.strip()]
+    set_teacher_class_ids(user_id, clean_ids)
+    return {"ok": True, "user_id": user_id, "class_ids": clean_ids}
+
+
+@router.get("/users/{user_id}/teacher-classes")
+def get_teacher_classes_api(user_id: str, request: Request):
+    """获取教师的班级列表（仅管理员）。"""
+    _require_admin(request)
+    return {"class_ids": get_teacher_class_ids(user_id)}
+
+
 @router.get("/classes")
 def list_classes(request: Request):
-    """获取所有班级列表（仅管理员）。"""
+    """获取所有学生班级列表（仅管理员，排除教师 JSON 数组）。"""
     _require_admin(request)
     with get_conn() as conn:
         rows = conn.execute(
-            "SELECT DISTINCT class_id FROM users WHERE class_id IS NOT NULL AND class_id != '' ORDER BY class_id"
+            "SELECT DISTINCT class_id FROM users WHERE role='student' AND class_id IS NOT NULL AND class_id != '' ORDER BY class_id"
         ).fetchall()
     return {"classes": [r[0] for r in rows]}
 
@@ -289,6 +317,69 @@ def batch_update_class(req: BatchClassRequest, request: Request):
         for uid in req.user_ids:
             conn.execute("UPDATE users SET class_id=? WHERE user_id=?", (req.class_id, uid))
     return {"ok": True, "updated": len(req.user_ids)}
+
+
+# ── 3b. 批量导入用户（CSV） ────────────────────────────────────────
+
+@router.post("/users/batch-import")
+async def batch_import_users(request: Request):
+    """
+    批量导入用户（仅管理员）。
+    接受 JSON body: { "users": [ {"username": "...", "password": "...", "role": "student", "class_id": "...", "display_name": "..."}, ... ] }
+    """
+    _require_admin(request)
+    body = await request.json()
+    users_data = body.get("users", [])
+    if not users_data:
+        raise HTTPException(status_code=400, detail="用户列表为空")
+
+    from services.database import save_user
+    import uuid
+    results = {"success": 0, "failed": 0, "errors": []}
+    for i, u in enumerate(users_data):
+        username = u.get("username", "").strip()
+        password = u.get("password", "").strip()
+        role = u.get("role", "student").strip()
+        class_id = u.get("class_id", "").strip()
+        display_name = u.get("display_name", "").strip()
+
+        if not username or not password:
+            results["failed"] += 1
+            results["errors"].append(f"第{i+1}行: 用户名或密码为空")
+            continue
+        if role not in ("student", "teacher", "admin"):
+            role = "student"
+
+        user_id = f"user_{uuid.uuid4().hex[:8]}"
+        ok = save_user(user_id, username, password, role, display_name or username, class_id)
+        if ok:
+            results["success"] += 1
+        else:
+            results["failed"] += 1
+            results["errors"].append(f"第{i+1}行: 用户名 '{username}' 已存在")
+
+    return results
+
+
+# ── 3c. 批量删除用户 ──────────────────────────────────────────────
+
+class BatchDeleteRequest(BaseModel):
+    user_ids: list[str]
+
+
+@router.delete("/users/batch-delete")
+def batch_delete_users(req: BatchDeleteRequest, request: Request):
+    """批量删除用户（仅管理员，不可删除自己）。"""
+    admin = _require_admin(request)
+    admin_id = admin["user_id"]
+    if admin_id in req.user_ids:
+        raise HTTPException(status_code=400, detail="不可删除自己")
+    with get_conn() as conn:
+        deleted = 0
+        for uid in req.user_ids:
+            cursor = conn.execute("DELETE FROM users WHERE user_id=?", (uid,))
+            deleted += cursor.rowcount
+    return {"ok": True, "deleted": deleted}
 
 
 # ── 4. 数据导出 ──────────────────────────────────────────────────

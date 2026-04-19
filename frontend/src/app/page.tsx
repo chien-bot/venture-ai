@@ -73,11 +73,11 @@ function LoginContent() {
     setError("");
     setLoading(true);
     try {
-      const res = await register(username, password, displayName, classId);
+      const res = await register(username, password, displayName, classId, role);
       sessionStorage.setItem("token", res.token);
       sessionStorage.setItem("user", JSON.stringify(res));
       document.cookie = `token=${res.token}; path=/`;
-      router.push("/student/projects");
+      router.push(role === "admin" ? "/admin/dashboard" : role === "teacher" ? "/teacher/dashboard" : "/student/projects");
     } catch (err: any) {
       setError(err.message || "注册失败");
     } finally {
@@ -140,8 +140,7 @@ function LoginContent() {
             ))}
           </div>
 
-          {/* Role selector — only for login */}
-          {tab === "login" && (
+          {/* Role selector — shown for both login and register */}
           <div className="flex rounded-xl p-1 mb-6"
                style={{ background: "rgba(255,255,255,0.04)", border: "1px solid var(--border)" }}>
             {([
@@ -168,7 +167,6 @@ function LoginContent() {
               );
             })}
           </div>
-          )}
 
           {/* Login Form */}
           {tab === "login" && (

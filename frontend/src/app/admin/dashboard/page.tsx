@@ -69,6 +69,10 @@ export default function AdminDashboard() {
   const [classes, setClasses] = useState<string[]>([]);
   const [newClassName, setNewClassName] = useState("");
   const [editingClassUser, setEditingClassUser] = useState<string | null>(null);
+  // Teacher multi-class management
+  const [editingTeacherClasses, setEditingTeacherClasses] = useState<string | null>(null);
+  const [teacherClassInput, setTeacherClassInput] = useState("");
+  const [teacherClassMap, setTeacherClassMap] = useState<Record<string, string[]>>({});
   const [allProjects, setAllProjects] = useState<ProjectInfo[]>([]);
   const [selectedUserIds, setSelectedUserIds] = useState<Set<string>>(new Set());
   const [batchClass, setBatchClass] = useState("");
@@ -78,6 +82,11 @@ export default function AdminDashboard() {
   const [projectStageFilter, setProjectStageFilter] = useState("");
   const [projectClassFilter, setProjectClassFilter] = useState("");
   const [selectedProject, setSelectedProject] = useState<ProjectInfo | null>(null);
+  // 批量导入
+  const [showImportModal, setShowImportModal] = useState(false);
+  const [importText, setImportText] = useState("");
+  const [importResult, setImportResult] = useState<any>(null);
+  const [importing, setImporting] = useState(false);
 
   const headers = { Authorization: `Bearer ${getToken()}`, "Content-Type": "application/json" };
 
@@ -161,6 +170,61 @@ export default function AdminDashboard() {
     } catch {}
   }
 
+  function parseTeacherClasses(classId: string): string[] {
+    if (!classId) return [];
+    try {
+      const parsed = JSON.parse(classId);
+      if (Array.isArray(parsed)) return parsed;
+    } catch {}
+    return [classId];
+  }
+
+  async function loadTeacherClasses(userId: string) {
+    try {
+      const res = await fetch(`${API}/api/admin/users/${userId}/teacher-classes`, { headers });
+      if (res.ok) {
+        const data = await res.json();
+        setTeacherClassMap(prev => ({ ...prev, [userId]: data.class_ids || [] }));
+      }
+    } catch {}
+  }
+
+  async function updateTeacherClasses(userId: string, classIds: string[]) {
+    try {
+      const res = await fetch(`${API}/api/admin/users/${userId}/teacher-classes`, {
+        method: "PUT", headers,
+        body: JSON.stringify({ class_ids: classIds }),
+      });
+      if (res.ok) {
+        setTeacherClassMap(prev => ({ ...prev, [userId]: classIds }));
+        fetchUsers();
+      }
+    } catch {}
+  }
+
+  function openTeacherClassEditor(userId: string, currentClassId: string) {
+    const ids = parseTeacherClasses(currentClassId);
+    setTeacherClassMap(prev => ({ ...prev, [userId]: ids }));
+    setEditingTeacherClasses(userId);
+    setTeacherClassInput("");
+  }
+
+  function addTeacherClass(userId: string) {
+    const c = teacherClassInput.trim();
+    if (!c) return;
+    const current = teacherClassMap[userId] || [];
+    if (!current.includes(c)) {
+      const updated = [...current, c];
+      setTeacherClassMap(prev => ({ ...prev, [userId]: updated }));
+    }
+    setTeacherClassInput("");
+  }
+
+  function removeTeacherClass(userId: string, classId: string) {
+    const current = teacherClassMap[userId] || [];
+    setTeacherClassMap(prev => ({ ...prev, [userId]: current.filter(c => c !== classId) }));
+  }
+
   async function fetchProjects() {
     setProjectsLoading(true);
     try {
@@ -234,6 +298,55 @@ export default function AdminDashboard() {
       const res = await fetch(`${API}/api/admin/users/${userId}`, { method: "DELETE", headers });
       if (res.ok) fetchUsers();
     } catch {}
+  }
+
+  async function batchDeleteUsers() {
+    if (selectedUserIds.size === 0) return;
+    if (!confirm(`确定批量删除 ${selectedUserIds.size} 个用户？此操作不可撤销。`)) return;
+    try {
+      const res = await fetch(`${API}/api/admin/users/batch-delete`, {
+        method: "DELETE", headers,
+        body: JSON.stringify({ user_ids: Array.from(selectedUserIds) }),
+      });
+      if (res.ok) {
+        setSelectedUserIds(new Set());
+        fetchUsers();
+      }
+    } catch {}
+  }
+
+  async function handleBatchImport() {
+    if (!importText.trim()) return;
+    setImporting(true);
+    setImportResult(null);
+    try {
+      // Parse CSV: username,password,role,class_id,display_name
+      const lines = importText.trim().split("\n").filter(l => l.trim());
+      const usersToImport = lines.map((line) => {
+        const parts = line.split(",").map(s => s.trim());
+        return {
+          username: parts[0] || "",
+          password: parts[1] || "",
+          role: parts[2] || "student",
+          class_id: parts[3] || "",
+          display_name: parts[4] || "",
+        };
+      });
+      const res = await fetch(`${API}/api/admin/users/batch-import`, {
+        method: "POST", headers,
+        body: JSON.stringify({ users: usersToImport }),
+      });
+      const data = await res.json();
+      setImportResult(data);
+      if (data.success > 0) {
+        fetchUsers();
+        fetchClasses();
+      }
+    } catch {
+      setImportResult({ success: 0, failed: 0, errors: ["请求失败"] });
+    } finally {
+      setImporting(false);
+    }
   }
 
   async function handleLogout() {
@@ -492,12 +605,25 @@ export default function AdminDashboard() {
                   style={{ background: "rgba(245,158,11,0.2)", color: "#fcd34d", border: "1px solid rgba(245,158,11,0.3)" }}>
                   批量分班
                 </button>
+                <button onClick={batchDeleteUsers}
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium"
+                  style={{ background: "rgba(239,68,68,0.2)", color: "#fca5a5", border: "1px solid rgba(239,68,68,0.3)" }}>
+                  批量删除
+                </button>
                 <button onClick={() => setSelectedUserIds(new Set())}
                   className="text-xs" style={{ color: "var(--text-muted)" }}>
                   取消选择
                 </button>
               </div>
             )}
+            {/* 批量导入按钮 */}
+            <div className="flex justify-end mb-2">
+              <button onClick={() => { setShowImportModal(true); setImportText(""); setImportResult(null); }}
+                className="px-4 py-2 rounded-lg text-xs font-medium"
+                style={{ background: "rgba(16,185,129,0.15)", color: "#6ee7b7", border: "1px solid rgba(16,185,129,0.3)" }}>
+                + 批量导入用户
+              </button>
+            </div>
           <div className="glass rounded-xl overflow-hidden">
             <table className="w-full text-sm">
               <thead>
@@ -538,7 +664,62 @@ export default function AdminDashboard() {
                     <td className="px-4 py-3">
                       {u.role === "admin" ? (
                         <span style={{ color: "var(--text-muted)" }}>—</span>
+                      ) : u.role === "teacher" ? (
+                        /* Teacher: multi-class manager */
+                        editingTeacherClasses === u.user_id ? (
+                          <div style={{ minWidth: 220 }}>
+                            <div className="flex flex-wrap gap-1 mb-1">
+                              {(teacherClassMap[u.user_id] || []).map(c => (
+                                <span key={c} className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-full"
+                                  style={{ background: "rgba(16,185,129,0.15)", color: "#6ee7b7", border: "1px solid rgba(16,185,129,0.3)" }}>
+                                  {c}
+                                  <button onClick={() => removeTeacherClass(u.user_id, c)} style={{ lineHeight: 1 }}>✕</button>
+                                </span>
+                              ))}
+                            </div>
+                            <div className="flex gap-1">
+                              <input
+                                placeholder="班级ID"
+                                value={teacherClassInput}
+                                onChange={e => setTeacherClassInput(e.target.value)}
+                                onKeyDown={e => { if (e.key === "Enter") addTeacherClass(u.user_id); }}
+                                className="rounded px-2 py-1 text-xs flex-1"
+                                style={{ background: "rgba(255,255,255,0.06)", border: "1px solid var(--border)", color: "var(--text-primary)" }}
+                              />
+                              <button onClick={() => addTeacherClass(u.user_id)}
+                                className="text-xs px-2 py-1 rounded"
+                                style={{ background: "rgba(99,102,241,0.15)", color: "#a5b4fc", border: "1px solid rgba(99,102,241,0.3)" }}>
+                                +
+                              </button>
+                              <button onClick={() => { updateTeacherClasses(u.user_id, teacherClassMap[u.user_id] || []); setEditingTeacherClasses(null); }}
+                                className="text-xs px-2 py-1 rounded"
+                                style={{ background: "rgba(34,197,94,0.15)", color: "#86efac", border: "1px solid rgba(34,197,94,0.3)" }}>
+                                ✓
+                              </button>
+                              <button onClick={() => setEditingTeacherClasses(null)}
+                                className="text-xs px-1 py-1 rounded"
+                                style={{ color: "var(--text-muted)" }}>
+                                ✕
+                              </button>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="flex flex-wrap gap-1 items-center cursor-pointer"
+                            onClick={() => openTeacherClassEditor(u.user_id, u.class_id)}>
+                            {parseTeacherClasses(u.class_id).length > 0
+                              ? parseTeacherClasses(u.class_id).map(c => (
+                                <span key={c} className="text-xs px-2 py-0.5 rounded-full"
+                                  style={{ background: "rgba(16,185,129,0.1)", color: "#6ee7b7", border: "1px solid rgba(16,185,129,0.25)" }}>
+                                  {c}
+                                </span>
+                              ))
+                              : <span style={{ color: "var(--text-muted)", fontSize: 12 }}>未分班</span>
+                            }
+                            <span style={{ color: "var(--text-muted)", fontSize: 11 }}>✎</span>
+                          </div>
+                        )
                       ) : editingClassUser === u.user_id ? (
+                        /* Student: single-class selector */
                         <div className="flex items-center gap-1">
                           <select
                             defaultValue={u.class_id || ""}
@@ -780,6 +961,134 @@ export default function AdminDashboard() {
           </div>
         )}
       </div>
+
+      {/* 批量导入用户弹窗 */}
+      {showImportModal && (
+        <div style={{
+          position: "fixed", inset: 0, zIndex: 100,
+          background: "rgba(0,0,0,0.7)", backdropFilter: "blur(4px)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+        }} onClick={() => setShowImportModal(false)}>
+          <div style={{
+            width: 580, maxHeight: "85vh", overflow: "auto",
+            background: "#1a1f2e", border: "1px solid rgba(255,255,255,0.1)",
+            borderRadius: 16, boxShadow: "0 24px 48px rgba(0,0,0,0.5)",
+          }} onClick={(e) => e.stopPropagation()}>
+            {/* Header */}
+            <div style={{ padding: "24px 28px 20px", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <h3 style={{ fontSize: 18, fontWeight: 700, color: "#f1f5f9", margin: 0 }}>
+                  批量导入用户
+                </h3>
+                <button onClick={() => setShowImportModal(false)}
+                  style={{ background: "none", border: "none", color: "#64748b", fontSize: 20, cursor: "pointer", padding: 4 }}>
+                  ✕
+                </button>
+              </div>
+              <p style={{ fontSize: 14, color: "#94a3b8", marginTop: 8 }}>
+                每行一个用户，用逗号分隔各字段
+              </p>
+            </div>
+
+            <div style={{ padding: "20px 28px" }}>
+              {/* Format guide */}
+              <div style={{
+                background: "#1e293b", border: "1px solid rgba(99,102,241,0.25)",
+                borderRadius: 12, padding: "16px 20px", marginBottom: 20,
+              }}>
+                <p style={{ fontSize: 13, fontWeight: 600, color: "#818cf8", marginBottom: 10 }}>
+                  格式说明
+                </p>
+                <div style={{
+                  display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 8, marginBottom: 14,
+                }}>
+                  {["用户名", "密码", "角色", "班级ID", "显示名称"].map((field, i) => (
+                    <div key={i} style={{
+                      textAlign: "center", padding: "6px 0", borderRadius: 6,
+                      background: "rgba(99,102,241,0.1)", fontSize: 12, fontWeight: 600, color: "#a5b4fc",
+                    }}>{field}</div>
+                  ))}
+                </div>
+                <p style={{ fontSize: 12, color: "#64748b", marginBottom: 8 }}>
+                  角色可选：student / teacher / admin
+                </p>
+                <div style={{
+                  background: "#0f172a", borderRadius: 8, padding: "12px 16px",
+                  fontFamily: "monospace", fontSize: 13, lineHeight: 1.8, color: "#a7f3d0",
+                }}>
+                  zhangsan,123456,student,class01,张三{"\n"}
+                  lisi,123456,student,class01,李四{"\n"}
+                  wangwu,123456,teacher,class01,王五
+                </div>
+              </div>
+
+              {/* Input area */}
+              <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#cbd5e1", marginBottom: 8 }}>
+                输入用户数据
+              </label>
+              <textarea
+                value={importText}
+                onChange={(e) => setImportText(e.target.value)}
+                rows={8}
+                placeholder={"zhangsan,123456,student,class01,张三\nlisi,123456,student,class01,李四"}
+                style={{
+                  width: "100%", borderRadius: 10, padding: "14px 16px",
+                  background: "#0f172a", border: "1px solid rgba(255,255,255,0.1)",
+                  color: "#e2e8f0", fontFamily: "monospace", fontSize: 13, lineHeight: 1.7,
+                  resize: "vertical", outline: "none",
+                }}
+              />
+
+              {/* Result feedback */}
+              {importResult && (
+                <div style={{
+                  marginTop: 16, borderRadius: 10, padding: "14px 18px",
+                  background: importResult.success > 0 ? "rgba(16,185,129,0.1)" : "rgba(239,68,68,0.1)",
+                  border: `1px solid ${importResult.success > 0 ? "rgba(16,185,129,0.3)" : "rgba(239,68,68,0.3)"}`,
+                }}>
+                  <p style={{ fontSize: 14, fontWeight: 600, color: "#6ee7b7" }}>
+                    成功导入 {importResult.success} 个用户
+                    {importResult.failed > 0 && <span style={{ color: "#fca5a5" }}> ，失败 {importResult.failed} 个</span>}
+                  </p>
+                  {importResult.errors?.length > 0 && (
+                    <div style={{ marginTop: 10 }}>
+                      {importResult.errors.map((err: string, i: number) => (
+                        <p key={i} style={{ fontSize: 13, color: "#fca5a5", lineHeight: 1.6 }}>{err}</p>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Footer */}
+            <div style={{
+              padding: "16px 28px", borderTop: "1px solid rgba(255,255,255,0.08)",
+              display: "flex", justifyContent: "flex-end", gap: 12,
+            }}>
+              <button onClick={() => setShowImportModal(false)}
+                style={{
+                  padding: "10px 20px", borderRadius: 10, fontSize: 14,
+                  background: "transparent", color: "#94a3b8",
+                  border: "1px solid rgba(255,255,255,0.1)", cursor: "pointer",
+                }}>
+                关闭
+              </button>
+              <button onClick={handleBatchImport}
+                disabled={!importText.trim() || importing}
+                style={{
+                  padding: "10px 24px", borderRadius: 10, fontSize: 14, fontWeight: 600,
+                  background: importing ? "rgba(16,185,129,0.15)" : "rgba(16,185,129,0.2)",
+                  color: "#6ee7b7", border: "1px solid rgba(16,185,129,0.35)",
+                  cursor: !importText.trim() || importing ? "not-allowed" : "pointer",
+                  opacity: !importText.trim() || importing ? 0.5 : 1,
+                }}>
+                {importing ? "导入中..." : "开始导入"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

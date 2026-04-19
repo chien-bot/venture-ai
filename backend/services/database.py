@@ -58,11 +58,12 @@ def init_db():
             );
 
             CREATE TABLE IF NOT EXISTS chat_messages (
-                id          INTEGER PRIMARY KEY AUTOINCREMENT,
-                session_id  TEXT NOT NULL,
-                role        TEXT NOT NULL,
-                content     TEXT NOT NULL,
-                created_at  TEXT DEFAULT (datetime('now'))
+                id              INTEGER PRIMARY KEY AUTOINCREMENT,
+                session_id      TEXT NOT NULL,
+                role            TEXT NOT NULL,
+                content         TEXT NOT NULL,
+                debug_logs_json TEXT,
+                created_at      TEXT DEFAULT (datetime('now'))
             );
 
             CREATE TABLE IF NOT EXISTS score_snapshots (
@@ -223,6 +224,34 @@ def init_db():
         except Exception:
             pass  # column already exists
 
+        # Add debug_logs_json column to chat_messages if not exists (safe migration)
+        try:
+            conn.execute("ALTER TABLE chat_messages ADD COLUMN debug_logs_json TEXT")
+        except Exception:
+            pass  # column already exists
+
+        # Add bp_content_json to projects for generated business plans (safe migration)
+        try:
+            conn.execute("ALTER TABLE projects ADD COLUMN bp_content_json TEXT")
+        except Exception:
+            pass  # column already exists
+
+        # Add project_type to projects for 创新/商业/公益 classification (safe migration)
+        try:
+            conn.execute("ALTER TABLE projects ADD COLUMN project_type TEXT")
+        except Exception:
+            pass  # column already exists
+
+        # Add capability_profile_json + updated_at for P3-3 cache (safe migration)
+        try:
+            conn.execute("ALTER TABLE projects ADD COLUMN capability_profile_json TEXT")
+        except Exception:
+            pass
+        try:
+            conn.execute("ALTER TABLE projects ADD COLUMN capability_profile_updated_at TEXT")
+        except Exception:
+            pass
+
         # Clean up expired tokens on startup
         conn.execute("DELETE FROM auth_tokens WHERE expires_at IS NOT NULL AND expires_at <= datetime('now')")
 
@@ -275,6 +304,46 @@ def init_db():
 
 
 # ── User / Auth ────────────────────────────────────────────────────
+
+def get_teacher_class_ids(teacher_id: str) -> list:
+    """Return list of class_ids a teacher manages (stored as JSON array or plain string)."""
+    with get_conn() as conn:
+        row = conn.execute(
+            "SELECT class_id FROM users WHERE user_id=?", (teacher_id,)
+        ).fetchone()
+    if not row or not row["class_id"]:
+        return []
+    raw = row["class_id"]
+    try:
+        parsed = json.loads(raw)
+        if isinstance(parsed, list):
+            return [c for c in parsed if c]
+    except (json.JSONDecodeError, TypeError):
+        pass
+    return [raw] if raw else []
+
+
+def set_teacher_class_ids(teacher_id: str, class_ids: list) -> None:
+    """Persist a teacher's class list as JSON array."""
+    with get_conn() as conn:
+        conn.execute(
+            "UPDATE users SET class_id=? WHERE user_id=?",
+            (json.dumps(class_ids, ensure_ascii=False), teacher_id)
+        )
+
+
+def get_students_in_classes(class_ids: list) -> set:
+    """Return set of student user_ids belonging to any of the given class_ids."""
+    if not class_ids:
+        return set()
+    with get_conn() as conn:
+        placeholders = ",".join("?" * len(class_ids))
+        rows = conn.execute(
+            f"SELECT user_id FROM users WHERE role='student' AND class_id IN ({placeholders})",
+            class_ids
+        ).fetchall()
+    return {row["user_id"] for row in rows}
+
 
 def save_user(user_id: str, username: str, password: str, role: str,
               display_name: str = "", class_id: str = "") -> bool:
@@ -370,14 +439,16 @@ def save_project(project: dict):
     with get_conn() as conn:
         conn.execute(
             """INSERT OR REPLACE INTO projects
-               (project_id, owner_id, name, industry, description, stage, scores_json, diagnosis_json, rubric_full_json, created_at)
-               VALUES (?,?,?,?,?,?,?,?,?,?)""",
+               (project_id, owner_id, name, industry, description, stage, scores_json, diagnosis_json, rubric_full_json, bp_content_json, project_type, created_at)
+               VALUES (?,?,?,?,?,?,?,?,?,?,?,?)""",
             (project["project_id"], project["owner_id"], project["name"],
              project.get("industry", ""), project.get("description", ""),
              project.get("stage", "discovery"),
              json.dumps(project.get("scores", {})),
              json.dumps(project.get("diagnosis", [])),
              json.dumps(project.get("rubric_full", {})),
+             json.dumps(project["bp_content"], ensure_ascii=False) if project.get("bp_content") else None,
+             project.get("project_type"),
              project.get("created_at", ""))
         )
 
@@ -453,7 +524,28 @@ def _hydrate_project(row: dict) -> dict:
     row["scores"] = json.loads(row.pop("scores_json", "{}") or "{}")
     row["diagnosis"] = json.loads(row.pop("diagnosis_json", "[]") or "[]")
     row["rubric_full"] = json.loads(row.pop("rubric_full_json", "{}") or "{}")
+    bp_raw = row.pop("bp_content_json", None)
+    row["bp_content"] = json.loads(bp_raw) if bp_raw else None
+    cp_raw = row.pop("capability_profile_json", None)
+    row["capability_profile"] = json.loads(cp_raw) if cp_raw else None
     return row
+
+
+def save_capability_profile(project_id: str, profile: dict):
+    """Persist capability_profile JSON + timestamp for P3-3 cache."""
+    with get_conn() as conn:
+        conn.execute(
+            "UPDATE projects SET capability_profile_json=?, capability_profile_updated_at=datetime('now') WHERE project_id=?",
+            (json.dumps(profile, ensure_ascii=False), project_id)
+        )
+
+
+def clear_capability_profile(project_id: str):
+    with get_conn() as conn:
+        conn.execute(
+            "UPDATE projects SET capability_profile_json=NULL, capability_profile_updated_at=NULL WHERE project_id=?",
+            (project_id,)
+        )
 
 
 # ── Chat Sessions ──────────────────────────────────────────────────
@@ -477,21 +569,32 @@ def get_project_for_session(session_id: str) -> str:
         return row["project_id"] if row else ""
 
 
-def append_chat(session_id: str, role: str, content: str):
+def append_chat(session_id: str, role: str, content: str, debug_logs: list | None = None):
+    import json as _json
     with get_conn() as conn:
         conn.execute(
-            "INSERT INTO chat_messages (session_id, role, content) VALUES (?,?,?)",
-            (session_id, role, content)
+            "INSERT INTO chat_messages (session_id, role, content, debug_logs_json) VALUES (?,?,?,?)",
+            (session_id, role, content, _json.dumps(debug_logs, ensure_ascii=False) if debug_logs else None)
         )
 
 
 def get_chat_history(session_id: str) -> list[dict]:
+    import json as _json
     with get_conn() as conn:
         rows = conn.execute(
-            "SELECT role, content FROM chat_messages WHERE session_id=? ORDER BY id",
+            "SELECT role, content, debug_logs_json FROM chat_messages WHERE session_id=? ORDER BY id",
             (session_id,)
         ).fetchall()
-        return [{"role": r["role"], "content": r["content"]} for r in rows]
+        result = []
+        for r in rows:
+            msg: dict = {"role": r["role"], "content": r["content"]}
+            if r["debug_logs_json"]:
+                try:
+                    msg["debug_logs"] = _json.loads(r["debug_logs_json"])
+                except (ValueError, TypeError):
+                    pass
+            result.append(msg)
+        return result
 
 
 def get_all_chat_messages(session_id: str) -> list[dict]:

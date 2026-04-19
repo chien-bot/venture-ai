@@ -162,6 +162,9 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
     from prompts.competition import COMPETITION_SYSTEM_PROMPT
     from config import USE_MOCK_API
 
+    from services.debug_logger import start_session_capture, flush_session_logs
+    start_session_capture(session_id)
+
     append_chat(session_id, "user", message)
     state = _build_initial_state(session_id, message, project_id)
 
@@ -435,7 +438,8 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
     clean_reply = critic_result.get("final_reply", clean_reply)
 
     # Save reply and update project scores (with EMA smoothing)
-    append_chat(session_id, "assistant", clean_reply)
+    debug_logs = flush_session_logs(session_id)
+    append_chat(session_id, "assistant", clean_reply, debug_logs=debug_logs if debug_logs else None)
     if project_id and (new_scores or stage or diagnosis or rubric_full):
         from services.session_store import update_project_scores
         from services.database import get_project, save_project
@@ -483,5 +487,9 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
         meta["knowledge_recommendations"] = knowledge_recs
     if score_breakdown:
         meta["score_breakdown"] = score_breakdown
+
+    # ★ 附带 debug 日志供前端 Debug Panel 展示
+    if debug_logs:
+        meta["debug_logs"] = debug_logs
 
     yield f"data: {json.dumps(meta)}\n\n"

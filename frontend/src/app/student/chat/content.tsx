@@ -94,6 +94,11 @@ export default function StudentChatPageContent() {
   const [intakeData, setIntakeData] = useState<Record<string, string>>({});
   const [intakeSubmitting, setIntakeSubmitting] = useState(false);
   const [intakeGaps, setIntakeGaps] = useState<any[]>([]);
+  // Debug Panel（知识图谱检索日志）
+  const [debugLogs, setDebugLogs] = useState<any[]>([]);
+  const [showDebugPanel, setShowDebugPanel] = useState(false);
+  const [debugBtnPos, setDebugBtnPos] = useState({ x: 24, y: 24 }); // right, bottom
+  const debugDragRef = useRef<{ dragging: boolean; startX: number; startY: number; origX: number; origY: number; moved: boolean }>({ dragging: false, startX: 0, startY: 0, origX: 24, origY: 24, moved: false });
 
   const handleFileUpload = async (file: File) => {
     if (!file || !selectedProjectId) return;
@@ -191,7 +196,13 @@ export default function StudentChatPageContent() {
         // Only restore if it's a coach/auto session, not a defense session
         if (res.exists && res.messages?.length > 0 && res.agent_type !== "defense") {
           setSessionId(res.session_id);
-          setMessages(res.messages.map((m: any) => ({ role: m.role, content: m.content })));
+          const msgs = res.messages;
+          setMessages(msgs.map((m: any) => ({ role: m.role, content: m.content })));
+          // Restore debug logs from history
+          const restoredLogs = msgs
+            .filter((m: any) => m.role === "assistant" && m.debug_logs)
+            .flatMap((m: any) => m.debug_logs);
+          if (restoredLogs.length > 0) setDebugLogs(restoredLogs);
           if (res.scores) setScores(res.scores);
           if (res.stage) setStage(res.stage);
           if (res.diagnosis) setDiagnosis(res.diagnosis);
@@ -297,7 +308,13 @@ export default function StudentChatPageContent() {
       const freshProjects = projRes.projects || [];
       setProjects(freshProjects);
       setSessionId(session.session_id);
-      setMessages((res.messages || []).map((m: any) => ({ role: m.role, content: m.content })));
+      const loadedMessages = res.messages || [];
+      setMessages(loadedMessages.map((m: any) => ({ role: m.role, content: m.content })));
+      // Restore debug logs from all assistant messages in history
+      const restoredLogs = loadedMessages
+        .filter((m: any) => m.role === "assistant" && m.debug_logs)
+        .flatMap((m: any) => m.debug_logs);
+      if (restoredLogs.length > 0) setDebugLogs(restoredLogs);
       if (session.project_id) setSelectedProjectId(session.project_id);
       setActiveSessionProject(session.project_name ? { name: session.project_name } : null);
       // Restore scores and rubric from project
@@ -305,13 +322,12 @@ export default function StudentChatPageContent() {
       setDiagnosis(res.diagnosis || []);
       setStage(res.stage || "discovery");
       setRubricFull(res.rubric_full || null);
-      // If rubric_full exists, set intent to grader; otherwise use agent_type
+      setRubricScores(res.rubric_scores || null);
+      // Always trust the session's own agent_type; rubric_full is project-scoped
+      // so it shouldn't override the session's actual mode
       const agentType = res.agent_type || "coach";
-      if (res.rubric_full && Object.keys(res.rubric_full).length > 0) {
-        setIntent("grader");
-      } else {
-        setIntent(agentType);
-      }
+      setIntent(agentType === "auto" ? "coach" : agentType);
+      setSelectedAgentType(agentType as any);
     } catch {}
   };
 
@@ -357,6 +373,7 @@ export default function StudentChatPageContent() {
           if (done.diagnosis) setDiagnosis(done.diagnosis);
           if (done.rubric_scores) setRubricScores(done.rubric_scores);
           if (done.rubric_full) setRubricFull(done.rubric_full);
+          if (done.debug_logs) setDebugLogs((prev) => [...prev, ...done.debug_logs]);
           // Attach fix_tasks to the last assistant message
           if (done.fix_tasks?.length) {
             setMessages((prev) => {
@@ -588,19 +605,31 @@ export default function StudentChatPageContent() {
         {/* Current project indicator bar */}
         <div className="flex items-center gap-2 px-4 py-2 flex-shrink-0"
              style={{ borderBottom: "1px solid var(--border)", background: "rgba(8,13,26,0.9)" }}>
-          {selectedProject ? (
-            <>
-              <span className="text-xs" style={{ color: "var(--text-muted)" }}>当前项目：</span>
-              <span className="text-xs font-semibold" style={{ color: "#a5b4fc" }}>{selectedProject.name}</span>
-              <span className="text-xs ml-1" style={{ color: "var(--text-muted)" }}>
-                · {selectedProject.industry || "未设置行业"}
-              </span>
-            </>
-          ) : (
-            <span className="text-xs" style={{ color: "var(--text-muted)" }}>
-              未选择项目 — 输入 <code className="px-1 py-0.5 rounded text-xs" style={{ background: "rgba(99,102,241,0.15)", color: "#a5b4fc" }}>/</code> 快速切换或创建项目
-            </span>
-          )}
+          <span className="text-xs" style={{ color: "var(--text-muted)" }}>当前项目：</span>
+          <select
+            value={selectedProjectId}
+            onChange={(e) => {
+              const pid = e.target.value;
+              if (!pid) return;
+              handleProjectChange(pid);
+            }}
+            className="text-xs px-2 py-1 rounded-lg outline-none cursor-pointer"
+            style={{
+              background: "rgba(99,102,241,0.12)",
+              border: "1px solid rgba(99,102,241,0.3)",
+              color: "#a5b4fc",
+              fontWeight: 600,
+              maxWidth: 220,
+            }}
+            title="切换项目（新建对话会绑定到当前项目）"
+          >
+            {!selectedProjectId && <option value="">未选择项目</option>}
+            {projects.map((p) => (
+              <option key={p.project_id} value={p.project_id} style={{ background: "#0a0e1c", color: "#e5e7eb" }}>
+                {p.name} {p.industry ? `· ${p.industry}` : ""}
+              </option>
+            ))}
+          </select>
           <div className="ml-auto flex items-center gap-1.5">
             {/* Agent mode selector */}
             {(["auto","coach","tutor","competition","grader"] as const).map((mode) => {
@@ -841,7 +870,7 @@ export default function StudentChatPageContent() {
           </div>
         </div>
       )}
-      {false && <div className="w-72 flex flex-col flex-shrink-0 overflow-hidden"
+      {intent !== "grader" && <div className="w-72 flex flex-col flex-shrink-0 overflow-hidden"
            style={{ borderLeft: "1px solid var(--border)", background: "rgba(8,13,26,0.6)" }}>
         {(intent === "coach" || intent === "hybrid") && (
           <div className="flex-1 overflow-y-auto p-4">
@@ -996,6 +1025,128 @@ export default function StudentChatPageContent() {
           </div>
         )}
       </div>}
+
+      {/* Debug Panel 浮动按钮（可拖拽） */}
+      <button
+        title="知识图谱检索日志（可拖拽移动）"
+        onMouseDown={(e) => {
+          debugDragRef.current = { dragging: true, startX: e.clientX, startY: e.clientY, origX: debugBtnPos.x, origY: debugBtnPos.y, moved: false };
+          const onMove = (ev: MouseEvent) => {
+            const d = debugDragRef.current;
+            if (!d.dragging) return;
+            const dx = ev.clientX - d.startX;
+            const dy = ev.clientY - d.startY;
+            if (Math.abs(dx) > 3 || Math.abs(dy) > 3) d.moved = true;
+            setDebugBtnPos({ x: Math.max(8, d.origX - dx), y: Math.max(8, d.origY + (d.startY - ev.clientY)) });
+          };
+          const onUp = () => {
+            const d = debugDragRef.current;
+            d.dragging = false;
+            if (!d.moved) setShowDebugPanel((v) => !v);
+            window.removeEventListener("mousemove", onMove);
+            window.removeEventListener("mouseup", onUp);
+          };
+          window.addEventListener("mousemove", onMove);
+          window.addEventListener("mouseup", onUp);
+        }}
+        style={{
+          position: "fixed", bottom: debugBtnPos.y, right: debugBtnPos.x, zIndex: 50,
+          width: 44, height: 44, borderRadius: "50%",
+          background: debugLogs.length > 0 ? "linear-gradient(135deg, #6366f1, #8b5cf6)" : "rgba(255,255,255,0.08)",
+          border: "1px solid rgba(255,255,255,0.15)", color: "#fff",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          cursor: "grab", fontSize: 18, boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+          userSelect: "none",
+        }}
+      >
+        🔍
+        {debugLogs.length > 0 && (
+          <span style={{
+            position: "absolute", top: -4, right: -4,
+            background: "#ef4444", color: "#fff", fontSize: 10,
+            borderRadius: "50%", width: 18, height: 18,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            fontWeight: 700,
+          }}>{debugLogs.length}</span>
+        )}
+      </button>
+
+      {/* Debug Panel 面板 */}
+      {showDebugPanel && (
+        <div style={{
+          position: "fixed", bottom: debugBtnPos.y + 56, right: debugBtnPos.x, zIndex: 50,
+          width: 480, maxHeight: "70vh",
+          background: "rgba(10,15,30,0.97)", border: "1px solid rgba(99,102,241,0.3)",
+          borderRadius: 16, boxShadow: "0 8px 40px rgba(0,0,0,0.5)",
+          display: "flex", flexDirection: "column", overflow: "hidden",
+        }}>
+          <div style={{
+            padding: "14px 18px", borderBottom: "1px solid rgba(255,255,255,0.08)",
+            display: "flex", alignItems: "center", justifyContent: "space-between",
+          }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <span style={{ fontSize: 16 }}>🧠</span>
+              <span style={{ fontWeight: 700, fontSize: 14, color: "#e2e8f0" }}>知识图谱检索日志</span>
+              <span style={{
+                fontSize: 10, padding: "2px 8px", borderRadius: 10,
+                background: "rgba(99,102,241,0.15)", color: "#a5b4fc",
+              }}>{debugLogs.length} 条</span>
+            </div>
+            <button onClick={() => setShowDebugPanel(false)} style={{
+              background: "none", border: "none", color: "var(--text-muted)",
+              cursor: "pointer", fontSize: 18, lineHeight: 1,
+            }}>✕</button>
+          </div>
+          <div style={{ flex: 1, overflowY: "auto", padding: "12px 16px" }}>
+            {debugLogs.length === 0 ? (
+              <div style={{ textAlign: "center", padding: "40px 0", color: "var(--text-muted)" }}>
+                <div style={{ fontSize: 32, marginBottom: 12, opacity: 0.4 }}>📭</div>
+                <p style={{ fontSize: 12 }}>暂无检索日志，发送消息后将自动记录</p>
+              </div>
+            ) : (
+              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                {debugLogs.map((log, i) => {
+                  const tagColors: Record<string, string> = {
+                    AGENT_START: "#22d3ee",
+                    RETRIEVED_KG_NODES: "#10b981",
+                    RETRIEVED_HYPEREDGES: "#8b5cf6",
+                    FALLACY_LABEL: "#ef4444",
+                    STRATEGY_SELECTED: "#f59e0b",
+                    RULE_TRIGGERED: "#f97316",
+                    COMPETITION_TEMPLATE: "#6366f1",
+                    AGENT_DONE: "#64748b",
+                    INFO: "#94a3b8",
+                    WARNING: "#fbbf24",
+                  };
+                  const tagColor = tagColors[log.tag] || "#94a3b8";
+                  return (
+                    <div key={i} style={{
+                      padding: "10px 12px", borderRadius: 10,
+                      background: "rgba(255,255,255,0.03)",
+                      border: `1px solid ${tagColor}22`,
+                    }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 6 }}>
+                        <span style={{
+                          fontSize: 9, padding: "2px 6px", borderRadius: 6,
+                          background: `${tagColor}20`, color: tagColor,
+                          fontWeight: 700, fontFamily: "monospace",
+                        }}>{log.tag}</span>
+                        <span style={{ fontSize: 10, color: "var(--text-muted)", fontFamily: "monospace" }}>{log.agent}</span>
+                        <span style={{ fontSize: 10, color: "var(--text-muted)", marginLeft: "auto" }}>{log.ts}</span>
+                      </div>
+                      <pre style={{
+                        fontSize: 11, color: "#cbd5e1", margin: 0,
+                        whiteSpace: "pre-wrap", wordBreak: "break-all",
+                        fontFamily: "monospace", lineHeight: 1.5,
+                      }}>{typeof log.data === "object" ? JSON.stringify(log.data, null, 2) : String(log.data)}</pre>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

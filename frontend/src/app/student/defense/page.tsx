@@ -24,6 +24,7 @@ function DefenseContent() {
   const [currentRound, setCurrentRound] = useState(0);
   const [started, setStarted] = useState(false);
   const [report, setReport] = useState<any>(null);
+  const reportPanelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     listProjects().then((r) => {
@@ -70,6 +71,12 @@ function DefenseContent() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (report && reportPanelRef.current) {
+      reportPanelRef.current.scrollTop = 0;
+    }
+  }, [report]);
 
   const selectedProject = projects.find((p) => p.project_id === selectedProjectId);
   const styleInfo = INVESTOR_STYLES.find((s) => s.key === investorStyle) || INVESTOR_STYLES[0];
@@ -186,7 +193,7 @@ function DefenseContent() {
       </div>
 
       {/* Report sidebar */}
-      <div className="w-80 flex flex-col flex-shrink-0 overflow-y-auto p-4"
+      <div ref={reportPanelRef} className="w-80 flex flex-col flex-shrink-0 overflow-y-auto p-4"
            style={{ borderLeft: "1px solid var(--border)", background: "rgba(8,13,26,0.6)" }}>
         {report ? (
           <>

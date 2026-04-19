@@ -1,5 +1,5 @@
 import io
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from services.session_store import get_all_projects, get_project
@@ -10,9 +10,30 @@ from services.database import (
     get_all_ratings,
     save_instructor_review_notes, get_instructor_review_notes,
     save_teacher_intervention, get_teacher_interventions, delete_teacher_intervention,
+    get_uploaded_files_for_project,
+    get_user_by_token, get_teacher_class_ids, get_students_in_classes,
 )
 from services.evidence_tracer import EvidenceTracer
 from collections import Counter
+
+
+def _get_teacher_projects(request: Request) -> list:
+    """Return only projects owned by students in the teacher's assigned classes.
+    Falls back to all projects if the teacher has no classes assigned yet."""
+    auth = request.headers.get("Authorization", "")
+    token = auth.replace("Bearer ", "").strip()
+    teacher = get_user_by_token(token) if token else None
+
+    all_projects = get_all_projects()
+    if not teacher:
+        return all_projects
+
+    class_ids = get_teacher_class_ids(teacher["user_id"])
+    if not class_ids:
+        return all_projects  # unassigned teacher sees all (fallback)
+
+    allowed_student_ids = get_students_in_classes(class_ids)
+    return [p for p in all_projects if p.get("owner_id") in allowed_student_ids]
 
 router = APIRouter(prefix="/api/teacher", tags=["teacher"])
 
@@ -33,8 +54,8 @@ HIGH_RISK_THRESHOLD = 5.0
 
 
 @router.get("/dashboard")
-def get_dashboard(class_id: str = "class_2026_spring"):
-    projects = get_all_projects()
+def get_dashboard(request: Request, class_id: str = "class_2026_spring"):
+    projects = _get_teacher_projects(request)
 
     if not projects:
         return {
@@ -161,8 +182,8 @@ def _generate_suggestions(avg_scores: dict, top_mistakes: list, high_risk: list)
 
 
 @router.get("/projects")
-def get_all_class_projects(class_id: str = "class_2026_spring"):
-    projects = get_all_projects()
+def get_all_class_projects(request: Request, class_id: str = "class_2026_spring"):
+    projects = _get_teacher_projects(request)
     return {"projects": projects}
 
 
@@ -279,7 +300,7 @@ def get_project_conversations(project_id: str):
 
 
 @router.get("/export/excel")
-def export_excel(class_id: str = "class_2026_spring"):
+def export_excel(request: Request, class_id: str = "class_2026_spring"):
     """Export all projects as an Excel file."""
     try:
         import openpyxl
@@ -288,7 +309,7 @@ def export_excel(class_id: str = "class_2026_spring"):
         from fastapi import HTTPException
         raise HTTPException(status_code=500, detail="openpyxl 未安装，请运行 pip install openpyxl")
 
-    projects = get_all_projects()
+    projects = _get_teacher_projects(request)
     dims = ["empathy", "ideation", "business", "execution", "pitching"]
     dim_labels = {"empathy": "痛点发现", "ideation": "方案策划", "business": "商业建模",
                   "execution": "资源杠杆", "pitching": "路演表达"}
@@ -605,6 +626,16 @@ def get_capability_profile(project_id: str):
     for sess in sessions[-3:]:
         all_msgs.extend(get_chat_history(sess["session_id"]))
 
+    # Inject uploaded file content (not persisted in chat_messages)
+    files = get_uploaded_files_for_project(project_id)
+    file_texts = [
+        f"[文件: {f['filename']}]\n{f['extracted_text'][:2000]}"
+        for f in files if f.get("extracted_text")
+    ]
+    if file_texts and all_msgs:
+        file_block = "已上传文件参考资料：\n" + "\n\n".join(file_texts[-3:])
+        all_msgs = [{"role": "user", "content": file_block}, *all_msgs]
+
     if not all_msgs:
         return {
             "project_id": project_id,
@@ -637,12 +668,157 @@ def get_capability_profile(project_id: str):
     }
 
 
+@router.get("/class-profile")
+def get_class_profile(request: Request, class_id: str = ""):
+    """
+    班级五维能力画像：
+    - 汇总班级所有学生（或指定班级）项目的五维平均分
+    - 按学生分组展示雷达对比
+    - 高/中/低分段学生分布
+    """
+    from services.database import get_conn
+
+    # 获取教师可见的班级范围
+    auth = request.headers.get("Authorization", "")
+    token = auth.replace("Bearer ", "").strip()
+    teacher = get_user_by_token(token) if token else None
+    teacher_class_ids = get_teacher_class_ids(teacher["user_id"]) if teacher else []
+    # 如果教师未分班，可见所有班级（fallback）
+    restrict_classes = teacher_class_ids if teacher_class_ids else None
+
+    # 加载学生 → 按教师班级范围 + 前端筛选器过滤
+    with get_conn() as conn:
+        if class_id:
+            # 前端选了某个具体班级
+            if restrict_classes and class_id not in restrict_classes:
+                students = []  # 教师无权查看该班级
+            else:
+                rows = conn.execute(
+                    "SELECT user_id, username, display_name, class_id FROM users WHERE role='student' AND class_id=?",
+                    (class_id,)
+                ).fetchall()
+                students = [dict(r) for r in rows]
+        elif restrict_classes:
+            placeholders = ",".join("?" * len(restrict_classes))
+            rows = conn.execute(
+                f"SELECT user_id, username, display_name, class_id FROM users WHERE role='student' AND class_id IN ({placeholders})",
+                restrict_classes
+            ).fetchall()
+            students = [dict(r) for r in rows]
+        else:
+            rows = conn.execute(
+                "SELECT user_id, username, display_name, class_id FROM users WHERE role='student'"
+            ).fetchall()
+            students = [dict(r) for r in rows]
+
+        # 班级筛选器只显示教师有权限的班级
+        if restrict_classes:
+            placeholders = ",".join("?" * len(restrict_classes))
+            class_rows = conn.execute(
+                f"SELECT DISTINCT class_id FROM users WHERE role='student' AND class_id IN ({placeholders}) AND class_id IS NOT NULL AND class_id != '' ORDER BY class_id",
+                restrict_classes
+            ).fetchall()
+        else:
+            class_rows = conn.execute(
+                "SELECT DISTINCT class_id FROM users WHERE role='student' AND class_id IS NOT NULL AND class_id != '' ORDER BY class_id"
+            ).fetchall()
+        all_classes = [r[0] for r in class_rows]
+
+    all_projects = get_all_projects()
+    proj_by_owner: dict[str, list[dict]] = {}
+    for p in all_projects:
+        oid = p.get("owner_id", "")
+        if oid:
+            proj_by_owner.setdefault(oid, []).append(p)
+
+    DIMS = ["empathy", "ideation", "business", "execution", "pitching"]
+    DIM_LABELS = {
+        "empathy": "痛点发现", "ideation": "方案策划",
+        "business": "商业建模", "execution": "资源杠杆", "pitching": "路演表达"
+    }
+
+    # 每个学生的平均五维分数（基于其所有项目平均）
+    student_profiles: list[dict] = []
+    class_scores_agg: dict[str, list[float]] = {d: [] for d in DIMS}
+
+    for stu in students:
+        uid = stu["user_id"]
+        stu_projects = proj_by_owner.get(uid, [])
+        if not stu_projects:
+            continue
+        per_dim: dict[str, list[float]] = {d: [] for d in DIMS}
+        for p in stu_projects:
+            scores = p.get("scores") or {}
+            for d in DIMS:
+                v = scores.get(d)
+                if isinstance(v, (int, float)) and v > 0:
+                    per_dim[d].append(float(v))
+        avg_scores = {d: round(sum(v)/len(v), 1) if v else 0.0 for d, v in per_dim.items()}
+        if any(avg_scores.values()):
+            overall = round(sum(v for v in avg_scores.values() if v > 0) /
+                            max(1, sum(1 for v in avg_scores.values() if v > 0)), 1)
+            student_profiles.append({
+                "user_id": uid,
+                "username": stu["username"],
+                "display_name": stu.get("display_name") or stu["username"],
+                "class_id": stu.get("class_id") or "",
+                "project_count": len(stu_projects),
+                "scores": avg_scores,
+                "overall": overall,
+            })
+            for d, val in avg_scores.items():
+                if val > 0:
+                    class_scores_agg[d].append(val)
+
+    class_avg = {d: round(sum(v)/len(v), 1) if v else 0.0 for d, v in class_scores_agg.items()}
+
+    # 强弱维度分析
+    non_zero = {d: v for d, v in class_avg.items() if v > 0}
+    strongest = max(non_zero.items(), key=lambda x: x[1]) if non_zero else None
+    weakest = min(non_zero.items(), key=lambda x: x[1]) if non_zero else None
+
+    # 学生分数段分布（按 overall 平均）
+    distribution = {"excellent": 0, "good": 0, "pass": 0, "weak": 0}  # ≥8 / 6-8 / 4-6 / <4
+    for sp in student_profiles:
+        o = sp["overall"]
+        if o >= 8: distribution["excellent"] += 1
+        elif o >= 6: distribution["good"] += 1
+        elif o >= 4: distribution["pass"] += 1
+        else: distribution["weak"] += 1
+
+    # 按 overall 降序排列学生
+    student_profiles.sort(key=lambda s: s["overall"], reverse=True)
+
+    return {
+        "class_id": class_id or "所有班级",
+        "all_classes": all_classes,
+        "dim_labels": DIM_LABELS,
+        "student_count": len(students),
+        "scored_student_count": len(student_profiles),
+        "class_avg_scores": class_avg,
+        "strongest_dim": {"key": strongest[0], "label": DIM_LABELS[strongest[0]], "score": strongest[1]} if strongest else None,
+        "weakest_dim": {"key": weakest[0], "label": DIM_LABELS[weakest[0]], "score": weakest[1]} if weakest else None,
+        "distribution": distribution,
+        "students": student_profiles,
+    }
+
+
 @router.get("/knowledge-coverage")
-def get_knowledge_coverage():
+def get_knowledge_coverage(request: Request):
     """
     扫描所有 tutor 会话，统计哪些概念已被讲解、各项目学生学习情况。
     """
     from services.database import get_conn
+
+    # Filter by teacher's assigned classes
+    auth = request.headers.get("Authorization", "")
+    token = auth.replace("Bearer ", "").strip()
+    teacher = get_user_by_token(token) if token else None
+    allowed_student_ids = None
+    if teacher:
+        class_ids = get_teacher_class_ids(teacher["user_id"])
+        if class_ids:
+            allowed_student_ids = get_students_in_classes(class_ids)
 
     with get_conn() as conn:
         # Get all tutor/hybrid sessions
@@ -651,6 +827,9 @@ def get_knowledge_coverage():
             "FROM chat_sessions cs LEFT JOIN projects p ON cs.project_id = p.project_id "
             "WHERE cs.agent_type IN ('tutor', 'hybrid', 'auto') ORDER BY cs.created_at"
         ).fetchall()
+
+    if allowed_student_ids is not None:
+        sessions = [s for s in sessions if (s["owner_id"] or "") in allowed_student_ids]
 
     # concept → {count: int, projects: set, students: set}
     concept_stats: dict[str, dict] = {

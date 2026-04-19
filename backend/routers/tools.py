@@ -10,7 +10,7 @@ routers/tools.py
 from __future__ import annotations
 
 import re
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 from pydantic import BaseModel
 from services.database import (
     get_score_snapshots, get_all_projects,
@@ -20,6 +20,7 @@ from services.database import (
     get_project_activity_in_range, save_weekly_report,
     get_weekly_reports, get_all_weekly_reports,
     update_learning_task_status,
+    get_user_by_token, get_teacher_class_ids, get_students_in_classes,
 )
 from services.learning_path import get_or_generate_learning_path, generate_learning_path
 from services.evidence_tracer import EvidenceTracer
@@ -681,10 +682,19 @@ def get_weekly_report(project_id: str, week_start: str = ""):
 
 
 @router.get("/weekly-reports/all")
-def get_all_reports(week_start: str = ""):
+def get_all_reports(request: Request, week_start: str = ""):
     """Get weekly reports for all projects (teacher view)."""
     ws, we = _current_week_range(week_start or None)
     all_projects = get_all_projects()
+    # Filter by teacher's assigned classes
+    auth = request.headers.get("Authorization", "")
+    token = auth.replace("Bearer ", "").strip()
+    teacher = get_user_by_token(token) if token else None
+    if teacher:
+        class_ids = get_teacher_class_ids(teacher["user_id"])
+        if class_ids:
+            allowed = get_students_in_classes(class_ids)
+            all_projects = [p for p in all_projects if p.get("owner_id") in allowed]
     reports = []
     for p in all_projects:
         try:

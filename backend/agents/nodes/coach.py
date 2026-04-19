@@ -391,18 +391,27 @@ def coach_node(state: AgentState) -> AgentState:
             proj_desc = intake_data.get("solution_desc") or intake_data.get("pain_scenario") or ""
             proj_industry = intake_data.get("industry_choice", "")
             proj_biz = intake_data.get("revenue_model", "")
-            if not proj_desc and project_id:
+            proj_type = ""
+            if project_id:
                 from services.database import get_project
                 proj_info = get_project(project_id)
                 if proj_info:
-                    proj_desc = proj_info.get("description", "")
-                    proj_industry = proj_info.get("industry", proj_industry)
+                    if not proj_desc:
+                        proj_desc = proj_info.get("description", "")
+                        proj_industry = proj_info.get("industry", proj_industry)
+                    proj_type = proj_info.get("project_type") or ""
             if proj_desc:
                 matched = match_playbook(proj_desc, proj_industry, proj_biz)
                 if matched:
                     pb_prompt = format_playbook_for_prompt(matched[0]["playbook_id"])
                     if pb_prompt:
                         system += f"\n\n{pb_prompt}"
+            # ★ 项目类型差异化提示注入（创新/商业/公益）
+            if proj_type:
+                from routers.projects import PROJECT_TYPE_FOCUS
+                type_focus = PROJECT_TYPE_FOCUS.get(proj_type, "")
+                if type_focus:
+                    system += f"\n\n{type_focus}\n请在提问与反馈中围绕上述重点展开。"
         except Exception:
             pass
 

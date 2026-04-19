@@ -35,6 +35,7 @@ class ProjectCreate(BaseModel):
     name: str
     industry: str = ""
     description: str = ""
+    project_type: Optional[str] = None  # 创新项目 / 商业项目 / 公益项目
 
 
 class ProjectInfo(BaseModel):
@@ -46,6 +47,7 @@ class ProjectInfo(BaseModel):
     owner_id: str = ""
     scores: dict = {}
     diagnosis: list = []
+    project_type: Optional[str] = None
     created_at: str = ""
 
 

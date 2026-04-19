@@ -62,10 +62,10 @@ export async function logout() {
   }
 }
 
-export async function register(username: string, password: string, displayName: string = "", classId: string = "") {
+export async function register(username: string, password: string, displayName: string = "", classId: string = "", role: string = "student") {
   return request("/api/auth/register", {
     method: "POST",
-    body: JSON.stringify({ username, password, display_name: displayName, class_id: classId }),
+    body: JSON.stringify({ username, password, display_name: displayName, class_id: classId, role }),
   });
 }
 
@@ -188,6 +188,45 @@ export async function sendDefenseMessage(
 }
 
 // Projects
+export async function getMyProfile() {
+  return request("/api/projects/my-profile");
+}
+
+export async function refreshMyProfile() {
+  return request("/api/projects/my-profile/refresh", { method: "POST" });
+}
+
+// Business Plan
+export async function generateBusinessPlan(projectId: string) {
+  return request(`/api/projects/${projectId}/generate-bp`, { method: "POST" });
+}
+
+export async function getBusinessPlan(projectId: string) {
+  return request(`/api/projects/${projectId}/bp`);
+}
+
+export async function getBpReadiness(projectId: string) {
+  return request(`/api/projects/${projectId}/bp/readiness`);
+}
+
+export async function downloadBusinessPlan(projectId: string, projectName: string = "project") {
+  const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+  const token = typeof window !== "undefined" ? sessionStorage.getItem("token") : null;
+  const res = await fetch(`${API_BASE}/api/projects/${projectId}/bp/download`, {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
+  if (!res.ok) throw new Error("下载失败");
+  const blob = await res.blob();
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `${projectName}_BP.docx`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
 export async function listProjects(ownerId?: string) {
   const query = ownerId ? `?owner_id=${ownerId}` : "";
   return request(`/api/projects/${query}`);
@@ -197,10 +236,17 @@ export async function getProject(projectId: string) {
   return request(`/api/projects/${projectId}`);
 }
 
-export async function createProject(name: string, industry: string, description: string) {
+export async function createProject(name: string, industry: string, description: string, projectType?: string) {
   return request("/api/projects/", {
     method: "POST",
-    body: JSON.stringify({ name, industry, description }),
+    body: JSON.stringify({ name, industry, description, project_type: projectType || null }),
+  });
+}
+
+export async function updateProjectType(projectId: string, projectType: string) {
+  return request(`/api/projects/${projectId}/type`, {
+    method: "PATCH",
+    body: JSON.stringify({ project_type: projectType }),
   });
 }
 
@@ -255,6 +301,11 @@ export async function getKnowledgeStats() {
 // Teacher
 export async function getDashboard() {
   return request("/api/teacher/dashboard");
+}
+
+export async function getClassProfile(classId: string = "") {
+  const q = classId ? `?class_id=${encodeURIComponent(classId)}` : "";
+  return request(`/api/teacher/class-profile${q}`);
 }
 
 export async function getTeacherProjects() {

@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { getDashboard, getHypergraphInsights } from "@/lib/api";
+import { getDashboard, getHypergraphInsights, getClassProfile } from "@/lib/api";
 import { ClassSummary } from "@/lib/types";
 import ScoreRadar from "@/components/ScoreRadar";
 import { DashboardSkeleton } from "@/components/Skeleton";
@@ -20,11 +20,14 @@ function StatCard({ label, value, sub, color }: { label: string; value: string |
   );
 }
 
-type Tab = "class" | "hypergraph";
+type Tab = "class" | "hypergraph" | "profile";
 
 export default function TeacherDashboard() {
   const [data, setData] = useState<ClassSummary | null>(null);
   const [hgInsights, setHgInsights] = useState<any>(null);
+  const [classProfile, setClassProfile] = useState<any>(null);
+  const [profileClassId, setProfileClassId] = useState<string>("");
+  const [profileLoading, setProfileLoading] = useState(false);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<Tab>("class");
   const { show, ToastContainer } = useToast();
@@ -39,6 +42,15 @@ export default function TeacherDashboard() {
       if (insights) setHgInsights(insights);
     }).finally(() => setLoading(false));
   }, []);
+
+  useEffect(() => {
+    if (activeTab !== "profile") return;
+    setProfileLoading(true);
+    getClassProfile(profileClassId)
+      .then(setClassProfile)
+      .catch(() => show("班级画像加载失败", "error"))
+      .finally(() => setProfileLoading(false));
+  }, [activeTab, profileClassId]);
 
   const handleExportExcel = async () => {
     try {
@@ -72,6 +84,7 @@ export default function TeacherDashboard() {
 
   const tabs: { key: Tab; label: string; badge?: string }[] = [
     { key: "class", label: "班级总览" },
+    { key: "profile", label: "班级画像" },
     ...(hgInsights ? [{ key: "hypergraph" as Tab, label: "案例库洞察", badge: `${hgInsights.coverage?.total_projects || 0} 个案例` }] : []),
   ];
 
@@ -109,13 +122,21 @@ export default function TeacherDashboard() {
                 key={t.key}
                 onClick={() => setActiveTab(t.key)}
                 className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200"
-                style={activeTab === t.key ? {
-                  background: t.key === "hypergraph"
-                    ? "linear-gradient(135deg, rgba(99,102,241,0.3), rgba(99,102,241,0.15))"
-                    : "linear-gradient(135deg, rgba(34,211,238,0.25), rgba(34,211,238,0.1))",
-                  color: t.key === "hypergraph" ? "#a5b4fc" : "#67e8f9",
-                  border: `1px solid ${t.key === "hypergraph" ? "rgba(99,102,241,0.4)" : "rgba(34,211,238,0.35)"}`,
-                } : { color: "var(--text-muted)" }}
+                style={activeTab === t.key ? (
+                  t.key === "hypergraph" ? {
+                    background: "linear-gradient(135deg, rgba(99,102,241,0.3), rgba(99,102,241,0.15))",
+                    color: "#a5b4fc",
+                    border: "1px solid rgba(99,102,241,0.4)",
+                  } : t.key === "profile" ? {
+                    background: "linear-gradient(135deg, rgba(168,85,247,0.25), rgba(168,85,247,0.1))",
+                    color: "#c4b5fd",
+                    border: "1px solid rgba(168,85,247,0.4)",
+                  } : {
+                    background: "linear-gradient(135deg, rgba(34,211,238,0.25), rgba(34,211,238,0.1))",
+                    color: "#67e8f9",
+                    border: "1px solid rgba(34,211,238,0.35)",
+                  }
+                ) : { color: "var(--text-muted)" }}
               >
                 {t.label}
                 {t.badge && (
@@ -343,6 +364,179 @@ export default function TeacherDashboard() {
               </div>
             )}
 
+          </div>
+        )}
+
+        {/* ── Tab: 班级画像 ── */}
+        {activeTab === "profile" && (
+          <div className="space-y-4">
+            {/* Class filter */}
+            <div className="flex items-center gap-3 flex-wrap">
+              <span className="text-xs font-semibold" style={{ color: "var(--text-muted)" }}>筛选班级：</span>
+              <button
+                onClick={() => setProfileClassId("")}
+                className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all"
+                style={profileClassId === "" ? {
+                  background: "rgba(168,85,247,0.2)", color: "#c4b5fd",
+                  border: "1px solid rgba(168,85,247,0.4)",
+                } : {
+                  background: "rgba(255,255,255,0.04)", color: "var(--text-muted)",
+                  border: "1px solid var(--border)",
+                }}
+              >全部</button>
+              {(classProfile?.all_classes || []).map((c: string) => (
+                <button
+                  key={c}
+                  onClick={() => setProfileClassId(c)}
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all"
+                  style={profileClassId === c ? {
+                    background: "rgba(168,85,247,0.2)", color: "#c4b5fd",
+                    border: "1px solid rgba(168,85,247,0.4)",
+                  } : {
+                    background: "rgba(255,255,255,0.04)", color: "var(--text-muted)",
+                    border: "1px solid var(--border)",
+                  }}
+                >{c}</button>
+              ))}
+            </div>
+
+            {profileLoading && (
+              <div className="text-center py-10" style={{ color: "var(--text-muted)" }}>加载中...</div>
+            )}
+
+            {!profileLoading && classProfile && (
+              <>
+                {/* Summary stats */}
+                <div className="grid grid-cols-4 gap-3">
+                  <StatCard label="学生总数" value={classProfile.student_count} sub={classProfile.class_id} color="#a855f7" />
+                  <StatCard label="已评估" value={classProfile.scored_student_count} sub="有评分学生" color="#6366f1" />
+                  <StatCard
+                    label="班级最强"
+                    value={classProfile.strongest_dim?.label || "--"}
+                    sub={classProfile.strongest_dim ? `${classProfile.strongest_dim.score}/10` : ""}
+                    color="#10b981"
+                  />
+                  <StatCard
+                    label="班级最弱"
+                    value={classProfile.weakest_dim?.label || "--"}
+                    sub={classProfile.weakest_dim ? `${classProfile.weakest_dim.score}/10` : ""}
+                    color="#ef4444"
+                  />
+                </div>
+
+                {/* Class radar + distribution */}
+                <div className="grid grid-cols-2 gap-4">
+                  {/* Radar */}
+                  <div className="glass rounded-xl p-5">
+                    <p className="text-sm font-bold mb-3" style={{ color: "var(--text-primary)" }}>
+                      班级五维能力雷达图
+                    </p>
+                    <div className="flex justify-center">
+                      <ScoreRadar scores={classProfile.class_avg_scores} />
+                    </div>
+                    <div className="mt-4 space-y-2">
+                      {Object.entries(classProfile.dim_labels || {}).map(([k, label]: any) => {
+                        const v = classProfile.class_avg_scores?.[k] || 0;
+                        const color = v >= 7 ? "#10b981" : v >= 5 ? "#f59e0b" : "#ef4444";
+                        return (
+                          <div key={k}>
+                            <div className="flex justify-between text-xs mb-1">
+                              <span style={{ color: "var(--text-secondary)" }}>{label}</span>
+                              <span className="font-bold" style={{ color }}>{v.toFixed(1)}/10</span>
+                            </div>
+                            <div style={{ height: 6, borderRadius: 3, background: "rgba(255,255,255,0.06)" }}>
+                              <div style={{
+                                height: 6, borderRadius: 3, width: `${v * 10}%`,
+                                background: color, transition: "width 0.6s ease",
+                              }} />
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Distribution */}
+                  <div className="glass rounded-xl p-5">
+                    <p className="text-sm font-bold mb-3" style={{ color: "var(--text-primary)" }}>
+                      学生能力分布
+                    </p>
+                    {[
+                      { key: "excellent", label: "优秀 (≥8分)", color: "#10b981", bg: "rgba(16,185,129,0.12)" },
+                      { key: "good", label: "良好 (6-8分)", color: "#22d3ee", bg: "rgba(34,211,238,0.12)" },
+                      { key: "pass", label: "合格 (4-6分)", color: "#f59e0b", bg: "rgba(245,158,11,0.12)" },
+                      { key: "weak", label: "待提升 (<4分)", color: "#ef4444", bg: "rgba(239,68,68,0.12)" },
+                    ].map(({ key, label, color, bg }) => {
+                      const count = classProfile.distribution?.[key] || 0;
+                      const total = classProfile.scored_student_count || 1;
+                      const pct = Math.round((count / total) * 100);
+                      return (
+                        <div key={key} className="mb-3 p-3 rounded-lg" style={{ background: bg, border: `1px solid ${color}22` }}>
+                          <div className="flex justify-between items-center mb-2">
+                            <span className="text-xs font-semibold" style={{ color }}>{label}</span>
+                            <span className="text-sm font-bold" style={{ color }}>{count} 人 ({pct}%)</span>
+                          </div>
+                          <div style={{ height: 6, borderRadius: 3, background: "rgba(255,255,255,0.06)" }}>
+                            <div style={{ height: 6, borderRadius: 3, width: `${pct}%`, background: color }} />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Student list */}
+                <div className="glass rounded-xl p-5">
+                  <p className="text-sm font-bold mb-3" style={{ color: "var(--text-primary)" }}>
+                    学生能力排行（按综合分降序）
+                  </p>
+                  {(classProfile.students || []).length === 0 ? (
+                    <p className="text-xs text-center py-6" style={{ color: "var(--text-muted)" }}>暂无有评分的学生</p>
+                  ) : (
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-xs">
+                        <thead>
+                          <tr style={{ borderBottom: "1px solid var(--border)" }}>
+                            <th className="text-left py-2 px-2" style={{ color: "var(--text-muted)" }}>排名</th>
+                            <th className="text-left py-2 px-2" style={{ color: "var(--text-muted)" }}>学生</th>
+                            <th className="text-left py-2 px-2" style={{ color: "var(--text-muted)" }}>班级</th>
+                            <th className="text-center py-2 px-2" style={{ color: "var(--text-muted)" }}>项目</th>
+                            {Object.entries(classProfile.dim_labels || {}).map(([k, label]: any) => (
+                              <th key={k} className="text-center py-2 px-2" style={{ color: "var(--text-muted)" }}>{label}</th>
+                            ))}
+                            <th className="text-center py-2 px-2" style={{ color: "var(--text-muted)" }}>综合</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {classProfile.students.map((s: any, i: number) => (
+                            <tr key={s.user_id} style={{ borderBottom: "1px solid var(--border)" }}>
+                              <td className="py-2 px-2">
+                                <span className="font-bold" style={{ color: i < 3 ? "#c4b5fd" : "var(--text-muted)" }}>
+                                  {i + 1}
+                                </span>
+                              </td>
+                              <td className="py-2 px-2 font-semibold" style={{ color: "var(--text-primary)" }}>
+                                {s.display_name}
+                              </td>
+                              <td className="py-2 px-2" style={{ color: "var(--text-muted)" }}>{s.class_id || "--"}</td>
+                              <td className="text-center py-2 px-2" style={{ color: "var(--text-muted)" }}>{s.project_count}</td>
+                              {Object.keys(classProfile.dim_labels || {}).map((k) => {
+                                const v = s.scores?.[k] || 0;
+                                const color = v >= 7 ? "#10b981" : v >= 5 ? "#f59e0b" : v > 0 ? "#ef4444" : "var(--text-muted)";
+                                return <td key={k} className="text-center py-2 px-2 font-semibold" style={{ color }}>{v || "--"}</td>;
+                              })}
+                              <td className="text-center py-2 px-2 font-bold" style={{
+                                color: s.overall >= 7 ? "#10b981" : s.overall >= 5 ? "#f59e0b" : "#ef4444"
+                              }}>{s.overall}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
           </div>
         )}
 

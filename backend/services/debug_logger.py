@@ -28,6 +28,7 @@ from __future__ import annotations
 import json
 import logging
 import sys
+import threading
 from datetime import datetime
 from typing import Any
 
@@ -39,6 +40,29 @@ _debug_logger = logging.getLogger("venture_ai.debug")
 _debug_logger.addHandler(_handler)
 _debug_logger.setLevel(logging.DEBUG)
 _debug_logger.propagate = False  # 避免与 root logger 重复输出
+
+# ── 会话级日志收集器（供前端 Debug Panel 使用）──
+_session_logs: dict[str, list[dict]] = {}
+_session_lock = threading.Lock()
+
+
+def start_session_capture(session_id: str):
+    """开始为指定 session 收集 debug 日志。"""
+    with _session_lock:
+        _session_logs[session_id] = []
+
+
+def flush_session_logs(session_id: str) -> list[dict]:
+    """取出并清空指定 session 的 debug 日志。"""
+    with _session_lock:
+        return _session_logs.pop(session_id, [])
+
+
+def _append_session_log(session_id: str, entry: dict):
+    """向当前 session 的日志缓冲区追加一条记录。"""
+    with _session_lock:
+        if session_id in _session_logs:
+            _session_logs[session_id].append(entry)
 
 
 def _ts() -> str:
@@ -60,12 +84,21 @@ class DebugLogger:
     def __init__(self, agent_name: str):
         self.agent_name = agent_name
         self._prefix = f"[DEBUG][{agent_name}]"
+        self._session_id: str = ""
 
     def _emit(self, tag: str, payload: str):
         _debug_logger.debug(f"{_ts()} {self._prefix}[{tag}] {payload}")
+        # 同时写入会话级缓冲区
+        if self._session_id:
+            try:
+                entry = {"ts": _ts(), "agent": self.agent_name, "tag": tag, "data": json.loads(payload) if payload.startswith(("{", "[")) else payload}
+            except (json.JSONDecodeError, ValueError):
+                entry = {"ts": _ts(), "agent": self.agent_name, "tag": tag, "data": payload}
+            _append_session_log(self._session_id, entry)
 
     def agent_start(self, session_id: str = "", intent: str = "", message_preview: str = ""):
         """智能体开始处理。"""
+        self._session_id = session_id
         self._emit("AGENT_START", json.dumps({
             "agent_name": self.agent_name,
             "session_id": session_id,

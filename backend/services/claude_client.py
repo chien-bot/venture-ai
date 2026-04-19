@@ -74,10 +74,12 @@ def chat_completion(
             else:
                 return _anthropic_completion(system_prompt, messages, model, max_tokens)
         except Exception as e:
+            print(f"[claude_client] LLM attempt {attempt}/{MAX_RETRIES} failed: {type(e).__name__}: {e}", flush=True)
             logger.warning(f"LLM call attempt {attempt}/{MAX_RETRIES} failed: {e}")
             if attempt < MAX_RETRIES:
                 time.sleep(RETRY_DELAY * attempt)
             else:
+                print(f"[claude_client] All retries exhausted, returning fallback", flush=True)
                 logger.error(f"All LLM retries exhausted. Last error: {e}")
                 return _fallback_reply(str(e))
 
@@ -102,7 +104,21 @@ def _anthropic_completion(
         system=system_prompt,
         messages=clean_msgs,
     )
-    return response.content[0].text
+    # Concatenate all text blocks (ignore thinking/tool_use blocks that may precede)
+    parts = [
+        getattr(b, "text", "") for b in (response.content or [])
+        if getattr(b, "type", "") == "text"
+    ]
+    text = "".join(parts)
+    if not text:
+        print(f"[claude_client] EMPTY TEXT: stop_reason={getattr(response, 'stop_reason', '?')}, blocks={len(response.content or [])}, types={[getattr(b, 'type', '?') for b in (response.content or [])]}", flush=True)
+        logger.warning(
+            "anthropic empty response: stop_reason=%s, blocks=%d, types=%s",
+            getattr(response, "stop_reason", "?"),
+            len(response.content or []),
+            [getattr(b, "type", "?") for b in (response.content or [])],
+        )
+    return text
 
 
 def _openrouter_completion(
@@ -122,8 +138,13 @@ def _openrouter_completion(
         messages=openai_messages,
         max_tokens=max_tokens,
     )
-    text = response.choices[0].message.content or ""
-    return _strip_thinking(text)
+    choice = response.choices[0] if response.choices else None
+    raw_content = (choice.message.content if choice else None) or ""
+    finish = getattr(choice, "finish_reason", "?") if choice else "no_choices"
+    if not raw_content:
+        print(f"[claude_client] OpenRouter empty content: finish_reason={finish}, model={model}", flush=True)
+        raise ValueError(f"OpenRouter returned empty content (finish_reason={finish})")
+    return _strip_thinking(raw_content)
 
 
 def _ensure_alternating(messages: list[dict]) -> list[dict]:

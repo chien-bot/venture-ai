@@ -339,6 +339,11 @@ def get_history(session_id: str):
     except Exception:
         pass
 
+    rubric_full = proj.get("rubric_full") if proj else None
+    rubric_scores = (
+        {k: v.get("score") for k, v in rubric_full.items()}
+        if rubric_full else None
+    )
     return {
         "session_id": session_id,
         "messages": history,
@@ -346,7 +351,8 @@ def get_history(session_id: str):
         "scores": proj.get("scores") if proj else None,
         "stage": proj.get("stage") if proj else None,
         "diagnosis": proj.get("diagnosis") if proj else None,
-        "rubric_full": proj.get("rubric_full") if proj else None,
+        "rubric_full": rubric_full,
+        "rubric_scores": rubric_scores,
     }
 
 
@@ -529,16 +535,23 @@ def defense_message(req: DefenseMessageRequest):
     raw = chat_completion(system, history)
     append_chat(req.session_id, "assistant", raw)
 
-    # Parse defense report if present (last round)
+    # Parse defense report — only on the final round to prevent premature display
     report = None
-    report_match = _re.search(r"<!--DEFENSE_REPORT:(.*?)-->", raw, _re.DOTALL)
-    if report_match:
-        try:
-            report = _json.loads(report_match.group(1))
-        except _json.JSONDecodeError:
-            pass
+    clean_patterns = [r"```defense_report.*?```", r"<!--DEFENSE_REPORT:.*?-->"]
+    if req.current_round >= req.total_questions:
+        report_match = _re.search(r"```defense_report\s*(.*?)```", raw, _re.DOTALL)
+        if not report_match:
+            report_match = _re.search(r"<!--DEFENSE_REPORT:(.*?)-->", raw, _re.DOTALL)
+        if report_match:
+            try:
+                report = _json.loads(report_match.group(1).strip())
+            except _json.JSONDecodeError:
+                pass
 
-    clean = _re.sub(r"<!--DEFENSE_REPORT:.*?-->", "", raw, flags=_re.DOTALL).strip()
+    clean = raw
+    for pat in clean_patterns:
+        clean = _re.sub(pat, "", clean, flags=_re.DOTALL)
+    clean = clean.strip()
 
     return {
         "session_id": req.session_id,

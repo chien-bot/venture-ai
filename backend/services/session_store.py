@@ -54,8 +54,8 @@ def get_chat_history(session_id: str) -> list[dict]:
     return _db_get_chat_history(session_id)
 
 
-def append_chat(session_id: str, role: str, content: str):
-    _db_append_chat(session_id, role, content)
+def append_chat(session_id: str, role: str, content: str, debug_logs: list | None = None):
+    _db_append_chat(session_id, role, content, debug_logs)
 
 
 def create_session(session_id: str, project_id: str = "", agent_type: str = "coach", owner_id: str = ""):

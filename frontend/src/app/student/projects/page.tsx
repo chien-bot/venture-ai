@@ -1,9 +1,10 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import {
-  listProjects, createProject,
+  listProjects, createProject, updateProjectType,
   getTimeline, getBenchmark, checkPitch, analyzeInterview,
   getEvidenceDashboard,
+  generateBusinessPlan, getBusinessPlan, downloadBusinessPlan, getBpReadiness,
 } from "@/lib/api";
 import { Project, User } from "@/lib/types";
 import ScoreRadar from "@/components/ScoreRadar";
@@ -26,9 +27,10 @@ const DIM_LABELS: Record<string, string> = {
   business: "商业建模", execution: "资源杠杆", pitching: "路演表达",
 };
 
-type TabId = "overview" | "timeline" | "benchmark" | "pitch" | "interview" | "evidence" | "learning" | "report" | "team";
+type TabId = "overview" | "timeline" | "benchmark" | "pitch" | "interview" | "evidence" | "learning" | "report" | "team" | "bp";
 const TABS: { id: TabId; label: string; icon: string }[] = [
   { id: "overview",   label: "概览",     icon: "📋" },
+  { id: "bp",         label: "策划书",   icon: "📄" },
   { id: "timeline",   label: "成长时间线", icon: "📈" },
   { id: "benchmark",  label: "对标分析",  icon: "🏆" },
   { id: "pitch",      label: "路演检查",  icon: "🎤" },
@@ -133,7 +135,12 @@ export default function ProjectsPage() {
   const [activeTab, setActiveTab]   = useState<TabId>("overview");
   const [reportKey, setReportKey]   = useState(0);
   const [showCreate, setShowCreate] = useState(false);
-  const [form, setForm]             = useState({ name: "", industry: "", description: "" });
+  const [form, setForm]             = useState({ name: "", industry: "", description: "", project_type: "" });
+  const [bp, setBp]                 = useState<any>(null);
+  const [bpLoading, setBpLoading]   = useState(false);
+  const [bpGenerating, setBpGenerating] = useState(false);
+  const [bpExpanded, setBpExpanded] = useState<Record<string, boolean>>({});
+  const [bpReadiness, setBpReadiness] = useState<any>(null);
   const [sidebarWidth, setSidebarWidth] = useState(256);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const isDragging = useRef(false);
@@ -181,11 +188,49 @@ export default function ProjectsPage() {
   useEffect(() => {
     if (!selected) return;
     setTimeline(null); setBenchmark(null); setPitchResult(null); setInterviewResult(null); setEvidence(null);
+    setBp(null); setBpReadiness(null);
     // Always load timeline for overview diagnosis summary (F6)
     loadTimeline();
     if (activeTab === "benchmark") loadBenchmark();
     if (activeTab === "evidence")  loadEvidence();
+    if (activeTab === "bp")        loadBp();
   }, [selected, activeTab]);
+
+  const loadBp = async () => {
+    if (!selected) return;
+    setBpLoading(true);
+    try {
+      const res = await getBusinessPlan(selected.project_id);
+      if (res.exists) setBp(res.bp);
+    } catch {}
+    try {
+      const r = await getBpReadiness(selected.project_id);
+      setBpReadiness(r);
+    } catch {}
+    setBpLoading(false);
+  };
+
+  const handleGenerateBp = async () => {
+    if (!selected) return;
+    if (bp && !confirm("已有策划书，重新生成会覆盖现有内容，确定吗？")) return;
+    setBpGenerating(true);
+    try {
+      const res = await generateBusinessPlan(selected.project_id);
+      setBp(res.bp);
+    } catch (err: any) {
+      alert("生成失败：" + (err?.message || "未知错误"));
+    }
+    setBpGenerating(false);
+  };
+
+  const handleDownloadBp = async () => {
+    if (!selected) return;
+    try {
+      await downloadBusinessPlan(selected.project_id, selected.name || "project");
+    } catch (err: any) {
+      alert("下载失败：" + (err?.message || "未知错误"));
+    }
+  };
 
   const loadProjects = async () => {
     try { const r = await listProjects(); setProjects(r.projects); } catch {}
@@ -193,8 +238,8 @@ export default function ProjectsPage() {
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await createProject(form.name, form.industry, form.description);
-      setShowCreate(false); setForm({ name: "", industry: "", description: "" });
+      await createProject(form.name, form.industry, form.description, form.project_type || undefined);
+      setShowCreate(false); setForm({ name: "", industry: "", description: "", project_type: "" });
       loadProjects();
     } catch {}
   };
@@ -253,6 +298,24 @@ export default function ProjectsPage() {
                       onChange={(e) => setForm({ ...form, description: e.target.value })}
                       className="w-full px-3 py-1.5 rounded-lg text-xs outline-none resize-none"
                       style={{ background: "rgba(255,255,255,0.06)", border: "1px solid var(--border)", color: "var(--text-primary)" }} />
+            <div>
+              <p className="text-xs mb-1" style={{ color: "var(--text-muted)" }}>项目类型（留空自动识别）</p>
+              <div className="grid grid-cols-3 gap-1">
+                {["创新项目", "商业项目", "公益项目"].map(t => {
+                  const active = form.project_type === t;
+                  return (
+                    <button key={t} type="button"
+                            onClick={() => setForm({ ...form, project_type: active ? "" : t })}
+                            className="text-xs py-1 rounded-lg transition-all"
+                            style={{
+                              background: active ? "rgba(99,102,241,0.2)" : "rgba(255,255,255,0.04)",
+                              border: `1px solid ${active ? "rgba(99,102,241,0.5)" : "var(--border)"}`,
+                              color: active ? "#a5b4fc" : "var(--text-muted)",
+                            }}>{t}</button>
+                  );
+                })}
+              </div>
+            </div>
             <div className="flex gap-2">
               <button type="submit" className="btn-glow text-xs px-3 py-1.5 rounded-lg flex-1">创建</button>
               <button type="button" onClick={() => setShowCreate(false)}
@@ -285,7 +348,14 @@ export default function ProjectsPage() {
                     {sm.label}
                   </span>
                 </div>
-                <p className="text-xs" style={{ color: "var(--text-muted)" }}>{proj.industry || "未设置行业"}</p>
+                <p className="text-xs" style={{ color: "var(--text-muted)" }}>
+                  {proj.industry || "未设置行业"}
+                  {(proj as any).project_type && (
+                    <span className="ml-1.5 px-1 py-0.5 rounded" style={{ background: "rgba(99,102,241,0.12)", color: "#a5b4fc", fontSize: "0.6rem" }}>
+                      {(proj as any).project_type}
+                    </span>
+                  )}
+                </p>
                 {proj.diagnosis?.length > 0 && (
                   <p className="text-xs mt-1" style={{ color: "#fcd34d" }}>⚠ {proj.diagnosis.length} 个待解决问题</p>
                 )}
@@ -347,6 +417,37 @@ export default function ProjectsPage() {
                   {stageMeta.label}
                 </span>
               )}
+              {(() => {
+                const typeColor: Record<string, string> = {
+                  "创新项目": "#22d3ee",
+                  "商业项目": "#f59e0b",
+                  "公益项目": "#10b981",
+                };
+                const currentType: string = (selected as any).project_type || "";
+                const color = typeColor[currentType] || "#6366f1";
+                return (
+                  <select
+                    value={currentType}
+                    onChange={async (e) => {
+                      const v = e.target.value;
+                      if (!v) return;
+                      try {
+                        await updateProjectType(selected.project_id, v);
+                        setSelected({ ...(selected as any), project_type: v } as any);
+                        loadProjects();
+                      } catch {}
+                    }}
+                    className="px-3 py-1 rounded-xl text-xs font-medium outline-none cursor-pointer"
+                    style={{ background: `${color}18`, color, border: `1px solid ${color}30` }}
+                    title="点击修改项目类型"
+                  >
+                    {!currentType && <option value="">未分类</option>}
+                    <option value="创新项目">创新项目</option>
+                    <option value="商业项目">商业项目</option>
+                    <option value="公益项目">公益项目</option>
+                  </select>
+                );
+              })()}
               <button onClick={() => window.print()} className="ml-auto text-xs px-3 py-1.5 rounded-lg no-print transition-all"
                       style={{ color: "var(--text-muted)", background: "rgba(255,255,255,0.04)", border: "1px solid var(--border)" }}>
                 ⎙ 打印报告
@@ -1155,6 +1256,189 @@ export default function ProjectsPage() {
                     projectId={selected.project_id}
                     isOwner={true}
                   />
+                </div>
+              )}
+
+              {activeTab === "bp" && selected && (
+                <div className="animate-fadeInUp" style={{ padding: "0 4px" }}>
+                  {/* Header Actions */}
+                  <div style={{
+                    display: "flex", alignItems: "center", justifyContent: "space-between",
+                    marginBottom: 20, flexWrap: "wrap", gap: 12,
+                  }}>
+                    <div>
+                      <h2 style={{ fontSize: 18, fontWeight: 700, margin: 0, color: "var(--text-primary)" }}>
+                        📄 商业策划书
+                      </h2>
+                      <p style={{ fontSize: 12, color: "var(--text-muted)", margin: "6px 0 0" }}>
+                        基于项目对话、评分与诊断自动生成。建议先完成多轮 AI 教练对话后再生成，内容会更准确。
+                      </p>
+                    </div>
+                    <div style={{ display: "flex", gap: 10 }}>
+                      <button
+                        onClick={handleGenerateBp}
+                        disabled={bpGenerating || (bpReadiness && !bpReadiness.ready)}
+                        title={bpReadiness && !bpReadiness.ready ? "证据不足，请先完成更多对话" : ""}
+                        style={{
+                          padding: "9px 18px", borderRadius: 10, border: "none",
+                          background: (bpGenerating || (bpReadiness && !bpReadiness.ready))
+                            ? "rgba(99,102,241,0.3)" : "linear-gradient(90deg,#6366f1,#818cf8)",
+                          color: "#fff", fontSize: 13, fontWeight: 600,
+                          cursor: (bpGenerating || (bpReadiness && !bpReadiness.ready)) ? "not-allowed" : "pointer",
+                          boxShadow: "0 2px 10px rgba(99,102,241,0.25)",
+                        }}
+                      >
+                        {bpGenerating ? "⏳ 正在生成..." : (bp ? "🔄 重新生成" : "✨ 一键生成策划书")}
+                      </button>
+                      {bp && (
+                        <button
+                          onClick={handleDownloadBp}
+                          style={{
+                            padding: "9px 18px", borderRadius: 10, border: "1px solid var(--border)",
+                            background: "rgba(16,185,129,0.12)", color: "#34d399",
+                            fontSize: 13, fontWeight: 600, cursor: "pointer",
+                          }}
+                        >
+                          ⬇ 下载 DOCX
+                        </button>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Readiness gate progress */}
+                  {bpReadiness && (
+                    <div style={{
+                      marginBottom: 18, padding: 16, borderRadius: 12,
+                      background: bpReadiness.ready ? "rgba(16,185,129,0.08)" : "rgba(245,158,11,0.08)",
+                      border: `1px solid ${bpReadiness.ready ? "rgba(16,185,129,0.25)" : "rgba(245,158,11,0.3)"}`,
+                    }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
+                        <span style={{ fontSize: 14 }}>{bpReadiness.ready ? "✅" : "⏳"}</span>
+                        <span style={{ fontSize: 13, fontWeight: 600, color: bpReadiness.ready ? "#6ee7b7" : "#fbbf24" }}>
+                          {bpReadiness.ready ? "证据门槛已达成，可生成策划书" : "证据积累中（策划书要求基于真实对话证据生成）"}
+                        </span>
+                      </div>
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10 }}>
+                        {[
+                          { label: "有效评分轮数", cur: bpReadiness.round_count, min: bpReadiness.requirements.min_rounds, hint: "每轮AI教练打分计一次" },
+                          { label: "累计对话消息", cur: bpReadiness.user_msg_count, min: bpReadiness.requirements.min_messages, hint: "你发送给AI的消息数" },
+                          { label: "已评估维度", cur: bpReadiness.scored_dims, min: bpReadiness.requirements.min_dims, hint: "5维中已打分的维度数" },
+                        ].map((item) => {
+                          const done = item.cur >= item.min;
+                          const pct = Math.min(100, (item.cur / item.min) * 100);
+                          return (
+                            <div key={item.label} style={{
+                              padding: 10, borderRadius: 8,
+                              background: "rgba(0,0,0,0.2)",
+                              border: `1px solid ${done ? "rgba(16,185,129,0.3)" : "var(--border)"}`,
+                            }}>
+                              <div style={{ fontSize: 11, color: "var(--text-muted)", marginBottom: 4 }}>{item.label}</div>
+                              <div style={{ fontSize: 15, fontWeight: 700, color: done ? "#34d399" : "var(--text-primary)" }}>
+                                {item.cur} <span style={{ fontSize: 11, color: "var(--text-muted)", fontWeight: 400 }}>/ {item.min}</span>
+                              </div>
+                              <div style={{ height: 4, background: "rgba(255,255,255,0.06)", borderRadius: 2, marginTop: 6, overflow: "hidden" }}>
+                                <div style={{ height: "100%", width: `${pct}%`, background: done ? "#10b981" : "#f59e0b", transition: "width 0.3s" }} />
+                              </div>
+                              <div style={{ fontSize: 10, color: "var(--text-muted)", marginTop: 4 }}>{item.hint}</div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Loading / Empty states */}
+                  {bpLoading && (
+                    <div style={{ padding: 40, textAlign: "center", color: "var(--text-muted)" }}>加载中...</div>
+                  )}
+                  {!bpLoading && !bp && (
+                    <div style={{
+                      padding: 48, textAlign: "center",
+                      background: "rgba(255,255,255,0.03)", border: "1px dashed var(--border)",
+                      borderRadius: 14,
+                    }}>
+                      <div style={{ fontSize: 42, opacity: 0.5, marginBottom: 12 }}>📝</div>
+                      <p style={{ fontSize: 14, color: "var(--text-secondary)", margin: 0 }}>
+                        还没有策划书，点击右上角 <strong style={{ color: "#a5b4fc" }}>"一键生成策划书"</strong> 开始
+                      </p>
+                    </div>
+                  )}
+
+                  {/* BP Content */}
+                  {bp && (
+                    <div>
+                      {/* Meta */}
+                      <div style={{
+                        padding: "16px 20px", marginBottom: 16,
+                        background: "linear-gradient(135deg,rgba(99,102,241,0.08),rgba(34,211,238,0.05))",
+                        border: "1px solid rgba(99,102,241,0.2)", borderRadius: 14,
+                      }}>
+                        <h3 style={{ fontSize: 16, fontWeight: 700, margin: 0, color: "var(--text-primary)" }}>
+                          {bp.title}
+                        </h3>
+                        <div style={{ display: "flex", gap: 14, marginTop: 10, flexWrap: "wrap" }}>
+                          <span style={{
+                            fontSize: 11, padding: "3px 10px", borderRadius: 8,
+                            background: "rgba(168,85,247,0.15)", color: "#c4b5fd", fontWeight: 600,
+                          }}>{bp.project_type}</span>
+                          {bp.generated_at && (
+                            <span style={{ fontSize: 11, color: "var(--text-muted)" }}>
+                              生成时间：{bp.generated_at}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Executive Summary */}
+                      {bp.executive_summary && (
+                        <div style={{
+                          padding: "14px 18px", marginBottom: 14,
+                          background: "rgba(16,185,129,0.08)",
+                          border: "1px solid rgba(16,185,129,0.2)", borderRadius: 12,
+                        }}>
+                          <p style={{ fontSize: 12, fontWeight: 700, color: "#6ee7b7", margin: "0 0 6px" }}>执行摘要</p>
+                          <p style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.7, margin: 0, whiteSpace: "pre-wrap" }}>
+                            {bp.executive_summary}
+                          </p>
+                        </div>
+                      )}
+
+                      {/* Sections (accordion) */}
+                      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                        {(bp.sections || []).map((sec: any) => {
+                          const isOpen = bpExpanded[sec.id] ?? true;
+                          return (
+                            <div key={sec.id} style={{
+                              background: "rgba(255,255,255,0.03)", border: "1px solid var(--border)",
+                              borderRadius: 12, overflow: "hidden",
+                            }}>
+                              <button
+                                onClick={() => setBpExpanded(prev => ({ ...prev, [sec.id]: !isOpen }))}
+                                style={{
+                                  width: "100%", padding: "12px 16px", background: "none", border: "none",
+                                  display: "flex", alignItems: "center", justifyContent: "space-between",
+                                  cursor: "pointer", color: "var(--text-primary)",
+                                  fontSize: 14, fontWeight: 600, textAlign: "left",
+                                }}
+                              >
+                                <span>{sec.title}</span>
+                                <span style={{ fontSize: 12, color: "var(--text-muted)", transition: "transform 0.2s", transform: isOpen ? "rotate(180deg)" : "rotate(0)" }}>▼</span>
+                              </button>
+                              {isOpen && (
+                                <div style={{
+                                  padding: "0 16px 14px", borderTop: "1px solid var(--border)",
+                                  fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.75,
+                                  whiteSpace: "pre-wrap",
+                                }}>
+                                  <div style={{ paddingTop: 10 }}>{sec.content}</div>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
 

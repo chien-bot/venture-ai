@@ -35,6 +35,7 @@ export interface Project {
   owner_id: string;
   scores: Scores;
   diagnosis: string[];
+  project_type?: string;
   created_at: string;
 }
 

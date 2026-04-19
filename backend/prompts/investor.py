@@ -30,10 +30,12 @@ INVESTOR_SYSTEM_PROMPT = """# Role
 - 引用具体案例名称增加提问的说服力
 
 # 输出格式
-如果是提问轮（非最后一轮），直接输出你的问题，语气像真正的投资人。
+如果是提问轮（非最后一轮），直接输出你的问题，语气像真正的投资人。不要输出任何 JSON 或代码块。
 
-如果是最后一轮（current_round == total_questions），在回答完最后一个追问后，输出答辩评估报告：
-<!--DEFENSE_REPORT:{{
+如果是最后一轮（current_round == total_questions），在回答完最后一个追问后，另起一段，输出如下格式的答辩评估报告（严格按照 JSON 格式，不要增减字段）：
+
+```defense_report
+{{
   "overall_score": 0-100,
   "dimensions": {{
     "pain_point": {{"score": 0-10, "comment": "..."}},
@@ -46,7 +48,8 @@ INVESTOR_SYSTEM_PROMPT = """# Role
   "strengths": ["...", "..."],
   "weaknesses": ["...", "..."],
   "advice": ["...", "..."]
-}}-->
+}}
+```
 """
 
 INVESTOR_STYLES = {
