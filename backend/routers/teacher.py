@@ -894,3 +894,493 @@ def get_knowledge_coverage(request: Request):
         "top_concepts": top_concepts[:15],
         "project_coverage": proj_coverage_list,
     }
+
+
+# ══════════════════════════════════════════════════════════════
+# 功能一：剽窃检测  /api/teacher/plagiarism-report
+# ══════════════════════════════════════════════════════════════
+
+def _extract_project_text(proj: dict) -> str:
+    """拼接项目的可比较文本：名称 + 行业 + 描述 + 诊断标签。"""
+    parts = [
+        proj.get("name", ""),
+        proj.get("industry", ""),
+        proj.get("description", ""),
+        " ".join(proj.get("diagnosis", [])),
+    ]
+    return " ".join(p for p in parts if p).strip()
+
+
+def _extract_chat_text(project_id: str, max_chars: int = 3000) -> str:
+    """提取项目所有学生消息拼成一段文本，用于相似度比对。"""
+    from services.database import get_sessions_for_project, get_conn
+    sessions = get_sessions_for_project(project_id)
+    texts = []
+    total = 0
+    for sess in sessions:
+        with get_conn() as conn:
+            rows = conn.execute(
+                "SELECT content FROM chat_messages WHERE session_id=? AND role='user' ORDER BY id",
+                (sess["session_id"],)
+            ).fetchall()
+        for row in rows:
+            texts.append(row["content"])
+            total += len(row["content"])
+            if total >= max_chars:
+                break
+        if total >= max_chars:
+            break
+    return " ".join(texts)
+
+
+@router.get("/plagiarism-report")
+def get_plagiarism_report(request: Request, threshold: float = 0.55):
+    """
+    班级剽窃检测报告。
+    使用 TF-IDF + 余弦相似度对所有项目的文本进行两两比较。
+    返回相似度超过 threshold 的项目对。
+    """
+    try:
+        from sklearn.feature_extraction.text import TfidfVectorizer
+        from sklearn.metrics.pairwise import cosine_similarity
+    except ImportError:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=500, detail="scikit-learn 未安装")
+
+    projects = _get_teacher_projects(request)
+    if len(projects) < 2:
+        return {"pairs": [], "message": "项目数量不足，无法比对"}
+
+    # 构建每个项目的文本（描述 + 对话内容）
+    pids, texts = [], []
+    for p in projects:
+        combined = _extract_project_text(p) + " " + _extract_chat_text(p["project_id"])
+        if combined.strip():
+            pids.append(p["project_id"])
+            texts.append(combined)
+
+    if len(texts) < 2:
+        return {"pairs": [], "message": "有效文本不足"}
+
+    # TF-IDF 向量化（支持中英文字符级 n-gram）
+    vec = TfidfVectorizer(analyzer="char_wb", ngram_range=(2, 4), min_df=1)
+    tfidf_matrix = vec.fit_transform(texts)
+    sim_matrix = cosine_similarity(tfidf_matrix)
+
+    # 找出超过阈值的项目对
+    proj_map = {p["project_id"]: p for p in projects}
+    flagged_pairs = []
+    for i in range(len(pids)):
+        for j in range(i + 1, len(pids)):
+            score = float(sim_matrix[i][j])
+            if score >= threshold:
+                pi = proj_map[pids[i]]
+                pj = proj_map[proj_map[pids[j]]["project_id"] if pids[j] in proj_map else pids[j]]
+                flagged_pairs.append({
+                    "project_a": {"id": pids[i], "name": pi.get("name", ""), "owner": pi.get("owner_id", "")},
+                    "project_b": {"id": pids[j], "name": pj.get("name", ""), "owner": pj.get("owner_id", "")},
+                    "similarity": round(score, 3),
+                    "risk_level": "高" if score >= 0.75 else "中",
+                })
+
+    flagged_pairs.sort(key=lambda x: x["similarity"], reverse=True)
+
+    return {
+        "total_projects_checked": len(pids),
+        "flagged_pairs": flagged_pairs,
+        "threshold": threshold,
+        "summary": f"共检测 {len(pids)} 个项目，发现 {len(flagged_pairs)} 对疑似雷同",
+    }
+
+
+@router.get("/project/{project_id}/plagiarism")
+def get_single_project_plagiarism(project_id: str, request: Request, threshold: float = 0.5):
+    """单项目剽窃检测：将该项目与班内其他所有项目比较。"""
+    try:
+        from sklearn.feature_extraction.text import TfidfVectorizer
+        from sklearn.metrics.pairwise import cosine_similarity
+    except ImportError:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=500, detail="scikit-learn 未安装")
+
+    all_projects = _get_teacher_projects(request)
+    target = next((p for p in all_projects if p["project_id"] == project_id), None)
+    if not target:
+        return {"error": "项目不存在"}
+
+    others = [p for p in all_projects if p["project_id"] != project_id]
+    if not others:
+        return {"comparisons": [], "message": "无其他项目可比对"}
+
+    target_text = _extract_project_text(target) + " " + _extract_chat_text(project_id)
+    other_texts = [_extract_project_text(p) + " " + _extract_chat_text(p["project_id"]) for p in others]
+
+    all_texts = [target_text] + other_texts
+    vec = TfidfVectorizer(analyzer="char_wb", ngram_range=(2, 4), min_df=1)
+    mat = vec.fit_transform(all_texts)
+    sims = cosine_similarity(mat[0:1], mat[1:])[0]
+
+    results = []
+    for idx, p in enumerate(others):
+        s = float(sims[idx])
+        results.append({
+            "compared_project": {"id": p["project_id"], "name": p.get("name", ""), "owner": p.get("owner_id", "")},
+            "similarity": round(s, 3),
+            "risk_level": "高" if s >= 0.75 else "中" if s >= threshold else "低",
+        })
+    results.sort(key=lambda x: x["similarity"], reverse=True)
+
+    return {
+        "project_id": project_id,
+        "project_name": target.get("name", ""),
+        "comparisons": results,
+        "max_similarity": round(max(float(s) for s in sims), 3) if len(sims) else 0,
+    }
+
+
+# ══════════════════════════════════════════════════════════════
+# 功能二：过程性评价  /api/teacher/project/{id}/process-eval
+# ══════════════════════════════════════════════════════════════
+
+# H规则 → 对应的辅导阶段（三轮诊断流）
+_H_RULE_STAGE_MAP = {
+    "H1": "第一轮:需求验证", "H2": "第一轮:需求验证", "H3": "第一轮:需求验证",
+    "H4": "第一轮:需求验证", "H5": "第一轮:需求验证",
+    "H6": "第二轮:生存压力测试", "H7": "第二轮:生存压力测试",
+    "H8": "第二轮:生存压力测试", "H9": "第二轮:生存压力测试",
+    "H10": "第三轮:落地可行性", "H11": "第三轮:落地可行性",
+    "H12": "第三轮:落地可行性", "H13": "第三轮:落地可行性",
+    "H14": "第二轮:生存压力测试", "H15": "第二轮:生存压力测试",
+}
+
+# H规则 → 知识点
+_H_RULE_KNOWLEDGE_MAP = {
+    "H1": "痛点真实性验证", "H2": "目标用户细分", "H3": "支付意愿调研",
+    "H4": "用户访谈方法", "H5": "需求场景描述",
+    "H6": "竞品分析", "H7": "巨头竞争防御策略", "H8": "差异化护城河",
+    "H9": "市场规模估算(TAM/SAM/SOM)", "H10": "里程碑规划",
+    "H11": "MVP定义", "H12": "团队分工", "H13": "资源获取路径",
+    "H14": "商业模式画布", "H15": "单位经济模型(CAC/LTV)",
+}
+
+
+def _get_score_trajectory(project_id: str) -> list[dict]:
+    """从 score_snapshots 表读取项目的评分变化轨迹。"""
+    from services.database import get_conn
+    with get_conn() as conn:
+        rows = conn.execute(
+            "SELECT scores_json, stage, round_num, created_at FROM score_snapshots "
+            "WHERE project_id=? ORDER BY id",
+            (project_id,)
+        ).fetchall()
+    trajectory = []
+    for row in rows:
+        try:
+            scores = json.loads(row["scores_json"])
+        except Exception:
+            scores = {}
+        trajectory.append({
+            "round": row["round_num"],
+            "stage": row["stage"] or "",
+            "scores": scores,
+            "created_at": row["created_at"],
+        })
+    return trajectory
+
+
+def _compute_logic_evolution(trajectory: list[dict]) -> str:
+    """根据评分轨迹描述逻辑演进趋势。"""
+    if len(trajectory) < 2:
+        return "数据不足，无法分析演进趋势"
+    first = trajectory[0]["scores"]
+    last = trajectory[-1]["scores"]
+    dims = {"empathy": "痛点发现", "ideation": "方案策划", "business": "商业建模",
+            "execution": "资源杠杆", "pitching": "路演表达"}
+    improvements, regressions = [], []
+    for k, label in dims.items():
+        delta = last.get(k, 0) - first.get(k, 0)
+        if delta >= 2:
+            improvements.append(f"{label}(+{delta:.1f})")
+        elif delta <= -2:
+            regressions.append(f"{label}({delta:.1f})")
+    parts = []
+    if improvements:
+        parts.append(f"显著进步：{', '.join(improvements)}")
+    if regressions:
+        parts.append(f"有所退步：{', '.join(regressions)}")
+    if not parts:
+        parts.append("各维度评分基本稳定，尚未出现明显突破")
+    return "；".join(parts)
+
+
+@router.get("/project/{project_id}/process-eval")
+def get_process_evaluation(project_id: str):
+    """
+    过程性评价：结合学生与AI交互过程中的活跃度、迭代次数、逻辑演进给出综合评价。
+    """
+    from services.database import get_sessions_for_project, get_conn
+
+    proj = get_project(project_id)
+    if not proj:
+        return {"error": "项目不存在"}
+
+    sessions = get_sessions_for_project(project_id)
+    session_count = len(sessions)
+
+    # 统计消息数、活跃天数
+    total_user_msgs = 0
+    total_ai_msgs = 0
+    active_days: set[str] = set()
+    h_rule_hits: dict[str, int] = {}
+
+    import re as _re
+    for sess in sessions:
+        with get_conn() as conn:
+            rows = conn.execute(
+                "SELECT role, content, created_at FROM chat_messages WHERE session_id=? ORDER BY id",
+                (sess["session_id"],)
+            ).fetchall()
+        for row in rows:
+            if row["role"] == "user":
+                total_user_msgs += 1
+            else:
+                total_ai_msgs += 1
+                # 扫描H规则触发
+                for m in _re.finditer(r"\b(H\d{1,2})\b", row["content"]):
+                    rid = m.group(1)
+                    h_rule_hits[rid] = h_rule_hits.get(rid, 0) + 1
+            if row["created_at"]:
+                active_days.add(row["created_at"][:10])
+
+    # 迭代次数：学生对同一话题的重复讨论 ≈ 用户消息数 / 会话数（粗估）
+    iteration_count = round(total_user_msgs / max(session_count, 1), 1)
+
+    # 评分轨迹
+    trajectory = _get_score_trajectory(project_id)
+    logic_evolution = _compute_logic_evolution(trajectory)
+
+    # 评分变化幅度（最终 - 最初）
+    score_delta: dict[str, float] = {}
+    if len(trajectory) >= 2:
+        first_s = trajectory[0]["scores"]
+        last_s = trajectory[-1]["scores"]
+        for k in ["empathy", "ideation", "business", "execution", "pitching"]:
+            score_delta[k] = round(last_s.get(k, 0) - first_s.get(k, 0), 1)
+
+    # 薄弱阶段（被H规则多次触发的阶段）
+    stage_hit_counts: dict[str, int] = {}
+    for rid, cnt in h_rule_hits.items():
+        stage = _H_RULE_STAGE_MAP.get(rid, "其他")
+        stage_hit_counts[stage] = stage_hit_counts.get(stage, 0) + cnt
+
+    # 综合活跃度评级
+    if total_user_msgs >= 30:
+        engagement_level = "高（深度参与）"
+    elif total_user_msgs >= 10:
+        engagement_level = "中（正常互动）"
+    else:
+        engagement_level = "低（参与不足）"
+
+    # 过程性得分（0-100）：活跃度30% + 迭代深度30% + 逻辑演进40%
+    score_engagement = min(30, total_user_msgs)
+    score_iteration = min(30, int(iteration_count * 10))
+    score_logic = min(40, len(trajectory) * 5 + sum(1 for v in score_delta.values() if v > 0) * 4)
+    process_score = score_engagement + score_iteration + score_logic
+
+    return {
+        "project_id": project_id,
+        "project_name": proj.get("name", ""),
+        # 活跃度指标
+        "session_count": session_count,
+        "total_user_messages": total_user_msgs,
+        "total_ai_messages": total_ai_msgs,
+        "active_days": sorted(active_days),
+        "active_day_count": len(active_days),
+        "engagement_level": engagement_level,
+        # 迭代深度
+        "iteration_count": iteration_count,
+        "h_rule_hits": h_rule_hits,
+        "stage_weakness": sorted(stage_hit_counts.items(), key=lambda x: x[1], reverse=True),
+        # 逻辑演进
+        "score_trajectory": trajectory,
+        "score_delta": score_delta,
+        "logic_evolution_summary": logic_evolution,
+        # 综合过程性评分
+        "process_score": process_score,
+        "process_score_breakdown": {
+            "engagement(活跃度)": score_engagement,
+            "iteration(迭代深度)": score_iteration,
+            "logic_evolution(逻辑演进)": score_logic,
+        },
+    }
+
+
+@router.get("/class-process-summary")
+def get_class_process_summary(request: Request):
+    """班级整体过程性评价汇总：每个学生项目的活跃度 + 迭代深度 + 逻辑演进一览。"""
+    from services.database import get_sessions_for_project, get_conn
+
+    projects = _get_teacher_projects(request)
+    summaries = []
+    for proj in projects:
+        pid = proj["project_id"]
+        sessions = get_sessions_for_project(pid)
+        total_user_msgs = 0
+        active_days: set[str] = set()
+        for sess in sessions:
+            with get_conn() as conn:
+                rows = conn.execute(
+                    "SELECT role, created_at FROM chat_messages WHERE session_id=?",
+                    (sess["session_id"],)
+                ).fetchall()
+            for row in rows:
+                if row["role"] == "user":
+                    total_user_msgs += 1
+                if row["created_at"]:
+                    active_days.add(row["created_at"][:10])
+        trajectory = _get_score_trajectory(pid)
+        score_delta: dict[str, float] = {}
+        if len(trajectory) >= 2:
+            fs = trajectory[0]["scores"]
+            ls = trajectory[-1]["scores"]
+            for k in ["empathy", "ideation", "business", "execution", "pitching"]:
+                score_delta[k] = round(ls.get(k, 0) - fs.get(k, 0), 1)
+        process_score = min(30, total_user_msgs) + min(30, len(sessions) * 10) + min(40, len(trajectory) * 5)
+        summaries.append({
+            "project_id": pid,
+            "project_name": proj.get("name", ""),
+            "owner_id": proj.get("owner_id", ""),
+            "session_count": len(sessions),
+            "total_user_messages": total_user_msgs,
+            "active_day_count": len(active_days),
+            "trajectory_rounds": len(trajectory),
+            "score_delta": score_delta,
+            "process_score": process_score,
+        })
+    summaries.sort(key=lambda x: x["process_score"], reverse=True)
+    avg_process = round(sum(s["process_score"] for s in summaries) / max(len(summaries), 1), 1)
+    low_engagement = [s for s in summaries if s["total_user_messages"] < 5]
+    return {
+        "total_projects": len(summaries),
+        "avg_process_score": avg_process,
+        "low_engagement_alert": low_engagement,
+        "summaries": summaries,
+    }
+
+
+# ══════════════════════════════════════════════════════════════
+# 功能三：细粒度班级预警  /api/teacher/stage-failure-analysis
+# ══════════════════════════════════════════════════════════════
+
+# 知识点 → 教学建议映射
+_KNOWLEDGE_TEACHING_MAP = {
+    "巨头竞争防御策略": "护城河理论（Moat Strategy）与差异化竞争",
+    "差异化护城河": "护城河理论（Moat Strategy）与差异化竞争",
+    "竞品分析": "竞品分析方法论（竞品矩阵 + 波特五力）",
+    "痛点真实性验证": "用户访谈方法与需求验证框架",
+    "用户访谈方法": "用户访谈技巧与 JTBD 理论",
+    "支付意愿调研": "定价策略与支付意愿测试方法",
+    "市场规模估算(TAM/SAM/SOM)": "自下而上的市场规模估算方法",
+    "单位经济模型(CAC/LTV)": "CAC/LTV 单位经济模型与财务建模",
+    "商业模式画布": "Lean Canvas 与商业模式画布工作坊",
+    "里程碑规划": "OKR 与 SMART 里程碑规划方法",
+    "MVP定义": "最小可行产品（MVP）设计原则",
+}
+
+
+@router.get("/stage-failure-analysis")
+def get_stage_failure_analysis(request: Request):
+    """
+    细粒度班级预警：
+    - 按辅导阶段统计各团队的薄弱点
+    - 识别"N% 的团队在第X轮表现不佳"
+    - 自动生成对应的教学建议
+    """
+    from services.database import get_sessions_for_project, get_conn
+
+    projects = _get_teacher_projects(request)
+    total = max(len(projects), 1)
+
+    # 累积所有项目的H规则触发情况
+    # stage → {project_id: set(triggered_rules)}
+    stage_project_rules: dict[str, dict[str, set]] = {}
+    knowledge_fail_projects: dict[str, set] = {}  # knowledge_point → set(project_ids)
+
+    import re as _re
+    for proj in projects:
+        pid = proj["project_id"]
+        sessions = get_sessions_for_project(pid)
+        for sess in sessions:
+            with get_conn() as conn:
+                rows = conn.execute(
+                    "SELECT content FROM chat_messages WHERE session_id=? AND role='assistant'",
+                    (sess["session_id"],)
+                ).fetchall()
+            for row in rows:
+                for m in _re.finditer(r"\b(H\d{1,2})\b", row["content"]):
+                    rid = m.group(1)
+                    stage = _H_RULE_STAGE_MAP.get(rid, "其他")
+                    knowledge = _H_RULE_KNOWLEDGE_MAP.get(rid, rid)
+                    stage_project_rules.setdefault(stage, {}).setdefault(pid, set()).add(rid)
+                    knowledge_fail_projects.setdefault(knowledge, set()).add(pid)
+
+    # 按阶段统计失败率
+    stage_alerts = []
+    for stage, proj_rules in stage_project_rules.items():
+        fail_count = len(proj_rules)
+        fail_pct = round(fail_count / total * 100)
+        if fail_pct >= 20:  # 超过20%才预警
+            # 统计该阶段最常见的知识薄弱点
+            rule_counter: dict[str, int] = {}
+            for rules in proj_rules.values():
+                for r in rules:
+                    rule_counter[r] = rule_counter.get(r, 0) + 1
+            top_rules = sorted(rule_counter.items(), key=lambda x: x[1], reverse=True)[:3]
+            top_knowledge = [_H_RULE_KNOWLEDGE_MAP.get(r, r) for r, _ in top_rules]
+            stage_alerts.append({
+                "stage": stage,
+                "fail_count": fail_count,
+                "fail_percentage": fail_pct,
+                "affected_projects": list(proj_rules.keys()),
+                "top_knowledge_gaps": top_knowledge,
+                "warning": f"{fail_pct}% 的团队在「{stage}」中表现不佳，普遍缺乏：{' / '.join(top_knowledge[:2])}",
+            })
+    stage_alerts.sort(key=lambda x: x["fail_percentage"], reverse=True)
+
+    # 按知识点统计（跨阶段）
+    knowledge_alerts = []
+    for kp, pids in knowledge_fail_projects.items():
+        pct = round(len(pids) / total * 100)
+        if pct >= 20:
+            teaching_suggestion = _KNOWLEDGE_TEACHING_MAP.get(kp, f"专项讲解「{kp}」")
+            knowledge_alerts.append({
+                "knowledge_point": kp,
+                "fail_count": len(pids),
+                "fail_percentage": pct,
+                "teaching_suggestion": f"建议下周课程重点讲解「{teaching_suggestion}」",
+            })
+    knowledge_alerts.sort(key=lambda x: x["fail_percentage"], reverse=True)
+
+    # 综合班级预警文本（仿照测试用例的自然语言格式）
+    warning_messages = []
+    for sa in stage_alerts[:3]:
+        warning_messages.append(sa["warning"])
+    for ka in knowledge_alerts[:3]:
+        warning_messages.append(
+            f"教学建议：{ka['teaching_suggestion']}（影响 {ka['fail_percentage']}% 团队）"
+        )
+
+    # 最薄弱阶段
+    worst_stage = stage_alerts[0]["stage"] if stage_alerts else None
+
+    return {
+        "total_projects": len(projects),
+        "stage_failure_analysis": stage_alerts,
+        "knowledge_gap_analysis": knowledge_alerts,
+        "warning_messages": warning_messages,
+        "worst_stage": worst_stage,
+        "recommendation": (
+            f"重点关注「{worst_stage}」阶段，建议安排针对性课堂讨论"
+            if worst_stage else "暂无足够数据生成预警，请待学生完成更多对话后再查看"
+        ),
+    }
