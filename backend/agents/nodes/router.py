@@ -100,6 +100,17 @@ def _mock_route(message: str) -> tuple[str, str | None]:
 def router_node(state: AgentState) -> AgentState:
     message = state["current_message"]
 
+    # The API can explicitly select a workflow (T1/T2/T3 use this path).
+    # Classification is only for `auto`; otherwise it must never overwrite the
+    # requested workflow after the caller has already made the choice.
+    requested = state.get("requested_agent_type")
+    if requested in ("coach", "tutor", "competition", "grader", "hybrid"):
+        return {
+            **state,
+            "intent": requested,
+            "tutor_concept": _detect_concept(message),
+        }
+
     if USE_MOCK_API:
         intent, concept = _mock_route(message)
     else:

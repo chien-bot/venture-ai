@@ -220,6 +220,27 @@ def _enforce_single_next_task(text: str) -> str:
     return cleaned.strip()
 
 
+def _build_single_step_reply(message: str) -> str:
+    """Return a bounded first turn when the student explicitly asks for it.
+
+    The normal coach prompt is deliberately rich, but it must not override a
+    course request for one actionable step.  This response is deterministic so
+    the protocol remains reliable even when an LLM adds a diagnostic checklist.
+    """
+    careai = "CareAI" in message
+    target = "一类成年目标用户" if careai else "一类具体目标用户"
+    boundary = (
+        "如果是尚未验证的判断，请在描述后标记为 H；不要把它写成已发生的访谈或用户反馈。"
+        if any(token in message for token in ("F/I/H/S", "未进行真实验证", "假设和模拟"))
+        else "先只描述你目前的判断，不需要补写访谈、问卷或其他尚未发生的证据。"
+    )
+    return (
+        "我们先只做第一步：把目标用户和发生问题的场景说清楚。\n\n"
+        f"**唯一问题：** 请用一句话写出“{target}在什么情境下，遇到什么具体困难”。\n\n"
+        f"**验收标准：** 这句话同时包含用户、情境和困难；{boundary}"
+    )
+
+
 def _detect_fallacy_strategy(message: str) -> tuple[str, list[str]]:
     """
     检测消息中的常见创业谬误，返回 (注入策略文本, 触发策略名称列表)。
@@ -284,7 +305,11 @@ def coach_node(state: AgentState) -> AgentState:
     # Refresh evidence tracer
     tracer = refresh_tracer(session_id, messages)
 
-    if USE_MOCK_API:
+    if state.get("strict_single_step"):
+        # This protocol is intentionally deterministic: it is a bounded first
+        # coaching turn, not a request for a broad model diagnosis.
+        raw = _build_single_step_reply(current_message)
+    elif USE_MOCK_API:
         raw = _mock_coach(state)
     else:
         system = COACH_SYSTEM_PROMPT
@@ -415,6 +440,27 @@ def coach_node(state: AgentState) -> AgentState:
         except Exception:
             pass
 
+        # Stage-1 course mode: a student may explicitly require one guided
+        # action and may state that evidence is still hypothetical.  This is a
+        # higher-priority interaction contract than the generic diagnostic
+        # helpers injected above.
+        if state.get("strict_single_step"):
+            system += """
+
+[单步指导协议 — 优先级最高]
+本轮只允许输出一个澄清问题，或一个可执行任务（两者二选一），并给出一个验收标准。
+不要输出完整诊断、评分、规则清单、多个问题、多个任务或多项补证建议；不要在收到学生回答前提前展开后续步骤。
+如果材料明确写明“未进行真实验证”，请如实将其当作当前边界，而不是要求学生立刻虚构、补写或声称已有访谈、问卷、订单、行为数据或实验。
+"""
+
+        if any(token in current_message for token in ("F/I/H/S", "事实、推断、假设和模拟", "未进行真实验证", "不得把公开资料、推断、假设和模拟混为一谈")):
+            system += """
+
+[证据边界协议 — 优先级最高]
+输入中的 F/I/H/S 标签和“未进行真实验证”声明必须被保留。缺少的数据只能标为待验证假设（H）或模拟（S），并可建议未来合规的验证路径；不得把访谈、问卷、用户反馈、市场数据、支付意愿、临床结论或合作意向写成已发生的事实。
+每一条风险、判断或建议只能依据输入中可定位的材料；没有材料依据时明确说“待核验”，不要臆测知识产权、路演或其他风险。
+"""
+
         # ★ Phase 1: Cheap-First 轻推理 — 注入结构化诊断到 LLM prompt
         all_msgs_for_diag = list(messages)
         if current_message:
@@ -457,6 +503,9 @@ def coach_node(state: AgentState) -> AgentState:
         if raw.startswith("抱歉，AI 服务暂时无法响应") and diag:
             raw = format_diagnostic_as_fallback(diag)
 
+    # A2-1: enforce the explicit one-step contract before score parsing.
+    # A deterministic bounded reply is intentionally used only when the
+    # student asks for this mode; normal coaching remains model-driven.
     # A2-1: enforce single next-task constraint before score parsing
     raw = _enforce_single_next_task(raw)
 

@@ -58,11 +58,15 @@ def critic_node(state: AgentState) -> AgentState:
             existing_diagnosis.append(d)
             existing_ids.add(rule_id)
 
+    # 单步辅导中，规则仍记录为诊断，但不能把一个问题/任务重新扩展成
+    # 多条规则清单；否则会违反对话协议。
+    strict_single_step = state.get("strict_single_step", False)
+
     # 如果有高/中风险规则，在 final_reply 后追加超图诊断块
     high_medium = [r for r in triggered if r.severity in ("high", "medium")]
     final_reply = state.get("final_reply", "")
 
-    if high_medium and final_reply:
+    if high_medium and final_reply and not strict_single_step:
         violations_text = format_violations(high_medium)
         final_reply = final_reply + "\n\n---\n" + violations_text
 
@@ -71,7 +75,7 @@ def critic_node(state: AgentState) -> AgentState:
     critic_redirect = None
     knowledge_recs = None
 
-    if loop_count == 0:  # 只允许一次重定向，防止无限循环
+    if loop_count == 0 and not strict_single_step:  # 单步模式不插入额外教学回合
         redirect_candidates = [
             r for r in triggered
             if r.severity in _REDIRECT_SEVERITY

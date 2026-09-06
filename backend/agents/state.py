@@ -12,7 +12,11 @@ class AgentState(TypedDict):
 
     # Routing
     intent: str                 # coach | tutor | competition | hybrid
+    requested_agent_type: Optional[str]  # explicit API selection; must not be re-routed
     tutor_concept: Optional[str]  # detected concept name for tutor
+
+    # Interaction constraints inferred from a request
+    strict_single_step: bool    # keep a guided turn to one question/task
 
     # Per-agent outputs
     coach_output: Optional[str]
