@@ -20,6 +20,7 @@ __pycache__/
 venv/
 .venv/
 env/
+.venv-*/
 
 # Node modules
 node_modules/
@@ -37,3 +38,7 @@ Thumbs.db
 *.tmp
 *.bak
 .~*
+~$*.docx
+
+# Local runtime artifacts
+backend/uploads/
