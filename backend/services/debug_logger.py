@@ -32,6 +32,14 @@ import threading
 from datetime import datetime
 from typing import Any
 
+# Windows terminals can default to a legacy code page. Preserve structured
+# Chinese logs in SQLite while ensuring console logging never raises a codec
+# exception during an otherwise successful Agent run.
+try:
+    sys.stdout.reconfigure(errors="backslashreplace")
+except (AttributeError, OSError):
+    pass
+
 # 全局 debug logger — 输出到 stdout，便于测试人员直接查看终端
 _handler = logging.StreamHandler(sys.stdout)
 _handler.setFormatter(logging.Formatter("%(message)s"))
@@ -43,18 +51,21 @@ _debug_logger.propagate = False  # 避免与 root logger 重复输出
 
 # ── 会话级日志收集器（供前端 Debug Panel 使用）──
 _session_logs: dict[str, list[dict]] = {}
+_session_metadata: dict[str, dict] = {}
 _session_lock = threading.Lock()
 
 
-def start_session_capture(session_id: str):
+def start_session_capture(session_id: str, run_id: str = "", **metadata: Any):
     """开始为指定 session 收集 debug 日志。"""
     with _session_lock:
         _session_logs[session_id] = []
+        _session_metadata[session_id] = {"run_id": run_id, **metadata}
 
 
 def flush_session_logs(session_id: str) -> list[dict]:
     """取出并清空指定 session 的 debug 日志。"""
     with _session_lock:
+        _session_metadata.pop(session_id, None)
         return _session_logs.pop(session_id, [])
 
 
@@ -62,7 +73,17 @@ def _append_session_log(session_id: str, entry: dict):
     """向当前 session 的日志缓冲区追加一条记录。"""
     with _session_lock:
         if session_id in _session_logs:
-            _session_logs[session_id].append(entry)
+            _session_logs[session_id].append({**_session_metadata.get(session_id, {}), **entry})
+
+
+def record_session_event(session_id: str, tag: str, data: dict | None = None):
+    """Record lifecycle events that happen outside an individual Agent node."""
+    _append_session_log(session_id, {
+        "ts": datetime.now().astimezone().isoformat(timespec="milliseconds"),
+        "agent": "router",
+        "tag": tag,
+        "data": data or {},
+    })
 
 
 def _ts() -> str:

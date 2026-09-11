@@ -2,10 +2,16 @@
 
 import re
 import json
+import logging
+from uuid import uuid4
 from services.session_store import get_chat_history, append_chat
 from services.database import get_uploaded_files_for_project
 from prompts.coach import COACH_GREETING
 from agents.graph import get_graph
+from config import AGENT_VERSION, MODEL_MAIN, USE_MOCK_API
+from services.debug_logger import start_session_capture, flush_session_logs, record_session_event
+
+logger = logging.getLogger(__name__)
 
 
 def get_greeting(agent_type: str) -> str:
@@ -24,6 +30,17 @@ def get_greeting(agent_type: str) -> str:
 
 
 def run_agent(session_id: str, message: str, agent_type: str = "coach", project_id: str = "") -> dict:
+    run_id = f"run_{uuid4().hex[:12]}"
+    start_session_capture(
+        session_id,
+        run_id,
+        agent_version=AGENT_VERSION,
+        flow=agent_type or "auto",
+        mode="non_stream",
+        model=MODEL_MAIN,
+        mock_mode=USE_MOCK_API,
+    )
+    record_session_event(session_id, "RUN_STARTED", {"project_id": project_id})
     append_chat(session_id, "user", message)
     history = get_chat_history(session_id)
 
@@ -69,20 +86,30 @@ def run_agent(session_id: str, message: str, agent_type: str = "coach", project_
         "score_breakdown": None,
     }
 
-    graph = get_graph()
-    final_state = graph.invoke(initial_state)
-
-    reply = final_state.get("final_reply", "")
+    try:
+        graph = get_graph()
+        final_state = graph.invoke(initial_state)
+        reply = final_state.get("final_reply", "")
+        record_session_event(session_id, "RUN_COMPLETED")
+    except Exception as exc:
+        logger.exception("Agent run failed: %s", run_id)
+        final_state = {}
+        reply = "抱歉，本次处理未能完成。请保留当前输入后安全重试；若问题持续，请检查模型、文件或网络服务是否可用。"
+        record_session_event(session_id, "RUN_FAILED", {"error_type": type(exc).__name__, "message": str(exc)[:200]})
 
     # Clean JSON/rubric markers from reply
     from services.marker_parser import clean_reply as mp_clean
     reply = mp_clean(reply)
 
-    append_chat(session_id, "assistant", reply)
+    debug_logs = flush_session_logs(session_id)
+    append_chat(session_id, "assistant", reply, debug_logs=debug_logs or None)
 
     result: dict = {
         "reply": reply,
         "intent": final_state.get("intent", "coach"),
+        "run_id": run_id,
+        "agent_version": AGENT_VERSION,
+        "debug_logs": debug_logs,
     }
     if final_state.get("scores"):
         result["scores"] = final_state["scores"]
@@ -164,10 +191,17 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
     from prompts.coach import COACH_SYSTEM_PROMPT
     from prompts.tutor import TUTOR_SYSTEM_PROMPT
     from prompts.competition import COMPETITION_SYSTEM_PROMPT
-    from config import USE_MOCK_API
-
-    from services.debug_logger import start_session_capture, flush_session_logs
-    start_session_capture(session_id)
+    run_id = f"run_{uuid4().hex[:12]}"
+    start_session_capture(
+        session_id,
+        run_id,
+        agent_version=AGENT_VERSION,
+        flow=agent_type or "auto",
+        mode="stream",
+        model=MODEL_MAIN,
+        mock_mode=USE_MOCK_API,
+    )
+    record_session_event(session_id, "RUN_STARTED", {"project_id": project_id})
 
     append_chat(session_id, "user", message)
     state = _build_initial_state(session_id, message, project_id)
@@ -311,7 +345,7 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
             pass
 
     # Phase 4: Send intent metadata
-    yield f"data: {json.dumps({'type': 'meta', 'intent': intent})}\n\n"
+    yield f"data: {json.dumps({'type': 'meta', 'intent': intent, 'run_id': run_id, 'agent_version': AGENT_VERSION})}\n\n"
 
     # Phase 5: Stream LLM response
     if USE_MOCK_API:
@@ -442,6 +476,7 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
     clean_reply = critic_result.get("final_reply", clean_reply)
 
     # Save reply and update project scores (with EMA smoothing)
+    record_session_event(session_id, "RUN_COMPLETED")
     debug_logs = flush_session_logs(session_id)
     append_chat(session_id, "assistant", clean_reply, debug_logs=debug_logs if debug_logs else None)
     if project_id and (new_scores or stage or diagnosis or rubric_full):
@@ -466,7 +501,12 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
         rubric_scores_from_full = {k: v["score"] for k, v in rubric_full.items()}
     else:
         rubric_scores_from_full = None
-    meta = {"type": "done", "intent": intent}
+    meta = {
+        "type": "done",
+        "intent": intent,
+        "run_id": run_id,
+        "agent_version": AGENT_VERSION,
+    }
     if new_scores:
         meta["scores"] = new_scores
     if stage:

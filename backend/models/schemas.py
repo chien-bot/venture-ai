@@ -67,6 +67,8 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     session_id: str
     reply: str
+    run_id: Optional[str] = None
+    agent_version: Optional[str] = None
     scores: Optional[dict] = None
     diagnosis: Optional[list] = None
     stage: Optional[str] = None

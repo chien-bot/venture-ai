@@ -1,0 +1,1313 @@
+{
+  "generated_at": "2026-09-11T19:32:04+08:00",
+  "agent_version": "ventureai-v2-candidate",
+  "model": "qwen/qwen-2.5-72b-instruct",
+  "mock_mode": false,
+  "records": [
+    {
+      "test_id": "U1",
+      "started_at": "2026-09-11T19:29:27+08:00",
+      "completed_at": "2026-09-11T19:29:58+08:00",
+      "input": "请向第一次参加创业计划竞赛的学生解释“问题—解决方案匹配”：说明含义、判断方法和常见误区；给出一个正例和一个反例；最后用3个问题检查我是否理解。引用必须可核验，无法核验时请明确说明。",
+      "result": {
+        "reply": "**证据边界：** 本回复未提供可核验引用；示例只用于说明方法，不能作为外部事实依据。 DroneFarm 仅为 S（模拟）教学示例，不代表已发生的调研、用户反馈或项目成果。\n\n### 问题—解决方案匹配 (Problem-Solution Fit, PSF)\n\n**概念定义：**\n问题—解决方案匹配是指确保你提供的解决方案确实解决了目标用户的核心问题。这是创业初期的关键步骤，确保产品和服务能有效满足市场需求。\n\n**实际案例：**\n**正例：** DroneFarm 项目的目标用户是农田管理者和农民。用户的主要痛点是农资配送成本高、效率低且自动化程度不足。DroneFarm 通过使用无人机技术，实现了高效、低成本、自动化的农资配送，完美解决了这一痛点。\n\n**反例：** 假设 DroneFarm 项目的用户仍然主要是农田管理者和农民，但解决方案却变成了一款基于增强现实 (AR) 的农田管理软件，虽然具有创新性，但并不能解决他们最关心的农资配送问题，导致问题—解决方案不匹配。\n\n**常见错误：**\n1. **忽视用户真实需求：** 只凭个人直觉或经验设计解决方案，而没有通过用户调研和访谈验证需求。\n2. **过度关注技术：** 过度依赖技术的先进性，而忽略了用户的实际需求和使用场景。\n3. **缺乏迭代验证：** 未能通过多次迭代测试和反馈来改进解决方案，导致产品与用户需求脱节。\n\n**练习任务：**\n进行一次用户访谈，选择 3 位潜在的农田管理者或农民，了解他们对农资配送的具体痛点，并记录他们的反馈。重点是验证这些痛点是否与你最初的假设一致。\n\n**预期产出：**\n- 一份详细的访谈记录，包括用户的痛点描述和具体反馈。\n- 一份总结报告，分析访谈结果与最初假设的匹配程度。\n\n**评价标准：**\n- **准确性：** 访谈记录是否详细、准确地反映了用户的实际需求。\n- **一致性：** 访谈结果与最初假设的匹配程度。\n- **迭代性：** 是否有具体的改进措施或计划，基于用户反馈进行调整。\n\n**检查理解的3个问题：**\n1. 问题—解决方案匹配的核心目标是什么？\n2. 在 DroneFarm 项目中，如果解决方案是基于 AR 的农田管理软件而不是无人机配送，会有什么问题？\n3. 为了避免问题—解决方案不匹配，你需要进行哪些关键步骤？\n\n---\n**⚠ 超图约束检测结果：**\n\n🟡 **[H10] 里程碑不可交付** （置信度：中）\n   触发信号：里程碑设置过于模糊或不可量化\n   建议修复：定义SMART指标的具体交付物\n   证据状态：话题被提及但无具体证据\n\n🟡 **[H15] 评分项证据覆盖不足** （置信度：中）\n   触发信号：多个评分维度缺乏支撑证据\n   建议修复：针对缺失项逐一补充证据材料\n   证据状态：话题被提及但无具体证据",
+        "intent": "tutor",
+        "run_id": "run_bfda3bd33e6a",
+        "agent_version": "ventureai-v2-candidate",
+        "debug_logs": [
+          {
+            "run_id": "run_bfda3bd33e6a",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "tutor",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "2026-09-11T19:29:27.624+08:00",
+            "agent": "router",
+            "tag": "RUN_STARTED",
+            "data": {
+              "project_id": ""
+            }
+          },
+          {
+            "run_id": "run_bfda3bd33e6a",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "tutor",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:29:31.436",
+            "agent": "retriever_node",
+            "tag": "AGENT_START",
+            "data": {
+              "agent_name": "retriever_node",
+              "session_id": "stage2-u1-44d34048fc2e471396baf56135d718fc",
+              "intent": "retrieval",
+              "message_preview": "请向第一次参加创业计划竞赛的学生解释“问题—解决方案匹配”：说明含义、判断方法和常见误区；给出一个正例和一个反例；最后用3个问题检查我是否理解。引用必须可核验，…"
+            }
+          },
+          {
+            "run_id": "run_bfda3bd33e6a",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "tutor",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:29:31.437",
+            "agent": "retriever_node",
+            "tag": "RETRIEVED_KG_NODES",
+            "data": {
+              "retrieved_kg_nodes": [
+                "精益画布",
+                "问题—解决方案匹配"
+              ],
+              "source": "llm_extraction",
+              "count": 2
+            }
+          },
+          {
+            "run_id": "run_bfda3bd33e6a",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "tutor",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:29:31.437",
+            "agent": "retriever_node",
+            "tag": "INFO",
+            "data": "Cache MISS — executing full hypergraph search (techs=['精益画布'], industry=教育教学, concept=问题—解决方案匹配)"
+          },
+          {
+            "run_id": "run_bfda3bd33e6a",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "tutor",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:29:31.440",
+            "agent": "retriever_node",
+            "tag": "RETRIEVED_HYPEREDGES",
+            "data": {
+              "retrieved_heterogeneous_subgraph": [
+                {
+                  "type": "Value_Loop_Edge",
+                  "query_context": "techs=['精益画布'], industry=教育教学"
+                },
+                {
+                  "type": "Risk_Pattern_Edge",
+                  "query_context": "techs=['精益画布'], industry=教育教学"
+                },
+                {
+                  "type": "Technology_Hierarchy_Edge",
+                  "query_context": "techs=['精益画布'], industry=教育教学"
+                }
+              ],
+              "edge_types": [
+                "Value_Loop_Edge",
+                "Risk_Pattern_Edge",
+                "Technology_Hierarchy_Edge"
+              ],
+              "total_edges": 3
+            }
+          },
+          {
+            "run_id": "run_bfda3bd33e6a",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "tutor",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "2026-09-11T19:29:58.561+08:00",
+            "agent": "router",
+            "tag": "RUN_COMPLETED",
+            "data": {}
+          }
+        ],
+        "diagnosis": [
+          "[H10] 里程碑不可交付（置信度中）：里程碑设置过于模糊或不可量化",
+          "[H15] 评分项证据覆盖不足（置信度中）：多个评分维度缺乏支撑证据"
+        ],
+        "triggered_rules": [
+          {
+            "rule_id": "H10",
+            "rule_type": "里程碑不可交付",
+            "severity": "medium",
+            "trigger_message": "里程碑设置过于模糊或不可量化",
+            "fix_task": "定义SMART指标的具体交付物",
+            "confidence": 0.5,
+            "evidence_summary": "话题被提及但无具体证据"
+          },
+          {
+            "rule_id": "H15",
+            "rule_type": "评分项证据覆盖不足",
+            "severity": "medium",
+            "trigger_message": "多个评分维度缺乏支撑证据",
+            "fix_task": "针对缺失项逐一补充证据材料",
+            "confidence": 0.5,
+            "evidence_summary": "话题被提及但无具体证据"
+          }
+        ]
+      }
+    },
+    {
+      "test_id": "U2",
+      "started_at": "2026-09-11T19:29:58+08:00",
+      "completed_at": "2026-09-11T19:29:58+08:00",
+      "input": "固定 U2 输入，见 U1-U6.md",
+      "result": {
+        "session_id": "stage2-u2-63e77d44dfae4f8fb59a14e19c558239",
+        "reply": "这是证据边界审阅，不会把题干中的主张补写成事实。\n\n在没有可定位来源的前提下，所有关于比例、机构支持和支付意愿的陈述都只能暂列为 **H（假设）**：它们可以作为待验证的项目问题或测算前提，但不能写成已证实的市场结论。\n\n题干中明确写为“Agent 模拟用户”的反馈应标记为 **S（模拟）**；它只能帮助发现可用性问题，不能当作真实用户反馈。只有附有可核验来源的陈述才可能标为 **F（事实）**；基于多个已知事实作出的结论才是 **I（推断）**。\n\n下一步：为每项 H/S 分别记录来源缺口、验证方式和验证后可能改变的项目章节；在获得真实来源前，保留 H/S 标识。",
+        "run_id": "run_df6284d74c8a",
+        "agent_version": "ventureai-v2-candidate",
+        "scores": null,
+        "diagnosis": null,
+        "stage": null,
+        "rubric_scores": null,
+        "intent": "evidence_review",
+        "knowledge_recommendations": null,
+        "fix_tasks": null,
+        "rubric_full": null,
+        "score_breakdown": null
+      }
+    },
+    {
+      "test_id": "U3",
+      "started_at": "2026-09-11T19:29:58+08:00",
+      "completed_at": "2026-09-11T19:30:01+08:00",
+      "input": "我们想做一个帮助大学生交换闲置教材的项目，目前只有这个想法，没有调研和运行数据。请不要直接生成商业计划书，而是通过分步提问帮助我们明确目标用户、场景、核心问题、现有替代方案、关键假设和需要补充的证据。",
+      "result": {
+        "reply": "我们先只做第一步：把目标用户和发生问题的场景说清楚。\n\n**唯一问题：** 请用一句话写出“一类具体目标用户在什么情境下，遇到什么具体困难”。\n\n**验收标准：** 这句话同时包含用户、情境和困难；先只描述你目前的判断，不需要补写访谈、问卷或其他尚未发生的证据。",
+        "intent": "coach",
+        "run_id": "run_ef05aa1e861e",
+        "agent_version": "ventureai-v2-candidate",
+        "debug_logs": [
+          {
+            "run_id": "run_ef05aa1e861e",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "coach",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "2026-09-11T19:29:58.684+08:00",
+            "agent": "router",
+            "tag": "RUN_STARTED",
+            "data": {
+              "project_id": ""
+            }
+          },
+          {
+            "run_id": "run_ef05aa1e861e",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "coach",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:30:01.618",
+            "agent": "retriever_node",
+            "tag": "AGENT_START",
+            "data": {
+              "agent_name": "retriever_node",
+              "session_id": "stage2-u3-u4-b4b8c6eea34c42bcba7dd3cc5eca4632",
+              "intent": "retrieval",
+              "message_preview": "我们想做一个帮助大学生交换闲置教材的项目，目前只有这个想法，没有调研和运行数据。请不要直接生成商业计划书，而是通过分步提问帮助我们明确目标用户、场景、核心问题、…"
+            }
+          },
+          {
+            "run_id": "run_ef05aa1e861e",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "coach",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:30:01.618",
+            "agent": "retriever_node",
+            "tag": "RETRIEVED_KG_NODES",
+            "data": {
+              "retrieved_kg_nodes": [
+                "移动应用",
+                "闲置物品交换",
+                "目标检测",
+                "生成对抗",
+                "数据湖",
+                "商业计划书"
+              ],
+              "source": "llm_extraction",
+              "count": 6
+            }
+          },
+          {
+            "run_id": "run_ef05aa1e861e",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "coach",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:30:01.619",
+            "agent": "retriever_node",
+            "tag": "INFO",
+            "data": "Cache MISS — executing full hypergraph search (techs=['移动应用', '闲置物品交换', '目标检测', '生成对抗', '数据湖'], industry=教育教学, concept=商业计划书)"
+          },
+          {
+            "run_id": "run_ef05aa1e861e",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "coach",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:30:01.624",
+            "agent": "retriever_node",
+            "tag": "RETRIEVED_HYPEREDGES",
+            "data": {
+              "retrieved_heterogeneous_subgraph": [
+                {
+                  "type": "Value_Loop_Edge",
+                  "query_context": "techs=['移动应用', '闲置物品交换', '目标检测', '生成对抗', '数据湖'], industry=教育教学"
+                },
+                {
+                  "type": "Risk_Pattern_Edge",
+                  "query_context": "techs=['移动应用', '闲置物品交换', '目标检测', '生成对抗', '数据湖'], industry=教育教学"
+                },
+                {
+                  "type": "Competition_Edge",
+                  "query_context": "techs=['移动应用', '闲置物品交换', '目标检测', '生成对抗', '数据湖'], industry=教育教学"
+                },
+                {
+                  "type": "Technology_Hierarchy_Edge",
+                  "query_context": "techs=['移动应用', '闲置物品交换', '目标检测', '生成对抗', '数据湖'], industry=教育教学"
+                }
+              ],
+              "edge_types": [
+                "Value_Loop_Edge",
+                "Risk_Pattern_Edge",
+                "Competition_Edge",
+                "Technology_Hierarchy_Edge"
+              ],
+              "total_edges": 4
+            }
+          },
+          {
+            "run_id": "run_ef05aa1e861e",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "coach",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:30:01.625",
+            "agent": "coach_node",
+            "tag": "AGENT_START",
+            "data": {
+              "agent_name": "coach_node",
+              "session_id": "stage2-u3-u4-b4b8c6eea34c42bcba7dd3cc5eca4632",
+              "intent": "coach",
+              "message_preview": "我们想做一个帮助大学生交换闲置教材的项目，目前只有这个想法，没有调研和运行数据。请不要直接生成商业计划书，而是通过分步提问帮助我们明确目标用户、场景、核心问题、…"
+            }
+          },
+          {
+            "run_id": "run_ef05aa1e861e",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "coach",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:30:01.626",
+            "agent": "coach_node",
+            "tag": "AGENT_DONE",
+            "data": {
+              "agent_name": "coach_node",
+              "stage": "",
+              "scores": {},
+              "diagnosis_count": 0
+            }
+          },
+          {
+            "run_id": "run_ef05aa1e861e",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "coach",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "2026-09-11T19:30:01.628+08:00",
+            "agent": "router",
+            "tag": "RUN_COMPLETED",
+            "data": {}
+          }
+        ],
+        "diagnosis": [
+          "[H1] 客户–价值主张错位（置信度中）：客户群体与价值主张不匹配",
+          "[H10] 里程碑不可交付（置信度中）：里程碑设置过于模糊或不可量化"
+        ],
+        "triggered_rules": [
+          {
+            "rule_id": "H1",
+            "rule_type": "客户–价值主张错位",
+            "severity": "high",
+            "trigger_message": "客户群体与价值主张不匹配",
+            "fix_task": "重新定义目标客户或调整价值主张",
+            "confidence": 0.531,
+            "evidence_summary": "话题被提及但无具体证据"
+          },
+          {
+            "rule_id": "H10",
+            "rule_type": "里程碑不可交付",
+            "severity": "medium",
+            "trigger_message": "里程碑设置过于模糊或不可量化",
+            "fix_task": "定义SMART指标的具体交付物",
+            "confidence": 0.55,
+            "evidence_summary": "话题被提及但无具体证据"
+          }
+        ]
+      }
+    },
+    {
+      "test_id": "U4",
+      "started_at": "2026-09-11T19:30:01+08:00",
+      "completed_at": "2026-09-11T19:30:37+08:00",
+      "input": "课程模拟材料新增两点：A. 用户只在每学期结束前两周集中处理教材；B. 校内已有微信群可免费交换。两点均为教师提供的模拟情境，不是真实市场证据。请基于原项目骨架，只修订受影响的用户场景、替代方案、价值主张和风险，并保留其他内容。",
+      "result": {
+        "reply": "**证据边界：** 本次输入中的新增情境与模拟反馈均标记为 S（模拟），不能作为真实市场或用户证据。\n\n好的，我们先基于你提供的模拟情境对原有的项目骨架进行修订，重点放在用户场景、现有替代方案、价值主张和风险上。我们将逐条分析并提出下一步任务。\n\n### 项目阶段（Project Stage）\n- **想法期**\n\n### 当前诊断（Current Diagnosis）\n- **最大的矛盾**：目标用户在时间上的集中性和现有替代方案（微信群）的存在，使得项目的独特价值和商业模式变得模糊。\n- **缺口**：缺乏明确的价值主张和差异化策略，没有具体的市场和用户调研数据。\n\n### 诊断依据（Evidence Used）\n- **用户场景**：用户只在每学期结束前两周集中处理教材（模拟情境）。\n- **现有替代方案**：校内已有微信群可免费交换（模拟情境）。\n- **问题描述**：虽然有初步想法，但缺乏数据支持和具体的用户调研。\n\n### 不修复后果（Impact if Unfixed）\n- **缺乏差异化**：如果不能明确项目与现有微信群的差异化优势，用户可能不会选择使用你们的平台。\n- **商业模式不清晰**：如果不能找到明确的盈利模式，项目可能会在早期就无法持续运营。\n\n### 下一步任务（Next Task）\n- **任务描述**：定义目标用户在特定情境下的具体痛点，并找出现有替代方案的不足之处。\n- **模板或步骤**：\n  1. 列出目标用户的典型特征（如年级、专业、课程需求等）。\n  2. 描述用户在每学期结束前两周处理教材的具体情境和遇到的困难。\n  3. 分析现有微信群在解决这些痛点方面的不足之处。\n  4. 提出你们项目的核心价值和差异化优势。\n- **验收标准**：提交一份包含上述四点的简要报告，确保每点内容具体且有逻辑连接。\n\n---\n\n### 援引超图案例库\n**案例库中的『物衡智判』**项目在政务管理中也面临类似的场景问题，通过多模态和大模型技术提高了效率。你们可以借鉴他们的技术应用思路，考虑如何在特定时间段内提高用户体验和效率。\n\n### 援引超图风险模式\n**合规风险**：如果你们的项目涉及用户数据的处理，需要特别注意数据安全和隐私保护。参考**基于YOLO的AI视_能感知系统**项目，了解他们的合规策略和注意事项。\n\n---\n\n请按上述任务进行下一步，明确你们的核心价值和差异化优势，再继续我们的讨论。\n\n---\n**⚠ 超图约束检测结果：**\n\n🔴 **[H2] 渠道不可达** （置信度：中）\n   触发信号：选定渠道无法触达目标客户\n   建议修复：验证渠道可达性，提供触达证据\n   证据状态：话题被提及但无具体证据\n\n🟡 **[H10] 里程碑不可交付** （置信度：中）\n   触发信号：里程碑设置过于模糊或不可量化\n   建议修复：定义SMART指标的具体交付物\n   证据状态：话题被提及但无具体证据",
+        "intent": "coach",
+        "run_id": "run_005c7f5b33f4",
+        "agent_version": "ventureai-v2-candidate",
+        "debug_logs": [
+          {
+            "run_id": "run_005c7f5b33f4",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "coach",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "2026-09-11T19:30:01.653+08:00",
+            "agent": "router",
+            "tag": "RUN_STARTED",
+            "data": {
+              "project_id": ""
+            }
+          },
+          {
+            "run_id": "run_005c7f5b33f4",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "coach",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:30:04.577",
+            "agent": "retriever_node",
+            "tag": "AGENT_START",
+            "data": {
+              "agent_name": "retriever_node",
+              "session_id": "stage2-u3-u4-b4b8c6eea34c42bcba7dd3cc5eca4632",
+              "intent": "retrieval",
+              "message_preview": "课程模拟材料新增两点：A. 用户只在每学期结束前两周集中处理教材；B. 校内已有微信群可免费交换。两点均为教师提供的模拟情境，不是真实市场证据。请基于原项目骨架…"
+            }
+          },
+          {
+            "run_id": "run_005c7f5b33f4",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "coach",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:30:04.577",
+            "agent": "retriever_node",
+            "tag": "RETRIEVED_KG_NODES",
+            "data": {
+              "retrieved_kg_nodes": [
+                "目标检测",
+                "声学信号处理",
+                "生成对抗",
+                "自然语言处理",
+                "商业计划书"
+              ],
+              "source": "llm_extraction",
+              "count": 5
+            }
+          },
+          {
+            "run_id": "run_005c7f5b33f4",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "coach",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:30:04.577",
+            "agent": "retriever_node",
+            "tag": "INFO",
+            "data": "Cache MISS — executing full hypergraph search (techs=['目标检测', '声学信号处理', '生成对抗', '自然语言处理'], industry=教育教学, concept=商业计划书)"
+          },
+          {
+            "run_id": "run_005c7f5b33f4",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "coach",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:30:04.583",
+            "agent": "retriever_node",
+            "tag": "RETRIEVED_HYPEREDGES",
+            "data": {
+              "retrieved_heterogeneous_subgraph": [
+                {
+                  "type": "Value_Loop_Edge",
+                  "query_context": "techs=['目标检测', '声学信号处理', '生成对抗', '自然语言处理'], industry=教育教学"
+                },
+                {
+                  "type": "Risk_Pattern_Edge",
+                  "query_context": "techs=['目标检测', '声学信号处理', '生成对抗', '自然语言处理'], industry=教育教学"
+                },
+                {
+                  "type": "Competition_Edge",
+                  "query_context": "techs=['目标检测', '声学信号处理', '生成对抗', '自然语言处理'], industry=教育教学"
+                },
+                {
+                  "type": "Technology_Hierarchy_Edge",
+                  "query_context": "techs=['目标检测', '声学信号处理', '生成对抗', '自然语言处理'], industry=教育教学"
+                }
+              ],
+              "edge_types": [
+                "Value_Loop_Edge",
+                "Risk_Pattern_Edge",
+                "Competition_Edge",
+                "Technology_Hierarchy_Edge"
+              ],
+              "total_edges": 4
+            }
+          },
+          {
+            "run_id": "run_005c7f5b33f4",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "coach",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:30:04.583",
+            "agent": "coach_node",
+            "tag": "AGENT_START",
+            "data": {
+              "agent_name": "coach_node",
+              "session_id": "stage2-u3-u4-b4b8c6eea34c42bcba7dd3cc5eca4632",
+              "intent": "coach",
+              "message_preview": "课程模拟材料新增两点：A. 用户只在每学期结束前两周集中处理教材；B. 校内已有微信群可免费交换。两点均为教师提供的模拟情境，不是真实市场证据。请基于原项目骨架…"
+            }
+          },
+          {
+            "run_id": "run_005c7f5b33f4",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "coach",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:30:04.585",
+            "agent": "coach_node",
+            "tag": "FALLACY_LABEL",
+            "data": {
+              "fallacy_label": "现金流生存逻辑",
+              "triggered_by": "课程模拟材料新增两点：A. 用户只在每学期结束前两周集中处理教材；B. 校内已有微信群可免费交换。两点均为教师提供的模拟情境，不是真实市场证据。请基于原项目骨架，只修订受影响的用户场景、替代方案、价值",
+              "confidence": 0.0
+            }
+          },
+          {
+            "run_id": "run_005c7f5b33f4",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "coach",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:30:04.585",
+            "agent": "coach_node",
+            "tag": "STRATEGY_SELECTED",
+            "data": {
+              "selected_strategy": "现金流生存逻辑",
+              "strategy_selected": "现金流生存逻辑",
+              "generated_question": "[将由LLM基于策略生成追问，策略=现金流生存逻辑]"
+            }
+          },
+          {
+            "run_id": "run_005c7f5b33f4",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "coach",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:30:37.823",
+            "agent": "coach_node",
+            "tag": "AGENT_DONE",
+            "data": {
+              "agent_name": "coach_node",
+              "stage": "discovery",
+              "scores": {
+                "empathy": 3.5,
+                "ideation": 3.5,
+                "business": 0.5,
+                "execution": 0.8,
+                "pitching": 0
+              },
+              "diagnosis_count": 2
+            }
+          },
+          {
+            "run_id": "run_005c7f5b33f4",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "coach",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "2026-09-11T19:30:37.827+08:00",
+            "agent": "router",
+            "tag": "RUN_COMPLETED",
+            "data": {}
+          }
+        ],
+        "scores": {
+          "empathy": 3.5,
+          "ideation": 3.5,
+          "business": 0.5,
+          "execution": 0.8,
+          "pitching": 0
+        },
+        "stage": "discovery",
+        "diagnosis": [
+          "缺乏细化的用户场景和痛点定义",
+          "未明确现有替代方案的不足",
+          "[H2] 渠道不可达（置信度中）：选定渠道无法触达目标客户",
+          "[H10] 里程碑不可交付（置信度中）：里程碑设置过于模糊或不可量化"
+        ],
+        "triggered_rules": [
+          {
+            "rule_id": "H2",
+            "rule_type": "渠道不可达",
+            "severity": "high",
+            "trigger_message": "选定渠道无法触达目标客户",
+            "fix_task": "验证渠道可达性，提供触达证据",
+            "confidence": 0.523,
+            "evidence_summary": "话题被提及但无具体证据"
+          },
+          {
+            "rule_id": "H10",
+            "rule_type": "里程碑不可交付",
+            "severity": "medium",
+            "trigger_message": "里程碑设置过于模糊或不可量化",
+            "fix_task": "定义SMART指标的具体交付物",
+            "confidence": 0.55,
+            "evidence_summary": "话题被提及但无具体证据"
+          }
+        ],
+        "score_breakdown": {
+          "empathy": {
+            "dim": "empathy",
+            "floor_score": 3.2,
+            "llm_delta": 0.3,
+            "final_score": 3.5,
+            "data_count": 2,
+            "claim_count": 0,
+            "commit_count": 2,
+            "evidence_summary": "2条数据证据、2条计划承诺\n✓ 第1轮「我们想做一个帮助大学生交换闲置教材的项目，目前只有这个想法，没有调研和运行数据」(DATA)\n✓ 第2轮「我们想做一个帮助大学生交换闲置教材的项目，目前只有这个想法，没有调研和运行数据」(DATA)"
+          },
+          "ideation": {
+            "dim": "ideation",
+            "floor_score": 3.2,
+            "llm_delta": 0.3,
+            "final_score": 3.5,
+            "data_count": 2,
+            "claim_count": 0,
+            "commit_count": 2,
+            "evidence_summary": "2条数据证据、2条计划承诺\n✓ 第3轮「请基于原项目骨架，只修订受影响的用户场景、替代方案、价值主张和风险，并保留其他内」(DATA)\n✓ 第4轮「请基于原项目骨架，只修订受影响的用户场景、替代方案、价值主张和风险，并保留其他内」(DATA)"
+          },
+          "business": {
+            "dim": "business",
+            "floor_score": 0.0,
+            "llm_delta": 0.5,
+            "final_score": 0.5,
+            "data_count": 0,
+            "claim_count": 0,
+            "commit_count": 0,
+            "evidence_summary": "尚无任何证据"
+          },
+          "execution": {
+            "dim": "execution",
+            "floor_score": 0.8,
+            "llm_delta": 0.0,
+            "final_score": 0.8,
+            "data_count": 0,
+            "claim_count": 0,
+            "commit_count": 2,
+            "evidence_summary": "2条计划承诺"
+          },
+          "pitching": {
+            "dim": "pitching",
+            "floor_score": 0.0,
+            "llm_delta": 0.0,
+            "final_score": 0,
+            "data_count": 0,
+            "claim_count": 0,
+            "commit_count": 0,
+            "evidence_summary": "尚无任何证据"
+          }
+        }
+      }
+    },
+    {
+      "test_id": "U5",
+      "started_at": "2026-09-11T19:30:37+08:00",
+      "completed_at": "2026-09-11T19:31:40+08:00",
+      "input": "评审以下项目：面向所有大学生的“AI校园书桥”，通过智能匹配交换闲置教材。团队称80%学生有需求，但无来源；创新点是使用AI；盈利依靠广告；没有说明获客、合规和替代方案。请按社会价值、实践依据、创新意义、发展前景和团队/实施条件给出结构化评价、证据缺口和下一步修改建议。",
+      "result": {
+        "reply": "**证据边界：** 题干未提供来源的比例、支持和支付意愿均为 H（假设），不得写成已证实事实。\n\n### 综合评价\n\n你的项目“AI校园书桥”旨在通过智能匹配交换闲置教材，这是一个具有较大社会价值的创意。项目旨在解决大学生的闲置教材交换问题，能够有效降低学习成本，减少资源浪费，具有较高的社会价值。然而，项目在实践依据、商业模式、合规性和社会责任等方面还有较大的提升空间。\n\n在创新方面，项目利用AI技术进行智能匹配，这种技术应用确实能够提高交换效率，增强用户体验。但在具体实现上，缺乏对AI算法的具体描述和技术实现路径的说明，使得创新点的可操作性和说服力不足。此外，项目的商业模型较为单一，主要依靠广告盈利，未详细说明获客途径、用户粘性提升策略以及广告主的引入计划。\n\n### 点评与建议\n\n项目最大的亮点在于利用AI技术解决实际问题，体现了较强的创新思维和技术应用能力。然而，项目在市场调研、商业模式设计、合规性评估等方面存在明显不足。建议团队在以下几个方面进行改进：\n\n1. **市场调研**：进行更深入的市场调研，收集更多关于大学生对闲置教材交换需求的数据，以验证项目的市场需求。可以通过在线问卷、访谈等方式获取真实用户反馈。\n\n2. **商业模式**：对商业模式进行细化，除了广告收入，探索更多盈利途径，如会员制、增值服务等。同时，明确获客途径，制定详细的用户获取和留存策略。\n\n3. **合规性与社会责任**：评估项目在数据隐私、用户信息安全等方面的合规性风险，制定相应的风险防控措施。同时，考虑项目在促进资源共享、减少浪费等方面的社会责任。\n\n4. **技术实现**：详细描述AI算法的技术实现路径，包括数据处理、匹配逻辑、用户界面设计等，提高项目的可操作性。\n\n### 结构化评价\n\n---\n**⚠ 超图约束检测结果：**\n\n🔴 **[H8] 单位经济不成立** （置信度：中）\n   触发信号：LTV < CAC 或单位经济模型假设不合理\n   建议修复：重新计算单位经济，调整定价或降低获客成本\n   证据状态：话题被提及但无具体证据\n\n🔴 **[H16] 客户获取成本幻觉** （置信度：中）\n   触发信号：声称获客成本(CAC)为零或接近零，缺乏合理依据\n   建议修复：列出每个获客渠道的预估成本，计算加权平均CAC\n   证据状态：话题被提及但无具体证据\n\n🟡 **[H15] 评分项证据覆盖不足** （置信度：中）\n   触发信号：多个评分维度缺乏支撑证据\n   建议修复：针对缺失项逐一补充证据材料\n   证据状态：话题被提及但无具体证据",
+        "intent": "grader",
+        "run_id": "run_6038de3ae4cf",
+        "agent_version": "ventureai-v2-candidate",
+        "debug_logs": [
+          {
+            "run_id": "run_6038de3ae4cf",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "grader",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "2026-09-11T19:30:37.859+08:00",
+            "agent": "router",
+            "tag": "RUN_STARTED",
+            "data": {
+              "project_id": ""
+            }
+          },
+          {
+            "run_id": "run_6038de3ae4cf",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "grader",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:30:40.825",
+            "agent": "retriever_node",
+            "tag": "AGENT_START",
+            "data": {
+              "agent_name": "retriever_node",
+              "session_id": "stage2-u5-4f0ecc41b67b4864bc544666bf26c763",
+              "intent": "retrieval",
+              "message_preview": "评审以下项目：面向所有大学生的“AI校园书桥”，通过智能匹配交换闲置教材。团队称80%学生有需求，但无来源；创新点是使用AI；盈利依靠广告；没有说明获客、合规和…"
+            }
+          },
+          {
+            "run_id": "run_6038de3ae4cf",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "grader",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:30:40.826",
+            "agent": "retriever_node",
+            "tag": "RETRIEVED_KG_NODES",
+            "data": {
+              "retrieved_kg_nodes": [
+                "AI",
+                "智能匹配",
+                "闲置交换",
+                "智能制造",
+                "社会价值"
+              ],
+              "source": "llm_extraction",
+              "count": 5
+            }
+          },
+          {
+            "run_id": "run_6038de3ae4cf",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "grader",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:30:40.826",
+            "agent": "retriever_node",
+            "tag": "INFO",
+            "data": "Cache MISS — executing full hypergraph search (techs=['AI', '智能匹配', '闲置交换', '智能制造'], industry=教育, concept=社会价值)"
+          },
+          {
+            "run_id": "run_6038de3ae4cf",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "grader",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:30:40.830",
+            "agent": "retriever_node",
+            "tag": "RETRIEVED_HYPEREDGES",
+            "data": {
+              "retrieved_heterogeneous_subgraph": [
+                {
+                  "type": "Competition_Edge",
+                  "query_context": "techs=['AI', '智能匹配', '闲置交换', '智能制造'], industry=教育"
+                },
+                {
+                  "type": "Technology_Hierarchy_Edge",
+                  "query_context": "techs=['AI', '智能匹配', '闲置交换', '智能制造'], industry=教育"
+                }
+              ],
+              "edge_types": [
+                "Competition_Edge",
+                "Technology_Hierarchy_Edge"
+              ],
+              "total_edges": 2
+            }
+          },
+          {
+            "run_id": "run_6038de3ae4cf",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "grader",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:30:40.831",
+            "agent": "grader_node",
+            "tag": "AGENT_START",
+            "data": {
+              "agent_name": "grader_node",
+              "session_id": "stage2-u5-4f0ecc41b67b4864bc544666bf26c763",
+              "intent": "grader",
+              "message_preview": "评审以下项目：面向所有大学生的“AI校园书桥”，通过智能匹配交换闲置教材。团队称80%学生有需求，但无来源；创新点是使用AI；盈利依靠广告；没有说明获客、合规和…"
+            }
+          },
+          {
+            "run_id": "run_6038de3ae4cf",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "grader",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:31:40.462",
+            "agent": "grader_node",
+            "tag": "RULE_TRIGGERED",
+            "data": {
+              "rule_triggered": "R1",
+              "rule_id": "R1",
+              "rule_type": "rubric_score=3/5",
+              "severity": "low",
+              "confidence": 0.6
+            }
+          },
+          {
+            "run_id": "run_6038de3ae4cf",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "grader",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:31:40.462",
+            "agent": "grader_node",
+            "tag": "RULE_TRIGGERED",
+            "data": {
+              "rule_triggered": "R2",
+              "rule_id": "R2",
+              "rule_type": "rubric_score=2/5",
+              "severity": "medium",
+              "confidence": 0.4
+            }
+          },
+          {
+            "run_id": "run_6038de3ae4cf",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "grader",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:31:40.462",
+            "agent": "grader_node",
+            "tag": "RULE_TRIGGERED",
+            "data": {
+              "rule_triggered": "R3",
+              "rule_id": "R3",
+              "rule_type": "rubric_score=3/5",
+              "severity": "low",
+              "confidence": 0.6
+            }
+          },
+          {
+            "run_id": "run_6038de3ae4cf",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "grader",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:31:40.462",
+            "agent": "grader_node",
+            "tag": "RULE_TRIGGERED",
+            "data": {
+              "rule_triggered": "R4",
+              "rule_id": "R4",
+              "rule_type": "rubric_score=2/5",
+              "severity": "medium",
+              "confidence": 0.4
+            }
+          },
+          {
+            "run_id": "run_6038de3ae4cf",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "grader",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:31:40.463",
+            "agent": "grader_node",
+            "tag": "RULE_TRIGGERED",
+            "data": {
+              "rule_triggered": "R5",
+              "rule_id": "R5",
+              "rule_type": "rubric_score=2/5",
+              "severity": "medium",
+              "confidence": 0.4
+            }
+          },
+          {
+            "run_id": "run_6038de3ae4cf",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "grader",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:31:40.463",
+            "agent": "grader_node",
+            "tag": "RULE_TRIGGERED",
+            "data": {
+              "rule_triggered": "R6",
+              "rule_id": "R6",
+              "rule_type": "rubric_score=1/5",
+              "severity": "high",
+              "confidence": 0.2
+            }
+          },
+          {
+            "run_id": "run_6038de3ae4cf",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "grader",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:31:40.463",
+            "agent": "grader_node",
+            "tag": "RULE_TRIGGERED",
+            "data": {
+              "rule_triggered": "R7",
+              "rule_id": "R7",
+              "rule_type": "rubric_score=3/5",
+              "severity": "low",
+              "confidence": 0.6
+            }
+          },
+          {
+            "run_id": "run_6038de3ae4cf",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "grader",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:31:40.463",
+            "agent": "grader_node",
+            "tag": "RULE_TRIGGERED",
+            "data": {
+              "rule_triggered": "R8",
+              "rule_id": "R8",
+              "rule_type": "rubric_score=3/5",
+              "severity": "low",
+              "confidence": 0.6
+            }
+          },
+          {
+            "run_id": "run_6038de3ae4cf",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "grader",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:31:40.463",
+            "agent": "grader_node",
+            "tag": "RULE_TRIGGERED",
+            "data": {
+              "rule_triggered": "R9",
+              "rule_id": "R9",
+              "rule_type": "rubric_score=2/5",
+              "severity": "medium",
+              "confidence": 0.4
+            }
+          },
+          {
+            "run_id": "run_6038de3ae4cf",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "grader",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:31:40.463",
+            "agent": "grader_node",
+            "tag": "RULE_TRIGGERED",
+            "data": {
+              "rule_triggered": "R10",
+              "rule_id": "R10",
+              "rule_type": "rubric_score=2/5",
+              "severity": "medium",
+              "confidence": 0.4
+            }
+          },
+          {
+            "run_id": "run_6038de3ae4cf",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "grader",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:31:40.463",
+            "agent": "grader_node",
+            "tag": "RULE_TRIGGERED",
+            "data": {
+              "rule_triggered": "R11",
+              "rule_id": "R11",
+              "rule_type": "rubric_score=2/5",
+              "severity": "medium",
+              "confidence": 0.4
+            }
+          },
+          {
+            "run_id": "run_6038de3ae4cf",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "grader",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:31:40.463",
+            "agent": "grader_node",
+            "tag": "AGENT_DONE",
+            "data": {
+              "agent_name": "grader_node",
+              "stage": "grader",
+              "scores": {
+                "R1": 3,
+                "R2": 2,
+                "R3": 3,
+                "R4": 2,
+                "R5": 2,
+                "R6": 1,
+                "R7": 3,
+                "R8": 3,
+                "R9": 2,
+                "R10": 2,
+                "R11": 2
+              },
+              "diagnosis_count": 0
+            }
+          },
+          {
+            "run_id": "run_6038de3ae4cf",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "grader",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "2026-09-11T19:31:40.466+08:00",
+            "agent": "router",
+            "tag": "RUN_COMPLETED",
+            "data": {}
+          }
+        ],
+        "diagnosis": [
+          "[H8] 单位经济不成立（置信度中）：LTV < CAC 或单位经济模型假设不合理",
+          "[H16] 客户获取成本幻觉（置信度中）：声称获客成本(CAC)为零或接近零，缺乏合理依据",
+          "[H15] 评分项证据覆盖不足（置信度中）：多个评分维度缺乏支撑证据"
+        ],
+        "rubric_scores": {
+          "R1": 3,
+          "R2": 2,
+          "R3": 3,
+          "R4": 2,
+          "R5": 2,
+          "R6": 1,
+          "R7": 3,
+          "R8": 3,
+          "R9": 2,
+          "R10": 2,
+          "R11": 2
+        },
+        "rubric_full": {
+          "R1": {
+            "score": 3,
+            "evidence": "项目明确指出了解决大学生闲置教材交换问题，但没有具体描述目标用户的具体需求和痛点。",
+            "suggestion": "建议进行更深入的用户调研，收集具体需求和痛点，以便更好地定义项目的核心问题。"
+          },
+          "R2": {
+            "score": 2,
+            "evidence": "团队称80%学生有需求，但没有提供数据来源或具体证据。",
+            "suggestion": "建议通过在线问卷、访谈等方式进行市场调研，获取真实用户反馈，以验证市场需求。"
+          },
+          "R3": {
+            "score": 3,
+            "evidence": "项目提到使用AI技术进行智能匹配，但缺乏具体的技术实现路径和数据处理方法。",
+            "suggestion": "建议详细描述AI算法的技术实现路径，包括数据处理、匹配逻辑、用户界面设计等。"
+          },
+          "R4": {
+            "score": 2,
+            "evidence": "项目的商业模式较为单一，主要依靠广告收入，没有详细说明获客途径和用户粘性提升策略。",
+            "suggestion": "建议对商业模式进行细化，探索更多盈利途径，如会员制、增值服务等。"
+          },
+          "R5": {
+            "score": 2,
+            "evidence": "项目没有提供明确的竞争对手分析和差异化定位。",
+            "suggestion": "建议进行详细的市场竞争分析，明确项目的差异化优势。"
+          },
+          "R6": {
+            "score": 1,
+            "evidence": "项目没有提供详细的财务预测和盈利路径，仅有广告收入的简要说明。",
+            "suggestion": "建议制定详细的财务计划，包括成本预算、收入预测和盈利路径。"
+          },
+          "R7": {
+            "score": 3,
+            "evidence": "项目利用AI技术进行智能匹配，这是一个创新点，但缺乏具体实现路径。",
+            "suggestion": "建议进一步阐述创新点的具体实现路径和技术优势，提高项目的独特性。"
+          },
+          "R8": {
+            "score": 3,
+            "evidence": "团队成员具备一定的技术背景，但未详细说明团队在执行项目所需的其他资源和技能。",
+            "suggestion": "建议团队评估自身在项目执行中所需的技能和资源，明确分工和协作机制。"
+          },
+          "R9": {
+            "score": 2,
+            "evidence": "PPT/计划书结构较为清晰，但逻辑不够完整，缺少详细的市场分析和财务预测。",
+            "suggestion": "建议完善PPT/计划书的结构，增加市场分析、财务预测等内容，提高逻辑完整性。"
+          },
+          "R10": {
+            "score": 2,
+            "evidence": "项目没有详细评估法律合规、伦理风险和社会影响。",
+            "suggestion": "建议评估项目在数据隐私、用户安全等方面的合规性风险，制定相应的风险防控措施。"
+          },
+          "R11": {
+            "score": 2,
+            "evidence": "项目没有提供增长路径和规模化策略的具体计划。",
+            "suggestion": "建议制定详细的阶段性增长路径和规模化策略，包括市场扩展、用户增长等。"
+          }
+        },
+        "triggered_rules": [
+          {
+            "rule_id": "H8",
+            "rule_type": "单位经济不成立",
+            "severity": "high",
+            "trigger_message": "LTV < CAC 或单位经济模型假设不合理",
+            "fix_task": "重新计算单位经济，调整定价或降低获客成本",
+            "confidence": 0.525,
+            "evidence_summary": "话题被提及但无具体证据"
+          },
+          {
+            "rule_id": "H16",
+            "rule_type": "客户获取成本幻觉",
+            "severity": "high",
+            "trigger_message": "声称获客成本(CAC)为零或接近零，缺乏合理依据",
+            "fix_task": "列出每个获客渠道的预估成本，计算加权平均CAC",
+            "confidence": 0.518,
+            "evidence_summary": "话题被提及但无具体证据"
+          },
+          {
+            "rule_id": "H15",
+            "rule_type": "评分项证据覆盖不足",
+            "severity": "medium",
+            "trigger_message": "多个评分维度缺乏支撑证据",
+            "fix_task": "针对缺失项逐一补充证据材料",
+            "confidence": 0.6,
+            "evidence_summary": "话题被提及但无具体证据"
+          }
+        ]
+      }
+    },
+    {
+      "test_id": "U6",
+      "started_at": "2026-09-11T19:31:40+08:00",
+      "completed_at": "2026-09-11T19:32:04+08:00",
+      "input": "我需要你依据文件 C:\\missing\\ventureai-source.pdf 继续分析，但该文件当前不可用。请只处理已知信息，明确不可完成的部分、失败原因、是否可重试，以及我需要补充什么；不要假装已经读取文件。",
+      "result": {
+        "reply": "理解你的需求，但目前系统无法访问你提到的 `C:\\missing\\ventureai-source.pdf` 文件。为了确保我们基于准确的信息进行分析，需遵循以下步骤：\n\n### 项目阶段（Project Stage）\n想法期\n\n### 当前诊断（Current Diagnosis）\n目前缺少必要的项目材料（具体文档）来完成详细的痛点发现和方案策划分析。\n\n### 诊断依据（Evidence Used）\n你提到文件 `C:\\missing\\ventureai-source.pdf` 无法访问。\n\n### 不修复后果（Impact if Unfixed）\n- 无法对项目的市场痛点进行有效验证。\n- 无法评估方案的技术可行性和创新性。\n- 无法构建一个完整的商业模型。\n- 无法确定资源利用和团队执行的具体策略。\n- 无法准备路演材料，影响项目的展示效果。\n\n### 下一步任务（Next Task）\n**任务描述：** 请上传或重新生成文件 `ventureai-source.pdf` 并确保其可访问。\n**模板或步骤：**\n1. 检查文件路径是否正确。\n2. 确认文件名是否拼写无误。\n3. 如果文件丢失或损坏，尝试从备份中恢复。\n4. 上传文件到我们的对话环境中。\n**验收标准：** 文件成功上传并可被系统读取。\n\n---\n\n希望这些步骤能帮助你解决当前的问题。如果有其他文件或材料可以替代或补充，也请一并提供。这样我们可以继续推进项目的分析和指导。",
+        "intent": "coach",
+        "run_id": "run_7a4edef55329",
+        "agent_version": "ventureai-v2-candidate",
+        "debug_logs": [
+          {
+            "run_id": "run_7a4edef55329",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "coach",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "2026-09-11T19:31:40.496+08:00",
+            "agent": "router",
+            "tag": "RUN_STARTED",
+            "data": {
+              "project_id": ""
+            }
+          },
+          {
+            "run_id": "run_7a4edef55329",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "coach",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:31:46.678",
+            "agent": "retriever_node",
+            "tag": "AGENT_START",
+            "data": {
+              "agent_name": "retriever_node",
+              "session_id": "stage2-u6-cd8a5efaed6c4db4aa3c841321d9ad3e",
+              "intent": "retrieval",
+              "message_preview": "我需要你依据文件 C:\\missing\\ventureai-source.pdf 继续分析，但该文件当前不可用。请只处理已知信息，明确不可完成的部分、失败原因、…"
+            }
+          },
+          {
+            "run_id": "run_7a4edef55329",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "coach",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:31:46.678",
+            "agent": "retriever_node",
+            "tag": "RETRIEVED_KG_NODES",
+            "data": {
+              "retrieved_kg_nodes": [
+                "声学信号处理",
+                "自然语言处理",
+                "情感分析",
+                "光谱分析",
+                "代码分析",
+                "总可用市场"
+              ],
+              "source": "llm_extraction",
+              "count": 6
+            }
+          },
+          {
+            "run_id": "run_7a4edef55329",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "coach",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:31:46.678",
+            "agent": "retriever_node",
+            "tag": "INFO",
+            "data": "Cache MISS — executing full hypergraph search (techs=['声学信号处理', '自然语言处理', '情感分析', '光谱分析', '代码分析'], industry=通用, concept=总可用市场)"
+          },
+          {
+            "run_id": "run_7a4edef55329",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "coach",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:31:46.694",
+            "agent": "retriever_node",
+            "tag": "RETRIEVED_HYPEREDGES",
+            "data": {
+              "retrieved_heterogeneous_subgraph": [
+                {
+                  "type": "Value_Loop_Edge",
+                  "query_context": "techs=['声学信号处理', '自然语言处理', '情感分析', '光谱分析', '代码分析'], industry=通用"
+                },
+                {
+                  "type": "Risk_Pattern_Edge",
+                  "query_context": "techs=['声学信号处理', '自然语言处理', '情感分析', '光谱分析', '代码分析'], industry=通用"
+                },
+                {
+                  "type": "Competition_Edge",
+                  "query_context": "techs=['声学信号处理', '自然语言处理', '情感分析', '光谱分析', '代码分析'], industry=通用"
+                },
+                {
+                  "type": "Technology_Hierarchy_Edge",
+                  "query_context": "techs=['声学信号处理', '自然语言处理', '情感分析', '光谱分析', '代码分析'], industry=通用"
+                }
+              ],
+              "edge_types": [
+                "Value_Loop_Edge",
+                "Risk_Pattern_Edge",
+                "Competition_Edge",
+                "Technology_Hierarchy_Edge"
+              ],
+              "total_edges": 4
+            }
+          },
+          {
+            "run_id": "run_7a4edef55329",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "coach",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:31:46.696",
+            "agent": "coach_node",
+            "tag": "AGENT_START",
+            "data": {
+              "agent_name": "coach_node",
+              "session_id": "stage2-u6-cd8a5efaed6c4db4aa3c841321d9ad3e",
+              "intent": "coach",
+              "message_preview": "我需要你依据文件 C:\\missing\\ventureai-source.pdf 继续分析，但该文件当前不可用。请只处理已知信息，明确不可完成的部分、失败原因、…"
+            }
+          },
+          {
+            "run_id": "run_7a4edef55329",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "coach",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:31:46.696",
+            "agent": "coach_node",
+            "tag": "FALLACY_LABEL",
+            "data": {
+              "fallacy_label": "伪需求识别",
+              "triggered_by": "我需要你依据文件 C:\\missing\\ventureai-source.pdf 继续分析，但该文件当前不可用。请只处理已知信息，明确不可完成的部分、失败原因、是否可重试，以及我需要补充什么；不要假装",
+              "confidence": 0.0
+            }
+          },
+          {
+            "run_id": "run_7a4edef55329",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "coach",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:31:46.696",
+            "agent": "coach_node",
+            "tag": "STRATEGY_SELECTED",
+            "data": {
+              "selected_strategy": "伪需求识别",
+              "strategy_selected": "伪需求识别",
+              "generated_question": "[将由LLM基于策略生成追问，策略=伪需求识别]"
+            }
+          },
+          {
+            "run_id": "run_7a4edef55329",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "coach",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "19:32:04.772",
+            "agent": "coach_node",
+            "tag": "AGENT_DONE",
+            "data": {
+              "agent_name": "coach_node",
+              "stage": "",
+              "scores": {},
+              "diagnosis_count": 0
+            }
+          },
+          {
+            "run_id": "run_7a4edef55329",
+            "agent_version": "ventureai-v2-candidate",
+            "flow": "coach",
+            "mode": "non_stream",
+            "model": "qwen/qwen-2.5-72b-instruct",
+            "mock_mode": false,
+            "ts": "2026-09-11T19:32:04.774+08:00",
+            "agent": "router",
+            "tag": "RUN_COMPLETED",
+            "data": {}
+          }
+        ]
+      }
+    }
+  ],
+  "note": "Raw outputs are archived without automatic quality scoring. Review every record, including failures, before any V1/V2 conclusion."
+}

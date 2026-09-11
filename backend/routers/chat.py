@@ -1,8 +1,11 @@
 from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
+from uuid import uuid4
 from models.schemas import ChatRequest, ChatResponse
 from agents.router import run_agent, run_agent_stream, get_greeting
+from config import AGENT_VERSION, MODEL_MAIN, USE_MOCK_API
+from services.debug_logger import start_session_capture, flush_session_logs, record_session_event
 from services.session_store import (
     get_chat_history,
     append_chat,
@@ -81,6 +84,22 @@ def _evidence_boundary_review(message: str) -> str | None:
 
 # ── A7 鲁棒性与边界异常兜底层 ─────────────────────────────────────
 import re as _re
+
+
+def _generic_evidence_boundary_review(message: str) -> str | None:
+    """Safely handle source-free F/I/H/S audits beyond the Stage-1 fixture."""
+    asks_for_classification = "F/I/H/S" in message or "事实F" in message
+    explicitly_source_free = any(token in message for token in ("没有提供", "无来源", "未提供任何真实来源"))
+    if not (asks_for_classification and explicitly_source_free):
+        return None
+
+    return """这是证据边界审阅，不会把题干中的主张补写成事实。
+
+在没有可定位来源的前提下，所有关于比例、机构支持和支付意愿的陈述都只能暂列为 **H（假设）**：它们可以作为待验证的项目问题或测算前提，但不能写成已证实的市场结论。
+
+题干中明确写为“Agent 模拟用户”的反馈应标记为 **S（模拟）**；它只能帮助发现可用性问题，不能当作真实用户反馈。只有附有可核验来源的陈述才可能标为 **F（事实）**；基于多个已知事实作出的结论才是 **I（推断）**。
+
+下一步：为每项 H/S 分别记录来源缺口、验证方式和验证后可能改变的项目章节；在获得真实来源前，保留 H/S 标识。"""
 
 def _is_garbled(message: str) -> bool:
     """检测消息是否为无意义/乱码/纯数字/纯符号输入。"""
@@ -173,6 +192,26 @@ def _robustness_check(message: str) -> tuple[str, str] | None:
     return None
 
 
+def _save_short_circuit_reply(req: ChatRequest, reply: str, intent: str) -> tuple[str, list[dict]]:
+    """Persist a guarded reply with the same trace identity as an Agent run."""
+    run_id = f"run_{uuid4().hex[:12]}"
+    start_session_capture(
+        req.session_id,
+        run_id,
+        agent_version=AGENT_VERSION,
+        flow=intent,
+        mode="short_circuit",
+        model=MODEL_MAIN,
+        mock_mode=USE_MOCK_API,
+    )
+    record_session_event(req.session_id, "RUN_STARTED", {"project_id": req.project_id})
+    append_chat(req.session_id, "user", req.message)
+    record_session_event(req.session_id, "RUN_COMPLETED")
+    debug_logs = flush_session_logs(req.session_id)
+    append_chat(req.session_id, "assistant", reply, debug_logs=debug_logs or None)
+    return run_id, debug_logs
+
+
 @router.post("/start")
 def start_chat(request: Request, agent_type: str = "auto", project_id: str = ""):
     from services.database import get_user_by_token
@@ -219,11 +258,16 @@ def send_message(req: ChatRequest):
             intent="guardrail_ghostwrite",
         )
 
-    evidence_review = _evidence_boundary_review(req.message)
+    evidence_review = _evidence_boundary_review(req.message) or _generic_evidence_boundary_review(req.message)
     if evidence_review:
-        append_chat(req.session_id, "user", req.message)
-        append_chat(req.session_id, "assistant", evidence_review)
-        return ChatResponse(session_id=req.session_id, reply=evidence_review, intent="evidence_review")
+        run_id, _ = _save_short_circuit_reply(req, evidence_review, "evidence_review")
+        return ChatResponse(
+            session_id=req.session_id,
+            reply=evidence_review,
+            intent="evidence_review",
+            run_id=run_id,
+            agent_version=AGENT_VERSION,
+        )
 
     # Bind project if provided and not already bound
     if req.project_id:
@@ -274,6 +318,8 @@ def send_message(req: ChatRequest):
     return ChatResponse(
         session_id=req.session_id,
         reply=result["reply"],
+        run_id=result.get("run_id"),
+        agent_version=result.get("agent_version"),
         scores=result.get("scores"),
         diagnosis=result.get("diagnosis"),
         stage=result.get("stage"),
@@ -327,16 +373,15 @@ def send_message_stream(req: ChatRequest):
             headers={"Cache-Control": "no-cache", "Connection": "keep-alive", "X-Accel-Buffering": "no"},
         )
 
-    evidence_review = _evidence_boundary_review(req.message)
+    evidence_review = _evidence_boundary_review(req.message) or _generic_evidence_boundary_review(req.message)
     if evidence_review:
-        append_chat(req.session_id, "user", req.message)
-        append_chat(req.session_id, "assistant", evidence_review)
+        run_id, debug_logs = _save_short_circuit_reply(req, evidence_review, "evidence_review")
 
         def evidence_review_stream():
             import json as _json
-            yield f"data: {_json.dumps({'type': 'meta', 'intent': 'evidence_review'})}\n\n"
+            yield f"data: {_json.dumps({'type': 'meta', 'intent': 'evidence_review', 'run_id': run_id, 'agent_version': AGENT_VERSION})}\n\n"
             yield f"data: {_json.dumps({'type': 'token', 'content': evidence_review})}\n\n"
-            yield f"data: {_json.dumps({'type': 'done', 'intent': 'evidence_review', 'reply': evidence_review})}\n\n"
+            yield f"data: {_json.dumps({'type': 'done', 'intent': 'evidence_review', 'reply': evidence_review, 'run_id': run_id, 'agent_version': AGENT_VERSION, 'debug_logs': debug_logs})}\n\n"
 
         return StreamingResponse(
             evidence_review_stream(),

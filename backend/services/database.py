@@ -6,7 +6,9 @@ import os
 from pathlib import Path
 from mock.responses import MOCK_USERS, MOCK_PROJECTS
 
-DB_PATH = Path(__file__).parent.parent / "venture_ai.db"
+# Tests and deployment environments may provide an isolated database. The
+# default preserves the existing local deployment location.
+DB_PATH = Path(os.getenv("VENTUREAI_DB_PATH", str(Path(__file__).parent.parent / "venture_ai.db")))
 
 
 def get_conn() -> sqlite3.Connection:

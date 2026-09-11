@@ -15,6 +15,7 @@ from agents.state import AgentState
 from services.claude_client import chat_completion
 from config import USE_MOCK_API
 from services.debug_logger import DebugLogger
+from services.course_boundary import enforce_course_boundary
 
 _dbg = DebugLogger("grader_node")
 
@@ -79,6 +80,16 @@ GRADER_SYSTEM_PROMPT = """你是一位专业的创新创业评审专家，需要
 """
 
 
+GRADER_SYSTEM_PROMPT += """
+
+# Course evidence boundary (high priority)
+
+- This course does not require real questionnaires, interviews, transactions, or market operations. Never make real interviews a current completion condition or a prerequisite for a score.
+- If a number has no source, call it H (hypothesis) or state that the material provides no evidence. Do not describe it as showing market demand.
+- Prefer public-source verification, F/I/H/S labels, scenario analysis, and a future real-validation plan. Never invent user feedback, partnerships, orders, or revenue.
+"""
+
+
 def _parse_rubric_full(text: str) -> dict | None:
     from services.marker_parser import parse_rubric_full
     return parse_rubric_full(text)
@@ -124,11 +135,19 @@ def grader_node(state: AgentState) -> AgentState:
 
     if USE_MOCK_API:
         raw = _mock_grader()
+        # The offline demonstration must follow the course boundary: real
+        # interviews are not a prerequisite, and simulated material must not
+        # be represented as market evidence.
+        raw = raw.replace(
+            "至少10份真实用户访谈记录",
+            "可核验公开资料或课程模拟材料，并明确标注 F/I/H/S",
+        )
     else:
         raw = chat_completion(GRADER_SYSTEM_PROMPT, messages)
 
     rubric_full = _parse_rubric_full(raw)
     clean = _clean(raw)
+    clean = enforce_course_boundary(clean, state.get("current_message", ""))
 
     # Build rubric_scores dict for compatibility with existing schema
     rubric_scores = None

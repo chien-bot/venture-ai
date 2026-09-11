@@ -21,6 +21,7 @@ from services.cheap_diagnostic import run_cheap_diagnostic, format_diagnostic_fo
 from services.knowledge_cards import search_cards, format_cards_for_prompt
 from services.playbook_engine import match_playbook, format_playbook_for_prompt
 from services.debug_logger import DebugLogger
+from services.course_boundary import enforce_course_boundary
 
 _dbg = DebugLogger("coach_node")
 
@@ -531,6 +532,8 @@ def coach_node(state: AgentState) -> AgentState:
         score_breakdown = format_breakdown_for_response(breakdowns)
 
     _dbg.agent_done(scores=new_scores, stage=stage or "", diagnosis=diagnosis)
+
+    clean = enforce_course_boundary(clean, current_message)
 
     return {
         **state,
