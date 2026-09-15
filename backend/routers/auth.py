@@ -37,6 +37,10 @@ def get_user_by_token(token: str) -> dict | None:
 
 @router.post("/register", response_model=LoginResponse)
 def register(req: RegisterRequest):
+    # Public sign-up only creates student accounts. Teacher/admin identities
+    # must be provisioned by an authorized administrator.
+    if req.role != "student":
+        raise HTTPException(status_code=403, detail="教师和管理员账号不能公开注册")
     if len(req.username) < 3:
         raise HTTPException(status_code=400, detail="用户名至少3个字符")
     if len(req.password) < 4:

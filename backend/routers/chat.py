@@ -25,6 +25,7 @@ from hypergraph.knowledge_recommendations import get_recommendations
 import uuid
 
 router = APIRouter(prefix="/api/chat", tags=["chat"])
+from services.access_control import require_user, require_project, require_session, require_message_access
 
 # ── A1-2 / A2-2 反代写拦截层 ─────────────────────────────────────
 # 检测到以下关键词时，直接返回苏格拉底引导，不走 LLM
@@ -93,13 +94,19 @@ def _generic_evidence_boundary_review(message: str) -> str | None:
     if not (asks_for_classification and explicitly_source_free):
         return None
 
-    return """这是证据边界审阅，不会把题干中的主张补写成事实。
+    reply = """这是证据边界审阅，不会把题干中的主张补写成事实。
 
 在没有可定位来源的前提下，所有关于比例、机构支持和支付意愿的陈述都只能暂列为 **H（假设）**：它们可以作为待验证的项目问题或测算前提，但不能写成已证实的市场结论。
 
 题干中明确写为“Agent 模拟用户”的反馈应标记为 **S（模拟）**；它只能帮助发现可用性问题，不能当作真实用户反馈。只有附有可核验来源的陈述才可能标为 **F（事实）**；基于多个已知事实作出的结论才是 **I（推断）**。
 
 下一步：为每项 H/S 分别记录来源缺口、验证方式和验证后可能改变的项目章节；在获得真实来源前，保留 H/S 标识。"""
+    if any(claim in message for claim in ("提前发现慢性病", "诊断疾病", "筛查疾病")):
+        reply += (
+            "\n\n**医疗边界：** 题干中的疾病发现、诊断或筛查能力缺少临床与合规依据，"
+            "应标为 H（未证实且当前不应作为产品主张）；不能将健康教育提示写成医疗结论。"
+        )
+    return reply
 
 def _is_garbled(message: str) -> bool:
     """检测消息是否为无意义/乱码/纯数字/纯符号输入。"""
@@ -195,6 +202,8 @@ def _robustness_check(message: str) -> tuple[str, str] | None:
 def _save_short_circuit_reply(req: ChatRequest, reply: str, intent: str) -> tuple[str, list[dict]]:
     """Persist a guarded reply with the same trace identity as an Agent run."""
     run_id = f"run_{uuid4().hex[:12]}"
+    from services.run_registry import start_run, finish_run
+    start_run(run_id, req.session_id, req.project_id, intent, AGENT_VERSION, MODEL_MAIN)
     start_session_capture(
         req.session_id,
         run_id,
@@ -209,15 +218,16 @@ def _save_short_circuit_reply(req: ChatRequest, reply: str, intent: str) -> tupl
     record_session_event(req.session_id, "RUN_COMPLETED")
     debug_logs = flush_session_logs(req.session_id)
     append_chat(req.session_id, "assistant", reply, debug_logs=debug_logs or None)
+    finish_run(run_id, "completed")
     return run_id, debug_logs
 
 
 @router.post("/start")
 def start_chat(request: Request, agent_type: str = "auto", project_id: str = ""):
-    from services.database import get_user_by_token
-    auth = request.headers.get("Authorization", "")
-    user = get_user_by_token(auth[7:]) if auth.startswith("Bearer ") else None
-    owner_id = user["user_id"] if user else ""
+    user = require_user(request)
+    if project_id:
+        require_project(request, project_id)
+    owner_id = user["user_id"]
 
     session_id = str(uuid.uuid4())
     create_session(session_id, project_id, agent_type, owner_id)
@@ -236,7 +246,8 @@ def start_chat(request: Request, agent_type: str = "auto", project_id: str = "")
 
 
 @router.post("/message", response_model=ChatResponse)
-def send_message(req: ChatRequest):
+def send_message(req: ChatRequest, request: Request):
+    require_message_access(request, req.session_id, req.project_id)
     if not req.message.strip():
         raise HTTPException(status_code=400, detail="消息不能为空")
 
@@ -324,6 +335,7 @@ def send_message(req: ChatRequest):
         diagnosis=result.get("diagnosis"),
         stage=result.get("stage"),
         rubric_scores=result.get("rubric_scores"),
+        rubric_full=result.get("rubric_full"),
         intent=result.get("intent"),
         knowledge_recommendations=knowledge_recs or None,
         fix_tasks=fix_tasks,
@@ -332,8 +344,9 @@ def send_message(req: ChatRequest):
 
 
 @router.post("/message/stream")
-def send_message_stream(req: ChatRequest):
+def send_message_stream(req: ChatRequest, request: Request):
     """SSE streaming endpoint — sends tokens as they arrive from the LLM."""
+    require_message_access(request, req.session_id, req.project_id)
     if not req.message.strip():
         raise HTTPException(status_code=400, detail="消息不能为空")
 
@@ -415,7 +428,8 @@ def send_message_stream(req: ChatRequest):
 
 
 @router.get("/history/{session_id}")
-def get_history(session_id: str):
+def get_history(session_id: str, request: Request):
+    require_session(request, session_id)
     from services.database import get_project, get_conn
     history = get_chat_history(session_id)
     project_id = get_project_for_session(session_id)
@@ -558,11 +572,13 @@ class DefenseStartRequest(BaseModel):
 
 
 @router.post("/defense/start")
-def start_defense(req: DefenseStartRequest):
+def start_defense(req: DefenseStartRequest, request: Request):
     """Start a mock investor defense session."""
     from prompts.investor import INVESTOR_GREETING
+    user = require_user(request)
+    require_project(request, req.project_id)
     session_id = str(uuid.uuid4())
-    create_session(session_id, req.project_id, "defense")
+    create_session(session_id, req.project_id, "defense", owner_id=user["user_id"])
     bind_session_to_project(session_id, req.project_id)
     greeting = INVESTOR_GREETING.format(total_questions=req.total_questions)
     append_chat(session_id, "assistant", greeting)
@@ -585,7 +601,7 @@ class DefenseMessageRequest(BaseModel):
 
 
 @router.post("/defense/message")
-def defense_message(req: DefenseMessageRequest):
+def defense_message(req: DefenseMessageRequest, request: Request):
     """Send a message in a mock investor defense and get the investor's response."""
     import re as _re
     import json as _json
@@ -596,6 +612,8 @@ def defense_message(req: DefenseMessageRequest):
 
     if not req.message.strip():
         raise HTTPException(status_code=400, detail="消息不能为空")
+
+    require_message_access(request, req.session_id, req.project_id)
 
     append_chat(req.session_id, "user", req.message)
     history = get_chat_history(req.session_id)
@@ -624,7 +642,15 @@ def defense_message(req: DefenseMessageRequest):
     if hypergraph_ctx:
         system += f"\n\n[超图案例库参考]\n{hypergraph_ctx}"
 
-    raw = chat_completion(system, history)
+    run_id = f"run_{uuid4().hex[:12]}"
+    from services.run_registry import start_run, finish_run
+    start_run(run_id, req.session_id, req.project_id, "defense", AGENT_VERSION, MODEL_MAIN)
+    try:
+        raw = chat_completion(system, history)
+        finish_run(run_id, "completed")
+    except Exception as exc:
+        finish_run(run_id, "failed", type(exc).__name__)
+        raise HTTPException(status_code=502, detail="答辩模型暂时不可用，请保留回答后重试") from exc
     append_chat(req.session_id, "assistant", raw)
 
     # Parse defense report — only on the final round to prevent premature display
@@ -651,6 +677,8 @@ def defense_message(req: DefenseMessageRequest):
         "current_round": req.current_round,
         "is_final": req.current_round >= req.total_questions,
         "report": report,
+        "run_id": run_id,
+        "agent_version": AGENT_VERSION,
     }
 
 
@@ -708,8 +736,9 @@ def delete_session_endpoint(session_id: str, request: Request):
 # ── Session Memory (F1-adv) ──────────────────────────────────────────
 
 @router.get("/latest-session/{project_id}")
-def get_latest_session(project_id: str):
+def get_latest_session(project_id: str, request: Request):
     """Return the latest session for a project so frontend can restore state."""
+    require_project(request, project_id)
     session = get_latest_session_for_project(project_id)
     if not session or not session.get("messages"):
         return {"exists": False}

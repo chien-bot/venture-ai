@@ -317,7 +317,7 @@ def coach_node(state: AgentState) -> AgentState:
 
         # ★ Inject hypergraph retrieval context (RAG)
         hypergraph_ctx = state.get("hypergraph_context", "")
-        if hypergraph_ctx:
+        if hypergraph_ctx and not state.get("project_id"):
             system += (
                 "\n\n[超图知识库检索结果 — 基于82个真实竞赛案例]\n"
                 "以下是从超图案例库中检索到的与学生项目相关的信息。"

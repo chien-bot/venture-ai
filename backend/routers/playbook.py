@@ -3,7 +3,7 @@ routers/playbook.py
 ────────────────────────────────────────────────────────────────
 创业范式库 API — Playbook listing / matching / detail
 """
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from services.playbook_engine import (
     get_all_playbooks, get_playbook,
@@ -11,7 +11,9 @@ from services.playbook_engine import (
     format_playbook_for_student,
 )
 
-router = APIRouter(prefix="/api/playbooks", tags=["playbooks"])
+from services.access_control import require_user
+
+router = APIRouter(prefix="/api/playbooks", tags=["playbooks"], dependencies=[Depends(require_user)])
 
 
 class MatchRequest(BaseModel):

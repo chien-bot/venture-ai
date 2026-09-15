@@ -57,7 +57,7 @@ def _route_after_critic(state: AgentState) -> str:
     redirect = state.get("critic_redirect")
     loop_count = state.get("loop_count", 0)
 
-    if redirect and loop_count <= 1:
+    if redirect and loop_count <= 1 and not state.get("project_id") and state.get("intent") == "coach":
         return "tutor_redirect"
     return "end"
 

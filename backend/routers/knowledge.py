@@ -3,7 +3,7 @@ routers/knowledge.py
 ────────────────────────────────────────────────────────────────
 知识卡片 API — Knowledge Cards CRUD + 检索
 """
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from services.knowledge_cards import (
     get_all_cards, get_card, search_cards,
@@ -12,7 +12,9 @@ from services.knowledge_cards import (
 )
 from services.competition_templates import get_all_templates, match_template, get_template_by_id
 
-router = APIRouter(prefix="/api/knowledge", tags=["knowledge"])
+from services.access_control import require_user
+
+router = APIRouter(prefix="/api/knowledge", tags=["knowledge"], dependencies=[Depends(require_user)])
 
 
 @router.get("/cards")

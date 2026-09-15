@@ -1,5 +1,5 @@
 import io
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Depends, Request
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from services.session_store import get_all_projects, get_project
@@ -14,6 +14,7 @@ from services.database import (
     get_user_by_token, get_teacher_class_ids, get_students_in_classes,
 )
 from services.evidence_tracer import EvidenceTracer
+from services.access_control import require_teacher
 from collections import Counter
 
 
@@ -30,12 +31,12 @@ def _get_teacher_projects(request: Request) -> list:
 
     class_ids = get_teacher_class_ids(teacher["user_id"])
     if not class_ids:
-        return all_projects  # unassigned teacher sees all (fallback)
+        return []
 
     allowed_student_ids = get_students_in_classes(class_ids)
     return [p for p in all_projects if p.get("owner_id") in allowed_student_ids]
 
-router = APIRouter(prefix="/api/teacher", tags=["teacher"])
+router = APIRouter(prefix="/api/teacher", tags=["teacher"], dependencies=[Depends(require_teacher)])
 
 DIAGNOSIS_RUBRIC_MAP = {
     "需求真实性待验证": "R1",

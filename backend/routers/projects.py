@@ -11,6 +11,7 @@ import re
 from datetime import datetime
 
 router = APIRouter(prefix="/api/projects", tags=["projects"])
+from services.access_control import require_user, require_project, require_session
 
 
 def _get_current_user(request: Request) -> dict | None:
@@ -23,13 +24,18 @@ def _get_current_user(request: Request) -> dict | None:
 
 @router.get("/")
 def list_projects(request: Request):
-    user = _get_current_user(request)
+    user = require_user(request)
     if user and user.get("role") == "student":
         projects = get_projects_for_user(user["user_id"])
     elif user and user.get("role") == "teacher":
+        from services.database import get_teacher_class_ids, get_students_in_classes
+        class_ids = get_teacher_class_ids(user["user_id"])
+        allowed = get_students_in_classes(class_ids) if class_ids else set()
+        projects = [p for p in get_all_projects() if p.get("owner_id") in allowed]
+    elif user.get("role") == "admin":
         projects = get_all_projects()
     else:
-        projects = get_all_projects()
+        projects = get_projects_for_user(user["user_id"])
     return {"projects": projects}
 
 
@@ -230,13 +236,16 @@ def refresh_my_profile(request: Request):
 
 # ── 商业策划书生成 ─────────────────────────────────────────────────
 
-_BP_SYSTEM_PROMPT = """你是一位资深创业顾问，擅长为大学生创业项目撰写完整、专业、可投资的商业策划书。
-请严格基于提供的项目数据（对话记录、评分、诊断、采集表单），生成一份结构完整的商业策划书。
+_BP_SYSTEM_PROMPT = """你是创新创业课程的材料审阅助手。根据已通过的立项书与项目材料，生成一份供学生核对和修改的商业计划书草稿，不得称为可直接提交的成品。
 
 # 输出要求
 - 输出必须是合法 JSON，字段与下方模板完全一致
 - 每个 section 的 content 用 Markdown 格式（可含小标题、列表、表格）
 - 内容必须与项目真实情况对齐，不要编造未出现的数据；缺失信息用"待补充"标注
+- 每个重要数字和主张标明 F（有来源事实）、I（推断）、H（假设）或 S（模拟）；无法定位来源时不得标 F
+- 不得虚构用户访谈、订单、收入、团队、合作、政策、临床验证或竞品功能
+- 财务部分只写有公式的首年或典型周期逻辑及悲观/基准/乐观三种情景；没有输入数字时给出待填公式，不生成看似精确的预测
+- 文末列出学生必须自行核验、补写和决定采纳/拒绝的内容
 - 针对项目类型（创新项目/商业项目/公益项目）调整盈利模式与社会价值章节的侧重
 
 # 输出 JSON 格式
@@ -246,18 +255,17 @@ _BP_SYSTEM_PROMPT = """你是一位资深创业顾问，擅长为大学生创业
   "project_type": "创新项目 | 商业项目 | 公益项目",
   "executive_summary": "一段不超过 250 字的执行摘要",
   "sections": [
-    {"id": "overview", "title": "一、项目概述", "content": "..."},
-    {"id": "pain_point", "title": "二、痛点与用户需求", "content": "..."},
-    {"id": "solution", "title": "三、解决方案与产品", "content": "..."},
-    {"id": "innovation", "title": "四、创新点与技术壁垒", "content": "..."},
-    {"id": "market", "title": "五、市场分析与竞品", "content": "..."},
-    {"id": "business_model", "title": "六、商业模式与盈利方案", "content": "..."},
-    {"id": "marketing", "title": "七、营销与获客策略", "content": "..."},
-    {"id": "team", "title": "八、团队介绍", "content": "..."},
-    {"id": "financial", "title": "九、财务预测（3年）", "content": "..."},
-    {"id": "milestone", "title": "十、执行计划与里程碑", "content": "..."},
-    {"id": "risk", "title": "十一、风险分析与应对", "content": "..."},
-    {"id": "social_value", "title": "十二、社会价值与影响力", "content": "..."}
+    {"id": "background", "title": "二、项目背景与社会价值", "content": "..."},
+    {"id": "user_problem", "title": "三、用户、场景与问题", "content": "..."},
+    {"id": "solution", "title": "四、产品／服务与核心机制", "content": "..."},
+    {"id": "innovation", "title": "五、创新与替代方案", "content": "..."},
+    {"id": "market", "title": "六、市场／受益规模分析", "content": "..."},
+    {"id": "business_model", "title": "七、商业模式与运营机制", "content": "..."},
+    {"id": "implementation", "title": "八、实施与技术路线", "content": "..."},
+    {"id": "financial", "title": "九、财务与资源情景测算", "content": "..."},
+    {"id": "risk", "title": "十、风险、合规与伦理", "content": "..."},
+    {"id": "team", "title": "十一、团队与协作", "content": "..."},
+    {"id": "evidence", "title": "十二、证据与验证计划", "content": "..."}
   ]
 }
 ```
@@ -267,14 +275,8 @@ _BP_SYSTEM_PROMPT = """你是一位资深创业顾问，擅长为大学生创业
 - **商业项目**：着重"盈利方案"、"财务预测"、"获客成本(CAC)与客户生命周期价值(LTV)"
 - **公益项目**：着重"社会价值"、"受益群体覆盖"、"可持续性（非一次性捐赠）"、"公益与商业平衡"
 
-# 盈利方案建议（根据项目类型选取 2-3 种）
-- 订阅制 / SaaS 年费
-- 平台佣金 / 交易抽成
-- 增值服务 / 会员等级
-- 硬件销售 + 软件订阅
-- 广告 / 数据合作
-- 政府补贴 + 企业定制（公益项目常用）
-- 社会影响力债券（SIB）
+# 证据边界
+不得把常见商业模式选项自动当成项目已确定的收入来源。学生未说明时写“待决策”。
 """
 
 
@@ -305,7 +307,7 @@ PROJECT_TYPE_FOCUS = {
         "- 明确的盈利模式（订阅、抽成、广告、增值服务）\n"
         "- 获客成本(CAC) 与 客户生命周期价值(LTV)\n"
         "- 市场规模、竞品分析、差异化定位\n"
-        "- 3年财务预测与融资计划"
+        "- 首年或典型周期的三情景财务测算与资金用途"
     ),
     "公益项目": (
         "【项目类型：公益项目】重点关注：\n"
@@ -328,7 +330,7 @@ MIN_SCORED_DIMS = 3
 
 
 def _check_bp_readiness(project_id: str) -> dict:
-    """检查项目是否满足生成策划书的最低证据门槛。"""
+    """Keep dialogue progress visible, but use the teacher's proposal gate."""
     from services.database import (
         get_score_snapshots as _gss,
         get_sessions_for_project as _gsp,
@@ -348,18 +350,10 @@ def _check_bp_readiness(project_id: str) -> dict:
     scores = (proj or {}).get("scores") or {}
     scored_dims = sum(1 for v in scores.values() if isinstance(v, (int, float)) and v > 0)
 
-    ok = (
-        round_count >= MIN_SCORE_ROUNDS
-        and user_msg_count >= MIN_USER_MESSAGES
-        and scored_dims >= MIN_SCORED_DIMS
-    )
-    missing = []
-    if round_count < MIN_SCORE_ROUNDS:
-        missing.append(f"有效评分轮数 {round_count}/{MIN_SCORE_ROUNDS}")
-    if user_msg_count < MIN_USER_MESSAGES:
-        missing.append(f"对话消息数 {user_msg_count}/{MIN_USER_MESSAGES}")
-    if scored_dims < MIN_SCORED_DIMS:
-        missing.append(f"已评估维度 {scored_dims}/{MIN_SCORED_DIMS}")
+    from routers.stage3 import _gate
+    gate = _gate(project_id)
+    ok = gate["approved"]
+    missing = [] if ok else ["立项书尚未通过教师 G1–G6 闯关"]
 
     return {
         "ready": ok,
@@ -372,6 +366,7 @@ def _check_bp_readiness(project_id: str) -> dict:
             "min_dims": MIN_SCORED_DIMS,
         },
         "missing": missing,
+        "gate": gate,
     }
 
 
@@ -414,15 +409,9 @@ def generate_business_plan(project_id: str, request: Request):
     if user.get("role") == "student" and project.get("owner_id") != user["user_id"]:
         raise HTTPException(status_code=403, detail="无权生成他人项目的策划书")
 
-    # 证据门槛校验（学生身份强制，教师/管理员可绕过用于演示）
-    if user.get("role") == "student":
-        readiness = _check_bp_readiness(project_id)
-        if not readiness["ready"]:
-            raise HTTPException(
-                status_code=400,
-                detail="证据不足，无法生成策划书：" + "；".join(readiness["missing"]) +
-                       "。请继续与AI教练对话，积累证据后再生成。",
-            )
+    readiness = _check_bp_readiness(project_id)
+    if not readiness["ready"]:
+        raise HTTPException(status_code=409, detail="立项未通过，无法生成计划书草稿")
 
     # Use explicit project_type if set, else auto-infer
     project_type = project.get("project_type") if project.get("project_type") in _VALID_PROJECT_TYPES else _infer_project_type(project)
@@ -482,21 +471,26 @@ def generate_business_plan(project_id: str, request: Request):
             "project_type": project_type,
             "executive_summary": project.get("description", "") or "执行摘要待完善。",
             "sections": [
-                {"id": "overview", "title": "一、项目概述", "content": f"**行业**：{project.get('industry','')}\n\n**简介**：{project.get('description','')}"},
-                {"id": "pain_point", "title": "二、痛点与用户需求", "content": "待补充（请先与AI教练深入对话）"},
-                {"id": "solution", "title": "三、解决方案与产品", "content": "待补充"},
-                {"id": "innovation", "title": "四、创新点与技术壁垒", "content": "待补充"},
-                {"id": "market", "title": "五、市场分析与竞品", "content": "待补充"},
-                {"id": "business_model", "title": "六、商业模式与盈利方案", "content": "待补充"},
-                {"id": "marketing", "title": "七、营销与获客策略", "content": "待补充"},
-                {"id": "team", "title": "八、团队介绍", "content": "待补充"},
-                {"id": "financial", "title": "九、财务预测（3年）", "content": "待补充"},
-                {"id": "milestone", "title": "十、执行计划与里程碑", "content": "待补充"},
-                {"id": "risk", "title": "十一、风险分析与应对", "content": f"**已识别诊断问题**：{'; '.join(diagnosis) if diagnosis else '暂无'}"},
-                {"id": "social_value", "title": "十二、社会价值与影响力", "content": "待补充"},
+                {"id": "background", "title": "二、项目背景与社会价值", "content": f"**行业**：{project.get('industry','')}\n\n**简介**：{project.get('description','')}"},
+                {"id": "user_problem", "title": "三、用户、场景与问题", "content": "待补充（请区分 F/I/H/S）"},
+                {"id": "solution", "title": "四、产品／服务与核心机制", "content": "待补充"},
+                {"id": "innovation", "title": "五、创新与替代方案", "content": "待补充"},
+                {"id": "market", "title": "六、市场／受益规模分析", "content": "待补充：来源、公式、假设与敏感性"},
+                {"id": "business_model", "title": "七、商业模式与运营机制", "content": "待决策：客户、交付、成本和资金来源"},
+                {"id": "implementation", "title": "八、实施与技术路线", "content": "待补充"},
+                {"id": "financial", "title": "九、财务与资源情景测算", "content": "待补充：关键假设、公式、悲观/基准/乐观三种情景"},
+                {"id": "risk", "title": "十、风险、合规与伦理", "content": f"**已识别诊断问题**：{'; '.join(diagnosis) if diagnosis else '暂无'}"},
+                {"id": "team", "title": "十一、团队与协作", "content": "待补充：真实分工、能力缺口和决策机制"},
+                {"id": "evidence", "title": "十二、证据与验证计划", "content": "待补充：现有证据、未决假设和未来真实验证路径"},
             ],
         }
 
+    from config import AGENT_VERSION, MODEL_MAIN
+    from services.run_registry import start_run, finish_run
+    plan_run_id = f"run_{uuid.uuid4().hex[:12]}"
+    # The plan draft is another model-assisted operation and must appear in
+    # the same immutable evidence registry as chat flows.
+    start_run(plan_run_id, f"plan:{project_id}", project_id, "plan_draft", AGENT_VERSION, MODEL_MAIN)
     bp: dict | None = None
     if USE_MOCK_API:
         bp = _fallback_bp()
@@ -508,13 +502,41 @@ def generate_business_plan(project_id: str, request: Request):
             m = _re.search(r"\{[\s\S]*\}", raw)
             if m:
                 bp = _json.loads(m.group(0))
-        except Exception:
-            bp = None
+            if not bp:
+                raise ValueError("模型未返回有效 JSON")
+        except Exception as exc:
+            finish_run(plan_run_id, "failed", type(exc).__name__)
+            raise HTTPException(status_code=502, detail="计划书模型生成失败；失败运行已保留，请安全重试") from exc
 
     if not bp:
         bp = _fallback_bp()
+    required_sections = {
+        "background", "user_problem", "solution", "innovation", "market",
+        "business_model", "implementation", "financial", "risk", "team", "evidence",
+    }
+    sections = bp.get("sections") if isinstance(bp, dict) else None
+    if not isinstance(sections, list) or {s.get("id") for s in sections if isinstance(s, dict)} != required_sections:
+        finish_run(plan_run_id, "failed", "InvalidPlanStructure")
+        raise HTTPException(status_code=502, detail="计划书草稿结构不完整；失败运行已保留，请安全重试")
+    finish_run(plan_run_id, "completed")
 
     bp["generated_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    bp["status"] = "agent_draft_requires_student_review"
+    bp["basis_version"] = _check_bp_readiness(project_id)["gate"]["proposal_version"]
+    bp["run_id"] = plan_run_id
+    bp["agent_version"] = AGENT_VERSION
+
+    # Preserve every generated draft; the student's revised formal document is
+    # saved separately through /api/stage3/{project_id}/documents.
+    from routers.stage3 import DocumentInput, save_document
+    markdown = "# " + bp.get("title", "商业计划书草稿") + "\n\n" + bp.get("executive_summary", "")
+    for section in bp.get("sections", []):
+        markdown += f"\n\n## {section.get('title', '')}\n\n{section.get('content', '')}"
+    saved_draft = save_document(project_id, DocumentInput(
+        kind="plan", content=markdown, source="agent_draft",
+        basis_version=bp["basis_version"], note="AI 草稿，学生必须核验、修改并保存独立版本",
+    ), request)
+    bp["stage3_plan_version"] = saved_draft["version"]
 
     # 持久化到项目
     project["bp_content"] = bp
@@ -621,18 +643,14 @@ def download_business_plan(project_id: str, request: Request):
 
 
 @router.get("/{project_id}")
-def get_project_detail(project_id: str):
-    proj = get_project(project_id)
-    if not proj:
-        raise HTTPException(status_code=404, detail="项目不存在")
-    return proj
+def get_project_detail(project_id: str, request: Request):
+    return require_project(request, project_id)
 
 
 @router.post("/", response_model=ProjectInfo)
 def create_project(req: ProjectCreate, request: Request, owner_id: str = "student_001"):
-    user = _get_current_user(request)
-    if user:
-        owner_id = user["user_id"]
+    user = require_user(request)
+    owner_id = user["user_id"]
     project_id = f"proj_{uuid.uuid4().hex[:6]}"
     # Resolve project_type: use explicit value if valid, else auto-infer
     ptype = req.project_type if req.project_type in _VALID_PROJECT_TYPES else None
@@ -782,7 +800,9 @@ class BindSessionRequest(BaseModel):
 
 
 @router.post("/bind-session")
-def bind_session(req: BindSessionRequest):
+def bind_session(req: BindSessionRequest, request: Request):
+    require_session(request, req.session_id)
+    require_project(request, req.project_id)
     bind_session_to_project(req.session_id, req.project_id)
     return {"ok": True}
 
@@ -794,13 +814,18 @@ class AddMemberRequest(BaseModel):
 
 
 @router.get("/{project_id}/team")
-def get_team(project_id: str):
+def get_team(project_id: str, request: Request):
+    require_project(request, project_id)
     members = get_team_members(project_id)
     return {"project_id": project_id, "members": members}
 
 
 @router.post("/{project_id}/team")
-def add_member(project_id: str, req: AddMemberRequest):
+def add_member(project_id: str, req: AddMemberRequest, request: Request):
+    project = require_project(request, project_id)
+    user_actor = require_user(request)
+    if user_actor.get("role") not in ("teacher", "admin") and project["owner_id"] != user_actor["user_id"]:
+        raise HTTPException(status_code=403, detail="仅项目负责人可管理成员")
     user = get_user_by_username(req.username)
     if not user:
         raise HTTPException(status_code=404, detail=f"用户 '{req.username}' 不存在")
@@ -809,10 +834,13 @@ def add_member(project_id: str, req: AddMemberRequest):
 
 
 @router.delete("/{project_id}/team/{user_id}")
-def remove_member(project_id: str, user_id: str):
+def remove_member(project_id: str, user_id: str, request: Request):
+    project = require_project(request, project_id)
+    user_actor = require_user(request)
+    if user_actor.get("role") not in ("teacher", "admin") and project["owner_id"] != user_actor["user_id"]:
+        raise HTTPException(status_code=403, detail="仅项目负责人可管理成员")
     remove_team_member(project_id, user_id)
     return {"ok": True}
 
 
 # ── 学生个人画像 ─────────────────────────────────────────────────────
-

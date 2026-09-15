@@ -10,7 +10,7 @@ routers/tools.py
 from __future__ import annotations
 
 import re
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Depends, Request
 from pydantic import BaseModel
 from services.database import (
     get_score_snapshots, get_all_projects,
@@ -28,7 +28,9 @@ from services.claude_client import chat_completion
 from hypergraph.engine import query_hypergraph, search_by_industry
 from config import USE_MOCK_API
 
-router = APIRouter(prefix="/api/tools", tags=["tools"])
+from services.access_control import require_project, require_teacher, require_user
+
+router = APIRouter(prefix="/api/tools", tags=["tools"], dependencies=[Depends(require_user)])
 
 DIMS = ["empathy", "ideation", "business", "execution", "pitching"]
 DIM_LABELS = {
@@ -41,11 +43,12 @@ DIM_LABELS = {
 # ──────────────────────────────────────────────────────────────
 
 @router.get("/timeline/{project_id}")
-def get_timeline(project_id: str):
+def get_timeline(project_id: str, request: Request):
     """
     返回该项目的所有得分快照，按轮次排序。
     前端可用折线图展示 5 维度随时间的变化。
     """
+    require_project(request, project_id)
     snapshots = get_score_snapshots(project_id)
     proj = get_project(project_id)
 
@@ -98,11 +101,12 @@ _BENCHMARK_INSIGHT_PROMPT = """你是一位创业导师，正在帮助学生对�
 
 
 @router.get("/benchmark/{project_id}")
-def get_benchmark(project_id: str):
+def get_benchmark(project_id: str, request: Request):
     """
     返回当前项目在班级中各维度的百分位排名，
     同时从超图检索同行业竞赛案例，并由 LLM 生成对标洞察。
     """
+    require_project(request, project_id)
     proj = get_project(project_id)
     if not proj:
         return {"error": "项目不存在"}
@@ -262,8 +266,10 @@ class PitchCheckRequest(BaseModel):
 
 
 @router.post("/pitch-check")
-def check_pitch(req: PitchCheckRequest):
+def check_pitch(req: PitchCheckRequest, request: Request):
     """Analyze pitch deck outline for structural completeness."""
+    if req.project_id:
+        require_project(request, req.project_id)
     outline = req.outline.strip()
     if not outline:
         return {"error": "请提供路演大纲内容"}
@@ -365,8 +371,10 @@ class InterviewRequest(BaseModel):
 
 
 @router.post("/interview-analyze")
-def analyze_interview(req: InterviewRequest):
+def analyze_interview(req: InterviewRequest, request: Request):
     """Parse user interview transcript and extract structured evidence."""
+    if req.project_id:
+        require_project(request, req.project_id)
     text = req.interview_text.strip()
     if not text or len(text) < 20:
         return {"error": "访谈内容太短，请至少输入50字"}
@@ -388,13 +396,15 @@ def analyze_interview(req: InterviewRequest):
 
 
 @router.get("/interview-history/{project_id}")
-def get_interview_history(project_id: str):
+def get_interview_history(project_id: str, request: Request):
+    require_project(request, project_id)
     analyses = get_interview_analyses(project_id)
     return {"project_id": project_id, "analyses": analyses}
 
 
 @router.get("/pitch-history/{project_id}")
-def get_pitch_history(project_id: str):
+def get_pitch_history(project_id: str, request: Request):
+    require_project(request, project_id)
     checks = get_pitch_checks(project_id)
     return {"project_id": project_id, "checks": checks}
 
@@ -421,11 +431,12 @@ _EVIDENCE_ANALYSIS_PROMPT = """你是一位创业导师，帮助学生分析他�
 
 
 @router.get("/evidence/{project_id}")
-def get_evidence_dashboard(project_id: str):
+def get_evidence_dashboard(project_id: str, request: Request):
     """
     Aggregate all chat messages for the project and run EvidenceTracer.
     Also maps evidence to hypergraph nodes and generates AI quality analysis.
     """
+    require_project(request, project_id)
     sessions = get_sessions_for_project(project_id)
     all_messages: list[dict] = []
     for sess in sessions:
@@ -610,8 +621,9 @@ def _current_week_range(week_start: str | None = None):
 
 
 @router.get("/weekly-report/{project_id}")
-def get_weekly_report(project_id: str, week_start: str = ""):
+def get_weekly_report(project_id: str, request: Request, week_start: str = ""):
     """Generate or retrieve weekly report for a project."""
+    require_project(request, project_id)
     ws, we = _current_week_range(week_start or None)
     today_str = datetime.now().strftime("%Y-%m-%d")
 
@@ -684,6 +696,7 @@ def get_weekly_report(project_id: str, week_start: str = ""):
 @router.get("/weekly-reports/all")
 def get_all_reports(request: Request, week_start: str = ""):
     """Get weekly reports for all projects (teacher view)."""
+    require_teacher(request)
     ws, we = _current_week_range(week_start or None)
     all_projects = get_all_projects()
     # Filter by teacher's assigned classes
@@ -695,10 +708,12 @@ def get_all_reports(request: Request, week_start: str = ""):
         if class_ids:
             allowed = get_students_in_classes(class_ids)
             all_projects = [p for p in all_projects if p.get("owner_id") in allowed]
+        else:
+            all_projects = []
     reports = []
     for p in all_projects:
         try:
-            report = get_weekly_report(p["project_id"], week_start=ws)
+            report = get_weekly_report(p["project_id"], request=request, week_start=ws)
             reports.append(report)
         except Exception:
             continue
@@ -714,20 +729,29 @@ class TaskStatusRequest(BaseModel):
 
 
 @router.get("/learning-path/{project_id}")
-def get_learning_path(project_id: str):
+def get_learning_path(project_id: str, request: Request):
     """Get or generate personalized learning path."""
+    require_project(request, project_id)
     return get_or_generate_learning_path(project_id)
 
 
 @router.post("/learning-path/{project_id}/generate")
-def regenerate_learning_path(project_id: str):
+def regenerate_learning_path(project_id: str, request: Request):
     """Force regenerate learning path based on current scores."""
+    require_project(request, project_id)
     tasks = generate_learning_path(project_id)
     return {"project_id": project_id, "tasks": tasks, "regenerated": True}
 
 
 @router.post("/learning-path/task/{task_id}/status")
-def update_task_status(task_id: str, req: TaskStatusRequest):
+def update_task_status(task_id: str, req: TaskStatusRequest, request: Request):
     """Manually update a learning task status."""
+    from services.database import get_conn
+    from fastapi import HTTPException
+    with get_conn() as conn:
+        row = conn.execute("SELECT project_id FROM learning_tasks WHERE task_id=?", (task_id,)).fetchone()
+    if not row:
+        raise HTTPException(status_code=404, detail="学习任务不存在")
+    require_project(request, row["project_id"])
     update_learning_task_status(task_id, req.status)
     return {"ok": True, "task_id": task_id, "status": req.status}

@@ -1,0 +1,695 @@
+{
+  "created_at": "2026-09-15T02:50:03.724106+00:00",
+  "mode": "S_simulated_stage3_workflow_functional_test",
+  "warning": "All teacher scores, D1-D9 entries, timing and final decisions are S (simulated). They do not prove real course completion or CareAI user validation.",
+  "api": "http://127.0.0.1:8001",
+  "project": {
+    "project_id": "proj_ce1464",
+    "name": "CareAI 第三阶段流程测试（S 模拟）",
+    "industry": "健康教育",
+    "description": "仅用于验证 VentureAI 第三阶段工作流；所有评分和教师结论均为 S（模拟），不是项目真实获奖或用户证据。",
+    "stage": "discovery",
+    "owner_id": "10e445f6-e335-41b2-a5f6-ee50e9278317",
+    "scores": {},
+    "diagnosis": [],
+    "project_type": "创新项目",
+    "created_at": "2026-09-15"
+  },
+  "gate": {
+    "approved": true,
+    "proposal_version": 1,
+    "review": {
+      "id": 3,
+      "project_id": "proj_ce1464",
+      "proposal_version": 1,
+      "decision": "approved",
+      "feedback": "S（模拟教师判断）：仅证明 G1–G6 接口和门槛可运行，不代表真实课程教师通过。",
+      "reviewer_id": "stage3-teacher-65ed7334",
+      "created_at": "2026-09-15 02:50:03",
+      "criteria": {
+        "G1": true,
+        "G2": true,
+        "G3": true,
+        "G4": true,
+        "G5": true,
+        "G6": true
+      }
+    }
+  },
+  "runs": [
+    {
+      "flow": "tutor",
+      "session_id": "c6fbe0b3-57ff-4b3d-af06-ef7c55b3b29a",
+      "run_id": "run_130cfd452def",
+      "agent_version": "ventureai-v2-stage3-2026-09-15",
+      "http_status": 200
+    },
+    {
+      "flow": "coach",
+      "session_id": "f3be5c1d-a0f7-4a63-8a23-df20a9954caa",
+      "run_id": "run_b829e520684a",
+      "agent_version": "ventureai-v2-stage3-2026-09-15",
+      "http_status": 200
+    },
+    {
+      "flow": "grader",
+      "session_id": "838b5a79-7da3-44b8-92a3-b4108d492092",
+      "run_id": "run_a9ea5882cbd0",
+      "agent_version": "ventureai-v2-stage3-2026-09-15",
+      "http_status": 200
+    },
+    {
+      "flow": "grader",
+      "session_id": "10112a53-8261-4880-9c5d-1ed390198e76",
+      "run_id": "run_ad3e079dc3aa",
+      "agent_version": "ventureai-v2-stage3-2026-09-15",
+      "http_status": 200
+    }
+  ],
+  "document_versions": [
+    {
+      "kind": "proposal",
+      "version": 1
+    },
+    {
+      "kind": "plan",
+      "version": 1
+    },
+    {
+      "kind": "plan",
+      "version": 2
+    },
+    {
+      "kind": "slides",
+      "version": 1
+    },
+    {
+      "kind": "script",
+      "version": 1
+    },
+    {
+      "kind": "qa",
+      "version": 1
+    },
+    {
+      "kind": "stage_summary",
+      "version": 1
+    }
+  ],
+  "evidence_id": 5,
+  "use_record_ids": [
+    7,
+    8,
+    9
+  ],
+  "scores": {
+    "project": {
+      "id": 5,
+      "category": "project",
+      "total": 68,
+      "pass": true
+    },
+    "agent": {
+      "id": 6,
+      "category": "agent",
+      "total": 71,
+      "pass": true
+    }
+  },
+  "final": {
+    "ready_for_acceptance": true,
+    "decision": "pass"
+  },
+  "security": {
+    "anonymous_stage3": 401,
+    "outsider_stage3": 403,
+    "student_teacher_page_api": 403,
+    "public_teacher_registration": 403,
+    "anonymous_graph": 401
+  },
+  "export": {
+    "project_id": "proj_ce1464",
+    "gate": {
+      "approved": true,
+      "proposal_version": 1,
+      "review": {
+        "id": 3,
+        "project_id": "proj_ce1464",
+        "proposal_version": 1,
+        "decision": "approved",
+        "feedback": "S（模拟教师判断）：仅证明 G1–G6 接口和门槛可运行，不代表真实课程教师通过。",
+        "reviewer_id": "stage3-teacher-65ed7334",
+        "created_at": "2026-09-15 02:50:03",
+        "criteria": {
+          "G1": true,
+          "G2": true,
+          "G3": true,
+          "G4": true,
+          "G5": true,
+          "G6": true
+        }
+      }
+    },
+    "documents": {
+      "proposal": {
+        "id": 16,
+        "project_id": "proj_ce1464",
+        "kind": "proposal",
+        "version": 1,
+        "basis_version": null,
+        "plan_version": null,
+        "content": "CareAI 学生核验立项书（S 流程测试）：面向成年人提供非诊断性健康教育和习惯管理；已有可演示 MVP，但无真实用户、留存、付费和临床证据。项目边界、替代方案、关键假设及 F1/F2/F3 使用计划均已列明。",
+        "content_hash": "142699be5bd0b46e91558dec35e0ad608299c60f8da6cdf1af2f57bcbd955220",
+        "timed_seconds": null,
+        "source": "student",
+        "note": "v1：根据 CareAI 项目书整理，所有未验证主张标 H。",
+        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
+        "created_at": "2026-09-15 02:50:03"
+      },
+      "plan": {
+        "id": 18,
+        "project_id": "proj_ce1464",
+        "kind": "plan",
+        "version": 2,
+        "basis_version": 1,
+        "plan_version": null,
+        "content": "CareAI 商业计划书学生 v2（S 流程测试）。已删除用户偏好和健康效果的无证据断言；明确非诊断边界，补充来源占位、三情景计算式、负面影响、人工责任及未来真实验证路径。",
+        "content_hash": "d47f58b40ba6616df41809888e7a59de1bb31daca45e088eff8803b9c09bcfa1",
+        "timed_seconds": null,
+        "source": "student",
+        "note": "根据 F3 评审定位人工改写，等待复验。",
+        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
+        "created_at": "2026-09-15 02:50:03"
+      },
+      "slides": {
+        "id": 19,
+        "project_id": "proj_ce1464",
+        "kind": "slides",
+        "version": 1,
+        "basis_version": 1,
+        "plan_version": 2,
+        "content": "CareAI 路演 PPT 学生稿（S 流程测试）：16页，依次呈现问题、证据、方案、演示、替代方案、运营、实施、财务假设、风险、社会价值、团队与请求。",
+        "content_hash": "4ae45894d073a615721bab6e18698029beecd4af2216732dde775ae9a00ffc04",
+        "timed_seconds": null,
+        "source": "student",
+        "note": "与计划书 v2 使用同一证据口径。",
+        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
+        "created_at": "2026-09-15 02:50:03"
+      },
+      "script": {
+        "id": 20,
+        "project_id": "proj_ce1464",
+        "kind": "script",
+        "version": 1,
+        "basis_version": 1,
+        "plan_version": 2,
+        "content": "CareAI 十分钟讲稿学生稿（S 流程测试）：结论—依据—边界—下一步验证。讲稿覆盖问题、证据、方案、模式、实施、社会价值、团队和请求。",
+        "content_hash": "a14dc0e35af8c8b4a5c66980ae9a85b965e243d7673a913588f047b09a5cfa1f",
+        "timed_seconds": 588,
+        "source": "student",
+        "note": "S 模拟计时 588 秒，仅验证计时门槛。",
+        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
+        "created_at": "2026-09-15 02:50:03"
+      },
+      "qa": {
+        "id": 21,
+        "project_id": "proj_ce1464",
+        "kind": "qa",
+        "version": 1,
+        "basis_version": 1,
+        "plan_version": 2,
+        "content": "1. 高风险问题1？回答采用结论—依据—边界—下一步验证；该内容为 S 流程测试。\n2. 高风险问题2？回答采用结论—依据—边界—下一步验证；该内容为 S 流程测试。\n3. 高风险问题3？回答采用结论—依据—边界—下一步验证；该内容为 S 流程测试。\n4. 高风险问题4？回答采用结论—依据—边界—下一步验证；该内容为 S 流程测试。\n5. 高风险问题5？回答采用结论—依据—边界—下一步验证；该内容为 S 流程测试。\n6. 高风险问题6？回答采用结论—依据—边界—下一步验证；该内容为 S 流程测试。\n7. 高风险问题7？回答采用结论—依据—边界—下一步验证；该内容为 S 流程测试。\n8. 高风险问题8？回答采用结论—依据—边界—下一步验证；该内容为 S 流程测试。\n9. 高风险问题9？回答采用结论—依据—边界—下一步验证；该内容为 S 流程测试。\n10. 高风险问题10？回答采用结论—依据—边界—下一步验证；该内容为 S 流程测试。",
+        "content_hash": "38b95173058d70c6d56391c8ef9e92d928fd266df992f9c2e08a925d136d9f6f",
+        "timed_seconds": null,
+        "source": "student",
+        "note": "10个 S 模拟高风险问题，待团队换成真实准备内容。",
+        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
+        "created_at": "2026-09-15 02:50:03"
+      },
+      "stage_summary": {
+        "id": 22,
+        "project_id": "proj_ce1464",
+        "kind": "stage_summary",
+        "version": 1,
+        "basis_version": 1,
+        "plan_version": null,
+        "content": "CareAI 第三阶段总结（S 流程测试）：记录项目结果、Agent 建议、学生采纳／拒绝、人工责任、系统局限和后续真实验证计划。",
+        "content_hash": "f38d274493e7782f6c7c7f287b7fb45074f6be737708ac815cf24a55b0871c9a",
+        "timed_seconds": null,
+        "source": "student",
+        "note": "仅验证阶段总结版本和完整性门槛。",
+        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
+        "created_at": "2026-09-15 02:50:03"
+      }
+    },
+    "scores": {
+      "agent": {
+        "id": 6,
+        "project_id": "proj_ce1464",
+        "category": "agent",
+        "total": 71,
+        "feedback": "S（模拟评分）：仅验证Agent效果100分表和独立60分门槛。",
+        "reviewer_id": "stage3-teacher-65ed7334",
+        "created_at": "2026-09-15 02:50:03",
+        "proposal_version": 1,
+        "plan_version": 2,
+        "scores": {
+          "three_flows": 14,
+          "traceability": 15,
+          "effectiveness": 17,
+          "correctness": 14,
+          "human_boundary": 11
+        }
+      },
+      "project": {
+        "id": 5,
+        "project_id": "proj_ce1464",
+        "category": "project",
+        "total": 68,
+        "feedback": "S（模拟评分）：仅验证项目成果100分表和独立60分门槛。",
+        "reviewer_id": "stage3-teacher-65ed7334",
+        "created_at": "2026-09-15 02:50:03",
+        "proposal_version": 1,
+        "plan_version": 2,
+        "scores": {
+          "social_value": 14,
+          "evidence_process": 14,
+          "innovation": 13,
+          "feasibility": 16,
+          "team_consistency": 11
+        }
+      }
+    },
+    "flow_coverage": [
+      "F1",
+      "F2",
+      "F3"
+    ],
+    "use_records": [
+      {
+        "id": 7,
+        "project_id": "proj_ce1464",
+        "run_id": "run_130cfd452def",
+        "flow": "F1",
+        "task": "理解 F/I/H/S 并纠正无来源主张",
+        "material_kind": "proposal",
+        "material_version": 1,
+        "action": "adopted",
+        "reason": "采用证据分类方法；学生仍负责核查每项来源。",
+        "learning_check": "无来源的付费意愿最初不能标 F，理解检查后改为 H。",
+        "issue_location": "",
+        "verification_run_id": "",
+        "result_kind": null,
+        "result_version": null,
+        "evidence_ref": "chat session c6fbe0b3-57ff-4b3d-af06-ef7c55b3b29a",
+        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
+        "created_at": "2026-09-15 02:50:03",
+        "effect_judgment": "纠正证据类型误判，并保留学生核查来源的责任边界。"
+      },
+      {
+        "id": 8,
+        "project_id": "proj_ce1464",
+        "run_id": "run_b829e520684a",
+        "flow": "F2",
+        "task": "从立项书推进计划书结构",
+        "material_kind": "proposal",
+        "material_version": 1,
+        "action": "rewritten",
+        "reason": "采用章节建议，人工删除自动生成的未经核验内容。",
+        "learning_check": "",
+        "issue_location": "",
+        "verification_run_id": "",
+        "result_kind": "plan",
+        "result_version": 1,
+        "evidence_ref": "chat session f3be5c1d-a0f7-4a63-8a23-df20a9954caa",
+        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
+        "created_at": "2026-09-15 02:50:03",
+        "effect_judgment": "缩短结构整理时间，未经核验的内容由学生删除。"
+      },
+      {
+        "id": 9,
+        "project_id": "proj_ce1464",
+        "run_id": "run_a9ea5882cbd0",
+        "flow": "F3",
+        "task": "评审计划书并完成修改复验",
+        "material_kind": "plan",
+        "material_version": 1,
+        "action": "rewritten",
+        "reason": "根据评审移除无证据的用户偏好与健康效果主张。",
+        "learning_check": "",
+        "issue_location": "计划书 v1 的市场判断与健康效果表述",
+        "verification_run_id": "run_ad3e079dc3aa",
+        "result_kind": "plan",
+        "result_version": 2,
+        "evidence_ref": "before=838b5a79-7da3-44b8-92a3-b4108d492092; after=10112a53-8261-4880-9c5d-1ed390198e76",
+        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
+        "created_at": "2026-09-15 02:50:03",
+        "effect_judgment": "修正两类证据跳跃，并用独立复验运行确认修改。"
+      }
+    ],
+    "missing": [],
+    "ready_for_acceptance": true,
+    "final_review": {
+      "id": 3,
+      "project_id": "proj_ce1464",
+      "decision": "pass",
+      "redline": 0,
+      "feedback": "S（模拟终局结论）：系统门槛测试通过；真实课程必须由教师重新评分与签字。",
+      "reviewer_id": "stage3-teacher-65ed7334",
+      "created_at": "2026-09-15 02:50:03",
+      "proposal_version": 1,
+      "plan_version": 2,
+      "current": true
+    },
+    "daily_progress": [
+      {
+        "id": 19,
+        "project_id": "proj_ce1464",
+        "day": 1,
+        "goal": "D1 系统流程测试目标（S）",
+        "artifact": "D1 S 模拟产物，关联已保存材料版本",
+        "agent_evidence": "S 模拟记录；关键 run_id 见 evidence-export，D1",
+        "risk_next": "不把 D1 自动数据作为真实课程完成证明；下一步由师生填写",
+        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
+        "created_at": "2026-09-15 02:50:03"
+      },
+      {
+        "id": 20,
+        "project_id": "proj_ce1464",
+        "day": 2,
+        "goal": "D2 系统流程测试目标（S）",
+        "artifact": "D2 S 模拟产物，关联已保存材料版本",
+        "agent_evidence": "S 模拟记录；关键 run_id 见 evidence-export，D2",
+        "risk_next": "不把 D2 自动数据作为真实课程完成证明；下一步由师生填写",
+        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
+        "created_at": "2026-09-15 02:50:03"
+      },
+      {
+        "id": 21,
+        "project_id": "proj_ce1464",
+        "day": 3,
+        "goal": "D3 系统流程测试目标（S）",
+        "artifact": "D3 S 模拟产物，关联已保存材料版本",
+        "agent_evidence": "S 模拟记录；关键 run_id 见 evidence-export，D3",
+        "risk_next": "不把 D3 自动数据作为真实课程完成证明；下一步由师生填写",
+        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
+        "created_at": "2026-09-15 02:50:03"
+      },
+      {
+        "id": 22,
+        "project_id": "proj_ce1464",
+        "day": 4,
+        "goal": "D4 系统流程测试目标（S）",
+        "artifact": "D4 S 模拟产物，关联已保存材料版本",
+        "agent_evidence": "S 模拟记录；关键 run_id 见 evidence-export，D4",
+        "risk_next": "不把 D4 自动数据作为真实课程完成证明；下一步由师生填写",
+        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
+        "created_at": "2026-09-15 02:50:03"
+      },
+      {
+        "id": 23,
+        "project_id": "proj_ce1464",
+        "day": 5,
+        "goal": "D5 系统流程测试目标（S）",
+        "artifact": "D5 S 模拟产物，关联已保存材料版本",
+        "agent_evidence": "S 模拟记录；关键 run_id 见 evidence-export，D5",
+        "risk_next": "不把 D5 自动数据作为真实课程完成证明；下一步由师生填写",
+        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
+        "created_at": "2026-09-15 02:50:03"
+      },
+      {
+        "id": 24,
+        "project_id": "proj_ce1464",
+        "day": 6,
+        "goal": "D6 系统流程测试目标（S）",
+        "artifact": "D6 S 模拟产物，关联已保存材料版本",
+        "agent_evidence": "S 模拟记录；关键 run_id 见 evidence-export，D6",
+        "risk_next": "不把 D6 自动数据作为真实课程完成证明；下一步由师生填写",
+        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
+        "created_at": "2026-09-15 02:50:03"
+      },
+      {
+        "id": 25,
+        "project_id": "proj_ce1464",
+        "day": 7,
+        "goal": "D7 系统流程测试目标（S）",
+        "artifact": "D7 S 模拟产物，关联已保存材料版本",
+        "agent_evidence": "S 模拟记录；关键 run_id 见 evidence-export，D7",
+        "risk_next": "不把 D7 自动数据作为真实课程完成证明；下一步由师生填写",
+        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
+        "created_at": "2026-09-15 02:50:03"
+      },
+      {
+        "id": 26,
+        "project_id": "proj_ce1464",
+        "day": 8,
+        "goal": "D8 系统流程测试目标（S）",
+        "artifact": "D8 S 模拟产物，关联已保存材料版本",
+        "agent_evidence": "S 模拟记录；关键 run_id 见 evidence-export，D8",
+        "risk_next": "不把 D8 自动数据作为真实课程完成证明；下一步由师生填写",
+        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
+        "created_at": "2026-09-15 02:50:03"
+      },
+      {
+        "id": 27,
+        "project_id": "proj_ce1464",
+        "day": 9,
+        "goal": "D9 系统流程测试目标（S）",
+        "artifact": "D9 S 模拟产物，关联已保存材料版本",
+        "agent_evidence": "S 模拟记录；关键 run_id 见 evidence-export，D9",
+        "risk_next": "不把 D9 自动数据作为真实课程完成证明；下一步由师生填写",
+        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
+        "created_at": "2026-09-15 02:50:03"
+      }
+    ],
+    "runs": [
+      {
+        "run_id": "run_130cfd452def",
+        "session_id": "c6fbe0b3-57ff-4b3d-af06-ef7c55b3b29a",
+        "project_id": "proj_ce1464",
+        "flow": "tutor",
+        "agent_version": "ventureai-v2-stage3-2026-09-15",
+        "git_commit": "d3c6e035013d22f59143c0695260ff1821e37bbb",
+        "model": "qwen/qwen-2.5-72b-instruct",
+        "source_hash": "3bb3f3e6665d30b90f92",
+        "prompt_hash": "971718c12d9ef3a7a855",
+        "status": "completed",
+        "error_type": "",
+        "started_at": "2026-09-15 02:50:03",
+        "finished_at": "2026-09-15 02:50:03"
+      },
+      {
+        "run_id": "run_a9ea5882cbd0",
+        "session_id": "838b5a79-7da3-44b8-92a3-b4108d492092",
+        "project_id": "proj_ce1464",
+        "flow": "grader",
+        "agent_version": "ventureai-v2-stage3-2026-09-15",
+        "git_commit": "d3c6e035013d22f59143c0695260ff1821e37bbb",
+        "model": "qwen/qwen-2.5-72b-instruct",
+        "source_hash": "3bb3f3e6665d30b90f92",
+        "prompt_hash": "971718c12d9ef3a7a855",
+        "status": "completed",
+        "error_type": "",
+        "started_at": "2026-09-15 02:50:03",
+        "finished_at": "2026-09-15 02:50:03"
+      },
+      {
+        "run_id": "run_ad3e079dc3aa",
+        "session_id": "10112a53-8261-4880-9c5d-1ed390198e76",
+        "project_id": "proj_ce1464",
+        "flow": "grader",
+        "agent_version": "ventureai-v2-stage3-2026-09-15",
+        "git_commit": "d3c6e035013d22f59143c0695260ff1821e37bbb",
+        "model": "qwen/qwen-2.5-72b-instruct",
+        "source_hash": "3bb3f3e6665d30b90f92",
+        "prompt_hash": "971718c12d9ef3a7a855",
+        "status": "completed",
+        "error_type": "",
+        "started_at": "2026-09-15 02:50:03",
+        "finished_at": "2026-09-15 02:50:03"
+      },
+      {
+        "run_id": "run_b829e520684a",
+        "session_id": "f3be5c1d-a0f7-4a63-8a23-df20a9954caa",
+        "project_id": "proj_ce1464",
+        "flow": "coach",
+        "agent_version": "ventureai-v2-stage3-2026-09-15",
+        "git_commit": "d3c6e035013d22f59143c0695260ff1821e37bbb",
+        "model": "qwen/qwen-2.5-72b-instruct",
+        "source_hash": "3bb3f3e6665d30b90f92",
+        "prompt_hash": "971718c12d9ef3a7a855",
+        "status": "completed",
+        "error_type": "",
+        "started_at": "2026-09-15 02:50:03",
+        "finished_at": "2026-09-15 02:50:03"
+      }
+    ],
+    "gate_history": [
+      {
+        "id": 3,
+        "project_id": "proj_ce1464",
+        "proposal_version": 1,
+        "criteria_json": "{\"G1\": true, \"G2\": true, \"G3\": true, \"G4\": true, \"G5\": true, \"G6\": true}",
+        "decision": "approved",
+        "feedback": "S（模拟教师判断）：仅证明 G1–G6 接口和门槛可运行，不代表真实课程教师通过。",
+        "reviewer_id": "stage3-teacher-65ed7334",
+        "created_at": "2026-09-15 02:50:03"
+      }
+    ],
+    "score_history": [
+      {
+        "id": 5,
+        "project_id": "proj_ce1464",
+        "category": "project",
+        "scores_json": "{\"social_value\": 14, \"evidence_process\": 14, \"innovation\": 13, \"feasibility\": 16, \"team_consistency\": 11}",
+        "total": 68,
+        "feedback": "S（模拟评分）：仅验证项目成果100分表和独立60分门槛。",
+        "reviewer_id": "stage3-teacher-65ed7334",
+        "created_at": "2026-09-15 02:50:03",
+        "proposal_version": 1,
+        "plan_version": 2
+      },
+      {
+        "id": 6,
+        "project_id": "proj_ce1464",
+        "category": "agent",
+        "scores_json": "{\"three_flows\": 14, \"traceability\": 15, \"effectiveness\": 17, \"correctness\": 14, \"human_boundary\": 11}",
+        "total": 71,
+        "feedback": "S（模拟评分）：仅验证Agent效果100分表和独立60分门槛。",
+        "reviewer_id": "stage3-teacher-65ed7334",
+        "created_at": "2026-09-15 02:50:03",
+        "proposal_version": 1,
+        "plan_version": 2
+      }
+    ],
+    "document_history": [
+      {
+        "id": 16,
+        "project_id": "proj_ce1464",
+        "kind": "proposal",
+        "version": 1,
+        "basis_version": null,
+        "plan_version": null,
+        "content": "CareAI 学生核验立项书（S 流程测试）：面向成年人提供非诊断性健康教育和习惯管理；已有可演示 MVP，但无真实用户、留存、付费和临床证据。项目边界、替代方案、关键假设及 F1/F2/F3 使用计划均已列明。",
+        "content_hash": "142699be5bd0b46e91558dec35e0ad608299c60f8da6cdf1af2f57bcbd955220",
+        "timed_seconds": null,
+        "source": "student",
+        "note": "v1：根据 CareAI 项目书整理，所有未验证主张标 H。",
+        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
+        "created_at": "2026-09-15 02:50:03"
+      },
+      {
+        "id": 17,
+        "project_id": "proj_ce1464",
+        "kind": "plan",
+        "version": 1,
+        "basis_version": 1,
+        "plan_version": null,
+        "content": "CareAI 商业计划书学生 v1（S 流程测试）。包括社会价值、用户场景、方案、替代方案、运营机制、实施路线、三情景公式、风险合规、团队和验证计划。无来源市场结论均标 H。",
+        "content_hash": "7fe55bafd47faa06cfd63bd7a339226f4a5369b3fbd412dadfa6beb719d0ec1c",
+        "timed_seconds": null,
+        "source": "student",
+        "note": "根据 F2 建议由学生整理的初版。",
+        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
+        "created_at": "2026-09-15 02:50:03"
+      },
+      {
+        "id": 18,
+        "project_id": "proj_ce1464",
+        "kind": "plan",
+        "version": 2,
+        "basis_version": 1,
+        "plan_version": null,
+        "content": "CareAI 商业计划书学生 v2（S 流程测试）。已删除用户偏好和健康效果的无证据断言；明确非诊断边界，补充来源占位、三情景计算式、负面影响、人工责任及未来真实验证路径。",
+        "content_hash": "d47f58b40ba6616df41809888e7a59de1bb31daca45e088eff8803b9c09bcfa1",
+        "timed_seconds": null,
+        "source": "student",
+        "note": "根据 F3 评审定位人工改写，等待复验。",
+        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
+        "created_at": "2026-09-15 02:50:03"
+      },
+      {
+        "id": 19,
+        "project_id": "proj_ce1464",
+        "kind": "slides",
+        "version": 1,
+        "basis_version": 1,
+        "plan_version": 2,
+        "content": "CareAI 路演 PPT 学生稿（S 流程测试）：16页，依次呈现问题、证据、方案、演示、替代方案、运营、实施、财务假设、风险、社会价值、团队与请求。",
+        "content_hash": "4ae45894d073a615721bab6e18698029beecd4af2216732dde775ae9a00ffc04",
+        "timed_seconds": null,
+        "source": "student",
+        "note": "与计划书 v2 使用同一证据口径。",
+        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
+        "created_at": "2026-09-15 02:50:03"
+      },
+      {
+        "id": 20,
+        "project_id": "proj_ce1464",
+        "kind": "script",
+        "version": 1,
+        "basis_version": 1,
+        "plan_version": 2,
+        "content": "CareAI 十分钟讲稿学生稿（S 流程测试）：结论—依据—边界—下一步验证。讲稿覆盖问题、证据、方案、模式、实施、社会价值、团队和请求。",
+        "content_hash": "a14dc0e35af8c8b4a5c66980ae9a85b965e243d7673a913588f047b09a5cfa1f",
+        "timed_seconds": 588,
+        "source": "student",
+        "note": "S 模拟计时 588 秒，仅验证计时门槛。",
+        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
+        "created_at": "2026-09-15 02:50:03"
+      },
+      {
+        "id": 21,
+        "project_id": "proj_ce1464",
+        "kind": "qa",
+        "version": 1,
+        "basis_version": 1,
+        "plan_version": 2,
+        "content": "1. 高风险问题1？回答采用结论—依据—边界—下一步验证；该内容为 S 流程测试。\n2. 高风险问题2？回答采用结论—依据—边界—下一步验证；该内容为 S 流程测试。\n3. 高风险问题3？回答采用结论—依据—边界—下一步验证；该内容为 S 流程测试。\n4. 高风险问题4？回答采用结论—依据—边界—下一步验证；该内容为 S 流程测试。\n5. 高风险问题5？回答采用结论—依据—边界—下一步验证；该内容为 S 流程测试。\n6. 高风险问题6？回答采用结论—依据—边界—下一步验证；该内容为 S 流程测试。\n7. 高风险问题7？回答采用结论—依据—边界—下一步验证；该内容为 S 流程测试。\n8. 高风险问题8？回答采用结论—依据—边界—下一步验证；该内容为 S 流程测试。\n9. 高风险问题9？回答采用结论—依据—边界—下一步验证；该内容为 S 流程测试。\n10. 高风险问题10？回答采用结论—依据—边界—下一步验证；该内容为 S 流程测试。",
+        "content_hash": "38b95173058d70c6d56391c8ef9e92d928fd266df992f9c2e08a925d136d9f6f",
+        "timed_seconds": null,
+        "source": "student",
+        "note": "10个 S 模拟高风险问题，待团队换成真实准备内容。",
+        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
+        "created_at": "2026-09-15 02:50:03"
+      },
+      {
+        "id": 22,
+        "project_id": "proj_ce1464",
+        "kind": "stage_summary",
+        "version": 1,
+        "basis_version": 1,
+        "plan_version": null,
+        "content": "CareAI 第三阶段总结（S 流程测试）：记录项目结果、Agent 建议、学生采纳／拒绝、人工责任、系统局限和后续真实验证计划。",
+        "content_hash": "f38d274493e7782f6c7c7f287b7fb45074f6be737708ac815cf24a55b0871c9a",
+        "timed_seconds": null,
+        "source": "student",
+        "note": "仅验证阶段总结版本和完整性门槛。",
+        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
+        "created_at": "2026-09-15 02:50:03"
+      }
+    ],
+    "evidence_items": [
+      {
+        "id": 5,
+        "project_id": "proj_ce1464",
+        "label": "S",
+        "claim": "本次双门槛评分与教师结论用于系统流程测试",
+        "source_ref": "S（模拟）：run_stage3_acceptance.py 自动构造，不是现实教师评价",
+        "formula": "无",
+        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
+        "created_at": "2026-09-15 02:50:03"
+      },
+      {
+        "id": 6,
+        "project_id": "proj_ce1464",
+        "label": "F",
+        "claim": "VentureAI 已保存 CareAI 项目材料版本哈希",
+        "source_ref": "stage3 evidence-export 的 document_history.content_hash 字段",
+        "formula": "SHA-256(content)",
+        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
+        "created_at": "2026-09-15 02:50:03"
+      }
+    ]
+  }
+}

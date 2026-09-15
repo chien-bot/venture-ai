@@ -21,6 +21,14 @@ const SCORE_LABELS: Record<string, string> = {
   business: "商业建模", execution: "资源杠杆", pitching: "路演表达",
 };
 
+function normalizeScores(value: unknown): Scores | null {
+  if (!value || typeof value !== "object") return null;
+  const candidate = value as Record<string, unknown>;
+  return Object.keys(SCORE_LABELS).every((key) =>
+    typeof candidate[key] === "number" && Number.isFinite(candidate[key])
+  ) ? value as Scores : null;
+}
+
 const INTENT_META: Record<string, { label: string; icon: string; badgeClass: string }> = {
   coach:       { label: "项目教练",  icon: "🎯", badgeClass: "badge-blue" },
   tutor:       { label: "概念辅导",  icon: "📚", badgeClass: "badge-purple" },
@@ -203,7 +211,7 @@ export default function StudentChatPageContent() {
             .filter((m: any) => m.role === "assistant" && m.debug_logs)
             .flatMap((m: any) => m.debug_logs);
           if (restoredLogs.length > 0) setDebugLogs(restoredLogs);
-          if (res.scores) setScores(res.scores);
+          setScores(normalizeScores(res.scores));
           if (res.stage) setStage(res.stage);
           if (res.diagnosis) setDiagnosis(res.diagnosis);
           setRatingSubmitted(false); setRatingValue(0);
@@ -318,7 +326,7 @@ export default function StudentChatPageContent() {
       if (session.project_id) setSelectedProjectId(session.project_id);
       setActiveSessionProject(session.project_name ? { name: session.project_name } : null);
       // Restore scores and rubric from project
-      setScores(res.scores || null);
+      setScores(normalizeScores(res.scores));
       setDiagnosis(res.diagnosis || []);
       setStage(res.stage || "discovery");
       setRubricFull(res.rubric_full || null);
@@ -368,7 +376,7 @@ export default function StudentChatPageContent() {
         },
         // onDone: final scores/stage/diagnosis/fix_tasks
         (done) => {
-          if (done.scores) setScores(done.scores);
+          if (done.scores) setScores(normalizeScores(done.scores));
           if (done.stage) setStage(done.stage);
           if (done.diagnosis) setDiagnosis(done.diagnosis);
           if (done.rubric_scores) setRubricScores(done.rubric_scores);

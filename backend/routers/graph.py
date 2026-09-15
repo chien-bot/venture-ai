@@ -11,7 +11,7 @@ Endpoints:
   GET /api/graph/node/{id}/prereqs — Prerequisites for a node
   POST /api/graph/cypher         — Raw Cypher query (teacher-only)
 """
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from pydantic import BaseModel
 from graph_db.neo4j_client import (
     is_available, sync_knowledge_graph,
@@ -28,7 +28,9 @@ from hypergraph.engine import (
     get_tech_competition,
 )
 
-router = APIRouter(prefix="/api/graph", tags=["graph"])
+from services.access_control import require_teacher, require_user
+
+router = APIRouter(prefix="/api/graph", tags=["graph"], dependencies=[Depends(require_user)])
 
 
 @router.get("/status")
@@ -238,8 +240,9 @@ def hypergraph_insights():
 
 
 @router.post("/sync")
-def sync_graph():
+def sync_graph(request: Request):
     """Push all KG nodes, edges, and hyperedges to Neo4j."""
+    require_teacher(request)
     success = sync_knowledge_graph()
     if success:
         return {"status": "ok", "message": "知识图谱已同步到 Neo4j"}
@@ -273,8 +276,9 @@ class CypherQuery(BaseModel):
 
 
 @router.post("/cypher")
-def run_cypher(query: CypherQuery):
+def run_cypher(query: CypherQuery, request: Request):
     """Execute a raw Cypher query (for teacher/admin use)."""
+    require_teacher(request)
     if not is_available():
         raise HTTPException(status_code=503, detail="Neo4j 未连接")
     # Safety: only allow read queries

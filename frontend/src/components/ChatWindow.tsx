@@ -288,7 +288,7 @@ export default function ChatWindow({ messages, onSend, loading, agentLabel, onUp
                   id="chat-file-input"
                   type="file"
                   className="hidden"
-                  accept=".pdf,.txt,.md,.csv,.png,.jpg,.jpeg"
+                  accept=".pdf,.docx,.pptx,.txt,.md,.csv,.png,.jpg,.jpeg"
                   onChange={(e) => { if (e.target.files?.[0]) onUpload(e.target.files[0]); e.target.value = ""; }}
                 />
                 <button

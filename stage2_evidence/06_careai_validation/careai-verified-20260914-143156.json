@@ -1,0 +1,1154 @@
+{
+  "created_at": "2026-09-14T06:31:56.579804+00:00",
+  "api": "http://127.0.0.1:8001",
+  "input_file": "CareAI项目书.md",
+  "note": "Real-model responses; no simulated-user or market-validation evidence.",
+  "setup": {
+    "health": {
+      "status": 200,
+      "body": {
+        "status": "ok",
+        "service": "VentureAI"
+      }
+    },
+    "registration": {
+      "status": 200,
+      "body": {
+        "user_id": "19d37733-66fa-43fa-8021-c3d7b1266abe",
+        "username": "careai_eval_95fbd286",
+        "role": "student"
+      }
+    },
+    "project": {
+      "status": 200,
+      "body": {
+        "project_id": "proj_718b3f",
+        "name": "CareAI 成人健康习惯管理原型",
+        "industry": "健康教育",
+        "description": "面向成年人；本地规则确定关注项，AI 只解释并生成7天行动计划；已有MVP，尚无真实用户访谈、临床验证、收入或付费数据。",
+        "stage": "discovery",
+        "owner_id": "19d37733-66fa-43fa-8021-c3d7b1266abe",
+        "scores": {},
+        "diagnosis": [],
+        "project_type": "创新项目",
+        "created_at": "2026-09-14"
+      }
+    },
+    "upload": {
+      "status": 200,
+      "body": {
+        "file_id": "file_10052d19",
+        "filename": "CareAI项目书.md",
+        "file_type": "text",
+        "size": 9873,
+        "extracted_text_preview": "# CareAI 项目书\n\n## 一、项目基本信息\n\n**项目名称：** CareAI——面向成年人的非诊断性健康风险教育与习惯管理助手  \n**项目方向：** 社会治理与公共服务（健康教育与公共健康促进）  \n**项目阶段：** 可演示的 MVP 原型；尚处于假设验证前期。\n\n## 二、项目摘要\n\nCareAI 是一款面向成年人的健康教育与日常习惯管理工具。用户自主录入身高、体重、睡眠时长、运动频率，以及可选的血压、空腹血糖等基础信息；系统先以本地、可追溯的规则计算 BMI 并识别需要关注的指标，再由受限的 AI 仅对既有规则结论进行通俗解释，生成生活方式建议和 7 天行动计划。报告会保存为历史记录，供用户查看趋势和前后两次结果的变化。\n\n本项目不提供疾病诊断、治疗方案、处方、用药或剂量建议，不面向未成年人、紧急/严重不适人群，也不替代医疗专业人员。对于需要进一步关注的结果，系统提示用户复测并在线下咨询合适的专业人员。\n\n## 三、背景、问题与证据边界\n\n成年人在日常健康自我管理中，常会接触体重、睡眠、运动和基础检查数值，但这些信息往往零散：只看到单个数字、不清楚其含义，或难以把“需"
+      }
+    },
+    "coach_history": {
+      "status": 200,
+      "body": {
+        "session_id": "ed2f61f5-66b8-4771-be62-40a08cc2dc5a",
+        "messages": [
+          {
+            "role": "assistant",
+            "content": "你好！我是你的创新创业陪跑教练。🎯\n\n在我们开始之前，我想了解一下你目前的想法。请用2-3句话告诉我：\n\n1. **你想解决什么问题？**（谁在什么场景下遇到了什么痛苦？）\n2. **你打算怎么解决？**（大致的方案方向）\n\n放心，这里没有对错之分——我们一起把你的想法打磨成型。"
+          },
+          {
+            "role": "user",
+            "content": "我上传了 CareAI 项目书。请先准确复述项目定位、目前真实完成的工作和没有完成的验证；指出最重要的一个证据缺口，再只问我一个下一步问题。不要把设想当成用户反馈或临床证据。"
+          },
+          {
+            "role": "assistant",
+            "content": "明白了。让我先复述一下 **CareAI** 项目的定位、已完成的工作和没有完成的验证：\n\n### 项目定位\n**CareAI** 是一款面向成年人的健康教育与日常习惯管理工具，旨在帮助用户更好地理解和管理自己的健康数据。用户自主录入身高、体重、睡眠时长、运动频率等基础信息，系统通过本地规则计算 BMI 并识别需要关注的指标，再由受限的 AI 解释并生成 7 天行动计划。CareAI 强调“记录—解释—行动—回顾”的闭环，但不提供疾病诊断、治疗方案、处方、用药或剂量建议，也不面向未成年人、紧急/严重不适人群，而是作为健康教育的辅助工具。\n\n### 目前真实完成的工作\n- **MVP 原型**：已经完成了一个可演示的 MVP，用户可以录入基础健康数据，系统能够生成健康教育提示、生活方式建议和 7 天行动计划，并支持历史回顾。\n- **技术实现**：前端使用 React 和 TypeScript，后端使用 FastAPI，SQLite 用于保存报告和趋势数据。实现了规则引擎、受限 AI 报告生成和数据流程的初步功能。\n- **规则透明**：规则版本通过接口公开，便于演示时说明阈值、适用范围和参考资料。\n\n### 没有完成的验证\n- **用户需求验证**：没有使用真实问卷、访谈、临床数据、订单、收入或合作证明。关键假设（如用户是否愿意持续记录、是否能理解提示、计划是否可执行等）尚未得到验证。\n- **合规与隐私**：虽然项目强调了非诊断定位和隐私保护，但相关的合规与隐私措施（如单独告知/同意、保留期限、删除和访问控制机制）尚未完善。\n- **专业复核**：规则阈值、文案和转介提示尚未经过专业人员复核。\n\n### 最重要的证据缺口\n最重要的证据缺口是 **用户需求验证**，特别是关于用户是否愿意持续记录健康数据、是否能理解系统的提示以及生成的行动计划是否可执行。这些假设是项目成功的关键，但目前缺乏实证支持。\n\n### 接下来的问题\n\n**下一步唯一问题：** 针对上面最重要的证据缺口，你想先在课程允许的范围内核验哪一个尚未证实的假设？",
+            "debug_logs": [
+              {
+                "run_id": "run_887a47705a48",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "2026-09-14T14:31:56.839+08:00",
+                "agent": "router",
+                "tag": "RUN_STARTED",
+                "data": {
+                  "project_id": "proj_718b3f"
+                }
+              },
+              {
+                "run_id": "run_887a47705a48",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:00.276",
+                "agent": "retriever_node",
+                "tag": "AGENT_START",
+                "data": {
+                  "agent_name": "retriever_node",
+                  "session_id": "ed2f61f5-66b8-4771-be62-40a08cc2dc5a",
+                  "intent": "retrieval",
+                  "message_preview": "[本轮项目证据；优先于此前 AI 回复]\n只把下列材料中明确记载的内容当作项目事实。不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验…"
+                }
+              },
+              {
+                "run_id": "run_887a47705a48",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:00.276",
+                "agent": "retriever_node",
+                "tag": "RETRIEVED_KG_NODES",
+                "data": {
+                  "retrieved_kg_nodes": [
+                    "React",
+                    "TypeScript",
+                    "FastAPI",
+                    "SQLite",
+                    "Agent",
+                    "attention",
+                    "图数据库",
+                    "交叉验证",
+                    "用户访谈"
+                  ],
+                  "source": "llm_extraction",
+                  "count": 9
+                }
+              },
+              {
+                "run_id": "run_887a47705a48",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:00.276",
+                "agent": "retriever_node",
+                "tag": "INFO",
+                "data": "Cache MISS — executing full hypergraph search (techs=['React', 'TypeScript', 'FastAPI', 'SQLite', 'Agent', 'attention', '图数据库', '交叉验证'], industry=医疗健康, concept=用户访谈)"
+              },
+              {
+                "run_id": "run_887a47705a48",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:00.283",
+                "agent": "retriever_node",
+                "tag": "RETRIEVED_HYPEREDGES",
+                "data": {
+                  "retrieved_heterogeneous_subgraph": [
+                    {
+                      "type": "Value_Loop_Edge",
+                      "query_context": "techs=['React', 'TypeScript', 'FastAPI', 'SQLite', 'Agent', 'attention', '图数据库', '交叉验证'], industry=医疗健康"
+                    },
+                    {
+                      "type": "Risk_Pattern_Edge",
+                      "query_context": "techs=['React', 'TypeScript', 'FastAPI', 'SQLite', 'Agent', 'attention', '图数据库', '交叉验证'], industry=医疗健康"
+                    },
+                    {
+                      "type": "Technology_Hierarchy_Edge",
+                      "query_context": "techs=['React', 'TypeScript', 'FastAPI', 'SQLite', 'Agent', 'attention', '图数据库', '交叉验证'], industry=医疗健康"
+                    }
+                  ],
+                  "edge_types": [
+                    "Value_Loop_Edge",
+                    "Risk_Pattern_Edge",
+                    "Technology_Hierarchy_Edge"
+                  ],
+                  "total_edges": 3
+                }
+              },
+              {
+                "run_id": "run_887a47705a48",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:00.284",
+                "agent": "coach_node",
+                "tag": "AGENT_START",
+                "data": {
+                  "agent_name": "coach_node",
+                  "session_id": "ed2f61f5-66b8-4771-be62-40a08cc2dc5a",
+                  "intent": "coach",
+                  "message_preview": "[本轮项目证据；优先于此前 AI 回复]\n只把下列材料中明确记载的内容当作项目事实。不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验…"
+                }
+              },
+              {
+                "run_id": "run_887a47705a48",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:00.287",
+                "agent": "coach_node",
+                "tag": "FALLACY_LABEL",
+                "data": {
+                  "fallacy_label": "伪需求识别",
+                  "triggered_by": "[本轮项目证据；优先于此前 AI 回复]\n只把下列材料中明确记载的内容当作项目事实。不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’。如先前 AI 回复与材料冲突，以材",
+                  "confidence": 0.0
+                }
+              },
+              {
+                "run_id": "run_887a47705a48",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:00.287",
+                "agent": "coach_node",
+                "tag": "STRATEGY_SELECTED",
+                "data": {
+                  "selected_strategy": "伪需求识别",
+                  "strategy_selected": "伪需求识别",
+                  "generated_question": "[将由LLM基于策略生成追问，策略=伪需求识别]"
+                }
+              },
+              {
+                "run_id": "run_887a47705a48",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:00.287",
+                "agent": "coach_node",
+                "tag": "FALLACY_LABEL",
+                "data": {
+                  "fallacy_label": "团队-野心匹配度",
+                  "triggered_by": "[本轮项目证据；优先于此前 AI 回复]\n只把下列材料中明确记载的内容当作项目事实。不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’。如先前 AI 回复与材料冲突，以材",
+                  "confidence": 0.0
+                }
+              },
+              {
+                "run_id": "run_887a47705a48",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:00.287",
+                "agent": "coach_node",
+                "tag": "STRATEGY_SELECTED",
+                "data": {
+                  "selected_strategy": "团队-野心匹配度",
+                  "strategy_selected": "团队-野心匹配度",
+                  "generated_question": "[将由LLM基于策略生成追问，策略=团队-野心匹配度]"
+                }
+              },
+              {
+                "run_id": "run_887a47705a48",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:00.287",
+                "agent": "coach_node",
+                "tag": "FALLACY_LABEL",
+                "data": {
+                  "fallacy_label": "合规风险追问",
+                  "triggered_by": "[本轮项目证据；优先于此前 AI 回复]\n只把下列材料中明确记载的内容当作项目事实。不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’。如先前 AI 回复与材料冲突，以材",
+                  "confidence": 0.0
+                }
+              },
+              {
+                "run_id": "run_887a47705a48",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:00.287",
+                "agent": "coach_node",
+                "tag": "STRATEGY_SELECTED",
+                "data": {
+                  "selected_strategy": "合规风险追问",
+                  "strategy_selected": "合规风险追问",
+                  "generated_question": "[将由LLM基于策略生成追问，策略=合规风险追问]"
+                }
+              },
+              {
+                "run_id": "run_887a47705a48",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:00.287",
+                "agent": "coach_node",
+                "tag": "FALLACY_LABEL",
+                "data": {
+                  "fallacy_label": "差异化壁垒深挖",
+                  "triggered_by": "[本轮项目证据；优先于此前 AI 回复]\n只把下列材料中明确记载的内容当作项目事实。不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’。如先前 AI 回复与材料冲突，以材",
+                  "confidence": 0.0
+                }
+              },
+              {
+                "run_id": "run_887a47705a48",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:00.287",
+                "agent": "coach_node",
+                "tag": "STRATEGY_SELECTED",
+                "data": {
+                  "selected_strategy": "差异化壁垒深挖",
+                  "strategy_selected": "差异化壁垒深挖",
+                  "generated_question": "[将由LLM基于策略生成追问，策略=差异化壁垒深挖]"
+                }
+              },
+              {
+                "run_id": "run_887a47705a48",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:00.287",
+                "agent": "coach_node",
+                "tag": "FALLACY_LABEL",
+                "data": {
+                  "fallacy_label": "MVP范围控制",
+                  "triggered_by": "[本轮项目证据；优先于此前 AI 回复]\n只把下列材料中明确记载的内容当作项目事实。不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’。如先前 AI 回复与材料冲突，以材",
+                  "confidence": 0.0
+                }
+              },
+              {
+                "run_id": "run_887a47705a48",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:00.287",
+                "agent": "coach_node",
+                "tag": "STRATEGY_SELECTED",
+                "data": {
+                  "selected_strategy": "MVP范围控制",
+                  "strategy_selected": "MVP范围控制",
+                  "generated_question": "[将由LLM基于策略生成追问，策略=MVP范围控制]"
+                }
+              },
+              {
+                "run_id": "run_887a47705a48",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:17.773",
+                "agent": "coach_node",
+                "tag": "AGENT_DONE",
+                "data": {
+                  "agent_name": "coach_node",
+                  "stage": "",
+                  "scores": {},
+                  "diagnosis_count": 0
+                }
+              },
+              {
+                "run_id": "run_887a47705a48",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "2026-09-14T14:32:17.784+08:00",
+                "agent": "router",
+                "tag": "RUN_COMPLETED",
+                "data": {}
+              }
+            ]
+          },
+          {
+            "role": "user",
+            "content": "补充：蚂蚁阿福已经有健康档案和健康小目标，CareAI 目前没有真实用户访谈、留存或付费证据。如果我想发布 CareAI，为什么用户会选它？请根据我们刚才讨论的项目，指出尚未验证的差异化假设，设计一个不采集真实健康数据的课堂对照测试。不要说阿福没有习惯计划。"
+          },
+          {
+            "role": "assistant",
+            "content": "### CareAI 项目复述与诊断\n\n**项目定位：** CareAI 是一款面向成年人的非诊断性健康风险教育与习惯管理助手，旨在通过一个闭环的工作流，帮助用户记录、解释健康信息，并生成易于理解的生活方式建议及 7 天行动计划。\n\n**已真实完成的工作：**\n- 开发了 MVP 原型，用户可以录入基础健康数据（如身高、体重、睡眠时长、运动频率等）。\n- 通过本地规则引擎计算 BMI 和其他健康指标，并根据预设规则生成关注等级（`normal`、`attention`、`high_attention`）。\n- 受限的 AI 生成解释和建议，生成 7 天行动计划。\n- 系统保存用户的报告和历史记录，支持趋势分析。\n\n**尚未完成的验证：**\n- **用户访谈与验证：** 没有真实用户访谈、留存或付费证据。\n- **临床验证：** 没有使用真实问卷或临床数据。\n- **收入或合作：** 没有订单、收入或合作证明。\n- **合规验证：** 没有涉及隐私、数据治理的全面合规审查。\n\n### 最重要证据缺口\n\n**差异化假设尚未验证：**\n- **假设 1：** 用户是否愿意主动完成基础数据录入并理解 `normal / attention / high_attention` 的非诊断含义。\n- **假设 2：** 以“指标—原因—建议—7 天计划”呈现结果，是否比仅展示原始数值更易于理解和执行。\n- **假设 3：** 持续展示非诊断边界、数据处理说明和线下咨询提示，是否减少用户将系统结果误解为医疗结论的风险。\n\n这些假设是 CareAI 与其他健康管理工具（如蚂蚁阿福）的主要差异化点。如果这些假设未能验证，CareAI 的独特价值将大打折扣。\n\n### 下一步任务\n\n**任务描述：** 设计并执行一个不采集真实健康数据的课堂对照测试，以验证 CareAI 的差异化假设。具体来说，验证用户是否愿意使用 CareAI 进行健康数据录入、是否能理解提示和 7 天计划，并且这些内容是否比仅展示原始数值更易于理解和执行。\n\n**模板或步骤：**\n1. **选择样本用户：** 从同学中选择 10 位愿意参与测试的志愿者。\n2. **设计测试问卷：** 制作一个包含以下内容的问卷：\n   - 基础健康数据录入（身高、体重、睡眠时长、运动频率等）。\n   - 展示 CareAI 生成的非诊断提示、建议和 7 天计划。\n   - 对比展示仅有原始数值的数据。\n   - 用户对提示、建议和行动计划的理解度评分。\n   - 用户对整个体验的满意度评分。\n3. **执行测试：** 让志愿者在课堂上完成测试问卷，并记录他们的反馈。\n4. **分析结果：** 根据问卷结果，分析用户对 CareAI 的使用意愿、理解度和满意度。\n\n**验收标准：**\n- 提交一份详细的测试报告，包括问卷设计、测试过程、用户反馈和分析结果。\n- 报告中应包含至少 10 位用户的反馈和评分，以及对以上三个假设的验证结论。\n\n**下一步：**\n设计并执行上述课堂对照测试，验证 CareAI 的差异化假设。\n\n---\n**⚠ 超图约束检测结果：**\n\n🔴 **[H11] 合规/伦理缺口** （置信度：低）\n   触发信号：项目涉及数据隐私、行业准入等合规风险\n   建议修复：补充合规分析和伦理风险评估\n   证据状态：✓ 不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’（第1轮·DATA）; ✓ 不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’（第2轮·DATA）; ✓ 不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’（第3轮·DATA）\n\n🟡 **[H15] 评分项证据覆盖不足** （置信度：中）\n   触发信号：多个评分维度缺乏支撑证据\n   建议修复：针对缺失项逐一补充证据材料\n   证据状态：✓ 不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’（第1轮·DATA）; ✓ 不要把设想当成用户反馈或临床证据（第1轮·DATA）; ✓ 不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’（第2轮·DATA）\n\n🟡 **[H6] 竞品对比不可比** （置信度：低）\n   触发信号：竞品对比维度不对等或遗漏关键竞品\n   建议修复：按统一维度重构竞品对比矩阵\n   证据状态：✓ ## 七、差异化与创新点（第1轮·DATA）; ✓ 项目的创新不在于把 AI 当作诊断者，而在于：（第1轮·DATA）; ✓ ## 七、差异化与创新点（第2轮·DATA）\n\n🟡 **[H10] 里程碑不可交付** （置信度：低）\n   触发信号：里程碑设置过于模糊或不可量化\n   建议修复：定义SMART指标的具体交付物\n   证据状态：✓ 不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’（第1轮·DATA）; ✓ 典型场景为：用户希望梳理近期健康记录，理解哪些日常习惯值得关注，并获得低风险、可（第1轮·DATA）; ✓ `健康数据录入 → 本地规则生成可追溯提示 → 受限 AI 解释与行动计划 → （第1轮·DATA）\n\n🟡 **[H7] 创新点不可验证** （置信度：低）\n   触发信号：创新点缺乏数据或实验支撑\n   建议修复：设计验证实验或提供对比数据\n   证据状态：✓ ## 七、差异化与创新点（第1轮·DATA）; ✓ 项目的创新不在于把 AI 当作诊断者，而在于：（第1轮·DATA）; ✓ ## 七、差异化与创新点（第2轮·DATA）\n\n🟡 **[H13] 实验设计不合格** （置信度：低）\n   触发信号：验证实验缺乏对照组或样本量不足\n   建议修复：重新设计实验方案\n   证据状态：✓ 不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’（第1轮·DATA）; ✓ 不要把设想当成用户反馈或临床证据（第1轮·DATA）; ✓ 不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’（第2轮·DATA）",
+            "debug_logs": [
+              {
+                "run_id": "run_553149cdba6b",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "2026-09-14T14:32:17.794+08:00",
+                "agent": "router",
+                "tag": "RUN_STARTED",
+                "data": {
+                  "project_id": "proj_718b3f"
+                }
+              },
+              {
+                "run_id": "run_553149cdba6b",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:20.797",
+                "agent": "retriever_node",
+                "tag": "AGENT_START",
+                "data": {
+                  "agent_name": "retriever_node",
+                  "session_id": "ed2f61f5-66b8-4771-be62-40a08cc2dc5a",
+                  "intent": "retrieval",
+                  "message_preview": "[本轮项目证据；优先于此前 AI 回复]\n只把下列材料中明确记载的内容当作项目事实。不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验…"
+                }
+              },
+              {
+                "run_id": "run_553149cdba6b",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:20.798",
+                "agent": "retriever_node",
+                "tag": "RETRIEVED_KG_NODES",
+                "data": {
+                  "retrieved_kg_nodes": [
+                    "AI",
+                    "本地规则",
+                    "React",
+                    "TypeScript",
+                    "FastAPI",
+                    "SQLite",
+                    "Agent",
+                    "attention",
+                    "用户访谈"
+                  ],
+                  "source": "llm_extraction",
+                  "count": 9
+                }
+              },
+              {
+                "run_id": "run_553149cdba6b",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:20.798",
+                "agent": "retriever_node",
+                "tag": "INFO",
+                "data": "Cache MISS — executing full hypergraph search (techs=['AI', '本地规则', 'React', 'TypeScript', 'FastAPI', 'SQLite', 'Agent', 'attention'], industry=医疗健康, concept=用户访谈)"
+              },
+              {
+                "run_id": "run_553149cdba6b",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:20.809",
+                "agent": "retriever_node",
+                "tag": "RETRIEVED_HYPEREDGES",
+                "data": {
+                  "retrieved_heterogeneous_subgraph": [
+                    {
+                      "type": "Value_Loop_Edge",
+                      "query_context": "techs=['AI', '本地规则', 'React', 'TypeScript', 'FastAPI', 'SQLite', 'Agent', 'attention'], industry=医疗健康"
+                    },
+                    {
+                      "type": "Risk_Pattern_Edge",
+                      "query_context": "techs=['AI', '本地规则', 'React', 'TypeScript', 'FastAPI', 'SQLite', 'Agent', 'attention'], industry=医疗健康"
+                    },
+                    {
+                      "type": "Competition_Edge",
+                      "query_context": "techs=['AI', '本地规则', 'React', 'TypeScript', 'FastAPI', 'SQLite', 'Agent', 'attention'], industry=医疗健康"
+                    },
+                    {
+                      "type": "Technology_Hierarchy_Edge",
+                      "query_context": "techs=['AI', '本地规则', 'React', 'TypeScript', 'FastAPI', 'SQLite', 'Agent', 'attention'], industry=医疗健康"
+                    }
+                  ],
+                  "edge_types": [
+                    "Value_Loop_Edge",
+                    "Risk_Pattern_Edge",
+                    "Competition_Edge",
+                    "Technology_Hierarchy_Edge"
+                  ],
+                  "total_edges": 4
+                }
+              },
+              {
+                "run_id": "run_553149cdba6b",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:20.810",
+                "agent": "coach_node",
+                "tag": "AGENT_START",
+                "data": {
+                  "agent_name": "coach_node",
+                  "session_id": "ed2f61f5-66b8-4771-be62-40a08cc2dc5a",
+                  "intent": "coach",
+                  "message_preview": "[本轮项目证据；优先于此前 AI 回复]\n只把下列材料中明确记载的内容当作项目事实。不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验…"
+                }
+              },
+              {
+                "run_id": "run_553149cdba6b",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:20.811",
+                "agent": "coach_node",
+                "tag": "FALLACY_LABEL",
+                "data": {
+                  "fallacy_label": "伪需求识别",
+                  "triggered_by": "[本轮项目证据；优先于此前 AI 回复]\n只把下列材料中明确记载的内容当作项目事实。不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’。如先前 AI 回复与材料冲突，以材",
+                  "confidence": 0.0
+                }
+              },
+              {
+                "run_id": "run_553149cdba6b",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:20.811",
+                "agent": "coach_node",
+                "tag": "STRATEGY_SELECTED",
+                "data": {
+                  "selected_strategy": "伪需求识别",
+                  "strategy_selected": "伪需求识别",
+                  "generated_question": "[将由LLM基于策略生成追问，策略=伪需求识别]"
+                }
+              },
+              {
+                "run_id": "run_553149cdba6b",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:20.811",
+                "agent": "coach_node",
+                "tag": "FALLACY_LABEL",
+                "data": {
+                  "fallacy_label": "团队-野心匹配度",
+                  "triggered_by": "[本轮项目证据；优先于此前 AI 回复]\n只把下列材料中明确记载的内容当作项目事实。不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’。如先前 AI 回复与材料冲突，以材",
+                  "confidence": 0.0
+                }
+              },
+              {
+                "run_id": "run_553149cdba6b",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:20.811",
+                "agent": "coach_node",
+                "tag": "STRATEGY_SELECTED",
+                "data": {
+                  "selected_strategy": "团队-野心匹配度",
+                  "strategy_selected": "团队-野心匹配度",
+                  "generated_question": "[将由LLM基于策略生成追问，策略=团队-野心匹配度]"
+                }
+              },
+              {
+                "run_id": "run_553149cdba6b",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:20.811",
+                "agent": "coach_node",
+                "tag": "FALLACY_LABEL",
+                "data": {
+                  "fallacy_label": "合规风险追问",
+                  "triggered_by": "[本轮项目证据；优先于此前 AI 回复]\n只把下列材料中明确记载的内容当作项目事实。不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’。如先前 AI 回复与材料冲突，以材",
+                  "confidence": 0.0
+                }
+              },
+              {
+                "run_id": "run_553149cdba6b",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:20.811",
+                "agent": "coach_node",
+                "tag": "STRATEGY_SELECTED",
+                "data": {
+                  "selected_strategy": "合规风险追问",
+                  "strategy_selected": "合规风险追问",
+                  "generated_question": "[将由LLM基于策略生成追问，策略=合规风险追问]"
+                }
+              },
+              {
+                "run_id": "run_553149cdba6b",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:20.811",
+                "agent": "coach_node",
+                "tag": "FALLACY_LABEL",
+                "data": {
+                  "fallacy_label": "差异化壁垒深挖",
+                  "triggered_by": "[本轮项目证据；优先于此前 AI 回复]\n只把下列材料中明确记载的内容当作项目事实。不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’。如先前 AI 回复与材料冲突，以材",
+                  "confidence": 0.0
+                }
+              },
+              {
+                "run_id": "run_553149cdba6b",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:20.811",
+                "agent": "coach_node",
+                "tag": "STRATEGY_SELECTED",
+                "data": {
+                  "selected_strategy": "差异化壁垒深挖",
+                  "strategy_selected": "差异化壁垒深挖",
+                  "generated_question": "[将由LLM基于策略生成追问，策略=差异化壁垒深挖]"
+                }
+              },
+              {
+                "run_id": "run_553149cdba6b",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:20.811",
+                "agent": "coach_node",
+                "tag": "FALLACY_LABEL",
+                "data": {
+                  "fallacy_label": "MVP范围控制",
+                  "triggered_by": "[本轮项目证据；优先于此前 AI 回复]\n只把下列材料中明确记载的内容当作项目事实。不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’。如先前 AI 回复与材料冲突，以材",
+                  "confidence": 0.0
+                }
+              },
+              {
+                "run_id": "run_553149cdba6b",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:20.812",
+                "agent": "coach_node",
+                "tag": "STRATEGY_SELECTED",
+                "data": {
+                  "selected_strategy": "MVP范围控制",
+                  "strategy_selected": "MVP范围控制",
+                  "generated_question": "[将由LLM基于策略生成追问，策略=MVP范围控制]"
+                }
+              },
+              {
+                "run_id": "run_553149cdba6b",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "14:32:43.577",
+                "agent": "coach_node",
+                "tag": "AGENT_DONE",
+                "data": {
+                  "agent_name": "coach_node",
+                  "stage": "discovery|ideation|modeling",
+                  "scores": {
+                    "empathy": 6.0,
+                    "ideation": 6.0,
+                    "business": 6.0,
+                    "execution": 6.0,
+                    "pitching": 3.6
+                  },
+                  "diagnosis_count": 2
+                }
+              },
+              {
+                "run_id": "run_553149cdba6b",
+                "agent_version": "ventureai-v2-candidate",
+                "flow": "coach",
+                "mode": "non_stream",
+                "model": "qwen/qwen-2.5-72b-instruct",
+                "mock_mode": false,
+                "ts": "2026-09-14T14:32:43.589+08:00",
+                "agent": "router",
+                "tag": "RUN_COMPLETED",
+                "data": {}
+              }
+            ]
+          }
+        ],
+        "agent_type": "coach",
+        "scores": {
+          "empathy": 6.0,
+          "ideation": 6.0,
+          "business": 6.0,
+          "execution": 6.0,
+          "pitching": 3.6
+        },
+        "stage": "discovery",
+        "diagnosis": [
+          "[H11] 合规/伦理缺口（置信度低）：项目涉及数据隐私、行业准入等合规风险",
+          "[H15] 评分项证据覆盖不足（置信度低）：多个评分维度缺乏支撑证据"
+        ],
+        "rubric_full": {
+          "R1": {
+            "score": 3,
+            "evidence": "项目书明确指出成年人在日常健康自我管理中面临的信息零散、难以理解、难以转化为行动等问题。这些痛点描述清晰，但缺乏真实用户的访谈数据或市场调研。",
+            "suggestion": "建议开展用户访谈，收集更多真实用户的反馈，以验证痛点的真实性和普遍性。"
+          },
+          "R2": {
+            "score": 2,
+            "evidence": "项目书提到项目不提供疾病诊断、治疗方案等，明确界定了适用范围。然而，缺乏真实用户的访谈数据和市场调研。",
+            "suggestion": "建议进行用户访谈和市场调研，收集用户对于产品的需求和反馈，以增强用户证据的充分性和相关性。"
+          },
+          "R3": {
+            "score": 3,
+            "evidence": "项目书详细描述了技术实现和数据流程，包括前端、后端和数据库的设计。规则版本通过接口公开，便于演示和解释。",
+            "suggestion": "建议进行小规模的用户测试，收集用户反馈，优化产品功能和用户体验。"
+          },
+          "R4": {
+            "score": 2,
+            "evidence": "项目书提到项目适合在健康教育、校园健康促进或企业健康活动等低风险展示场景中继续完善，但没有详细说明客户、价值主张、渠道、收入和成本。",
+            "suggestion": "建议制定详细的商业模式，明确客户群体、价值主张、收入来源和成本控制措施，以增强商业模式的可行性和可持续性。"
+          },
+          "R5": {
+            "score": 2,
+            "evidence": "项目书提到与通用搜索、通用AI对话等工具的差异化，但没有详细的市场竞争分析和差异化定位。",
+            "suggestion": "建议进行详细的市场调研，分析竞争对手的优势和劣势，明确项目的差异化定位和竞争优势。"
+          },
+          "R6": {
+            "score": 1,
+            "evidence": "项目书未提供财务预测，也没有明确的盈利路径和成本控制措施。",
+            "suggestion": "建议制定详细的财务计划，包括收入预测、成本预算、盈利模式和融资计划，以提升项目的商业可行性。"
+          },
+          "R7": {
+            "score": 3,
+            "evidence": "项目书提到规则与AI结合、数据闭环和隐私保护等创新点，展示了项目的独特性和竞争力。",
+            "suggestion": "建议进一步强化这些创新点，并通过用户测试和市场验证来证明其有效性和可持续性。"
+          },
+          "R8": {
+            "score": 3,
+            "evidence": "项目书未提供团队背景和技能描述，但从技术实现来看，团队具备一定的技术能力和项目管理能力。",
+            "suggestion": "建议详细描述团队成员的背景和技能，说明团队的执行能力和资源匹配情况。"
+          },
+          "R9": {
+            "score": 2,
+            "evidence": "项目书结构清晰，逻辑完整，但部分内容缺乏具体数据和用户反馈。",
+            "suggestion": "建议进一步补充数据和用户反馈，使项目书更加充实和有说服力。"
+          },
+          "R10": {
+            "score": 2,
+            "evidence": "项目书详细描述了医疗安全、隐私保护和合规措施，但缺乏具体的合规验证和审查流程。",
+            "suggestion": "建议进行合规审查和用户隐私保护的第三方审计，确保项目符合相关法律法规的要求。"
+          },
+          "R11": {
+            "score": 2,
+            "evidence": "项目书提到项目适合在健康教育、校园健康促进或企业健康活动中继续完善，但缺乏详细的增长路径和规模化策略。",
+            "suggestion": "建议制定详细的增长路径和规模化策略，包括市场拓展、用户增长和产品迭代计划，以确保项目的持续发展。"
+          }
+        },
+        "rubric_scores": {
+          "R1": 3,
+          "R2": 2,
+          "R3": 3,
+          "R4": 2,
+          "R5": 2,
+          "R6": 1,
+          "R7": 3,
+          "R8": 3,
+          "R9": 2,
+          "R10": 2,
+          "R11": 2
+        }
+      }
+    }
+  },
+  "cases": [
+    {
+      "case_id": "coach_initial",
+      "flow": "coach",
+      "session_id": "ed2f61f5-66b8-4771-be62-40a08cc2dc5a",
+      "started_at": "2026-09-14T06:31:56.835332+00:00",
+      "elapsed_seconds": 20.95,
+      "input": "我上传了 CareAI 项目书。请先准确复述项目定位、目前真实完成的工作和没有完成的验证；指出最重要的一个证据缺口，再只问我一个下一步问题。不要把设想当成用户反馈或临床证据。",
+      "result": {
+        "status": 200,
+        "body": {
+          "session_id": "ed2f61f5-66b8-4771-be62-40a08cc2dc5a",
+          "reply": "明白了。让我先复述一下 **CareAI** 项目的定位、已完成的工作和没有完成的验证：\n\n### 项目定位\n**CareAI** 是一款面向成年人的健康教育与日常习惯管理工具，旨在帮助用户更好地理解和管理自己的健康数据。用户自主录入身高、体重、睡眠时长、运动频率等基础信息，系统通过本地规则计算 BMI 并识别需要关注的指标，再由受限的 AI 解释并生成 7 天行动计划。CareAI 强调“记录—解释—行动—回顾”的闭环，但不提供疾病诊断、治疗方案、处方、用药或剂量建议，也不面向未成年人、紧急/严重不适人群，而是作为健康教育的辅助工具。\n\n### 目前真实完成的工作\n- **MVP 原型**：已经完成了一个可演示的 MVP，用户可以录入基础健康数据，系统能够生成健康教育提示、生活方式建议和 7 天行动计划，并支持历史回顾。\n- **技术实现**：前端使用 React 和 TypeScript，后端使用 FastAPI，SQLite 用于保存报告和趋势数据。实现了规则引擎、受限 AI 报告生成和数据流程的初步功能。\n- **规则透明**：规则版本通过接口公开，便于演示时说明阈值、适用范围和参考资料。\n\n### 没有完成的验证\n- **用户需求验证**：没有使用真实问卷、访谈、临床数据、订单、收入或合作证明。关键假设（如用户是否愿意持续记录、是否能理解提示、计划是否可执行等）尚未得到验证。\n- **合规与隐私**：虽然项目强调了非诊断定位和隐私保护，但相关的合规与隐私措施（如单独告知/同意、保留期限、删除和访问控制机制）尚未完善。\n- **专业复核**：规则阈值、文案和转介提示尚未经过专业人员复核。\n\n### 最重要的证据缺口\n最重要的证据缺口是 **用户需求验证**，特别是关于用户是否愿意持续记录健康数据、是否能理解系统的提示以及生成的行动计划是否可执行。这些假设是项目成功的关键，但目前缺乏实证支持。\n\n### 接下来的问题\n\n**下一步唯一问题：** 针对上面最重要的证据缺口，你想先在课程允许的范围内核验哪一个尚未证实的假设？",
+          "run_id": "run_887a47705a48",
+          "agent_version": "ventureai-v2-candidate",
+          "scores": null,
+          "diagnosis": [
+            "[H15] 评分项证据覆盖不足（置信度低）：多个评分维度缺乏支撑证据"
+          ],
+          "stage": null,
+          "rubric_scores": null,
+          "intent": "coach",
+          "knowledge_recommendations": [
+            {
+              "rule_id": "H15",
+              "concept": "精益画布",
+              "query": "如何为每个评分维度构建完整的证据材料？",
+              "prerequisites": [
+                "产品市场契合",
+                "定价策略",
+                "盈亏平衡点",
+                "最小可行产品",
+                "商业计划书",
+                "路演材料"
+              ],
+              "learning_order": [
+                "路演材料",
+                "商业计划书",
+                "最小可行产品",
+                "盈亏平衡点",
+                "定价策略",
+                "产品市场契合",
+                "精益画布"
+              ]
+            }
+          ],
+          "fix_tasks": [
+            {
+              "rule_id": "H15",
+              "severity": "medium",
+              "fix_task": "针对缺失项逐一补充证据材料"
+            }
+          ],
+          "rubric_full": null,
+          "score_breakdown": null
+        }
+      }
+    },
+    {
+      "case_id": "coach_competitor_followup",
+      "flow": "coach",
+      "session_id": "ed2f61f5-66b8-4771-be62-40a08cc2dc5a",
+      "started_at": "2026-09-14T06:32:17.789863+00:00",
+      "elapsed_seconds": 25.81,
+      "input": "补充：蚂蚁阿福已经有健康档案和健康小目标，CareAI 目前没有真实用户访谈、留存或付费证据。如果我想发布 CareAI，为什么用户会选它？请根据我们刚才讨论的项目，指出尚未验证的差异化假设，设计一个不采集真实健康数据的课堂对照测试。不要说阿福没有习惯计划。",
+      "result": {
+        "status": 200,
+        "body": {
+          "session_id": "ed2f61f5-66b8-4771-be62-40a08cc2dc5a",
+          "reply": "### CareAI 项目复述与诊断\n\n**项目定位：** CareAI 是一款面向成年人的非诊断性健康风险教育与习惯管理助手，旨在通过一个闭环的工作流，帮助用户记录、解释健康信息，并生成易于理解的生活方式建议及 7 天行动计划。\n\n**已真实完成的工作：**\n- 开发了 MVP 原型，用户可以录入基础健康数据（如身高、体重、睡眠时长、运动频率等）。\n- 通过本地规则引擎计算 BMI 和其他健康指标，并根据预设规则生成关注等级（`normal`、`attention`、`high_attention`）。\n- 受限的 AI 生成解释和建议，生成 7 天行动计划。\n- 系统保存用户的报告和历史记录，支持趋势分析。\n\n**尚未完成的验证：**\n- **用户访谈与验证：** 没有真实用户访谈、留存或付费证据。\n- **临床验证：** 没有使用真实问卷或临床数据。\n- **收入或合作：** 没有订单、收入或合作证明。\n- **合规验证：** 没有涉及隐私、数据治理的全面合规审查。\n\n### 最重要证据缺口\n\n**差异化假设尚未验证：**\n- **假设 1：** 用户是否愿意主动完成基础数据录入并理解 `normal / attention / high_attention` 的非诊断含义。\n- **假设 2：** 以“指标—原因—建议—7 天计划”呈现结果，是否比仅展示原始数值更易于理解和执行。\n- **假设 3：** 持续展示非诊断边界、数据处理说明和线下咨询提示，是否减少用户将系统结果误解为医疗结论的风险。\n\n这些假设是 CareAI 与其他健康管理工具（如蚂蚁阿福）的主要差异化点。如果这些假设未能验证，CareAI 的独特价值将大打折扣。\n\n### 下一步任务\n\n**任务描述：** 设计并执行一个不采集真实健康数据的课堂对照测试，以验证 CareAI 的差异化假设。具体来说，验证用户是否愿意使用 CareAI 进行健康数据录入、是否能理解提示和 7 天计划，并且这些内容是否比仅展示原始数值更易于理解和执行。\n\n**模板或步骤：**\n1. **选择样本用户：** 从同学中选择 10 位愿意参与测试的志愿者。\n2. **设计测试问卷：** 制作一个包含以下内容的问卷：\n   - 基础健康数据录入（身高、体重、睡眠时长、运动频率等）。\n   - 展示 CareAI 生成的非诊断提示、建议和 7 天计划。\n   - 对比展示仅有原始数值的数据。\n   - 用户对提示、建议和行动计划的理解度评分。\n   - 用户对整个体验的满意度评分。\n3. **执行测试：** 让志愿者在课堂上完成测试问卷，并记录他们的反馈。\n4. **分析结果：** 根据问卷结果，分析用户对 CareAI 的使用意愿、理解度和满意度。\n\n**验收标准：**\n- 提交一份详细的测试报告，包括问卷设计、测试过程、用户反馈和分析结果。\n- 报告中应包含至少 10 位用户的反馈和评分，以及对以上三个假设的验证结论。\n\n**下一步：**\n设计并执行上述课堂对照测试，验证 CareAI 的差异化假设。\n\n---\n**⚠ 超图约束检测结果：**\n\n🔴 **[H11] 合规/伦理缺口** （置信度：低）\n   触发信号：项目涉及数据隐私、行业准入等合规风险\n   建议修复：补充合规分析和伦理风险评估\n   证据状态：✓ 不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’（第1轮·DATA）; ✓ 不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’（第2轮·DATA）; ✓ 不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’（第3轮·DATA）\n\n🟡 **[H15] 评分项证据覆盖不足** （置信度：中）\n   触发信号：多个评分维度缺乏支撑证据\n   建议修复：针对缺失项逐一补充证据材料\n   证据状态：✓ 不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’（第1轮·DATA）; ✓ 不要把设想当成用户反馈或临床证据（第1轮·DATA）; ✓ 不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’（第2轮·DATA）\n\n🟡 **[H6] 竞品对比不可比** （置信度：低）\n   触发信号：竞品对比维度不对等或遗漏关键竞品\n   建议修复：按统一维度重构竞品对比矩阵\n   证据状态：✓ ## 七、差异化与创新点（第1轮·DATA）; ✓ 项目的创新不在于把 AI 当作诊断者，而在于：（第1轮·DATA）; ✓ ## 七、差异化与创新点（第2轮·DATA）\n\n🟡 **[H10] 里程碑不可交付** （置信度：低）\n   触发信号：里程碑设置过于模糊或不可量化\n   建议修复：定义SMART指标的具体交付物\n   证据状态：✓ 不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’（第1轮·DATA）; ✓ 典型场景为：用户希望梳理近期健康记录，理解哪些日常习惯值得关注，并获得低风险、可（第1轮·DATA）; ✓ `健康数据录入 → 本地规则生成可追溯提示 → 受限 AI 解释与行动计划 → （第1轮·DATA）\n\n🟡 **[H7] 创新点不可验证** （置信度：低）\n   触发信号：创新点缺乏数据或实验支撑\n   建议修复：设计验证实验或提供对比数据\n   证据状态：✓ ## 七、差异化与创新点（第1轮·DATA）; ✓ 项目的创新不在于把 AI 当作诊断者，而在于：（第1轮·DATA）; ✓ ## 七、差异化与创新点（第2轮·DATA）\n\n🟡 **[H13] 实验设计不合格** （置信度：低）\n   触发信号：验证实验缺乏对照组或样本量不足\n   建议修复：重新设计实验方案\n   证据状态：✓ 不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’（第1轮·DATA）; ✓ 不要把设想当成用户反馈或临床证据（第1轮·DATA）; ✓ 不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’（第2轮·DATA）",
+          "run_id": "run_553149cdba6b",
+          "agent_version": "ventureai-v2-candidate",
+          "scores": {
+            "empathy": 6.0,
+            "ideation": 6.0,
+            "business": 6.0,
+            "execution": 6.0,
+            "pitching": 3.6
+          },
+          "diagnosis": [
+            "差异化假设尚未验证",
+            "合规验证不足",
+            "[H11] 合规/伦理缺口（置信度低）：项目涉及数据隐私、行业准入等合规风险",
+            "[H15] 评分项证据覆盖不足（置信度中）：多个评分维度缺乏支撑证据",
+            "[H6] 竞品对比不可比（置信度低）：竞品对比维度不对等或遗漏关键竞品",
+            "[H10] 里程碑不可交付（置信度低）：里程碑设置过于模糊或不可量化",
+            "[H7] 创新点不可验证（置信度低）：创新点缺乏数据或实验支撑",
+            "[H13] 实验设计不合格（置信度低）：验证实验缺乏对照组或样本量不足",
+            "[H14] 路演叙事断裂（置信度低）：路演材料的故事线不连贯"
+          ],
+          "stage": "discovery|ideation|modeling",
+          "rubric_scores": null,
+          "intent": "coach",
+          "knowledge_recommendations": [
+            {
+              "rule_id": "H11",
+              "concept": "合规性",
+              "query": "数据隐私和行业合规如何评估？哪些行业有特殊监管？",
+              "prerequisites": [],
+              "learning_order": [
+                "合规性"
+              ]
+            },
+            {
+              "rule_id": "H15",
+              "concept": "精益画布",
+              "query": "如何为每个评分维度构建完整的证据材料？",
+              "prerequisites": [
+                "产品市场契合",
+                "定价策略",
+                "盈亏平衡点",
+                "最小可行产品",
+                "商业计划书",
+                "路演材料"
+              ],
+              "learning_order": [
+                "路演材料",
+                "商业计划书",
+                "最小可行产品",
+                "盈亏平衡点",
+                "定价策略",
+                "产品市场契合",
+                "精益画布"
+              ]
+            },
+            {
+              "rule_id": "H6",
+              "concept": "竞争分析",
+              "query": "如何系统做竞品对比分析？竞品分析矩阵怎么建？",
+              "prerequisites": [],
+              "learning_order": [
+                "竞争分析"
+              ]
+            }
+          ],
+          "fix_tasks": [
+            {
+              "rule_id": "H11",
+              "severity": "high",
+              "fix_task": "补充合规分析和伦理风险评估"
+            },
+            {
+              "rule_id": "H15",
+              "severity": "medium",
+              "fix_task": "针对缺失项逐一补充证据材料"
+            },
+            {
+              "rule_id": "H6",
+              "severity": "medium",
+              "fix_task": "按统一维度重构竞品对比矩阵"
+            },
+            {
+              "rule_id": "H10",
+              "severity": "medium",
+              "fix_task": "定义SMART指标的具体交付物"
+            },
+            {
+              "rule_id": "H7",
+              "severity": "medium",
+              "fix_task": "设计验证实验或提供对比数据"
+            },
+            {
+              "rule_id": "H13",
+              "severity": "medium",
+              "fix_task": "重新设计实验方案"
+            }
+          ],
+          "rubric_full": null,
+          "score_breakdown": {
+            "empathy": {
+              "dim": "empathy",
+              "floor_score": 6.0,
+              "llm_delta": 0.0,
+              "final_score": 6.0,
+              "data_count": 14,
+              "claim_count": 0,
+              "commit_count": 15,
+              "evidence_summary": "14条数据证据、15条计划承诺\n✓ 第1轮「## 三、背景、问题与证据边界」(DATA)\n✓ 第1轮「[学生本轮问题]」(DATA)\n✓ 第1轮「请先准确复述项目定位、目前真实完成的工作和没有完成的验证；指出最重要的一个证据缺」(DATA)"
+            },
+            "ideation": {
+              "dim": "ideation",
+              "floor_score": 6.0,
+              "llm_delta": 0.0,
+              "final_score": 6.0,
+              "data_count": 34,
+              "claim_count": 0,
+              "commit_count": 3,
+              "evidence_summary": "34条数据证据、3条计划承诺\n✓ 第1轮「本项目不提供疾病诊断、治疗方案、处方、用药或剂量建议，不面向未成年人、紧急/严重」(DATA)\n✓ 第1轮「## 五、解决方案与核心功能」(DATA)\n✓ 第1轮「外部大模型密钥仅配置在服务端环境变量中，不暴露在前端」(DATA)"
+            },
+            "business": {
+              "dim": "business",
+              "floor_score": 6.0,
+              "llm_delta": 0.0,
+              "final_score": 6.0,
+              "data_count": 6,
+              "claim_count": 0,
+              "commit_count": 9,
+              "evidence_summary": "6条数据证据、9条计划承诺\n✓ 第1轮「不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’」(DATA)\n✓ 第2轮「不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’」(DATA)\n✓ 第3轮「不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’」(DATA)"
+            },
+            "execution": {
+              "dim": "execution",
+              "floor_score": 6.0,
+              "llm_delta": 0.0,
+              "final_score": 6.0,
+              "data_count": 9,
+              "claim_count": 0,
+              "commit_count": 49,
+              "evidence_summary": "9条数据证据、49条计划承诺\n✓ 第1轮「不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’」(DATA)\n✓ 第1轮「典型场景为：用户希望梳理近期健康记录，理解哪些日常习惯值得关注，并获得低风险、可」(DATA)\n✓ 第1轮「`健康数据录入 → 本地规则生成可追溯提示 → 受限 AI 解释与行动计划 → 」(DATA)"
+            },
+            "pitching": {
+              "dim": "pitching",
+              "floor_score": 3.6,
+              "llm_delta": 0.0,
+              "final_score": 3.6,
+              "data_count": 3,
+              "claim_count": 0,
+              "commit_count": 0,
+              "evidence_summary": "3条数据证据\n✓ 第1轮「1. **规则与生成分层：** 可追溯规则负责判断，AI 负责受限表达，减少模型」(DATA)\n✓ 第2轮「1. **规则与生成分层：** 可追溯规则负责判断，AI 负责受限表达，减少模型」(DATA)\n✓ 第3轮「1. **规则与生成分层：** 可追溯规则负责判断，AI 负责受限表达，减少模型」(DATA)"
+            }
+          }
+        }
+      }
+    },
+    {
+      "case_id": "grader_uploaded_only",
+      "flow": "grader",
+      "session_id": "2e71115e-2f08-4d1f-b2b3-6160506e395b",
+      "started_at": "2026-09-14T06:32:43.602649+00:00",
+      "elapsed_seconds": 56.83,
+      "input": "请评审我上传的 CareAI 项目书，按 R1-R11 逐项给出依据、缺失证据和一条下一步建议。尤其核对未做真实用户测试、临床验证和医疗健康数据隐私治理；无法从文件读到的内容请明确说不知道。",
+      "result": {
+        "status": 200,
+        "body": {
+          "session_id": "2e71115e-2f08-4d1f-b2b3-6160506e395b",
+          "reply": "### 综合评价\n\n**最大亮点**：\n- **规则与AI结合**：CareAI 项目通过将本地规则引擎和受限AI结合，为用户提供了一种非诊断性的健康教育与习惯管理解决方案。这种设计既保持了技术的可行性，又明确界定了医疗风险的边界，显示出较强的创新性和合规性。\n- **隐私保护**：项目从多个方面考虑了隐私保护，包括最小化收集数据、本地处理、服务端密钥保护等，符合《个人信息保护法》的要求，展示了对用户隐私的高度重视。\n\n**最需要改进的方向**：\n- **用户验证与市场验证**：尽管项目已经开发了MVP，但缺乏真实用户访谈、市场数据和支付意愿验证，无法证明产品的市场接受度和商业可行性。这部分需要作为下一步的重点进行补充。\n- **财务模型与盈利路径**：项目目前缺乏明确的财务预测和盈利模式，尤其是在如何实现收入和成本控制方面没有详细规划，导致商业模式的可持续性存疑。\n\n### 逐项评价\n\n**R1 痛点定义**：**3分**\n- **依据**：项目书明确指出成年人在日常健康自我管理中面临的问题，如信息零散、难以理解、难以转化为行动等。这些问题描述清晰，且符合目标用户的需求。\n- **缺失证据**：虽然痛点定义清楚，但缺乏真实用户的访谈数据或市场调研，无法验证这些痛点的普遍性和紧迫性。\n- **建议**：建议开展用户访谈，收集更多真实用户的反馈，以验证痛点的真实性和普遍性。\n\n**R2 用户证据**：**2分**\n- **依据**：项目书提到项目不提供疾病诊断、治疗方案等，明确界定了适用范围。然而，缺乏真实用户的访谈数据和市场调研，无法提供有力的用户证据。\n- **建议**：建议完成一份课程内证据/假设表，并把真实访谈列为后续验证计划和市场调研，收集用户对于产品的需求和反馈，以增强用户证据的充分性和相关性。\n\n**R3 方案可行性**：**3分**\n- **依据**：项目书详细描述了技术实现和数据流程，包括前端、后端和数据库的设计。规则版本通过接口公开，便于演示和解释。\n- **缺失证据**：项目目前没有进行真实用户测试，无法验证方案在实际使用中的可行性和用户体验。\n- **建议**：建议进行小规模的用户测试，收集用户反馈，优化产品功能和用户体验。\n\n**R4 商业模式**：**2分**\n- **依据**：项目书提到项目适合在健康教育、校园健康促进或企业健康活动等低风险展示场景中继续完善，但没有详细说明客户、价值主张、渠道、收入和成本。\n- **建议**：建议制定详细的商业模式，明确客户群体、价值主张、收入来源和成本控制措施，以增强商业模式的可行性和可持续性。\n\n**R5 市场竞争**：**2分**\n- **依据**：项目书提到与通用搜索、通用AI对话等工具的差异化，但没有详细的市场竞争分析和差异化定位。\n- **建议**：建议进行详细的市场调研，分析竞争对手的优势和劣势，明确项目的差异化定位和竞争优势。\n\n**R6 财务逻辑**：**1分**\n- **依据**：项目书未提供财务预测，也没有明确的盈利路径和成本控制措施。\n- **建议**：建议制定详细的财务计划，包括收入预测、成本预算、盈利模式和融资计划，以提升项目的商业可行性。\n\n**R7 创新差异化**：**3分**\n- **依据**：项目书提到规则与AI结合、数据闭环和隐私保护等创新点，展示了项目的独特性和竞争力。\n- **建议**：建议进一步强化这些创新点，并通过用户测试和市场验证来证明其有效性和可持续性。\n\n**R8 团队执行**：**3分**\n- **依据**：项目书未提供团队背景和技能描述，但从技术实现来看，团队具备一定的技术能力和项目管理能力。\n- **建议**：建议详细描述团队成员的背景和技能，说明团队的执行能力和资源匹配情况。\n\n**R9 表达材料**：**2分**\n- **依据**：项目书结构清晰，逻辑完整，但部分内容缺乏具体数据和用户反馈。\n- **建议**：建议进一步补充数据和用户反馈，使项目书更加充实和有说服力。\n\n**R10 合规与社会责任**：**2分**\n- **依据**：项目书详细描述了医疗安全、隐私保护和合规措施，但缺乏具体的合规验证和审查流程。\n- **建议**：建议进行合规审查和用户隐私保护的第三方审计，确保项目符合相关法律法规的要求。\n\n**R11 增长与规模化**：**2分**\n- **依据**：项目书提到项目适合在健康教育、校园健康促进或企业健康活动中继续完善，但缺乏详细的增长路径和规模化策略。\n- **建议**：建议制定详细的增长路径和规模化策略，包括市场拓展、用户增长和产品迭代计划，以确保项目的持续发展。\n\n---\n**⚠ 超图约束检测结果：**\n\n🔴 **[H11] 合规/伦理缺口** （置信度：低）\n   触发信号：项目涉及数据隐私、行业准入等合规风险\n   建议修复：补充合规分析和伦理风险评估\n   证据状态：✓ 不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’（第1轮·DATA）; ✓ 不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’（第2轮·DATA）\n\n🟡 **[H15] 评分项证据覆盖不足** （置信度：低）\n   触发信号：多个评分维度缺乏支撑证据\n   建议修复：针对缺失项逐一补充证据材料\n   证据状态：✓ 不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’（第1轮·DATA）; ✓ 不能凭项目名推测技术、访谈、收入、团队或医疗能力；缺失的资料写‘未提供/待验证’（第2轮·DATA）",
+          "run_id": "run_d41dfacee2c7",
+          "agent_version": "ventureai-v2-candidate",
+          "scores": null,
+          "diagnosis": [
+            "[H11] 合规/伦理缺口（置信度低）：项目涉及数据隐私、行业准入等合规风险",
+            "[H15] 评分项证据覆盖不足（置信度低）：多个评分维度缺乏支撑证据"
+          ],
+          "stage": null,
+          "rubric_scores": {
+            "R1": 3,
+            "R2": 2,
+            "R3": 3,
+            "R4": 2,
+            "R5": 2,
+            "R6": 1,
+            "R7": 3,
+            "R8": 3,
+            "R9": 2,
+            "R10": 2,
+            "R11": 2
+          },
+          "intent": "grader",
+          "knowledge_recommendations": [
+            {
+              "rule_id": "H11",
+              "concept": "合规性",
+              "query": "数据隐私和行业合规如何评估？哪些行业有特殊监管？",
+              "prerequisites": [],
+              "learning_order": [
+                "合规性"
+              ]
+            },
+            {
+              "rule_id": "H15",
+              "concept": "精益画布",
+              "query": "如何为每个评分维度构建完整的证据材料？",
+              "prerequisites": [
+                "产品市场契合",
+                "定价策略",
+                "盈亏平衡点",
+                "最小可行产品",
+                "商业计划书",
+                "路演材料"
+              ],
+              "learning_order": [
+                "路演材料",
+                "商业计划书",
+                "最小可行产品",
+                "盈亏平衡点",
+                "定价策略",
+                "产品市场契合",
+                "精益画布"
+              ]
+            }
+          ],
+          "fix_tasks": [
+            {
+              "rule_id": "H11",
+              "severity": "high",
+              "fix_task": "补充合规分析和伦理风险评估"
+            },
+            {
+              "rule_id": "H15",
+              "severity": "medium",
+              "fix_task": "针对缺失项逐一补充证据材料"
+            }
+          ],
+          "rubric_full": {
+            "R1": {
+              "score": 3,
+              "evidence": "项目书明确指出成年人在日常健康自我管理中面临的信息零散、难以理解、难以转化为行动等问题。这些痛点描述清晰，但缺乏真实用户的访谈数据或市场调研。",
+              "suggestion": "建议开展用户访谈，收集更多真实用户的反馈，以验证痛点的真实性和普遍性。"
+            },
+            "R2": {
+              "score": 2,
+              "evidence": "项目书提到项目不提供疾病诊断、治疗方案等，明确界定了适用范围。然而，缺乏真实用户的访谈数据和市场调研。",
+              "suggestion": "建议进行用户访谈和市场调研，收集用户对于产品的需求和反馈，以增强用户证据的充分性和相关性。"
+            },
+            "R3": {
+              "score": 3,
+              "evidence": "项目书详细描述了技术实现和数据流程，包括前端、后端和数据库的设计。规则版本通过接口公开，便于演示和解释。",
+              "suggestion": "建议进行小规模的用户测试，收集用户反馈，优化产品功能和用户体验。"
+            },
+            "R4": {
+              "score": 2,
+              "evidence": "项目书提到项目适合在健康教育、校园健康促进或企业健康活动等低风险展示场景中继续完善，但没有详细说明客户、价值主张、渠道、收入和成本。",
+              "suggestion": "建议制定详细的商业模式，明确客户群体、价值主张、收入来源和成本控制措施，以增强商业模式的可行性和可持续性。"
+            },
+            "R5": {
+              "score": 2,
+              "evidence": "项目书提到与通用搜索、通用AI对话等工具的差异化，但没有详细的市场竞争分析和差异化定位。",
+              "suggestion": "建议进行详细的市场调研，分析竞争对手的优势和劣势，明确项目的差异化定位和竞争优势。"
+            },
+            "R6": {
+              "score": 1,
+              "evidence": "项目书未提供财务预测，也没有明确的盈利路径和成本控制措施。",
+              "suggestion": "建议制定详细的财务计划，包括收入预测、成本预算、盈利模式和融资计划，以提升项目的商业可行性。"
+            },
+            "R7": {
+              "score": 3,
+              "evidence": "项目书提到规则与AI结合、数据闭环和隐私保护等创新点，展示了项目的独特性和竞争力。",
+              "suggestion": "建议进一步强化这些创新点，并通过用户测试和市场验证来证明其有效性和可持续性。"
+            },
+            "R8": {
+              "score": 3,
+              "evidence": "项目书未提供团队背景和技能描述，但从技术实现来看，团队具备一定的技术能力和项目管理能力。",
+              "suggestion": "建议详细描述团队成员的背景和技能，说明团队的执行能力和资源匹配情况。"
+            },
+            "R9": {
+              "score": 2,
+              "evidence": "项目书结构清晰，逻辑完整，但部分内容缺乏具体数据和用户反馈。",
+              "suggestion": "建议进一步补充数据和用户反馈，使项目书更加充实和有说服力。"
+            },
+            "R10": {
+              "score": 2,
+              "evidence": "项目书详细描述了医疗安全、隐私保护和合规措施，但缺乏具体的合规验证和审查流程。",
+              "suggestion": "建议进行合规审查和用户隐私保护的第三方审计，确保项目符合相关法律法规的要求。"
+            },
+            "R11": {
+              "score": 2,
+              "evidence": "项目书提到项目适合在健康教育、校园健康促进或企业健康活动中继续完善，但缺乏详细的增长路径和规模化策略。",
+              "suggestion": "建议制定详细的增长路径和规模化策略，包括市场拓展、用户增长和产品迭代计划，以确保项目的持续发展。"
+            }
+          },
+          "score_breakdown": null
+        }
+      }
+    }
+  ]
+}

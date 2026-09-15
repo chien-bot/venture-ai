@@ -69,6 +69,16 @@ def enforce_course_boundary(text: str, request: str) -> str:
     for unsafe_pattern, safe in phrase_replacements:
         text = re.sub(unsafe_pattern, safe, text)
 
+    # A design description is not evidence of legal compliance or observed
+    # effectiveness. Keep claims at the level supported by the supplied work.
+    text = re.sub(r"符合《([^》]+)》的要求", r"仍需核验是否符合《\1》的适用要求", text)
+    text = text.replace("能有效解决成年人", "旨在缓解成年人")
+    text = re.sub(
+        r"从技术实现来看，团队具备[^。]+。",
+        "材料记录了技术实现，但未提供团队成员背景与分工，不能据此评价团队能力。",
+        text,
+    )
+
     notices: list[str] = []
     if any(token in request for token in ("课程模拟材料", "教师提供的模拟情境", "模拟用户")):
         notices.append("本次输入中的新增情境与模拟反馈均标记为 S（模拟），不能作为真实市场或用户证据。")

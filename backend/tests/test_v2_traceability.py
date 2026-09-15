@@ -23,12 +23,17 @@ class V2TraceabilityTests(unittest.TestCase):
         os.environ["VENTUREAI_DB_PATH"] = str(Path(cls._temp_dir.name) / "ventureai-test.db")
         os.environ["USE_MOCK_API"] = "true"
 
-        from services.database import create_session, get_chat_history, init_db
+        import services.database as database
+        cls.old_db_path = database.DB_PATH
+        database.DB_PATH = Path(cls._temp_dir.name) / "ventureai-test.db"
+        from services.database import create_session, get_chat_history, init_db, save_token
         from agents.router import run_agent, run_agent_stream
         from models.schemas import ChatRequest
         from routers.chat import send_message
 
         init_db()
+        cls.test_token = f"test-token-{uuid4().hex}"
+        save_token(cls.test_token, "student_001")
         cls.create_session = staticmethod(create_session)
         cls.get_chat_history = staticmethod(get_chat_history)
         cls.run_agent = staticmethod(run_agent)
@@ -38,6 +43,8 @@ class V2TraceabilityTests(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls) -> None:
+        import services.database as database
+        database.DB_PATH = cls.old_db_path
         cls._temp_dir.cleanup()
 
     def _run(self, flow: str, message: str) -> tuple[str, dict]:
@@ -75,7 +82,7 @@ class V2TraceabilityTests(unittest.TestCase):
 
     def test_failure_is_recorded_without_losing_the_run_identity(self) -> None:
         session_id = f"test-{uuid4().hex}"
-        self.create_session(session_id, agent_type="coach")
+        self.create_session(session_id, agent_type="coach", owner_id="student_001")
 
         with patch("agents.router.get_graph", side_effect=RuntimeError("simulated unavailable service")):
             result = self.run_agent(session_id, "测试服务不可用时的降级。", agent_type="coach")
@@ -103,7 +110,7 @@ class V2TraceabilityTests(unittest.TestCase):
 
     def test_source_free_claims_are_not_presented_as_facts(self) -> None:
         session_id = f"test-{uuid4().hex}"
-        self.create_session(session_id, agent_type="coach")
+        self.create_session(session_id, agent_type="coach", owner_id="student_001")
         request = self.ChatRequest(
             session_id=session_id,
             project_id="",
@@ -115,7 +122,12 @@ class V2TraceabilityTests(unittest.TestCase):
             ),
         )
 
-        result = self.send_message(request)
+        from starlette.requests import Request
+        http_request = Request({
+            "type": "http",
+            "headers": [(b"authorization", f"Bearer {self.test_token}".encode())],
+        })
+        result = self.send_message(request, http_request)
 
         self.assertEqual(result.intent, "evidence_review")
         self.assertTrue(result.run_id.startswith("run_"))

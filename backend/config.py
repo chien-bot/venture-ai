@@ -15,6 +15,6 @@ MODEL_LIGHT = os.getenv("MODEL_LIGHT", os.getenv("MODEL_MAIN", "Qwen/Qwen2.5-7B-
 
 # Attached to every captured Agent run. Release packaging can override this
 # with the final Git tag without changing code.
-AGENT_VERSION = os.getenv("AGENT_VERSION", "ventureai-v2-candidate")
+AGENT_VERSION = os.getenv("AGENT_VERSION", "ventureai-v2-stage3-2026-09-15")
 
 JWT_SECRET = os.getenv("JWT_SECRET", "venture-ai-secret-key-change-in-production")

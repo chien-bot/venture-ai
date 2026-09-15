@@ -1,6 +1,6 @@
 """File upload router for multi-modal input (F3-adv) + hypergraph ingestion."""
 
-from fastapi import APIRouter, UploadFile, File, Form, HTTPException
+from fastapi import APIRouter, UploadFile, File, Form, HTTPException, Request
 from pydantic import BaseModel
 from pathlib import Path
 import uuid
@@ -8,6 +8,7 @@ import re
 import logging
 
 from services.database import save_uploaded_file
+from services.access_control import require_project, require_session, require_user
 
 logger = logging.getLogger(__name__)
 
@@ -16,17 +17,25 @@ router = APIRouter(prefix="/api/upload", tags=["upload"])
 UPLOAD_DIR = Path(__file__).parent.parent / "uploads"
 UPLOAD_DIR.mkdir(exist_ok=True)
 
-ALLOWED_EXTENSIONS = {".pdf", ".txt", ".png", ".jpg", ".jpeg", ".md", ".csv"}
+ALLOWED_EXTENSIONS = {".pdf", ".docx", ".pptx", ".txt", ".png", ".jpg", ".jpeg", ".md", ".csv"}
 MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
 
 
 @router.post("/file")
 async def upload_file(
+    request: Request,
     file: UploadFile = File(...),
     project_id: str = Form(""),
     session_id: str = Form(""),
 ):
     """Upload PDF, image, or text file. Extract text and store."""
+    if not project_id:
+        raise HTTPException(status_code=400, detail="请选择项目")
+    require_project(request, project_id)
+    if session_id:
+        session = require_session(request, session_id)
+        if session["project_id"] and session["project_id"] != project_id:
+            raise HTTPException(status_code=403, detail="对话与项目不匹配")
     if not file.filename:
         raise HTTPException(status_code=400, detail="文件名不能为空")
 
@@ -46,6 +55,12 @@ async def upload_file(
     if ext == ".pdf":
         file_type = "pdf"
         extracted_text = _extract_pdf_text(file_path)
+    elif ext == ".docx":
+        file_type = "document"
+        extracted_text = _extract_docx_text(file_path)
+    elif ext == ".pptx":
+        file_type = "slides"
+        extracted_text = _extract_pptx_text(file_path)
     elif ext in (".txt", ".md", ".csv"):
         file_type = "text"
         extracted_text = _extract_text_file(file_path)
@@ -93,6 +108,39 @@ def _extract_text_file(file_path: Path) -> str:
         return file_path.read_text(encoding="utf-8", errors="ignore")[:50000]
     except Exception:
         return "[文本读取失败]"
+
+
+def _extract_docx_text(file_path: Path) -> str:
+    try:
+        from docx import Document
+        document = Document(str(file_path))
+        blocks = [p.text for p in document.paragraphs if p.text.strip()]
+        for table in document.tables:
+            blocks.extend(" | ".join(cell.text for cell in row.cells) for row in table.rows)
+        return "\n".join(blocks)[:100000]
+    except ImportError:
+        return "[python-docx 未安装，无法提取 DOCX 文本]"
+    except Exception as exc:
+        logger.warning("DOCX extraction failed for %s: %s", file_path, type(exc).__name__)
+        return "[DOCX 解析失败]"
+
+
+def _extract_pptx_text(file_path: Path) -> str:
+    try:
+        from pptx import Presentation
+        presentation = Presentation(str(file_path))
+        blocks = []
+        for index, slide in enumerate(presentation.slides, 1):
+            blocks.append(f"[第{index}页]")
+            for shape in slide.shapes:
+                if hasattr(shape, "text") and shape.text.strip():
+                    blocks.append(shape.text)
+        return "\n".join(blocks)[:100000]
+    except ImportError:
+        return "[python-pptx 未安装，无法提取 PPTX 文本]"
+    except Exception as exc:
+        logger.warning("PPTX extraction failed for %s: %s", file_path, type(exc).__name__)
+        return "[PPTX 解析失败]"
 
 
 # ── Hypergraph ingestion ─────────────────────────────────────
@@ -191,6 +239,7 @@ def _extract_entities_from_text(text: str) -> dict:
 
 @router.post("/ingest")
 async def ingest_to_hypergraph(
+    request: Request,
     file: UploadFile = File(...),
 ):
     """
@@ -198,6 +247,9 @@ async def ingest_to_hypergraph(
     auto-extract entities, and add to the hypergraph.
     """
     from hypergraph.engine import add_project_to_hypergraph
+    actor = require_user(request)
+    if actor.get("role") not in ("teacher", "admin"):
+        raise HTTPException(status_code=403, detail="仅教师或管理员可导入案例")
 
     if not file.filename:
         raise HTTPException(status_code=400, detail="文件名不能为空")
@@ -262,9 +314,12 @@ class ManualIngestRequest(BaseModel):
 
 
 @router.post("/ingest/manual")
-async def ingest_manual(req: ManualIngestRequest):
+async def ingest_manual(req: ManualIngestRequest, request: Request):
     """Manually add a project to the hypergraph without file upload."""
     from hypergraph.engine import add_project_to_hypergraph
+    actor = require_user(request)
+    if actor.get("role") not in ("teacher", "admin"):
+        raise HTTPException(status_code=403, detail="仅教师或管理员可导入案例")
 
     result = add_project_to_hypergraph(
         project_name=req.project_name,

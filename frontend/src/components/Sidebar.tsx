@@ -14,6 +14,7 @@ const CHAT_MODES = [
 const STUDENT_NAV = [
   { label: "AI 教练",  path: "/student/chat",        icon: "💬", desc: "智能对话" },
   { label: "我的项目", path: "/student/projects",     icon: "📋", desc: "项目管理" },
+  { label: "第三阶段", path: "/student/stage3",       icon: "🧭", desc: "立项与验收" },
   { label: "能力画像", path: "/student/profile",      icon: "📊", desc: "个人画像" },
   { label: "模拟答辩", path: "/student/defense",      icon: "🎤", desc: "投资人问答" },
   { label: "同学互评", path: "/student/peer-review",  icon: "👥", desc: "匿名评审" },
@@ -22,6 +23,7 @@ const STUDENT_NAV = [
 const TEACHER_NAV = [
   { label: "控制面板", path: "/teacher/dashboard",         icon: "📊", desc: "班级概览" },
   { label: "项目审阅", path: "/teacher/review",            icon: "📝", desc: "逐项评分" },
+  { label: "第三阶段", path: "/teacher/stage3",           icon: "🧭", desc: "闯关与双门槛" },
   { label: "对话记录", path: "/teacher/conversations",     icon: "💬", desc: "学生对话" },
   { label: "周报汇总", path: "/teacher/reports",           icon: "📰", desc: "全班周报" },
   { label: "知识覆盖", path: "/teacher/knowledge",         icon: "🧠", desc: "概念学习统计" },

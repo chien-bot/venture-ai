@@ -212,7 +212,7 @@ export default function ProjectsPage() {
 
   const handleGenerateBp = async () => {
     if (!selected) return;
-    if (bp && !confirm("已有策划书，重新生成会覆盖现有内容，确定吗？")) return;
+    if (bp && !confirm("将新增一份 AI 草稿版本并更新当前预览；历史版本会保留。继续吗？")) return;
     setBpGenerating(true);
     try {
       const res = await generateBusinessPlan(selected.project_id);
@@ -1271,14 +1271,14 @@ export default function ProjectsPage() {
                         📄 商业策划书
                       </h2>
                       <p style={{ fontSize: 12, color: "var(--text-muted)", margin: "6px 0 0" }}>
-                        基于项目对话、评分与诊断自动生成。建议先完成多轮 AI 教练对话后再生成，内容会更准确。
+                        立项经教师通过后，可生成供学生核验的 AI 草稿。正式计划书请在「第三阶段」另存修改版。
                       </p>
                     </div>
                     <div style={{ display: "flex", gap: 10 }}>
                       <button
                         onClick={handleGenerateBp}
                         disabled={bpGenerating || (bpReadiness && !bpReadiness.ready)}
-                        title={bpReadiness && !bpReadiness.ready ? "证据不足，请先完成更多对话" : ""}
+                        title={bpReadiness && !bpReadiness.ready ? "请先在第三阶段提交立项书并通过教师 G1–G6 复审" : ""}
                         style={{
                           padding: "9px 18px", borderRadius: 10, border: "none",
                           background: (bpGenerating || (bpReadiness && !bpReadiness.ready))
@@ -1288,7 +1288,7 @@ export default function ProjectsPage() {
                           boxShadow: "0 2px 10px rgba(99,102,241,0.25)",
                         }}
                       >
-                        {bpGenerating ? "⏳ 正在生成..." : (bp ? "🔄 重新生成" : "✨ 一键生成策划书")}
+                        {bpGenerating ? "⏳ 正在生成..." : (bp ? "🔄 生成新草稿" : "✨ 生成 AI 草稿")}
                       </button>
                       {bp && (
                         <button
@@ -1315,7 +1315,7 @@ export default function ProjectsPage() {
                       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
                         <span style={{ fontSize: 14 }}>{bpReadiness.ready ? "✅" : "⏳"}</span>
                         <span style={{ fontSize: 13, fontWeight: 600, color: bpReadiness.ready ? "#6ee7b7" : "#fbbf24" }}>
-                          {bpReadiness.ready ? "证据门槛已达成，可生成策划书" : "证据积累中（策划书要求基于真实对话证据生成）"}
+                          {bpReadiness.ready ? "立项已通过，可生成供核验的 AI 草稿" : "立项尚未通过教师 G1–G6 闯关，请先到「第三阶段」提交并复审"}
                         </span>
                       </div>
                       <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10 }}>
@@ -1359,7 +1359,7 @@ export default function ProjectsPage() {
                     }}>
                       <div style={{ fontSize: 42, opacity: 0.5, marginBottom: 12 }}>📝</div>
                       <p style={{ fontSize: 14, color: "var(--text-secondary)", margin: 0 }}>
-                        还没有策划书，点击右上角 <strong style={{ color: "#a5b4fc" }}>"一键生成策划书"</strong> 开始
+                        还没有草稿。先到「第三阶段」通过立项，再点击右上角 <strong style={{ color: "#a5b4fc" }}>"生成 AI 草稿"</strong>。
                       </p>
                     </div>
                   )}

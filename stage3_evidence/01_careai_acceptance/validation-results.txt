@@ -1,0 +1,30 @@
+VentureAI V2 third-stage validation
+Date: 2026-09-15 (Asia/Shanghai)
+
+[PASS] Backend complete suite
+Command: backend/.venv/bin/python -m unittest discover -s tests -v
+Result: Ran 15 tests in 4.563s — OK
+Coverage includes: CareAI regressions (6), stage-three acceptance/security (4), V2 traceability/failure handling (5).
+
+[PASS] Frontend type check
+Command: npx tsc --noEmit
+Result: exit 0, no diagnostics.
+
+[PASS] Frontend production build
+Command: npm run build
+Result: Next.js 16.1.6 compiled successfully; 17/17 static pages generated.
+Verified routes include /student/stage3 and /teacher/stage3.
+Non-blocking warnings: middleware naming is deprecated; caniuse-lite data is old.
+
+[PASS] CareAI end-to-end local HTTP workflow
+Command: run_stage3_acceptance.py against http://127.0.0.1:8001
+Result: project proj_ce1464, ready_for_acceptance=true, missing=[], F1/F2/F3 covered.
+Security: anonymous 401, outsider 403, student-to-teacher API 403, public teacher registration 403, anonymous graph 401.
+Boundary: all teacher scores, D1-D9 entries, timing and final decisions are explicitly S (simulated).
+
+[PASS] Requirement DOCX extraction
+Result: 13,430 extracted characters; markers “双门槛”, “D1” and “F1” present.
+
+[PASS] Source formatting
+Command: git diff --check
+Result: exit 0, no whitespace errors.

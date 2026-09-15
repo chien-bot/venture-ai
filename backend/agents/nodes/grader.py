@@ -25,6 +25,8 @@ GRADER_SYSTEM_PROMPT = """你是一位专业的创新创业评审专家，需要
 - 如材料明确标记 F/I/H/S，或声明“未进行真实验证”，必须保留这些边界。
 - 缺少访谈、市场规模、支付意愿、临床或运营数据时，只能写为“待验证/待核验”，不得把它们补写成事实，也不得要求学生伪造材料。
 - 每项评价和风险应回引材料中的具体句子；材料没有依据时明确说明“材料未提供依据”。
+- 在写“未进行/未提供/没有”之前，必须检查文件证据索引和全文是否已有对应信息。明确区分软件规则/接口测试、公开资料引用、真实用户验证、临床验证：前两项即使存在，也不能冒充后两项；但不能声称前两项不存在。
+- MVP 已实现不等于已有效解决用户问题。不能把“旨在缓解”写成“已有效解决”，也不能从技术实现推断团队成员背景。
 - 如果用户要求按“社会价值、实践依据、创新意义、发展前景、团队协作”评审，先以这五个标题逐项作出评价、证据缺口和可执行建议，再输出 Rubric JSON。
 
 请基于以下 Rubric 标准（R1-R11）对学生的创业项目进行详细评分：
@@ -63,18 +65,18 @@ GRADER_SYSTEM_PROMPT = """你是一位专业的创新创业评审专家，需要
 }
 -->
 
-在 JSON 注释之前，请先用中文给出2-3段综合评价，指出项目的最大亮点和最需要改进的方向。
+在 JSON 注释之前，请先用中文给出2-3段综合评价，指出项目的最大亮点和最需要改进的方向。若用户要求逐项评价，正文还必须逐项列出 R1-R11 的依据、缺失证据和下一步建议。
 
 ⚠️ 绝对不能违反的规则（必须遵守）：
 - 正文中绝对禁止出现任何JSON格式（包括 { } [ ] 等符号的数据结构）
-- 正文中绝对禁止出现评分数字或 "R1", "R2" 等标签
+- 正文可以使用 R1-R11 标签和评分数字，以便学生核对每项结论
 - 绝对禁止出现 "score:", "evidence:", "suggestion:" 等JSON字段名
 - 所有结构化数据必须且只能放在 <!--RUBRIC_FULL:...--> HTML注释中
-- 学生只会看到中文段落文字，完全看不到任何JSON或评分数据
+- 学生会看到综合评价和逐项评语；JSON 注释由程序提取，不直接显示
 
 正文格式示例：
 ✅ 好：「你的项目在用户痛点定义方面表现不错，清晰地描述了目标用户的核心需求。在商业模式方面还需加强，特别是收入来源的论证...」
-❌ 坏：「R1评分为3分，因为...」或任何包含JSON的输出
+❌ 坏：只给综合印象，却不解释各项评分依据。
 
 只有HTML注释中可以出现JSON数据。
 """
@@ -98,6 +100,21 @@ def _parse_rubric_full(text: str) -> dict | None:
 def _clean(text: str) -> str:
     from services.marker_parser import clean_reply
     return clean_reply(text)
+
+
+def show_rubric_details(text: str, rubric_full: dict | None) -> str:
+    """Ensure the structured grading evidence is visible to the student."""
+    if not rubric_full or all(re.search(rf"\bR{i}\b", text) for i in range(1, 12)):
+        return text
+    lines = [text.strip(), "", "### R1–R11 逐项评价"]
+    for i in range(1, 12):
+        item = rubric_full.get(f"R{i}", {})
+        lines.append(
+            f"**R{i} · {item.get('score', '未评分')}/5** — "
+            f"依据：{item.get('evidence') or '材料未提供依据'}；"
+            f"下一步：{item.get('suggestion') or '补充可核验材料并标明证据等级'}"
+        )
+    return "\n".join(lines)
 
 
 def _mock_grader() -> str:
@@ -146,7 +163,7 @@ def grader_node(state: AgentState) -> AgentState:
         raw = chat_completion(GRADER_SYSTEM_PROMPT, messages)
 
     rubric_full = _parse_rubric_full(raw)
-    clean = _clean(raw)
+    clean = show_rubric_details(_clean(raw), rubric_full)
     clean = enforce_course_boundary(clean, state.get("current_message", ""))
 
     # Build rubric_scores dict for compatibility with existing schema

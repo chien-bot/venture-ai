@@ -1,0 +1,15 @@
+{
+  "request_authentication": "none",
+  "project_list": {
+    "status": 401,
+    "contains_careai": false
+  },
+  "project_detail": {
+    "status": 401,
+    "contains_rubric": false
+  },
+  "chat_history": {
+    "status": 401,
+    "message_count": 0
+  }
+}

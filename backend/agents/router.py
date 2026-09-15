@@ -14,6 +14,69 @@ from services.debug_logger import start_session_capture, flush_session_logs, rec
 logger = logging.getLogger(__name__)
 
 
+def _wants_one_question(message: str) -> bool:
+    return bool(re.search(r"只(?:问|提出|给|留).{0,8}一个.{0,8}(?:问题|追问|下一步)", message))
+
+
+def _focus_one_question(reply: str, message: str) -> str:
+    if not _wants_one_question(message):
+        return reply
+    # Preserve the evidence-based assessment, remove the model's long task
+    # checklist and critic appendix, then ask exactly one feasible question.
+    assessment = re.split(r"^#{1,4}\s*下一步|^\*\*下一步", reply, maxsplit=1, flags=re.MULTILINE)[0].strip()
+    assessment = re.split(r"^---\s*$", assessment, maxsplit=1, flags=re.MULTILINE)[0].strip()
+    return assessment + "\n\n**下一步唯一问题：** 针对上面最重要的证据缺口，你想先在课程允许的范围内核验哪一个尚未证实的假设？"
+
+
+def _grounded_messages(history: list[dict], message: str, project_id: str) -> tuple[list[dict], str]:
+    """Put uploaded evidence in the actual LLM messages, not only graph metadata.
+
+    Earlier assistant replies may contain mistakes, so a supplied document takes
+    precedence over them. The stored conversation remains unchanged.
+    """
+    from services.database import get_project
+
+    source_parts = []
+    project = get_project(project_id) if project_id else None
+    if project:
+        source_parts.append(
+            f"[项目登记信息]\n名称：{project.get('name', '')}\n行业：{project.get('industry', '')}"
+            f"\n描述：{project.get('description', '')}"
+        )
+    if project_id:
+        files = get_uploaded_files_for_project(project_id)
+        for file in files[:3]:
+            extracted = file.get("extracted_text") or ""
+            if extracted:
+                source_parts.append(f"[已上传文件：{file['filename']}]\n{extracted[:18000]}")
+                evidence_lines = [
+                    line.strip()[:240] for line in extracted.splitlines()
+                    if len(line.strip()) > 8 and re.search(
+                        r"已完成|已实现|已有|尚未|未进行|未提供|没有|不提供|不主张|测试|参考资料|来源|收入|付费",
+                        line,
+                    )
+                ]
+                if evidence_lines:
+                    source_parts.append(
+                        f"[文件证据索引：{file['filename']}；请逐项核对，不能把‘软件测试’写成‘用户验证’]\n"
+                        + "\n".join(f"- {line}" for line in evidence_lines[:30])
+                    )
+
+    source = "\n\n".join(source_parts)
+    if not source:
+        return history, message
+    grounded = (
+        "[本轮项目证据；优先于此前 AI 回复]\n"
+        "只把下列材料中明确记载的内容当作项目事实。不能凭项目名推测技术、访谈、收入、团队或医疗能力；"
+        "缺失的资料写‘未提供/待验证’。如先前 AI 回复与材料冲突，以材料为准。\n\n"
+        f"{source}\n\n[学生本轮问题]\n{message}"
+    )
+    # Retain the student's recent questions for continuity, but never recycle
+    # unverified assistant claims as evidence for the next answer.
+    prior_users = [m for m in history[:-1] if m.get("role") == "user"][-4:]
+    return [*prior_users, {"role": "user", "content": grounded}], grounded
+
+
 def get_greeting(agent_type: str) -> str:
     greetings = {
         "coach": COACH_GREETING,
@@ -31,6 +94,8 @@ def get_greeting(agent_type: str) -> str:
 
 def run_agent(session_id: str, message: str, agent_type: str = "coach", project_id: str = "") -> dict:
     run_id = f"run_{uuid4().hex[:12]}"
+    from services.run_registry import start_run, finish_run
+    start_run(run_id, session_id, project_id, agent_type or "auto", AGENT_VERSION, MODEL_MAIN)
     start_session_capture(
         session_id,
         run_id,
@@ -44,16 +109,7 @@ def run_agent(session_id: str, message: str, agent_type: str = "coach", project_
     append_chat(session_id, "user", message)
     history = get_chat_history(session_id)
 
-    # F3-adv: Inject uploaded file context into message
-    file_context = ""
-    if project_id:
-        files = get_uploaded_files_for_project(project_id)
-        texts = [f"[文件: {f['filename']}]\n{f['extracted_text'][:2000]}"
-                 for f in files if f.get("extracted_text")]
-        if texts:
-            file_context = "\n\n---\n已上传文件参考资料：\n" + "\n\n".join(texts[-3:])  # latest 3
-
-    current_msg = message + file_context if file_context else message
+    history, current_msg = _grounded_messages(history, message, project_id)
 
     initial_state = {
         "session_id": session_id,
@@ -91,15 +147,20 @@ def run_agent(session_id: str, message: str, agent_type: str = "coach", project_
         final_state = graph.invoke(initial_state)
         reply = final_state.get("final_reply", "")
         record_session_event(session_id, "RUN_COMPLETED")
+        finish_run(run_id, "completed")
     except Exception as exc:
         logger.exception("Agent run failed: %s", run_id)
         final_state = {}
         reply = "抱歉，本次处理未能完成。请保留当前输入后安全重试；若问题持续，请检查模型、文件或网络服务是否可用。"
         record_session_event(session_id, "RUN_FAILED", {"error_type": type(exc).__name__, "message": str(exc)[:200]})
+        finish_run(run_id, "failed", type(exc).__name__)
 
     # Clean JSON/rubric markers from reply
     from services.marker_parser import clean_reply as mp_clean
+    from services.competitor_review import ensure_comparison_protocol
     reply = mp_clean(reply)
+    reply = _focus_one_question(reply, message)
+    reply = ensure_comparison_protocol(reply, message)
 
     debug_logs = flush_session_logs(session_id)
     append_chat(session_id, "assistant", reply, debug_logs=debug_logs or None)
@@ -133,15 +194,7 @@ def run_agent(session_id: str, message: str, agent_type: str = "coach", project_
 
 def _build_initial_state(session_id: str, message: str, project_id: str) -> dict:
     """Build the shared initial state for both streaming and non-streaming paths."""
-    history = get_chat_history(session_id)
-    file_context = ""
-    if project_id:
-        files = get_uploaded_files_for_project(project_id)
-        texts = [f"[文件: {f['filename']}]\n{f['extracted_text'][:2000]}"
-                 for f in files if f.get("extracted_text")]
-        if texts:
-            file_context = "\n\n---\n已上传文件参考资料：\n" + "\n\n".join(texts[-3:])
-    current_msg = message + file_context if file_context else message
+    history, current_msg = _grounded_messages(get_chat_history(session_id), message, project_id)
     return {
         "session_id": session_id,
         "project_id": project_id,
@@ -183,6 +236,7 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
     from agents.nodes.retriever import retriever_node
     from agents.nodes.critic import critic_node
     from agents.nodes.synthesizer import synthesizer_node
+    from services.competitor_review import needs_comparison_protocol, ensure_comparison_protocol
     from services.claude_client import chat_completion_stream
     from services.evidence_tracer import refresh_tracer
     from agents.adaptive_questioning import build_questioning_context
@@ -192,6 +246,8 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
     from prompts.tutor import TUTOR_SYSTEM_PROMPT
     from prompts.competition import COMPETITION_SYSTEM_PROMPT
     run_id = f"run_{uuid4().hex[:12]}"
+    from services.run_registry import start_run, finish_run
+    start_run(run_id, session_id, project_id, agent_type or "auto", AGENT_VERSION, MODEL_MAIN)
     start_session_capture(
         session_id,
         run_id,
@@ -225,7 +281,7 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
         system = GRADER_SYSTEM_PROMPT
     elif intent == "competition":
         system = COMPETITION_SYSTEM_PROMPT
-        if hypergraph_ctx:
+        if hypergraph_ctx and not project_id:
             system += f"\n\n[超图案例库参考]\n{hypergraph_ctx}"
     elif intent in ("tutor", "hybrid"):
         system = TUTOR_SYSTEM_PROMPT
@@ -354,8 +410,18 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
     else:
         full_text = ""
         buffer = ""
+        held_chunks = 0
+        hold_response = intent == "grader" or _wants_one_question(message) or needs_comparison_protocol(message)
         for chunk in chat_completion_stream(system, state.get("messages", [])):
             full_text += chunk
+            # Grader output contains a machine-readable HTML comment. Buffer
+            # this mode until the comment is parsed so raw JSON never flashes
+            # in the student's chat window.
+            if hold_response:
+                held_chunks += 1
+                if held_chunks % 30 == 0:
+                    yield f"data: {json.dumps({'type': 'progress', 'message': '正在核对材料与证据边界…'})}\n\n"
+                continue
             buffer += chunk
             # Hold back buffer if it might be the start of a SCORES comment
             while True:
@@ -401,6 +467,10 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
     scores_data = parse_scores(full_text)
     rubric_full = parse_rubric_full(full_text)
     clean_reply = mp_clean(full_text)
+    if intent == "grader":
+        from agents.nodes.grader import show_rubric_details
+        clean_reply = show_rubric_details(clean_reply, rubric_full)
+        yield f"data: {json.dumps({'type': 'token', 'content': clean_reply})}\n\n"
 
     new_scores = None
     stage = state.get("stage")
@@ -453,7 +523,7 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
     # V2: Handle critic redirect — if critic wants to redirect to tutor
     critic_redirect = critic_result.get("critic_redirect")
     knowledge_recs = critic_result.get("knowledge_recommendations")
-    if critic_redirect and critic_result.get("loop_count", 0) <= 1:
+    if critic_redirect and critic_result.get("loop_count", 0) <= 1 and not project_id and intent == "coach":
         # Stream the redirect tutor output — include project context so tutor uses correct project
         from agents.nodes.tutor import tutor_node as _tutor_node
         _redirect_msg = f"请帮我解释一下「{critic_redirect}」这个概念，以及它在创业项目中的具体应用。"
@@ -474,9 +544,16 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
 
     # Update final_reply from critic (includes learning recommendations)
     clean_reply = critic_result.get("final_reply", clean_reply)
+    if _wants_one_question(message):
+        clean_reply = _focus_one_question(clean_reply, message)
+        yield f"data: {json.dumps({'type': 'token', 'content': clean_reply})}\n\n"
+    elif needs_comparison_protocol(message):
+        clean_reply = ensure_comparison_protocol(clean_reply, message)
+        yield f"data: {json.dumps({'type': 'token', 'content': clean_reply})}\n\n"
 
     # Save reply and update project scores (with EMA smoothing)
     record_session_event(session_id, "RUN_COMPLETED")
+    finish_run(run_id, "completed")
     debug_logs = flush_session_logs(session_id)
     append_chat(session_id, "assistant", clean_reply, debug_logs=debug_logs if debug_logs else None)
     if project_id and (new_scores or stage or diagnosis or rubric_full):

@@ -209,6 +209,51 @@ export async function getBpReadiness(projectId: string) {
   return request(`/api/projects/${projectId}/bp/readiness`);
 }
 
+// Third-stage course workflow. These calls preserve document and review history.
+export async function getStage3Overview(projectId: string) {
+  return request(`/api/stage3/${projectId}/overview`);
+}
+
+export async function getStage3Export(projectId: string) {
+  return request(`/api/stage3/${projectId}/evidence-export`);
+}
+
+export async function getStage3Documents(projectId: string) {
+  return request(`/api/stage3/${projectId}/documents`);
+}
+
+export async function saveStage3Document(projectId: string, payload: object) {
+  return request(`/api/stage3/${projectId}/documents`, { method: "POST", body: JSON.stringify(payload) });
+}
+
+export async function saveStage3Evidence(projectId: string, payload: object) {
+  return request(`/api/stage3/${projectId}/evidence`, { method: "POST", body: JSON.stringify(payload) });
+}
+
+export async function saveStage3DailyProgress(projectId: string, payload: object) {
+  return request(`/api/stage3/${projectId}/daily-progress`, { method: "PUT", body: JSON.stringify(payload) });
+}
+
+export async function saveStage3UseRecord(projectId: string, payload: object) {
+  return request(`/api/stage3/${projectId}/use-records`, { method: "POST", body: JSON.stringify(payload) });
+}
+
+export async function saveStage3GateReview(projectId: string, payload: object) {
+  return request(`/api/stage3/${projectId}/gate-review`, { method: "POST", body: JSON.stringify(payload) });
+}
+
+export async function saveStage3Score(projectId: string, payload: object) {
+  return request(`/api/stage3/${projectId}/scores`, { method: "POST", body: JSON.stringify(payload) });
+}
+
+export async function saveStage3FinalReview(projectId: string, payload: object) {
+  return request(`/api/stage3/${projectId}/final-review`, { method: "POST", body: JSON.stringify(payload) });
+}
+
+export async function getStage3Ranking() {
+  return request("/api/stage3/teacher/ranking");
+}
+
 export async function downloadBusinessPlan(projectId: string, projectName: string = "project") {
   const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
   const token = typeof window !== "undefined" ? sessionStorage.getItem("token") : null;

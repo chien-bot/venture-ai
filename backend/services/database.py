@@ -200,7 +200,150 @@ def init_db():
                 active          INTEGER DEFAULT 1,
                 created_at      TEXT DEFAULT (datetime('now'))
             );
+
+            CREATE TABLE IF NOT EXISTS agent_runs (
+                run_id TEXT PRIMARY KEY,
+                session_id TEXT NOT NULL,
+                project_id TEXT NOT NULL,
+                flow TEXT NOT NULL,
+                agent_version TEXT NOT NULL,
+                git_commit TEXT NOT NULL DEFAULT '',
+                model TEXT NOT NULL,
+                source_hash TEXT NOT NULL,
+                prompt_hash TEXT NOT NULL DEFAULT '',
+                status TEXT NOT NULL DEFAULT 'running',
+                error_type TEXT NOT NULL DEFAULT '',
+                started_at TEXT DEFAULT (datetime('now')),
+                finished_at TEXT
+            );
+
+            CREATE TABLE IF NOT EXISTS stage3_documents (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                project_id TEXT NOT NULL,
+                kind TEXT NOT NULL,
+                version INTEGER NOT NULL,
+                basis_version INTEGER,
+                plan_version INTEGER,
+                content TEXT NOT NULL,
+                content_hash TEXT NOT NULL DEFAULT '',
+                timed_seconds INTEGER,
+                source TEXT NOT NULL,
+                note TEXT NOT NULL DEFAULT '',
+                created_by TEXT NOT NULL,
+                created_at TEXT DEFAULT (datetime('now')),
+                UNIQUE(project_id, kind, version)
+            );
+
+            CREATE TABLE IF NOT EXISTS stage3_gate_reviews (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                project_id TEXT NOT NULL,
+                proposal_version INTEGER NOT NULL,
+                criteria_json TEXT NOT NULL,
+                decision TEXT NOT NULL,
+                feedback TEXT NOT NULL DEFAULT '',
+                reviewer_id TEXT NOT NULL,
+                created_at TEXT DEFAULT (datetime('now'))
+            );
+
+            CREATE TABLE IF NOT EXISTS stage3_use_records (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                project_id TEXT NOT NULL,
+                run_id TEXT NOT NULL,
+                flow TEXT NOT NULL,
+                task TEXT NOT NULL,
+                material_kind TEXT NOT NULL,
+                material_version INTEGER NOT NULL,
+                action TEXT NOT NULL,
+                reason TEXT NOT NULL,
+                learning_check TEXT NOT NULL DEFAULT '',
+                issue_location TEXT NOT NULL DEFAULT '',
+                verification_run_id TEXT NOT NULL DEFAULT '',
+                result_kind TEXT,
+                result_version INTEGER,
+                evidence_ref TEXT NOT NULL DEFAULT '',
+                effect_judgment TEXT NOT NULL DEFAULT '',
+                created_by TEXT NOT NULL,
+                created_at TEXT DEFAULT (datetime('now'))
+            );
+
+            CREATE TABLE IF NOT EXISTS stage3_scores (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                project_id TEXT NOT NULL,
+                category TEXT NOT NULL,
+                scores_json TEXT NOT NULL,
+                total INTEGER NOT NULL,
+                proposal_version INTEGER,
+                plan_version INTEGER,
+                feedback TEXT NOT NULL DEFAULT '',
+                reviewer_id TEXT NOT NULL,
+                created_at TEXT DEFAULT (datetime('now'))
+            );
+
+            CREATE TABLE IF NOT EXISTS stage3_final_reviews (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                project_id TEXT NOT NULL,
+                decision TEXT NOT NULL,
+                redline INTEGER NOT NULL DEFAULT 0,
+                proposal_version INTEGER,
+                plan_version INTEGER,
+                feedback TEXT NOT NULL DEFAULT '',
+                reviewer_id TEXT NOT NULL,
+                created_at TEXT DEFAULT (datetime('now'))
+            );
+
+            CREATE TABLE IF NOT EXISTS stage3_evidence_items (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                project_id TEXT NOT NULL,
+                label TEXT NOT NULL,
+                claim TEXT NOT NULL,
+                source_ref TEXT NOT NULL DEFAULT '',
+                formula TEXT NOT NULL DEFAULT '',
+                created_by TEXT NOT NULL,
+                created_at TEXT DEFAULT (datetime('now'))
+            );
+
+            CREATE TABLE IF NOT EXISTS stage3_daily_progress (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                project_id TEXT NOT NULL,
+                day INTEGER NOT NULL,
+                goal TEXT NOT NULL,
+                artifact TEXT NOT NULL,
+                agent_evidence TEXT NOT NULL,
+                risk_next TEXT NOT NULL,
+                created_by TEXT NOT NULL,
+                created_at TEXT DEFAULT (datetime('now')),
+                UNIQUE(project_id, day)
+            );
         """)
+
+        # Preserve databases that were opened during an earlier development
+        # iteration of the stage-three schema.
+        for table, columns in {
+            "agent_runs": {"git_commit": "TEXT NOT NULL DEFAULT ''"},
+            "stage3_documents": {
+                "plan_version": "INTEGER",
+                "content_hash": "TEXT NOT NULL DEFAULT ''",
+                "timed_seconds": "INTEGER",
+            },
+            "stage3_use_records": {
+                "learning_check": "TEXT NOT NULL DEFAULT ''",
+                "issue_location": "TEXT NOT NULL DEFAULT ''",
+                "verification_run_id": "TEXT NOT NULL DEFAULT ''",
+                "effect_judgment": "TEXT NOT NULL DEFAULT ''",
+            },
+            "stage3_scores": {
+                "proposal_version": "INTEGER",
+                "plan_version": "INTEGER",
+            },
+            "stage3_final_reviews": {
+                "proposal_version": "INTEGER",
+                "plan_version": "INTEGER",
+            },
+        }.items():
+            existing = {row["name"] for row in conn.execute(f"PRAGMA table_info({table})")}
+            for name, definition in columns.items():
+                if name not in existing:
+                    conn.execute(f"ALTER TABLE {table} ADD COLUMN {name} {definition}")
 
         # Add competition_date column if not exists (safe migration)
         try:
