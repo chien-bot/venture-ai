@@ -18,7 +18,7 @@ Non-blocking warnings: middleware naming is deprecated; caniuse-lite data is old
 
 [PASS] CareAI end-to-end local HTTP workflow
 Command: run_stage3_acceptance.py against http://127.0.0.1:8001
-Result: project proj_ce1464, ready_for_acceptance=true, missing=[], F1/F2/F3 covered.
+Result: project proj_00a69b, ready_for_acceptance=true, missing=[], F1/F2/F3 covered.
 Security: anonymous 401, outsider 403, student-to-teacher API 403, public teacher registration 403, anonymous graph 401.
 Boundary: all teacher scores, D1-D9 entries, timing and final decisions are explicitly S (simulated).
 

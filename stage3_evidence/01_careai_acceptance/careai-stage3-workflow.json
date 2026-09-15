@@ -1,15 +1,15 @@
 {
-  "created_at": "2026-09-15T02:50:03.724106+00:00",
+  "created_at": "2026-09-15T02:52:21.998346+00:00",
   "mode": "S_simulated_stage3_workflow_functional_test",
   "warning": "All teacher scores, D1-D9 entries, timing and final decisions are S (simulated). They do not prove real course completion or CareAI user validation.",
   "api": "http://127.0.0.1:8001",
   "project": {
-    "project_id": "proj_ce1464",
+    "project_id": "proj_00a69b",
     "name": "CareAI 第三阶段流程测试（S 模拟）",
     "industry": "健康教育",
     "description": "仅用于验证 VentureAI 第三阶段工作流；所有评分和教师结论均为 S（模拟），不是项目真实获奖或用户证据。",
     "stage": "discovery",
-    "owner_id": "10e445f6-e335-41b2-a5f6-ee50e9278317",
+    "owner_id": "e6f53b3a-1d5a-42da-ac21-00ab40db7066",
     "scores": {},
     "diagnosis": [],
     "project_type": "创新项目",
@@ -19,13 +19,13 @@
     "approved": true,
     "proposal_version": 1,
     "review": {
-      "id": 3,
-      "project_id": "proj_ce1464",
+      "id": 4,
+      "project_id": "proj_00a69b",
       "proposal_version": 1,
       "decision": "approved",
       "feedback": "S（模拟教师判断）：仅证明 G1–G6 接口和门槛可运行，不代表真实课程教师通过。",
-      "reviewer_id": "stage3-teacher-65ed7334",
-      "created_at": "2026-09-15 02:50:03",
+      "reviewer_id": "stage3-teacher-6f5e732c",
+      "created_at": "2026-09-15 02:52:21",
       "criteria": {
         "G1": true,
         "G2": true,
@@ -39,29 +39,29 @@
   "runs": [
     {
       "flow": "tutor",
-      "session_id": "c6fbe0b3-57ff-4b3d-af06-ef7c55b3b29a",
-      "run_id": "run_130cfd452def",
+      "session_id": "c792b52e-fc3d-457a-976f-862cace2c967",
+      "run_id": "run_b13c4ae7fbf8",
       "agent_version": "ventureai-v2-stage3-2026-09-15",
       "http_status": 200
     },
     {
       "flow": "coach",
-      "session_id": "f3be5c1d-a0f7-4a63-8a23-df20a9954caa",
-      "run_id": "run_b829e520684a",
+      "session_id": "f14baf5c-e30e-4648-8609-4707d36ff0c3",
+      "run_id": "run_520d849eb996",
       "agent_version": "ventureai-v2-stage3-2026-09-15",
       "http_status": 200
     },
     {
       "flow": "grader",
-      "session_id": "838b5a79-7da3-44b8-92a3-b4108d492092",
-      "run_id": "run_a9ea5882cbd0",
+      "session_id": "8d832735-a21a-4917-b222-aaf9302ec942",
+      "run_id": "run_b4d9b25617b6",
       "agent_version": "ventureai-v2-stage3-2026-09-15",
       "http_status": 200
     },
     {
       "flow": "grader",
-      "session_id": "10112a53-8261-4880-9c5d-1ed390198e76",
-      "run_id": "run_ad3e079dc3aa",
+      "session_id": "a9be40db-1687-48fe-9d4e-8d2137a38ff6",
+      "run_id": "run_6bb1d2dd6c18",
       "agent_version": "ventureai-v2-stage3-2026-09-15",
       "http_status": 200
     }
@@ -96,21 +96,21 @@
       "version": 1
     }
   ],
-  "evidence_id": 5,
+  "evidence_id": 7,
   "use_record_ids": [
-    7,
-    8,
-    9
+    10,
+    11,
+    12
   ],
   "scores": {
     "project": {
-      "id": 5,
+      "id": 7,
       "category": "project",
       "total": 68,
       "pass": true
     },
     "agent": {
-      "id": 6,
+      "id": 8,
       "category": "agent",
       "total": 71,
       "pass": true
@@ -128,18 +128,18 @@
     "anonymous_graph": 401
   },
   "export": {
-    "project_id": "proj_ce1464",
+    "project_id": "proj_00a69b",
     "gate": {
       "approved": true,
       "proposal_version": 1,
       "review": {
-        "id": 3,
-        "project_id": "proj_ce1464",
+        "id": 4,
+        "project_id": "proj_00a69b",
         "proposal_version": 1,
         "decision": "approved",
         "feedback": "S（模拟教师判断）：仅证明 G1–G6 接口和门槛可运行，不代表真实课程教师通过。",
-        "reviewer_id": "stage3-teacher-65ed7334",
-        "created_at": "2026-09-15 02:50:03",
+        "reviewer_id": "stage3-teacher-6f5e732c",
+        "created_at": "2026-09-15 02:52:21",
         "criteria": {
           "G1": true,
           "G2": true,
@@ -152,8 +152,8 @@
     },
     "documents": {
       "proposal": {
-        "id": 16,
-        "project_id": "proj_ce1464",
+        "id": 23,
+        "project_id": "proj_00a69b",
         "kind": "proposal",
         "version": 1,
         "basis_version": null,
@@ -163,12 +163,12 @@
         "timed_seconds": null,
         "source": "student",
         "note": "v1：根据 CareAI 项目书整理，所有未验证主张标 H。",
-        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
-        "created_at": "2026-09-15 02:50:03"
+        "created_by": "e6f53b3a-1d5a-42da-ac21-00ab40db7066",
+        "created_at": "2026-09-15 02:52:21"
       },
       "plan": {
-        "id": 18,
-        "project_id": "proj_ce1464",
+        "id": 25,
+        "project_id": "proj_00a69b",
         "kind": "plan",
         "version": 2,
         "basis_version": 1,
@@ -178,12 +178,12 @@
         "timed_seconds": null,
         "source": "student",
         "note": "根据 F3 评审定位人工改写，等待复验。",
-        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
-        "created_at": "2026-09-15 02:50:03"
+        "created_by": "e6f53b3a-1d5a-42da-ac21-00ab40db7066",
+        "created_at": "2026-09-15 02:52:21"
       },
       "slides": {
-        "id": 19,
-        "project_id": "proj_ce1464",
+        "id": 26,
+        "project_id": "proj_00a69b",
         "kind": "slides",
         "version": 1,
         "basis_version": 1,
@@ -193,12 +193,12 @@
         "timed_seconds": null,
         "source": "student",
         "note": "与计划书 v2 使用同一证据口径。",
-        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
-        "created_at": "2026-09-15 02:50:03"
+        "created_by": "e6f53b3a-1d5a-42da-ac21-00ab40db7066",
+        "created_at": "2026-09-15 02:52:21"
       },
       "script": {
-        "id": 20,
-        "project_id": "proj_ce1464",
+        "id": 27,
+        "project_id": "proj_00a69b",
         "kind": "script",
         "version": 1,
         "basis_version": 1,
@@ -208,12 +208,12 @@
         "timed_seconds": 588,
         "source": "student",
         "note": "S 模拟计时 588 秒，仅验证计时门槛。",
-        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
-        "created_at": "2026-09-15 02:50:03"
+        "created_by": "e6f53b3a-1d5a-42da-ac21-00ab40db7066",
+        "created_at": "2026-09-15 02:52:21"
       },
       "qa": {
-        "id": 21,
-        "project_id": "proj_ce1464",
+        "id": 28,
+        "project_id": "proj_00a69b",
         "kind": "qa",
         "version": 1,
         "basis_version": 1,
@@ -223,12 +223,12 @@
         "timed_seconds": null,
         "source": "student",
         "note": "10个 S 模拟高风险问题，待团队换成真实准备内容。",
-        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
-        "created_at": "2026-09-15 02:50:03"
+        "created_by": "e6f53b3a-1d5a-42da-ac21-00ab40db7066",
+        "created_at": "2026-09-15 02:52:21"
       },
       "stage_summary": {
-        "id": 22,
-        "project_id": "proj_ce1464",
+        "id": 29,
+        "project_id": "proj_00a69b",
         "kind": "stage_summary",
         "version": 1,
         "basis_version": 1,
@@ -238,19 +238,19 @@
         "timed_seconds": null,
         "source": "student",
         "note": "仅验证阶段总结版本和完整性门槛。",
-        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
-        "created_at": "2026-09-15 02:50:03"
+        "created_by": "e6f53b3a-1d5a-42da-ac21-00ab40db7066",
+        "created_at": "2026-09-15 02:52:21"
       }
     },
     "scores": {
       "agent": {
-        "id": 6,
-        "project_id": "proj_ce1464",
+        "id": 8,
+        "project_id": "proj_00a69b",
         "category": "agent",
         "total": 71,
         "feedback": "S（模拟评分）：仅验证Agent效果100分表和独立60分门槛。",
-        "reviewer_id": "stage3-teacher-65ed7334",
-        "created_at": "2026-09-15 02:50:03",
+        "reviewer_id": "stage3-teacher-6f5e732c",
+        "created_at": "2026-09-15 02:52:21",
         "proposal_version": 1,
         "plan_version": 2,
         "scores": {
@@ -262,13 +262,13 @@
         }
       },
       "project": {
-        "id": 5,
-        "project_id": "proj_ce1464",
+        "id": 7,
+        "project_id": "proj_00a69b",
         "category": "project",
         "total": 68,
         "feedback": "S（模拟评分）：仅验证项目成果100分表和独立60分门槛。",
-        "reviewer_id": "stage3-teacher-65ed7334",
-        "created_at": "2026-09-15 02:50:03",
+        "reviewer_id": "stage3-teacher-6f5e732c",
+        "created_at": "2026-09-15 02:52:21",
         "proposal_version": 1,
         "plan_version": 2,
         "scores": {
@@ -287,9 +287,9 @@
     ],
     "use_records": [
       {
-        "id": 7,
-        "project_id": "proj_ce1464",
-        "run_id": "run_130cfd452def",
+        "id": 10,
+        "project_id": "proj_00a69b",
+        "run_id": "run_b13c4ae7fbf8",
         "flow": "F1",
         "task": "理解 F/I/H/S 并纠正无来源主张",
         "material_kind": "proposal",
@@ -301,15 +301,15 @@
         "verification_run_id": "",
         "result_kind": null,
         "result_version": null,
-        "evidence_ref": "chat session c6fbe0b3-57ff-4b3d-af06-ef7c55b3b29a",
-        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
-        "created_at": "2026-09-15 02:50:03",
+        "evidence_ref": "chat session c792b52e-fc3d-457a-976f-862cace2c967",
+        "created_by": "e6f53b3a-1d5a-42da-ac21-00ab40db7066",
+        "created_at": "2026-09-15 02:52:21",
         "effect_judgment": "纠正证据类型误判，并保留学生核查来源的责任边界。"
       },
       {
-        "id": 8,
-        "project_id": "proj_ce1464",
-        "run_id": "run_b829e520684a",
+        "id": 11,
+        "project_id": "proj_00a69b",
+        "run_id": "run_520d849eb996",
         "flow": "F2",
         "task": "从立项书推进计划书结构",
         "material_kind": "proposal",
@@ -321,15 +321,15 @@
         "verification_run_id": "",
         "result_kind": "plan",
         "result_version": 1,
-        "evidence_ref": "chat session f3be5c1d-a0f7-4a63-8a23-df20a9954caa",
-        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
-        "created_at": "2026-09-15 02:50:03",
+        "evidence_ref": "chat session f14baf5c-e30e-4648-8609-4707d36ff0c3",
+        "created_by": "e6f53b3a-1d5a-42da-ac21-00ab40db7066",
+        "created_at": "2026-09-15 02:52:21",
         "effect_judgment": "缩短结构整理时间，未经核验的内容由学生删除。"
       },
       {
-        "id": 9,
-        "project_id": "proj_ce1464",
-        "run_id": "run_a9ea5882cbd0",
+        "id": 12,
+        "project_id": "proj_00a69b",
+        "run_id": "run_b4d9b25617b6",
         "flow": "F3",
         "task": "评审计划书并完成修改复验",
         "material_kind": "plan",
@@ -338,234 +338,234 @@
         "reason": "根据评审移除无证据的用户偏好与健康效果主张。",
         "learning_check": "",
         "issue_location": "计划书 v1 的市场判断与健康效果表述",
-        "verification_run_id": "run_ad3e079dc3aa",
+        "verification_run_id": "run_6bb1d2dd6c18",
         "result_kind": "plan",
         "result_version": 2,
-        "evidence_ref": "before=838b5a79-7da3-44b8-92a3-b4108d492092; after=10112a53-8261-4880-9c5d-1ed390198e76",
-        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
-        "created_at": "2026-09-15 02:50:03",
+        "evidence_ref": "before=8d832735-a21a-4917-b222-aaf9302ec942; after=a9be40db-1687-48fe-9d4e-8d2137a38ff6",
+        "created_by": "e6f53b3a-1d5a-42da-ac21-00ab40db7066",
+        "created_at": "2026-09-15 02:52:21",
         "effect_judgment": "修正两类证据跳跃，并用独立复验运行确认修改。"
       }
     ],
     "missing": [],
     "ready_for_acceptance": true,
     "final_review": {
-      "id": 3,
-      "project_id": "proj_ce1464",
+      "id": 4,
+      "project_id": "proj_00a69b",
       "decision": "pass",
       "redline": 0,
       "feedback": "S（模拟终局结论）：系统门槛测试通过；真实课程必须由教师重新评分与签字。",
-      "reviewer_id": "stage3-teacher-65ed7334",
-      "created_at": "2026-09-15 02:50:03",
+      "reviewer_id": "stage3-teacher-6f5e732c",
+      "created_at": "2026-09-15 02:52:21",
       "proposal_version": 1,
       "plan_version": 2,
       "current": true
     },
     "daily_progress": [
       {
-        "id": 19,
-        "project_id": "proj_ce1464",
+        "id": 28,
+        "project_id": "proj_00a69b",
         "day": 1,
         "goal": "D1 系统流程测试目标（S）",
         "artifact": "D1 S 模拟产物，关联已保存材料版本",
         "agent_evidence": "S 模拟记录；关键 run_id 见 evidence-export，D1",
         "risk_next": "不把 D1 自动数据作为真实课程完成证明；下一步由师生填写",
-        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
-        "created_at": "2026-09-15 02:50:03"
+        "created_by": "e6f53b3a-1d5a-42da-ac21-00ab40db7066",
+        "created_at": "2026-09-15 02:52:21"
       },
       {
-        "id": 20,
-        "project_id": "proj_ce1464",
+        "id": 29,
+        "project_id": "proj_00a69b",
         "day": 2,
         "goal": "D2 系统流程测试目标（S）",
         "artifact": "D2 S 模拟产物，关联已保存材料版本",
         "agent_evidence": "S 模拟记录；关键 run_id 见 evidence-export，D2",
         "risk_next": "不把 D2 自动数据作为真实课程完成证明；下一步由师生填写",
-        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
-        "created_at": "2026-09-15 02:50:03"
+        "created_by": "e6f53b3a-1d5a-42da-ac21-00ab40db7066",
+        "created_at": "2026-09-15 02:52:21"
       },
       {
-        "id": 21,
-        "project_id": "proj_ce1464",
+        "id": 30,
+        "project_id": "proj_00a69b",
         "day": 3,
         "goal": "D3 系统流程测试目标（S）",
         "artifact": "D3 S 模拟产物，关联已保存材料版本",
         "agent_evidence": "S 模拟记录；关键 run_id 见 evidence-export，D3",
         "risk_next": "不把 D3 自动数据作为真实课程完成证明；下一步由师生填写",
-        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
-        "created_at": "2026-09-15 02:50:03"
+        "created_by": "e6f53b3a-1d5a-42da-ac21-00ab40db7066",
+        "created_at": "2026-09-15 02:52:21"
       },
       {
-        "id": 22,
-        "project_id": "proj_ce1464",
+        "id": 31,
+        "project_id": "proj_00a69b",
         "day": 4,
         "goal": "D4 系统流程测试目标（S）",
         "artifact": "D4 S 模拟产物，关联已保存材料版本",
         "agent_evidence": "S 模拟记录；关键 run_id 见 evidence-export，D4",
         "risk_next": "不把 D4 自动数据作为真实课程完成证明；下一步由师生填写",
-        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
-        "created_at": "2026-09-15 02:50:03"
+        "created_by": "e6f53b3a-1d5a-42da-ac21-00ab40db7066",
+        "created_at": "2026-09-15 02:52:21"
       },
       {
-        "id": 23,
-        "project_id": "proj_ce1464",
+        "id": 32,
+        "project_id": "proj_00a69b",
         "day": 5,
         "goal": "D5 系统流程测试目标（S）",
         "artifact": "D5 S 模拟产物，关联已保存材料版本",
         "agent_evidence": "S 模拟记录；关键 run_id 见 evidence-export，D5",
         "risk_next": "不把 D5 自动数据作为真实课程完成证明；下一步由师生填写",
-        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
-        "created_at": "2026-09-15 02:50:03"
+        "created_by": "e6f53b3a-1d5a-42da-ac21-00ab40db7066",
+        "created_at": "2026-09-15 02:52:21"
       },
       {
-        "id": 24,
-        "project_id": "proj_ce1464",
+        "id": 33,
+        "project_id": "proj_00a69b",
         "day": 6,
         "goal": "D6 系统流程测试目标（S）",
         "artifact": "D6 S 模拟产物，关联已保存材料版本",
         "agent_evidence": "S 模拟记录；关键 run_id 见 evidence-export，D6",
         "risk_next": "不把 D6 自动数据作为真实课程完成证明；下一步由师生填写",
-        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
-        "created_at": "2026-09-15 02:50:03"
+        "created_by": "e6f53b3a-1d5a-42da-ac21-00ab40db7066",
+        "created_at": "2026-09-15 02:52:21"
       },
       {
-        "id": 25,
-        "project_id": "proj_ce1464",
+        "id": 34,
+        "project_id": "proj_00a69b",
         "day": 7,
         "goal": "D7 系统流程测试目标（S）",
         "artifact": "D7 S 模拟产物，关联已保存材料版本",
         "agent_evidence": "S 模拟记录；关键 run_id 见 evidence-export，D7",
         "risk_next": "不把 D7 自动数据作为真实课程完成证明；下一步由师生填写",
-        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
-        "created_at": "2026-09-15 02:50:03"
+        "created_by": "e6f53b3a-1d5a-42da-ac21-00ab40db7066",
+        "created_at": "2026-09-15 02:52:21"
       },
       {
-        "id": 26,
-        "project_id": "proj_ce1464",
+        "id": 35,
+        "project_id": "proj_00a69b",
         "day": 8,
         "goal": "D8 系统流程测试目标（S）",
         "artifact": "D8 S 模拟产物，关联已保存材料版本",
         "agent_evidence": "S 模拟记录；关键 run_id 见 evidence-export，D8",
         "risk_next": "不把 D8 自动数据作为真实课程完成证明；下一步由师生填写",
-        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
-        "created_at": "2026-09-15 02:50:03"
+        "created_by": "e6f53b3a-1d5a-42da-ac21-00ab40db7066",
+        "created_at": "2026-09-15 02:52:21"
       },
       {
-        "id": 27,
-        "project_id": "proj_ce1464",
+        "id": 36,
+        "project_id": "proj_00a69b",
         "day": 9,
         "goal": "D9 系统流程测试目标（S）",
         "artifact": "D9 S 模拟产物，关联已保存材料版本",
         "agent_evidence": "S 模拟记录；关键 run_id 见 evidence-export，D9",
         "risk_next": "不把 D9 自动数据作为真实课程完成证明；下一步由师生填写",
-        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
-        "created_at": "2026-09-15 02:50:03"
+        "created_by": "e6f53b3a-1d5a-42da-ac21-00ab40db7066",
+        "created_at": "2026-09-15 02:52:21"
       }
     ],
     "runs": [
       {
-        "run_id": "run_130cfd452def",
-        "session_id": "c6fbe0b3-57ff-4b3d-af06-ef7c55b3b29a",
-        "project_id": "proj_ce1464",
-        "flow": "tutor",
-        "agent_version": "ventureai-v2-stage3-2026-09-15",
-        "git_commit": "d3c6e035013d22f59143c0695260ff1821e37bbb",
-        "model": "qwen/qwen-2.5-72b-instruct",
-        "source_hash": "3bb3f3e6665d30b90f92",
-        "prompt_hash": "971718c12d9ef3a7a855",
-        "status": "completed",
-        "error_type": "",
-        "started_at": "2026-09-15 02:50:03",
-        "finished_at": "2026-09-15 02:50:03"
-      },
-      {
-        "run_id": "run_a9ea5882cbd0",
-        "session_id": "838b5a79-7da3-44b8-92a3-b4108d492092",
-        "project_id": "proj_ce1464",
-        "flow": "grader",
-        "agent_version": "ventureai-v2-stage3-2026-09-15",
-        "git_commit": "d3c6e035013d22f59143c0695260ff1821e37bbb",
-        "model": "qwen/qwen-2.5-72b-instruct",
-        "source_hash": "3bb3f3e6665d30b90f92",
-        "prompt_hash": "971718c12d9ef3a7a855",
-        "status": "completed",
-        "error_type": "",
-        "started_at": "2026-09-15 02:50:03",
-        "finished_at": "2026-09-15 02:50:03"
-      },
-      {
-        "run_id": "run_ad3e079dc3aa",
-        "session_id": "10112a53-8261-4880-9c5d-1ed390198e76",
-        "project_id": "proj_ce1464",
-        "flow": "grader",
-        "agent_version": "ventureai-v2-stage3-2026-09-15",
-        "git_commit": "d3c6e035013d22f59143c0695260ff1821e37bbb",
-        "model": "qwen/qwen-2.5-72b-instruct",
-        "source_hash": "3bb3f3e6665d30b90f92",
-        "prompt_hash": "971718c12d9ef3a7a855",
-        "status": "completed",
-        "error_type": "",
-        "started_at": "2026-09-15 02:50:03",
-        "finished_at": "2026-09-15 02:50:03"
-      },
-      {
-        "run_id": "run_b829e520684a",
-        "session_id": "f3be5c1d-a0f7-4a63-8a23-df20a9954caa",
-        "project_id": "proj_ce1464",
+        "run_id": "run_520d849eb996",
+        "session_id": "f14baf5c-e30e-4648-8609-4707d36ff0c3",
+        "project_id": "proj_00a69b",
         "flow": "coach",
         "agent_version": "ventureai-v2-stage3-2026-09-15",
-        "git_commit": "d3c6e035013d22f59143c0695260ff1821e37bbb",
+        "git_commit": "79753025ee676846c0c0aaee0d51ed07241795e0",
         "model": "qwen/qwen-2.5-72b-instruct",
         "source_hash": "3bb3f3e6665d30b90f92",
         "prompt_hash": "971718c12d9ef3a7a855",
         "status": "completed",
         "error_type": "",
-        "started_at": "2026-09-15 02:50:03",
-        "finished_at": "2026-09-15 02:50:03"
+        "started_at": "2026-09-15 02:52:21",
+        "finished_at": "2026-09-15 02:52:21"
+      },
+      {
+        "run_id": "run_6bb1d2dd6c18",
+        "session_id": "a9be40db-1687-48fe-9d4e-8d2137a38ff6",
+        "project_id": "proj_00a69b",
+        "flow": "grader",
+        "agent_version": "ventureai-v2-stage3-2026-09-15",
+        "git_commit": "79753025ee676846c0c0aaee0d51ed07241795e0",
+        "model": "qwen/qwen-2.5-72b-instruct",
+        "source_hash": "3bb3f3e6665d30b90f92",
+        "prompt_hash": "971718c12d9ef3a7a855",
+        "status": "completed",
+        "error_type": "",
+        "started_at": "2026-09-15 02:52:21",
+        "finished_at": "2026-09-15 02:52:21"
+      },
+      {
+        "run_id": "run_b13c4ae7fbf8",
+        "session_id": "c792b52e-fc3d-457a-976f-862cace2c967",
+        "project_id": "proj_00a69b",
+        "flow": "tutor",
+        "agent_version": "ventureai-v2-stage3-2026-09-15",
+        "git_commit": "79753025ee676846c0c0aaee0d51ed07241795e0",
+        "model": "qwen/qwen-2.5-72b-instruct",
+        "source_hash": "3bb3f3e6665d30b90f92",
+        "prompt_hash": "971718c12d9ef3a7a855",
+        "status": "completed",
+        "error_type": "",
+        "started_at": "2026-09-15 02:52:21",
+        "finished_at": "2026-09-15 02:52:21"
+      },
+      {
+        "run_id": "run_b4d9b25617b6",
+        "session_id": "8d832735-a21a-4917-b222-aaf9302ec942",
+        "project_id": "proj_00a69b",
+        "flow": "grader",
+        "agent_version": "ventureai-v2-stage3-2026-09-15",
+        "git_commit": "79753025ee676846c0c0aaee0d51ed07241795e0",
+        "model": "qwen/qwen-2.5-72b-instruct",
+        "source_hash": "3bb3f3e6665d30b90f92",
+        "prompt_hash": "971718c12d9ef3a7a855",
+        "status": "completed",
+        "error_type": "",
+        "started_at": "2026-09-15 02:52:21",
+        "finished_at": "2026-09-15 02:52:21"
       }
     ],
     "gate_history": [
       {
-        "id": 3,
-        "project_id": "proj_ce1464",
+        "id": 4,
+        "project_id": "proj_00a69b",
         "proposal_version": 1,
         "criteria_json": "{\"G1\": true, \"G2\": true, \"G3\": true, \"G4\": true, \"G5\": true, \"G6\": true}",
         "decision": "approved",
         "feedback": "S（模拟教师判断）：仅证明 G1–G6 接口和门槛可运行，不代表真实课程教师通过。",
-        "reviewer_id": "stage3-teacher-65ed7334",
-        "created_at": "2026-09-15 02:50:03"
+        "reviewer_id": "stage3-teacher-6f5e732c",
+        "created_at": "2026-09-15 02:52:21"
       }
     ],
     "score_history": [
       {
-        "id": 5,
-        "project_id": "proj_ce1464",
+        "id": 7,
+        "project_id": "proj_00a69b",
         "category": "project",
         "scores_json": "{\"social_value\": 14, \"evidence_process\": 14, \"innovation\": 13, \"feasibility\": 16, \"team_consistency\": 11}",
         "total": 68,
         "feedback": "S（模拟评分）：仅验证项目成果100分表和独立60分门槛。",
-        "reviewer_id": "stage3-teacher-65ed7334",
-        "created_at": "2026-09-15 02:50:03",
+        "reviewer_id": "stage3-teacher-6f5e732c",
+        "created_at": "2026-09-15 02:52:21",
         "proposal_version": 1,
         "plan_version": 2
       },
       {
-        "id": 6,
-        "project_id": "proj_ce1464",
+        "id": 8,
+        "project_id": "proj_00a69b",
         "category": "agent",
         "scores_json": "{\"three_flows\": 14, \"traceability\": 15, \"effectiveness\": 17, \"correctness\": 14, \"human_boundary\": 11}",
         "total": 71,
         "feedback": "S（模拟评分）：仅验证Agent效果100分表和独立60分门槛。",
-        "reviewer_id": "stage3-teacher-65ed7334",
-        "created_at": "2026-09-15 02:50:03",
+        "reviewer_id": "stage3-teacher-6f5e732c",
+        "created_at": "2026-09-15 02:52:21",
         "proposal_version": 1,
         "plan_version": 2
       }
     ],
     "document_history": [
       {
-        "id": 16,
-        "project_id": "proj_ce1464",
+        "id": 23,
+        "project_id": "proj_00a69b",
         "kind": "proposal",
         "version": 1,
         "basis_version": null,
@@ -575,12 +575,12 @@
         "timed_seconds": null,
         "source": "student",
         "note": "v1：根据 CareAI 项目书整理，所有未验证主张标 H。",
-        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
-        "created_at": "2026-09-15 02:50:03"
+        "created_by": "e6f53b3a-1d5a-42da-ac21-00ab40db7066",
+        "created_at": "2026-09-15 02:52:21"
       },
       {
-        "id": 17,
-        "project_id": "proj_ce1464",
+        "id": 24,
+        "project_id": "proj_00a69b",
         "kind": "plan",
         "version": 1,
         "basis_version": 1,
@@ -590,12 +590,12 @@
         "timed_seconds": null,
         "source": "student",
         "note": "根据 F2 建议由学生整理的初版。",
-        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
-        "created_at": "2026-09-15 02:50:03"
+        "created_by": "e6f53b3a-1d5a-42da-ac21-00ab40db7066",
+        "created_at": "2026-09-15 02:52:21"
       },
       {
-        "id": 18,
-        "project_id": "proj_ce1464",
+        "id": 25,
+        "project_id": "proj_00a69b",
         "kind": "plan",
         "version": 2,
         "basis_version": 1,
@@ -605,12 +605,12 @@
         "timed_seconds": null,
         "source": "student",
         "note": "根据 F3 评审定位人工改写，等待复验。",
-        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
-        "created_at": "2026-09-15 02:50:03"
+        "created_by": "e6f53b3a-1d5a-42da-ac21-00ab40db7066",
+        "created_at": "2026-09-15 02:52:21"
       },
       {
-        "id": 19,
-        "project_id": "proj_ce1464",
+        "id": 26,
+        "project_id": "proj_00a69b",
         "kind": "slides",
         "version": 1,
         "basis_version": 1,
@@ -620,12 +620,12 @@
         "timed_seconds": null,
         "source": "student",
         "note": "与计划书 v2 使用同一证据口径。",
-        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
-        "created_at": "2026-09-15 02:50:03"
+        "created_by": "e6f53b3a-1d5a-42da-ac21-00ab40db7066",
+        "created_at": "2026-09-15 02:52:21"
       },
       {
-        "id": 20,
-        "project_id": "proj_ce1464",
+        "id": 27,
+        "project_id": "proj_00a69b",
         "kind": "script",
         "version": 1,
         "basis_version": 1,
@@ -635,12 +635,12 @@
         "timed_seconds": 588,
         "source": "student",
         "note": "S 模拟计时 588 秒，仅验证计时门槛。",
-        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
-        "created_at": "2026-09-15 02:50:03"
+        "created_by": "e6f53b3a-1d5a-42da-ac21-00ab40db7066",
+        "created_at": "2026-09-15 02:52:21"
       },
       {
-        "id": 21,
-        "project_id": "proj_ce1464",
+        "id": 28,
+        "project_id": "proj_00a69b",
         "kind": "qa",
         "version": 1,
         "basis_version": 1,
@@ -650,12 +650,12 @@
         "timed_seconds": null,
         "source": "student",
         "note": "10个 S 模拟高风险问题，待团队换成真实准备内容。",
-        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
-        "created_at": "2026-09-15 02:50:03"
+        "created_by": "e6f53b3a-1d5a-42da-ac21-00ab40db7066",
+        "created_at": "2026-09-15 02:52:21"
       },
       {
-        "id": 22,
-        "project_id": "proj_ce1464",
+        "id": 29,
+        "project_id": "proj_00a69b",
         "kind": "stage_summary",
         "version": 1,
         "basis_version": 1,
@@ -665,30 +665,30 @@
         "timed_seconds": null,
         "source": "student",
         "note": "仅验证阶段总结版本和完整性门槛。",
-        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
-        "created_at": "2026-09-15 02:50:03"
+        "created_by": "e6f53b3a-1d5a-42da-ac21-00ab40db7066",
+        "created_at": "2026-09-15 02:52:21"
       }
     ],
     "evidence_items": [
       {
-        "id": 5,
-        "project_id": "proj_ce1464",
+        "id": 7,
+        "project_id": "proj_00a69b",
         "label": "S",
         "claim": "本次双门槛评分与教师结论用于系统流程测试",
         "source_ref": "S（模拟）：run_stage3_acceptance.py 自动构造，不是现实教师评价",
         "formula": "无",
-        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
-        "created_at": "2026-09-15 02:50:03"
+        "created_by": "e6f53b3a-1d5a-42da-ac21-00ab40db7066",
+        "created_at": "2026-09-15 02:52:21"
       },
       {
-        "id": 6,
-        "project_id": "proj_ce1464",
+        "id": 8,
+        "project_id": "proj_00a69b",
         "label": "F",
         "claim": "VentureAI 已保存 CareAI 项目材料版本哈希",
         "source_ref": "stage3 evidence-export 的 document_history.content_hash 字段",
         "formula": "SHA-256(content)",
-        "created_by": "10e445f6-e335-41b2-a5f6-ee50e9278317",
-        "created_at": "2026-09-15 02:50:03"
+        "created_by": "e6f53b3a-1d5a-42da-ac21-00ab40db7066",
+        "created_at": "2026-09-15 02:52:21"
       }
     ]
   }
