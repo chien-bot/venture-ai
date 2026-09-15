@@ -346,4 +346,8 @@ def build():
 
 
 if __name__ == "__main__":
-    build()
+    # The submitted deck was shortened after review. Keep the shared styling
+    # helpers and long-form builder here, but make the default command produce
+    # the current compact presentation.
+    from generate_stage3_ppt_compact import build_compact
+    build_compact()
