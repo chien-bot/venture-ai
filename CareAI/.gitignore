@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+
+# Secrets
+.env
+
+# Local database
+*.db
+*.sqlite3
+
+# Node / Vite
+frontend/node_modules/
+frontend/dist/
+.npm-cache/
+
+# TypeScript build metadata and generated config output
+*.tsbuildinfo
+frontend/vite.config.js
+frontend/vite.config.d.ts

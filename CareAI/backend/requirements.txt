@@ -1,0 +1,7 @@
+fastapi>=0.115,<0.116
+# FastAPI 0.115 requires Starlette below 0.39; pinning this prevents an
+# incompatible globally installed Starlette 1.x from breaking application startup.
+starlette>=0.37.2,<0.39.0
+uvicorn[standard]>=0.30,<1.0
+httpx>=0.27,<1.0
+pytest>=8.0,<9.0

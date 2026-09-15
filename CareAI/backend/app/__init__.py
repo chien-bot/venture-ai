@@ -1,0 +1,1 @@
+"""CareAI backend application package."""
