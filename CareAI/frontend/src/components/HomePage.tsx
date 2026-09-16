@@ -1,4 +1,4 @@
-import { ArrowRight, BrainCircuit, ClipboardCheck, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowRight, BookOpenCheck, BrainCircuit, ClipboardCheck, FlaskConical, GraduationCap, LockKeyhole, ShieldCheck, Sparkles } from "lucide-react";
 
 export function HomePage({ onStart }: { onStart: () => void }) {
   return (
@@ -26,8 +26,12 @@ export function HomePage({ onStart }: { onStart: () => void }) {
         {[
           [ClipboardCheck, "健康 Memory", "将带日期的指标、报告和计划完成情况放入个人时间轴。"],
           [BrainCircuit, "主动趋势提示", "基于多次记录发现连续变化；资料不足时不会制造预警。"],
-          [ShieldCheck, "非诊断定位", "不诊断疾病，不替代医生；异常情况建议线下咨询专业人员。"]
-        ].map(([Icon, title, text]) => <article key={String(title)} className="rounded-2xl border border-slate-100 p-5"><span className="mb-4 grid size-10 place-items-center rounded-xl bg-teal-50 text-teal-700"><Icon size={21} /></span><h2 className="font-bold text-slate-900">{String(title)}</h2><p className="mt-2 text-sm leading-6 text-slate-600">{String(text)}</p></article>)}
+          [ShieldCheck, "非诊断定位", "不诊断疾病，不替代医生；异常情况建议线下咨询专业人员。"],
+          [BookOpenCheck, "建议证据卡", "每条判断都能回到输入字段、规则版本、公开来源与不确定性。"],
+          [GraduationCap, "理解确认", "行动前用三道题确认用户理解报告含义、安全边界和下一步。"],
+          [LockKeyhole, "隐私控制", "可关闭外部AI、停止保存、设置保留期限，并主动导出或删除。"],
+          [FlaskConical, "安全实验室", "固定回归案例持续检查诊断、处方和药物建议越权。"]
+        ].map(([Icon, title, text]) => <article key={String(title)} className="border-t border-slate-200 pt-5"><span className="mb-4 grid size-10 place-items-center rounded-xl bg-teal-50 text-teal-700"><Icon size={21} /></span><h2 className="font-bold text-slate-900">{String(title)}</h2><p className="mt-2 text-sm leading-6 text-slate-600">{String(text)}</p></article>)}
       </div></section>
     </main>
   );

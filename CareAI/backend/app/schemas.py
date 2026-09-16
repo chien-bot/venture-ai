@@ -2,6 +2,7 @@
 
 from datetime import date
 from enum import Enum
+from typing import Literal
 
 from pydantic import BaseModel, Field, model_validator
 
@@ -133,6 +134,10 @@ class ReportHistoryItem(BaseModel):
     input: HealthDataInput
     assessment: RuleAssessment
     report: HealthReport
+    generation_source: Literal["constrained_ai", "local_rule", "legacy_unknown"] = "legacy_unknown"
+    generation_model: str = "unknown"
+    agent_version: str = "unknown"
+    rule_version: str = "unknown"
 
 
 class HealthTrendPoint(BaseModel):
@@ -244,6 +249,127 @@ class WeeklyPlanDraft(BaseModel):
     confirmed_at: str | None = None
     tasks: list[PlanTask]
     safety_notice: str
+    version: int = 1
+    previous_draft_id: int | None = None
+    experiment_variable: str = "保持当前计划"
+    difficulty: int = Field(2, ge=1, le=5)
+    experiment_snapshot: dict[str, str | int] = Field(default_factory=dict)
+
+
+class WeeklyPlanExperimentRequest(BaseModel):
+    experiment_variable: Literal["提醒时间", "行动时长", "行动频率", "任务难度"] = "任务难度"
+    difficulty: int = Field(2, ge=1, le=5)
+
+
+class ComprehensionCheckRequest(BaseModel):
+    meaning_answer: Literal["health_education", "medical_diagnosis", "guaranteed_outcome"]
+    boundary_answer: Literal["repeat_and_seek_help", "change_medicine", "ignore_all_results"]
+    action_answer: Literal["choose_one_small_step", "complete_everything_today", "wait_for_diagnosis"]
+
+
+class ComprehensionFeedback(BaseModel):
+    question: str
+    correct: bool
+    explanation: str
+
+
+class ComprehensionCheckResult(BaseModel):
+    report_id: int
+    user_id: str
+    score: int
+    passed: bool
+    attempts: int
+    feedback: list[ComprehensionFeedback]
+    submitted_at: str
+
+
+class EvidenceReference(BaseModel):
+    title: str
+    url: str | None = None
+    use: str
+
+
+class EvidenceCard(BaseModel):
+    id: str
+    kind: Literal["rule", "ai_explanation", "recommendation"]
+    title: str
+    source_fields: list[str]
+    rule_version: str
+    decision_owner: Literal["local_rule", "constrained_ai", "legacy_unknown"]
+    explanation: str
+    uncertainty: str
+    references: list[EvidenceReference]
+
+
+class ReportEvidenceBundle(BaseModel):
+    report_id: int
+    generated_at: str
+    rule_version: str
+    agent_version: str
+    model: str
+    cards: list[EvidenceCard]
+    safety_notice: str
+
+
+class PrivacyPreferences(BaseModel):
+    user_id: str
+    ai_processing_enabled: bool = True
+    save_reports: bool = True
+    retention_days: int = Field(365, ge=0, le=3650)
+    summary_export_enabled: bool = True
+    ai_data_scope: str = "仅发送规则已经确定的关注项，不发送姓名、完整档案或原始健康记录。"
+    updated_at: str | None = None
+
+
+class PrivacyPreferencesUpdate(BaseModel):
+    ai_processing_enabled: bool
+    save_reports: bool
+    retention_days: int = Field(..., ge=0, le=3650)
+    summary_export_enabled: bool
+
+
+class PortableObservation(BaseModel):
+    code: str
+    display: str
+    value: float | int | str
+    unit: str | None = None
+    recorded_at: str
+    source: str
+
+
+class ProvenanceMetadata(BaseModel):
+    schema_version: str
+    generated_at: str
+    rule_version: str
+    source_report_ids: list[int]
+    generator: str
+    boundary: str
+
+
+class PortableHealthSummary(BaseModel):
+    user: UserProfile
+    observations: list[PortableObservation]
+    trend_insights: list[TrendInsight]
+    weekly_review: WeeklyReview
+    provenance: ProvenanceMetadata
+    safety_notice: str
+
+
+class SafetyTestCase(BaseModel):
+    id: str
+    title: str
+    expected: str
+    passed: bool
+    detail: str
+
+
+class SafetySuiteResult(BaseModel):
+    suite_version: str
+    checked_at: str
+    passed: bool
+    pass_count: int
+    total_count: int
+    cases: list[SafetyTestCase]
 
 
 class DoctorSummary(BaseModel):

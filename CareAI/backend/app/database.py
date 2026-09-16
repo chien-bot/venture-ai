@@ -3,12 +3,14 @@
 import json
 import os
 import sqlite3
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from app.schemas import (
-    ActionPlanState, HealthDataInput, HealthReport, HealthTrendPoint, PlanTask,
-    ReportHistoryItem, RuleAssessment, UserProfile, UserProfileInput, WeeklyPlanDraft, WeeklyReview,
+    ActionPlanState, ComprehensionCheckRequest, ComprehensionCheckResult, ComprehensionFeedback,
+    HealthDataInput, HealthReport, HealthTrendPoint, PlanTask, PrivacyPreferences,
+    PrivacyPreferencesUpdate, ReportHistoryItem, RuleAssessment, UserProfile, UserProfileInput,
+    WeeklyPlanDraft, WeeklyReview,
 )
 
 
@@ -48,6 +50,10 @@ def initialize_database() -> None:
         _ensure_column(connection, "health_reports", "user_id", "TEXT NOT NULL DEFAULT 'demo-user'")
         _ensure_column(connection, "health_reports", "recorded_at", "TEXT NOT NULL DEFAULT '2026-01-01'")
         _ensure_column(connection, "health_reports", "source", "TEXT NOT NULL DEFAULT 'manual'")
+        _ensure_column(connection, "health_reports", "generation_source", "TEXT NOT NULL DEFAULT 'legacy_unknown'")
+        _ensure_column(connection, "health_reports", "generation_model", "TEXT NOT NULL DEFAULT 'unknown'")
+        _ensure_column(connection, "health_reports", "agent_version", "TEXT NOT NULL DEFAULT 'unknown'")
+        _ensure_column(connection, "health_reports", "rule_version", "TEXT NOT NULL DEFAULT 'unknown'")
         connection.execute("""CREATE TABLE IF NOT EXISTS action_plans (
             id INTEGER PRIMARY KEY AUTOINCREMENT, report_id INTEGER NOT NULL UNIQUE, user_id TEXT NOT NULL,
             goal TEXT NOT NULL, week_start TEXT NOT NULL, created_at TEXT NOT NULL,
@@ -60,15 +66,32 @@ def initialize_database() -> None:
             id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT NOT NULL, goal TEXT NOT NULL,
             summary TEXT NOT NULL, adjustment_reason TEXT NOT NULL, created_at TEXT NOT NULL,
             confirmed_at TEXT)""")
+        _ensure_column(connection, "weekly_plan_drafts", "version", "INTEGER NOT NULL DEFAULT 1")
+        _ensure_column(connection, "weekly_plan_drafts", "previous_draft_id", "INTEGER")
+        _ensure_column(connection, "weekly_plan_drafts", "experiment_variable", "TEXT NOT NULL DEFAULT '保持当前计划'")
+        _ensure_column(connection, "weekly_plan_drafts", "difficulty", "INTEGER NOT NULL DEFAULT 2")
+        _ensure_column(connection, "weekly_plan_drafts", "experiment_snapshot_json", "TEXT NOT NULL DEFAULT '{}'")
         connection.execute("""CREATE TABLE IF NOT EXISTS weekly_plan_draft_tasks (
             id INTEGER PRIMARY KEY AUTOINCREMENT, draft_id INTEGER NOT NULL, day_number INTEGER NOT NULL,
             content TEXT NOT NULL, completed INTEGER NOT NULL DEFAULT 0, completion_reason TEXT,
             completed_at TEXT, FOREIGN KEY(draft_id) REFERENCES weekly_plan_drafts(id))""")
+        connection.execute("""CREATE TABLE IF NOT EXISTS privacy_preferences (
+            user_id TEXT PRIMARY KEY, ai_processing_enabled INTEGER NOT NULL DEFAULT 1,
+            save_reports INTEGER NOT NULL DEFAULT 1, retention_days INTEGER NOT NULL DEFAULT 365,
+            summary_export_enabled INTEGER NOT NULL DEFAULT 1, updated_at TEXT NOT NULL,
+            FOREIGN KEY(user_id) REFERENCES users(id))""")
+        connection.execute("""CREATE TABLE IF NOT EXISTS comprehension_checks (
+            id INTEGER PRIMARY KEY AUTOINCREMENT, report_id INTEGER NOT NULL, user_id TEXT NOT NULL,
+            meaning_answer TEXT NOT NULL, boundary_answer TEXT NOT NULL, action_answer TEXT NOT NULL,
+            score INTEGER NOT NULL, passed INTEGER NOT NULL, attempts INTEGER NOT NULL,
+            feedback_json TEXT NOT NULL, submitted_at TEXT NOT NULL,
+            FOREIGN KEY(report_id) REFERENCES health_reports(id))""")
         now = _utc_now()
         connection.execute("""INSERT OR IGNORE INTO users (id, display_name, created_at, updated_at)
             VALUES ('demo-user', '健康记忆演示用户', ?, ?)""", (now, now))
         connection.execute("CREATE INDEX IF NOT EXISTS idx_reports_user_date ON health_reports(user_id, recorded_at DESC, id DESC)")
         connection.execute("CREATE INDEX IF NOT EXISTS idx_plans_user_week ON action_plans(user_id, week_start DESC)")
+        connection.execute("CREATE INDEX IF NOT EXISTS idx_checks_report_user ON comprehension_checks(report_id, user_id, id DESC)")
 
 
 def _to_user_profile(row: sqlite3.Row) -> UserProfile:
@@ -114,19 +137,29 @@ def _ensure_user_for_input(data: HealthDataInput) -> None:
         save_user_profile(UserProfileInput(id=data.user_id, display_name=data.user_id, age=data.age, gender=data.gender, health_goal=data.health_goal))
 
 
-def save_health_report(data: HealthDataInput, assessment: RuleAssessment, report: HealthReport) -> ReportHistoryItem:
+def save_health_report(
+    data: HealthDataInput,
+    assessment: RuleAssessment,
+    report: HealthReport,
+    generation_source: str = "legacy_unknown",
+    generation_model: str = "unknown",
+    agent_version: str = "unknown",
+    rule_version: str = "unknown",
+) -> ReportHistoryItem:
     """Persist a completed report and its initial plan for one local profile."""
     initialize_database()
     _ensure_user_for_input(data)
     created_at = _utc_now()
     with _connect() as connection:
         cursor = connection.execute("""INSERT INTO health_reports
-            (created_at, input_json, assessment_json, report_json, user_id, recorded_at, source)
-            VALUES (?, ?, ?, ?, ?, ?, ?)""", (
+            (created_at, input_json, assessment_json, report_json, user_id, recorded_at, source,
+             generation_source, generation_model, agent_version, rule_version)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""", (
             created_at, json.dumps(data.model_dump(mode="json"), ensure_ascii=False),
             json.dumps(assessment.model_dump(mode="json"), ensure_ascii=False),
             json.dumps(report.model_dump(mode="json"), ensure_ascii=False), data.user_id,
-            data.recorded_at.isoformat(), data.source,
+            data.recorded_at.isoformat(), data.source, generation_source, generation_model,
+            agent_version, rule_version,
         ))
         report_id = int(cursor.lastrowid)
         plan_cursor = connection.execute("""INSERT INTO action_plans
@@ -136,7 +169,11 @@ def save_health_report(data: HealthDataInput, assessment: RuleAssessment, report
         plan_id = int(plan_cursor.lastrowid)
         connection.executemany("INSERT INTO plan_tasks (plan_id, day_number, content) VALUES (?, ?, ?)",
             [(plan_id, index + 1, content) for index, content in enumerate(report.action_plan)])
-    return ReportHistoryItem(id=report_id, created_at=created_at, input=data, assessment=assessment, report=report)
+    return ReportHistoryItem(
+        id=report_id, created_at=created_at, input=data, assessment=assessment, report=report,
+        generation_source=generation_source, generation_model=generation_model,
+        agent_version=agent_version, rule_version=rule_version,
+    )
 
 
 def _to_history_item(row: sqlite3.Row) -> ReportHistoryItem:
@@ -147,7 +184,9 @@ def _to_history_item(row: sqlite3.Row) -> ReportHistoryItem:
     return ReportHistoryItem(id=int(row["id"]), created_at=row["created_at"],
         input=HealthDataInput.model_validate(input_data),
         assessment=RuleAssessment.model_validate(json.loads(row["assessment_json"])),
-        report=HealthReport.model_validate(json.loads(row["report_json"])))
+        report=HealthReport.model_validate(json.loads(row["report_json"])),
+        generation_source=row["generation_source"], generation_model=row["generation_model"],
+        agent_version=row["agent_version"], rule_version=row["rule_version"])
 
 
 def list_health_reports(user_id: str = "demo-user", limit: int = 20) -> list[ReportHistoryItem]:
@@ -172,6 +211,7 @@ def delete_health_report(report_id: int, user_id: str) -> bool:
         if plan:
             connection.execute("DELETE FROM plan_tasks WHERE plan_id = ?", (plan["id"],))
             connection.execute("DELETE FROM action_plans WHERE id = ?", (plan["id"],))
+        connection.execute("DELETE FROM comprehension_checks WHERE report_id = ? AND user_id = ?", (report_id, user_id))
         deleted = connection.execute("DELETE FROM health_reports WHERE id = ? AND user_id = ?", (report_id, user_id))
     return deleted.rowcount > 0
 
@@ -207,7 +247,7 @@ def update_plan_task(task_id: int, user_id: str, completed: bool, completion_rea
             return None
         completed_at = _utc_now() if completed else None
         connection.execute("UPDATE plan_tasks SET completed = ?, completion_reason = ?, completed_at = ? WHERE id = ?",
-            (int(completed), completion_reason if completed else None, completed_at, task_id))
+            (int(completed), completion_reason, completed_at, task_id))
         updated = connection.execute("SELECT * FROM plan_tasks WHERE id = ?", (task_id,)).fetchone()
     return PlanTask(id=int(updated["id"]), day_number=updated["day_number"], content=updated["content"],
         completed=bool(updated["completed"]), completion_reason=updated["completion_reason"], completed_at=updated["completed_at"])
@@ -225,7 +265,7 @@ def update_weekly_plan_draft_task(task_id: int, user_id: str, completed: bool, c
             return None
         completed_at = _utc_now() if completed else None
         connection.execute("UPDATE weekly_plan_draft_tasks SET completed = ?, completion_reason = ?, completed_at = ? WHERE id = ?",
-            (int(completed), completion_reason if completed else None, completed_at, task_id))
+            (int(completed), completion_reason, completed_at, task_id))
         updated = connection.execute("SELECT * FROM weekly_plan_draft_tasks WHERE id = ?", (task_id,)).fetchone()
     return PlanTask(id=int(updated["id"]), day_number=updated["day_number"], content=updated["content"],
         completed=bool(updated["completed"]), completion_reason=updated["completion_reason"], completed_at=updated["completed_at"])
@@ -261,21 +301,64 @@ def _to_weekly_plan_draft(row: sqlite3.Row, connection: sqlite3.Connection) -> W
     tasks = connection.execute("SELECT * FROM weekly_plan_draft_tasks WHERE draft_id = ? ORDER BY day_number", (row["id"],)).fetchall()
     return WeeklyPlanDraft(id=int(row["id"]), user_id=row["user_id"], goal=row["goal"], summary=row["summary"],
         adjustment_reason=row["adjustment_reason"], created_at=row["created_at"], confirmed_at=row["confirmed_at"],
+        version=int(row["version"]), previous_draft_id=row["previous_draft_id"],
+        experiment_variable=row["experiment_variable"], difficulty=int(row["difficulty"]),
+        experiment_snapshot=json.loads(row["experiment_snapshot_json"] or "{}"),
         tasks=[PlanTask(id=int(task["id"]), day_number=task["day_number"], content=task["content"], completed=bool(task["completed"]), completion_reason=task["completion_reason"], completed_at=task["completed_at"]) for task in tasks],
         safety_notice="本计划仅用于生活方式管理，不构成医疗诊断、处方或用药建议。")
 
 
-def save_weekly_plan_draft(user_id: str, goal: str, summary: str, adjustment_reason: str, tasks: list[str]) -> WeeklyPlanDraft:
+def save_weekly_plan_draft(
+    user_id: str,
+    goal: str,
+    summary: str,
+    adjustment_reason: str,
+    tasks: list[str],
+    experiment_variable: str = "保持当前计划",
+    difficulty: int = 2,
+    experiment_snapshot: dict[str, str | int] | None = None,
+) -> WeeklyPlanDraft:
     initialize_database()
     created_at = _utc_now()
     with _connect() as connection:
-        cursor = connection.execute("INSERT INTO weekly_plan_drafts (user_id, goal, summary, adjustment_reason, created_at) VALUES (?, ?, ?, ?, ?)",
-            (user_id, goal, summary, adjustment_reason, created_at))
+        previous = connection.execute("SELECT id, version FROM weekly_plan_drafts WHERE user_id = ? ORDER BY id DESC LIMIT 1", (user_id,)).fetchone()
+        version = int(previous["version"]) + 1 if previous else 1
+        previous_id = int(previous["id"]) if previous else None
+        cursor = connection.execute("""INSERT INTO weekly_plan_drafts
+            (user_id, goal, summary, adjustment_reason, created_at, version, previous_draft_id,
+             experiment_variable, difficulty, experiment_snapshot_json)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+            (user_id, goal, summary, adjustment_reason, created_at, version, previous_id,
+             experiment_variable, difficulty, json.dumps(experiment_snapshot or {}, ensure_ascii=False)))
         draft_id = int(cursor.lastrowid)
         connection.executemany("INSERT INTO weekly_plan_draft_tasks (draft_id, day_number, content) VALUES (?, ?, ?)",
             [(draft_id, index + 1, task) for index, task in enumerate(tasks)])
         row = connection.execute("SELECT * FROM weekly_plan_drafts WHERE id = ?", (draft_id,)).fetchone()
         return _to_weekly_plan_draft(row, connection)
+
+
+def get_latest_weekly_plan_draft(user_id: str) -> WeeklyPlanDraft | None:
+    initialize_database()
+    with _connect() as connection:
+        row = connection.execute(
+            "SELECT * FROM weekly_plan_drafts WHERE user_id = ? ORDER BY id DESC LIMIT 1", (user_id,)
+        ).fetchone()
+        return _to_weekly_plan_draft(row, connection) if row else None
+
+
+def is_plan_task_unlocked(task_id: int, user_id: str) -> bool:
+    """Action tracking starts only after the report's latest understanding check passed."""
+    initialize_database()
+    with _connect() as connection:
+        row = connection.execute("""SELECT action_plans.report_id FROM plan_tasks
+            JOIN action_plans ON action_plans.id = plan_tasks.plan_id
+            WHERE plan_tasks.id = ? AND action_plans.user_id = ?""", (task_id, user_id)).fetchone()
+        if row is None:
+            return False
+        passed = connection.execute("""SELECT passed FROM comprehension_checks
+            WHERE report_id = ? AND user_id = ? ORDER BY id DESC LIMIT 1""",
+            (row["report_id"], user_id)).fetchone()
+    return bool(passed and passed["passed"])
 
 
 def confirm_weekly_plan_draft(draft_id: int, user_id: str) -> WeeklyPlanDraft | None:
@@ -288,3 +371,124 @@ def confirm_weekly_plan_draft(draft_id: int, user_id: str) -> WeeklyPlanDraft | 
             connection.execute("UPDATE weekly_plan_drafts SET confirmed_at = ? WHERE id = ?", (_utc_now(), draft_id))
         updated = connection.execute("SELECT * FROM weekly_plan_drafts WHERE id = ?", (draft_id,)).fetchone()
         return _to_weekly_plan_draft(updated, connection)
+
+
+def get_privacy_preferences(user_id: str) -> PrivacyPreferences:
+    initialize_database()
+    with _connect() as connection:
+        row = connection.execute("SELECT * FROM privacy_preferences WHERE user_id = ?", (user_id,)).fetchone()
+        if row is None:
+            now = _utc_now()
+            connection.execute("INSERT INTO privacy_preferences (user_id, updated_at) VALUES (?, ?)", (user_id, now))
+            row = connection.execute("SELECT * FROM privacy_preferences WHERE user_id = ?", (user_id,)).fetchone()
+    return PrivacyPreferences(
+        user_id=user_id,
+        ai_processing_enabled=bool(row["ai_processing_enabled"]),
+        save_reports=bool(row["save_reports"]),
+        retention_days=int(row["retention_days"]),
+        summary_export_enabled=bool(row["summary_export_enabled"]),
+        updated_at=row["updated_at"],
+    )
+
+
+def save_privacy_preferences(user_id: str, data: PrivacyPreferencesUpdate) -> PrivacyPreferences:
+    initialize_database()
+    now = _utc_now()
+    with _connect() as connection:
+        connection.execute("""INSERT INTO privacy_preferences
+            (user_id, ai_processing_enabled, save_reports, retention_days, summary_export_enabled, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?)
+            ON CONFLICT(user_id) DO UPDATE SET ai_processing_enabled=excluded.ai_processing_enabled,
+            save_reports=excluded.save_reports, retention_days=excluded.retention_days,
+            summary_export_enabled=excluded.summary_export_enabled, updated_at=excluded.updated_at""",
+            (user_id, int(data.ai_processing_enabled), int(data.save_reports), data.retention_days,
+             int(data.summary_export_enabled), now))
+    purge_expired_reports(user_id, data.retention_days)
+    return get_privacy_preferences(user_id)
+
+
+def purge_expired_reports(user_id: str, retention_days: int) -> int:
+    if retention_days == 0:
+        return 0
+    initialize_database()
+    cutoff = (datetime.now(timezone.utc) - timedelta(days=retention_days)).date().isoformat()
+    with _connect() as connection:
+        report_rows = connection.execute(
+            "SELECT id FROM health_reports WHERE user_id = ? AND recorded_at < ?", (user_id, cutoff)
+        ).fetchall()
+    deleted = 0
+    for row in report_rows:
+        deleted += int(delete_health_report(int(row["id"]), user_id))
+    return deleted
+
+
+def delete_all_health_data(user_id: str) -> int:
+    """Delete reports, plans, reviews and comprehension checks while retaining the local profile."""
+    initialize_database()
+    with _connect() as connection:
+        report_count = int(connection.execute(
+            "SELECT COUNT(*) AS count FROM health_reports WHERE user_id = ?", (user_id,)
+        ).fetchone()["count"])
+        plan_ids = [row["id"] for row in connection.execute("SELECT id FROM action_plans WHERE user_id = ?", (user_id,))]
+        draft_ids = [row["id"] for row in connection.execute("SELECT id FROM weekly_plan_drafts WHERE user_id = ?", (user_id,))]
+        for plan_id in plan_ids:
+            connection.execute("DELETE FROM plan_tasks WHERE plan_id = ?", (plan_id,))
+        for draft_id in draft_ids:
+            connection.execute("DELETE FROM weekly_plan_draft_tasks WHERE draft_id = ?", (draft_id,))
+        connection.execute("DELETE FROM action_plans WHERE user_id = ?", (user_id,))
+        connection.execute("DELETE FROM weekly_plan_drafts WHERE user_id = ?", (user_id,))
+        connection.execute("DELETE FROM comprehension_checks WHERE user_id = ?", (user_id,))
+        connection.execute("DELETE FROM health_reports WHERE user_id = ?", (user_id,))
+    return report_count
+
+
+def save_comprehension_check(
+    report_id: int, user_id: str, data: ComprehensionCheckRequest
+) -> ComprehensionCheckResult | None:
+    initialize_database()
+    with _connect() as connection:
+        owned = connection.execute(
+            "SELECT id FROM health_reports WHERE id = ? AND user_id = ?", (report_id, user_id)
+        ).fetchone()
+        if owned is None:
+            return None
+        previous = connection.execute(
+            "SELECT COUNT(*) AS count FROM comprehension_checks WHERE report_id = ? AND user_id = ?",
+            (report_id, user_id),
+        ).fetchone()
+        attempts = int(previous["count"]) + 1
+        answers = [
+            ("报告含义", data.meaning_answer == "health_education", "这是健康教育和生活方式提示，不是医疗结论。"),
+            ("安全边界", data.boundary_answer == "repeat_and_seek_help", "明显异常应复测；持续异常或伴随不适时应咨询线下专业人员。"),
+            ("下一步行动", data.action_answer == "choose_one_small_step", "先选择一个低负担行动并记录执行情况，更容易判断什么有帮助。"),
+        ]
+        feedback = [ComprehensionFeedback(question=q, correct=ok, explanation=detail) for q, ok, detail in answers]
+        score = sum(item.correct for item in feedback)
+        passed = score == 3
+        submitted_at = _utc_now()
+        connection.execute("""INSERT INTO comprehension_checks
+            (report_id, user_id, meaning_answer, boundary_answer, action_answer, score, passed, attempts, feedback_json, submitted_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""", (
+                report_id, user_id, data.meaning_answer, data.boundary_answer, data.action_answer,
+                score, int(passed), attempts,
+                json.dumps([item.model_dump() for item in feedback], ensure_ascii=False), submitted_at,
+            ))
+    return ComprehensionCheckResult(
+        report_id=report_id, user_id=user_id, score=score, passed=passed,
+        attempts=attempts, feedback=feedback, submitted_at=submitted_at,
+    )
+
+
+def get_latest_comprehension_check(report_id: int, user_id: str) -> ComprehensionCheckResult | None:
+    initialize_database()
+    with _connect() as connection:
+        row = connection.execute("""SELECT * FROM comprehension_checks
+            WHERE report_id = ? AND user_id = ? ORDER BY id DESC LIMIT 1""", (report_id, user_id)).fetchone()
+    if row is None:
+        return None
+    return ComprehensionCheckResult(
+        report_id=report_id, user_id=user_id, score=int(row["score"]), passed=bool(row["passed"]),
+        attempts=int(row["attempts"]),
+        feedback=[ComprehensionFeedback.model_validate(item) for item in json.loads(row["feedback_json"])],
+        submitted_at=row["submitted_at"],
+    )

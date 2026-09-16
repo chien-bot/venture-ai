@@ -151,6 +151,53 @@ class V2TraceabilityTests(unittest.TestCase):
         self.assertNotIn("通过问卷调查、访谈等方式获取真实用户反馈", reply)
         self.assertIn("课程内证据/假设表", reply)
 
+    def test_tutor_labels_invented_project_results_as_simulation(self) -> None:
+        from services.course_boundary import enforce_tutor_boundary
+
+        reply = enforce_tutor_boundary(
+            "例子：项目引入AI技术，经过运营后用户留存率很高、复购率上升，用户反馈积极。\n\n"
+            "练习任务：收集并分析至少10名早期用户的反馈。\n\n"
+            "评价标准：是否收集到了至少10名用户的反馈。",
+            "请解释PMF，给例子和反例，并说明适用边界。",
+        )
+
+        self.assertIn("H（假设）", reply)
+        self.assertIn("S（模拟）", reply)
+        self.assertIn("不能把其中的技术、用户反馈、运营结果或数字当作", reply)
+        self.assertNotIn("收集并分析至少10名", reply)
+        self.assertNotIn("是否收集到了至少10名", reply)
+        self.assertIn("适用边界", reply)
+
+    def test_tutor_keeps_only_one_requested_comprehension_question(self) -> None:
+        from services.course_boundary import enforce_tutor_boundary
+
+        reply = enforce_tutor_boundary(
+            "### 理解检查问题\n\n第一个问题是什么？\n\n第二个问题是什么？",
+            "请在最后问我一个理解检查问题。",
+        )
+
+        self.assertIn("第一个问题是什么？", reply)
+        self.assertNotIn("第二个问题是什么？", reply)
+
+    def test_abandoned_stream_run_is_closed_without_overwriting_completion(self) -> None:
+        from services.run_registry import fail_run_if_running, finish_run, start_run
+        from services.database import get_conn
+
+        run_id = f"run_{uuid4().hex[:12]}"
+        start_run(run_id, "stream-session", "", "grader", "test", "mock")
+        self.assertTrue(fail_run_if_running(run_id, "ClientDisconnected"))
+        self.assertFalse(fail_run_if_running(run_id, "ClientDisconnected"))
+
+        with get_conn() as conn:
+            row = conn.execute(
+                "SELECT status, error_type FROM agent_runs WHERE run_id=?", (run_id,)
+            ).fetchone()
+        self.assertEqual(row["status"], "failed")
+        self.assertEqual(row["error_type"], "ClientDisconnected")
+
+        finish_run(run_id, "completed")
+        self.assertFalse(fail_run_if_running(run_id, "ClientDisconnected"))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -6,7 +6,7 @@ from config import USE_MOCK_API
 from services.claude_client import chat_completion
 from prompts.tutor import TUTOR_SYSTEM_PROMPT
 from mock.responses import MOCK_TUTOR_REPLIES
-from services.course_boundary import enforce_course_boundary
+from services.course_boundary import enforce_tutor_boundary
 
 
 def _enforce_single_practice_task(text: str) -> str:
@@ -90,7 +90,7 @@ def tutor_node(state: AgentState) -> AgentState:
 
     # A1-1: enforce single practice task constraint
     reply = _enforce_single_practice_task(reply)
-    reply = enforce_course_boundary(reply, message)
+    reply = enforce_tutor_boundary(reply, message)
 
     return {
         **state,

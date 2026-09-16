@@ -53,3 +53,18 @@ def finish_run(run_id: str, status: str, error_type: str = "") -> None:
             "UPDATE agent_runs SET status=?, error_type=?, finished_at=datetime('now') WHERE run_id=?",
             (status, error_type[:100], run_id),
         )
+
+
+def fail_run_if_running(run_id: str, error_type: str) -> bool:
+    """Close an abandoned stream without overwriting a completed result."""
+    with get_conn() as conn:
+        row = conn.execute(
+            "SELECT status FROM agent_runs WHERE run_id=?", (run_id,)
+        ).fetchone()
+        if not row or row["status"] != "running":
+            return False
+        conn.execute(
+            "UPDATE agent_runs SET status='failed', error_type=?, finished_at=datetime('now') WHERE run_id=?",
+            (error_type[:100], run_id),
+        )
+        return True

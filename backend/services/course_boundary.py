@@ -42,6 +42,14 @@ def enforce_course_boundary(text: str, request: str) -> str:
             "整理课程内模拟情境或公开资料核验结果，并明确其证据等级",
         ),
         (
+            r"收集并分析至少\s*\d+\s*名[^，。\n]*用户的反馈",
+            "整理一份课程内证据/假设表，并把真实用户反馈列为后续验证计划",
+        ),
+        (
+            r"是否收集到了至少\s*\d+\s*名用户的反馈",
+            "是否清楚标出了已有证据、假设与后续真实验证计划",
+        ),
+        (
             r"通过问卷调查、访谈等方式获取真实用户反馈",
             "通过公开资料核验或明确标注的课程模拟材料补足证据，并把真实用户验证列为后续计划",
         ),
@@ -91,4 +99,41 @@ def enforce_course_boundary(text: str, request: str) -> str:
 
     if notices:
         return "**证据边界：** " + " ".join(notices) + "\n\n" + text
+    return text
+
+
+def enforce_tutor_boundary(text: str, request: str) -> str:
+    """Keep project-based teaching examples from becoming project facts."""
+    text = enforce_course_boundary(text, request)
+
+    example_signals = ("例子", "案例", "反例")
+    unverified_result_signals = (
+        "留存率", "复购率", "用户反馈", "用户流失", "运营", "付费", "收入",
+        "访谈", "问卷", "已有真实用户", "AI技术", "AI 技术",
+    )
+    if any(signal in text for signal in example_signals) and any(
+        signal in text for signal in unverified_result_signals
+    ):
+        notice = (
+            "**示例证据边界：** 下列与当前项目有关的例子和反例均为 H（假设）或 "
+            "S（模拟）教学情境，除非另附可定位来源；不能把其中的技术、用户反馈、"
+            "运营结果或数字当作项目已经发生的事实。"
+        )
+        if "**示例证据边界：**" not in text:
+            text = notice + "\n\n" + text
+
+    if "适用边界" in request and "适用边界" not in text:
+        text += (
+            "\n\n### 适用边界\n"
+            "这个概念只能帮助分析项目是否获得了持续、可核验的目标用户价值信号；"
+            "不能仅凭功能完成、模拟反馈、单次使用或没有来源的数字宣布已经成立。"
+        )
+
+    if "一个理解检查问题" in request:
+        marker = re.search(r"(?m)^#{0,4}\s*理解检查问题\s*$", text)
+        if marker:
+            section = text[marker.end():]
+            first_question_end = section.find("？")
+            if first_question_end >= 0:
+                text = text[:marker.end()] + section[:first_question_end + 1]
     return text

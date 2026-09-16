@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from uuid import uuid4
+import json
 from models.schemas import ChatRequest, ChatResponse
 from agents.router import run_agent, run_agent_stream, get_greeting
 from config import AGENT_VERSION, MODEL_MAIN, USE_MOCK_API
@@ -408,8 +409,27 @@ def send_message_stream(req: ChatRequest, request: Request):
     project_id = req.project_id or get_project_for_session(req.session_id)
 
     def event_generator():
-        for event in run_agent_stream(req.session_id, req.message, req.agent_type, project_id=project_id):
-            yield event
+        active_run_id = None
+        completed = False
+        try:
+            for event in run_agent_stream(req.session_id, req.message, req.agent_type, project_id=project_id):
+                if event.startswith("data: "):
+                    try:
+                        payload = json.loads(event.removeprefix("data: ").strip())
+                        active_run_id = payload.get("run_id") or active_run_id
+                        completed = completed or payload.get("type") == "done"
+                    except (json.JSONDecodeError, AttributeError):
+                        pass
+                yield event
+        finally:
+            if active_run_id and not completed:
+                from services.run_registry import fail_run_if_running
+                if fail_run_if_running(active_run_id, "ClientDisconnected"):
+                    record_session_event(
+                        req.session_id,
+                        "RUN_FAILED",
+                        {"error_type": "ClientDisconnected", "message": "stream ended before done"},
+                    )
 
         # Post-stream: update project scores (from the 'done' event data)
         # This is handled by the frontend calling the scores from the done event.

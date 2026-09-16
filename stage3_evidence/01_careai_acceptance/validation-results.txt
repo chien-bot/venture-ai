@@ -3,8 +3,8 @@ Date: 2026-09-15 (Asia/Shanghai)
 
 [PASS] Backend complete suite
 Command: backend/.venv/bin/python -m unittest discover -s tests -v
-Result: Ran 15 tests in 4.563s — OK
-Coverage includes: CareAI regressions (6), stage-three acceptance/security (4), V2 traceability/failure handling (5).
+Result: Ran 18 tests — OK (re-run 2026-09-16)
+Coverage includes: CareAI regressions (6), stage-three acceptance/security (4), V2 traceability, evidence-boundary and stream-failure handling (8).
 
 [PASS] Frontend type check
 Command: npx tsc --noEmit
@@ -28,3 +28,9 @@ Result: 13,430 extracted characters; markers “双门槛”, “D1” and “F1
 [PASS] Source formatting
 Command: git diff --check
 Result: exit 0, no whitespace errors.
+
+[PARTIAL] Final live-model random rehearsal (2026-09-16)
+F1: initial project-example evidence issue found, fixed and re-tested successfully; run run_0f2bf35c9ed0.
+F2: completed without inventing missing interviews or market data; run run_da943ff15ee2.
+F3: browser probe ended before the long grader response completed; run run_a34f6a2afb00 was closed as failed instead of being presented as success. A same-version recovered grader result remains available in stage2 evidence.
+Details and screenshots: stage3_evidence/03_final_rehearsal/README.md.

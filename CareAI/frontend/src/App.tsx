@@ -6,6 +6,8 @@ import { HistoryPage } from "./components/HistoryPage";
 import { HomePage } from "./components/HomePage";
 import { ProfilePage } from "./components/ProfilePage";
 import { ReportView } from "./components/ReportView";
+import { PrivacyPage } from "./components/PrivacyPage";
+import { SafetyLabPage } from "./components/SafetyLabPage";
 import { reportPlanKey } from "./lib/reportStorage";
 import type { HealthInput, HealthReport, HealthTrendPoint, ReportHistoryItem, StoredHealthInput, TrendInsight, UserProfile, WeeklyReview } from "./types";
 
@@ -17,6 +19,7 @@ function App() {
   const [reportInput, setReportInput] = useState<HealthInput | StoredHealthInput | null>(null);
   const [reportBmi, setReportBmi] = useState<number | null>(null);
   const [activeReportId, setActiveReportId] = useState<number | null>(null);
+  const [reportGenerationSource, setReportGenerationSource] = useState<"constrained_ai" | "local_rule" | "legacy_unknown">("legacy_unknown");
   const [activePlanKey, setActivePlanKey] = useState<string | null>(null);
   const [historyReports, setHistoryReports] = useState<ReportHistoryItem[]>([]);
   const [trendPoints, setTrendPoints] = useState<HealthTrendPoint[]>([]);
@@ -39,6 +42,7 @@ function App() {
       setReportInput(input);
       setReportBmi(Math.round((input.weight / ((input.height / 100) ** 2)) * 10) / 10);
       setActiveReportId(result.reportId ?? null);
+      setReportGenerationSource(result.generationSource);
       setActivePlanKey(reportPlanKey(result.report, result.reportId));
       setActivePage("report");
       void loadHistory();
@@ -88,6 +92,7 @@ function App() {
     setReportInput(historyReport.input);
     setReportBmi(historyReport.assessment.bmi);
     setActiveReportId(historyReport.id);
+    setReportGenerationSource(historyReport.generation_source);
     setActivePlanKey(reportPlanKey(historyReport.report, historyReport.id));
     setActivePage("report");
   }
@@ -112,7 +117,7 @@ function App() {
 
   function changeActiveUser(userId: string) {
     const selected = profiles.find((profile) => profile.id === userId);
-    if (selected) { setActiveUser(selected); setReport(null); setActiveReportId(null); }
+    if (selected) { setActiveUser(selected); setReport(null); setActiveReportId(null); setReportGenerationSource("legacy_unknown"); }
   }
 
   async function removeHistoryReport(reportId: number) {
@@ -124,9 +129,11 @@ function App() {
   return <div className="min-h-screen bg-[#f8fafb] text-slate-900"><Header activePage={activePage} onNavigate={setActivePage} profiles={profiles} activeUserId={activeUser.id} onUserChange={changeActiveUser} />
     {activePage === "home" && <HomePage onStart={goToForm} />}
     {activePage === "form" && <HealthForm onSubmit={submitHealthData} isLoading={isLoading} error={error} userId={activeUser.id} defaultGoal={activeUser.health_goal} />}
-    {activePage === "report" && <ReportView report={report} input={reportInput} bmi={reportBmi} planStorageKey={activePlanKey} previousReport={previousReport} onStart={goToForm} reportId={activeReportId} userId={activeUser.id} />}
+    {activePage === "report" && <ReportView report={report} input={reportInput} bmi={reportBmi} planStorageKey={activePlanKey} previousReport={previousReport} onStart={goToForm} reportId={activeReportId} userId={activeUser.id} generationSource={reportGenerationSource} />}
     {activePage === "history" && <HistoryPage reports={historyReports} trends={trendPoints} insights={insights} weeklyReview={weeklyReview} user={activeUser} isLoading={historyLoading} error={historyError} onView={viewHistoryReport} onDelete={removeHistoryReport} onRetry={loadHistory} />}
     {activePage === "profile" && <ProfilePage profile={activeUser} onSave={persistProfile} onCreate={createDemoProfile} saving={profileSaving} />}
+    {activePage === "privacy" && <PrivacyPage user={activeUser} onDataDeleted={() => { setHistoryReports([]); setTrendPoints([]); setInsights([]); setWeeklyReview(null); setReport(null); setActiveReportId(null); }} />}
+    {activePage === "safety" && <SafetyLabPage />}
     <footer className="border-t border-slate-200 bg-white"><div className="mx-auto max-w-6xl px-5 py-6 text-xs leading-5 text-slate-500">CareAI 是 AI 辅助健康风险管理工具，仅提供健康风险提示与健康教育，不诊断疾病，也不替代医生的专业意见。</div></footer>
   </div>;
 }

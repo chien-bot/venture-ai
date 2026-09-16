@@ -51,6 +51,10 @@ export interface ReportHistoryItem {
   input: StoredHealthInput;
   assessment: RuleAssessment;
   report: HealthReport;
+  generation_source: "constrained_ai" | "local_rule" | "legacy_unknown";
+  generation_model: string;
+  agent_version: string;
+  rule_version: string;
 }
 
 export interface HealthTrendPoint {
@@ -122,6 +126,107 @@ export interface WeeklyPlanDraft {
   confirmed_at: string | null;
   tasks: PlanTask[];
   safety_notice: string;
+  version: number;
+  previous_draft_id: number | null;
+  experiment_variable: string;
+  difficulty: number;
+  experiment_snapshot: Record<string, string | number>;
+}
+
+export interface ComprehensionFeedback {
+  question: string;
+  correct: boolean;
+  explanation: string;
+}
+
+export interface ComprehensionCheckResult {
+  report_id: number;
+  user_id: string;
+  score: number;
+  passed: boolean;
+  attempts: number;
+  feedback: ComprehensionFeedback[];
+  submitted_at: string;
+}
+
+export interface EvidenceReference {
+  title: string;
+  url: string | null;
+  use: string;
+}
+
+export interface EvidenceCard {
+  id: string;
+  kind: "rule" | "ai_explanation" | "recommendation";
+  title: string;
+  source_fields: string[];
+  rule_version: string;
+  decision_owner: "local_rule" | "constrained_ai" | "legacy_unknown";
+  explanation: string;
+  uncertainty: string;
+  references: EvidenceReference[];
+}
+
+export interface ReportEvidenceBundle {
+  report_id: number;
+  generated_at: string;
+  rule_version: string;
+  agent_version: string;
+  model: string;
+  cards: EvidenceCard[];
+  safety_notice: string;
+}
+
+export interface PrivacyPreferences {
+  user_id: string;
+  ai_processing_enabled: boolean;
+  save_reports: boolean;
+  retention_days: number;
+  summary_export_enabled: boolean;
+  ai_data_scope: string;
+  updated_at: string | null;
+}
+
+export interface PortableObservation {
+  code: string;
+  display: string;
+  value: string | number;
+  unit: string | null;
+  recorded_at: string;
+  source: string;
+}
+
+export interface PortableHealthSummary {
+  user: UserProfile;
+  observations: PortableObservation[];
+  trend_insights: TrendInsight[];
+  weekly_review: WeeklyReview;
+  provenance: {
+    schema_version: string;
+    generated_at: string;
+    rule_version: string;
+    source_report_ids: number[];
+    generator: string;
+    boundary: string;
+  };
+  safety_notice: string;
+}
+
+export interface SafetyTestCase {
+  id: string;
+  title: string;
+  expected: string;
+  passed: boolean;
+  detail: string;
+}
+
+export interface SafetySuiteResult {
+  suite_version: string;
+  checked_at: string;
+  passed: boolean;
+  pass_count: number;
+  total_count: number;
+  cases: SafetyTestCase[];
 }
 
 export interface DoctorSummary {

@@ -7,5 +7,6 @@
 - `01_careai_acceptance/student-stage3.png`：学生端材料版本与闯关状态截图。
 - `01_careai_acceptance/teacher-stage3.png`：教师端 G1–G6 和独立评分表截图。
 - `01_careai_acceptance/validation-results.txt`：后端完整测试、前端类型检查和构建结果。
+- `03_final_rehearsal/`：2026-09-16最终现场彩排、F1修复复测、F2真实运行与F3中断证据。
 
 所有自动生成的教师判断、评分、D1–D9 和计时都标为 `S（模拟）`，只证明系统功能可运行。真实课程验收必须由学生提交真实材料、教师本人复审评分并完成现场答辩。

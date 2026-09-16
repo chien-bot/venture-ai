@@ -64,10 +64,16 @@ Open `http://localhost:3000`. The backend health check is
   `stage2_evidence/04_live_runs/U1-U6-live-20260911-193404.json`. It contains
   the six raw results and their trace metadata; earlier runs are retained as
   the repair history.
+- The frozen final system version is tag
+  `ventureai-v2-stage3-2026-09-15` at commit `7975302`. Presentation files
+  created after the freeze do not change that system version.
+- The final classroom handoff, including acceptance hardening and the three
+  assistant-specific material sets, is tag
+  `ventureai-v2-stage3-final-2026-09-16` on branch `HC`.
 
 ## Known limits before final submission
 
 - Cross-group testing has been cancelled by the teacher and is not included.
 - The same-condition V1/V2 comparison is archived in
-  `stage2_evidence/05_v1_v2_comparison/`; the final V2 Git tag remains to be
-  created after the final worktree review.
+  `stage2_evidence/05_v1_v2_comparison/`. The V2 baseline and final classroom
+  handoff tags are listed above.

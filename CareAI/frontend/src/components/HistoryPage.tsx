@@ -1,6 +1,6 @@
-import { BarChart3, CalendarDays, ChevronRight, FileClock, LoaderCircle, RefreshCw, Trash2, WifiOff } from "lucide-react";
+import { BarChart3, CalendarDays, ChevronRight, FileClock, LoaderCircle, RefreshCw, SlidersHorizontal, Trash2, WifiOff } from "lucide-react";
 import { useState } from "react";
-import { confirmWeeklyPlanDraft, createWeeklyPlanDraft } from "../api";
+import { confirmWeeklyPlanDraft, createWeeklyPlanExperiment } from "../api";
 import { LevelBadge } from "./LevelBadge";
 import type { HealthTrendPoint, ReportHistoryItem, TrendInsight, UserProfile, WeeklyPlanDraft, WeeklyReview } from "../types";
 
@@ -28,10 +28,12 @@ function WeeklyReviewPanel({ review, userId }: { review: WeeklyReview; userId: s
   const [draft, setDraft] = useState<WeeklyPlanDraft | null>(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+  const [experimentVariable, setExperimentVariable] = useState("任务难度");
+  const [difficulty, setDifficulty] = useState(2);
   async function generate() {
     setLoading(true); setMessage(null);
-    try { setDraft(await createWeeklyPlanDraft(userId)); }
-    catch { setMessage("暂时无法生成 AI 计划。请确认模型服务已配置；原有计划不会被修改。"); }
+    try { setDraft(await createWeeklyPlanExperiment(userId, experimentVariable, difficulty)); }
+    catch { setMessage("暂时无法生成行动实验；原有计划不会被修改。"); }
     finally { setLoading(false); }
   }
   async function confirm() {
@@ -41,7 +43,8 @@ function WeeklyReviewPanel({ review, userId }: { review: WeeklyReview; userId: s
     catch { setMessage("暂时无法保存该计划，请稍后重试。"); }
     finally { setLoading(false); }
   }
-  return <section className="mt-6 rounded-3xl border border-teal-100 bg-teal-50 p-5"><div className="flex flex-wrap items-start justify-between gap-4"><div><p className="text-sm font-semibold text-teal-800">本周行动复盘{review.completion_rate !== null ? " · 完成 " + review.completion_rate + "%" : ""}</p><p className="mt-2 max-w-2xl text-sm leading-6 text-teal-950">{review.summary}</p></div><button disabled={loading || Boolean(draft?.confirmed_at)} onClick={() => void generate()} className="rounded-xl bg-teal-700 px-4 py-2.5 text-sm font-semibold text-white hover:bg-teal-800 disabled:opacity-60">{loading ? "正在生成" : draft?.confirmed_at ? "计划已确认" : "AI 生成下周计划"}</button></div>{message && <p className="mt-4 rounded-xl bg-white/70 p-3 text-sm text-teal-900">{message}</p>}{draft && <div className="mt-5 rounded-2xl border border-teal-100 bg-white p-4"><p className="text-sm font-bold text-slate-900">下周目标：{draft.goal}</p><p className="mt-2 text-sm leading-6 text-slate-600">{draft.summary}</p><p className="mt-2 text-sm leading-6 text-teal-800">调整依据：{draft.adjustment_reason}</p><ol className="mt-4 grid gap-2 sm:grid-cols-2">{draft.tasks.map((task) => <li key={task.id} className="rounded-xl bg-slate-50 p-3 text-sm text-slate-700">第 {task.day_number} 天：{task.content.replace(/^第\d+天：?/, "")}</li>)}</ol>{!draft.confirmed_at && <button disabled={loading} onClick={() => void confirm()} className="mt-4 rounded-xl border border-teal-300 px-4 py-2 text-sm font-semibold text-teal-700 hover:bg-teal-50 disabled:opacity-60">确认并保存本计划</button>}</div>}</section>;
+  const canSetDifficulty = experimentVariable === "任务难度";
+  return <section className="mt-6 rounded-3xl border border-teal-100 bg-teal-50 p-5"><div className="flex flex-wrap items-start justify-between gap-4"><div><p className="text-sm font-semibold text-teal-800">本周行动复盘{review.completion_rate !== null ? " · 完成 " + review.completion_rate + "%" : ""}</p><p className="mt-2 max-w-2xl text-sm leading-6 text-teal-950">{review.summary}</p></div></div><div className="mt-5 grid gap-3 rounded-2xl border border-teal-100 bg-white/70 p-4 sm:grid-cols-[1fr_1fr_auto]"><label className="text-xs font-semibold text-slate-600">本轮只改变一个变量<select value={experimentVariable} onChange={(event) => setExperimentVariable(event.target.value)} className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm font-medium text-slate-800 outline-none focus:border-teal-500"><option>提醒时间</option><option>行动时长</option><option>行动频率</option><option>任务难度</option></select></label><label className="text-xs font-semibold text-slate-600">{canSetDifficulty ? `目标难度：${difficulty}/5` : "难度沿用上一版"}<input aria-label="目标难度" disabled={!canSetDifficulty} type="range" min="1" max="5" value={difficulty} onChange={(event) => setDifficulty(Number(event.target.value))} className="mt-4 w-full accent-teal-600 disabled:opacity-35" /></label><button disabled={loading || Boolean(draft?.confirmed_at)} onClick={() => void generate()} className="mt-auto inline-flex items-center justify-center gap-2 rounded-xl bg-teal-700 px-4 py-2.5 text-sm font-semibold text-white hover:bg-teal-800 disabled:opacity-60"><SlidersHorizontal size={16} />{loading ? "正在生成" : draft?.confirmed_at ? "计划已确认" : "生成行动实验"}</button></div>{message && <p className="mt-4 rounded-xl bg-white/70 p-3 text-sm text-teal-900">{message}</p>}{draft && <div className="mt-5 rounded-2xl border border-teal-100 bg-white p-4"><div className="flex flex-wrap items-center justify-between gap-2"><p className="text-sm font-bold text-slate-900">第 {draft.version} 版计划 · {draft.goal}</p><span className="rounded-lg bg-teal-50 px-2.5 py-1 text-xs font-semibold text-teal-800">只调整：{draft.experiment_variable}</span></div><p className="mt-2 text-sm leading-6 text-slate-600">{draft.summary}</p><p className="mt-2 text-sm leading-6 text-teal-800">调整依据：{draft.adjustment_reason}</p>{Object.keys(draft.experiment_snapshot).length > 0 && <dl className="mt-3 flex flex-wrap gap-2 text-xs">{[["提醒", draft.experiment_snapshot.reminder_time], ["时长", `${draft.experiment_snapshot.duration_minutes}分钟`], ["频率", `${draft.experiment_snapshot.active_days}天`], ["难度", `${draft.experiment_snapshot.difficulty}/5`]].map(([label, value]) => <div key={String(label)} className="rounded-lg bg-slate-100 px-2.5 py-1 text-slate-700"><dt className="inline font-semibold">{label}：</dt><dd className="inline">{String(value)}</dd></div>)}</dl>}<ol className="mt-4 grid gap-2 sm:grid-cols-2">{draft.tasks.map((task) => <li key={task.id} className="rounded-xl bg-slate-50 p-3 text-sm text-slate-700">第 {task.day_number} 天：{task.content.replace(/^第\d+天：?/, "")}</li>)}</ol>{!draft.confirmed_at && <button disabled={loading} onClick={() => void confirm()} className="mt-4 rounded-xl border border-teal-300 px-4 py-2 text-sm font-semibold text-teal-700 hover:bg-teal-50 disabled:opacity-60">确认并保存本计划</button>}</div>}</section>;
 }
 
 function ErrorCard({ error, onRetry }: { error: string; onRetry: () => Promise<void> }) {
@@ -50,7 +53,7 @@ function ErrorCard({ error, onRetry }: { error: string; onRetry: () => Promise<v
 
 function InsightPanel({ insights }: { insights: TrendInsight[] }) {
   if (!insights.length) return null;
-  return <section className="mt-8 rounded-3xl border border-cyan-100 bg-gradient-to-br from-cyan-50 to-white p-6"><p className="text-sm font-semibold text-cyan-800">AI 主动趋势提示</p><div className="mt-4 grid gap-3 md:grid-cols-2">{insights.map((insight) => <article key={insight.category + "-" + insight.title} className="rounded-2xl border border-white bg-white/90 p-4 shadow-sm"><div className="flex items-center justify-between gap-3"><h2 className="font-bold text-slate-900">{insight.title}</h2><LevelBadge level={insight.level} /></div><p className="mt-2 text-sm leading-6 text-slate-600">{insight.explanation}</p><p className="mt-3 text-sm font-medium leading-6 text-teal-800">下一步：{insight.next_step}</p></article>)}</div></section>;
+  return <section className="mt-8 rounded-3xl border border-cyan-100 bg-gradient-to-br from-cyan-50 to-white p-6"><p className="text-sm font-semibold text-cyan-800">规则主动趋势提示</p><div className="mt-4 grid gap-3 md:grid-cols-2">{insights.map((insight) => <article key={insight.category + "-" + insight.title} className="rounded-2xl border border-white bg-white/90 p-4 shadow-sm"><div className="flex items-center justify-between gap-3"><h2 className="font-bold text-slate-900">{insight.title}</h2><LevelBadge level={insight.level} /></div><p className="mt-2 text-sm leading-6 text-slate-600">{insight.explanation}</p><p className="mt-3 text-sm font-medium leading-6 text-teal-800">下一步：{insight.next_step}</p></article>)}</div></section>;
 }
 
 function TrendPanel({ trends }: { trends: HealthTrendPoint[] }) {

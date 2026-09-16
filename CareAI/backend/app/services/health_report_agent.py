@@ -10,6 +10,8 @@ from app.schemas import HealthReport, RiskItem, RiskLevel, RuleAssessment
 from app.services.llm import LLMServiceError, chat
 from app.services.risk_rules import SAFETY_NOTICE
 
+AGENT_VERSION = "careai-report-agent-v2"
+
 
 class HealthReportAgentError(RuntimeError):
     """Raised when the model response does not meet the agent's safety contract."""
@@ -38,6 +40,24 @@ _FORBIDDEN_TERMS = (
     "medication",
 )
 
+_SAFETY_PATTERNS: tuple[tuple[str, str], ...] = (
+    ("direct-disease-claim-zh", r"(?:你|用户|患者).{0,8}(?:有|得了|患上|患有|属于).{0,12}(?:高血压|糖尿病|冠心病|抑郁症|焦虑症|脂肪肝|肾病|癌症)"),
+    ("direct-disease-claim-en", r"\b(?:you|the user|the patient)\s+(?:have|has|suffer(?:s)? from)\s+(?:hypertension|diabetes|depression|cancer|kidney disease)\b"),
+    ("disease-name", r"(?:高血压|糖尿病|冠心病|抑郁症|焦虑症|脂肪肝|肾病|癌症|hypertension|diabetes|depression|cancer)"),
+    ("specific-medication", r"(?:阿司匹林|二甲双胍|布洛芬|对乙酰氨基酚|氨氯地平|aspirin|metformin|ibuprofen|amlodipine)"),
+    ("specific-dosage", r"\d+(?:\.\d+)?\s*(?:mg|g|ml|毫克|克|毫升|片|粒)"),
+    ("medication-frequency", r"(?:每天|每日|一天).{0,8}(?:服用|口服|吃药)|(?:服用|口服).{0,8}(?:每天|每日|一天)|\b(?:take|use)\b.{0,30}\b(?:daily|twice a day|once a day)\b"),
+    ("medication-instruction", r"(?:建议|应该|请|需要).{0,12}(?:服用|口服|停药|换药|加量|减量)|\b(?:take|stop|increase|decrease)\b.{0,20}\b(?:aspirin|metformin|ibuprofen|medication|dose)\b"),
+)
+
+
+def find_safety_violations(text: str) -> list[str]:
+    """Return terms and pattern labels found in generated lifestyle guidance."""
+    lowered = text.lower()
+    violations = {term for term in _FORBIDDEN_TERMS if term.lower() in lowered}
+    violations.update(label for label, pattern in _SAFETY_PATTERNS if re.search(pattern, lowered, re.IGNORECASE))
+    return sorted(violations)
+
 
 def _parse_json_object(content: str) -> dict[str, Any]:
     cleaned = re.sub(r"^```(?:json)?\s*|\s*```$", "", content.strip(), flags=re.IGNORECASE)
@@ -56,7 +76,7 @@ def _ensure_non_diagnostic(draft: _ReportDraft, expected_categories: set[str]) -
     text = "\n".join(
         [draft.summary, *draft.risk_explanations.values(), *draft.recommendations, *draft.action_plan]
     )
-    if any(term in text for term in _FORBIDDEN_TERMS):
+    if find_safety_violations(text):
         raise HealthReportAgentError("Model response violated CareAI's non-diagnostic boundary")
 
 
@@ -139,4 +159,33 @@ risk_explanations 的键必须且只能使用输入中给出的 category；如�
         recommendations=draft.recommendations,
         action_plan=draft.action_plan,
         safety_notice=SAFETY_NOTICE,
+    )
+
+
+def generate_local_rule_report(assessment: RuleAssessment) -> HealthReport:
+    """Create a useful offline report without sending any data to an LLM."""
+    attention_items = _items_requiring_attention(assessment)
+    key_risks = [f"{item.title}（来源：{item.source}）：{item.reason}" for item in attention_items]
+    if not key_risks:
+        key_risks = ["当前已输入的规则指标中，未发现需要重点关注的项目。"]
+    recommendations = [item.recommendation for item in attention_items]
+    if not recommendations:
+        recommendations = ["保持规律作息、适量活动，并继续记录变化。"]
+    seed = recommendations[:3]
+    action_plan = [
+        "第1天：选择一项最容易开始的生活方式行动，并记录计划时间。",
+        f"第2天：{seed[0]}",
+        "第3天：记录行动是否完成，以及最主要的帮助或阻碍。",
+        f"第4天：{seed[min(1, len(seed) - 1)]}",
+        "第5天：重复最容易坚持的一项行动，保持低负担。",
+        f"第6天：{seed[min(2, len(seed) - 1)]}",
+        "第7天：回顾本周完成情况，只保留下一周最可执行的一项调整。",
+    ]
+    return HealthReport(
+        summary="本报告由本地规则生成，未调用外部 AI。请根据需要关注的指标选择一个低负担行动，并持续记录变化。",
+        risk_level=assessment.overall_level,
+        key_risks=key_risks,
+        recommendations=recommendations[:5],
+        action_plan=action_plan,
+        safety_notice=SAFETY_NOTICE + " 本次报告未调用外部 AI。",
     )

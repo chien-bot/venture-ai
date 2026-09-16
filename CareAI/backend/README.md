@@ -90,3 +90,14 @@ The endpoint returns a fixed JSON object:
 `risk_level` and the source risk categories are always computed by local rules. The model is not permitted to add risks or make a disease diagnosis.
 
 If no API key is configured, the LLM endpoints intentionally return HTTP 503. The local `/api/v1/health/risk-assessment` endpoint remains available for testing the rules without MaaS access.
+
+## Innovation endpoints
+
+- `GET /api/v1/health/reports/{report_id}/evidence` returns rule, recommendation, source-field and uncertainty cards.
+- `POST /api/v1/health/reports/{report_id}/comprehension` records the user's report-understanding check.
+- `POST /api/v1/health/weekly-plan-experiments` creates a version-linked plan that changes one chosen variable.
+- `GET` / `PUT /api/v1/privacy/{user_id}` controls AI processing, persistence, export and retention.
+- `GET /api/v1/health/portable-summary` and `/api/v1/health/fhir-export` provide portable, provenance-labelled exports.
+- `GET /api/v1/safety/suite` runs the deterministic non-diagnostic regression suite.
+
+The FHIR-shaped bundle is a classroom interoperability demonstration and is not a certified clinical exchange artifact.

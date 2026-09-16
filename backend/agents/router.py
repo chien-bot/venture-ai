@@ -411,7 +411,7 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
         full_text = ""
         buffer = ""
         held_chunks = 0
-        hold_response = intent == "grader" or _wants_one_question(message) or needs_comparison_protocol(message)
+        hold_response = intent in ("grader", "tutor", "hybrid") or _wants_one_question(message) or needs_comparison_protocol(message)
         for chunk in chat_completion_stream(system, state.get("messages", [])):
             full_text += chunk
             # Grader output contains a machine-readable HTML comment. Buffer
@@ -467,9 +467,18 @@ def run_agent_stream(session_id: str, message: str, agent_type: str = "coach", p
     scores_data = parse_scores(full_text)
     rubric_full = parse_rubric_full(full_text)
     clean_reply = mp_clean(full_text)
+    from services.course_boundary import enforce_course_boundary, enforce_tutor_boundary
+    if intent in ("tutor", "hybrid"):
+        clean_reply = enforce_tutor_boundary(clean_reply, message)
+    elif intent == "grader":
+        clean_reply = enforce_course_boundary(clean_reply, message)
     if intent == "grader":
         from agents.nodes.grader import show_rubric_details
         clean_reply = show_rubric_details(clean_reply, rubric_full)
+        yield f"data: {json.dumps({'type': 'token', 'content': clean_reply})}\n\n"
+    elif intent in ("tutor", "hybrid"):
+        # Tutor replies are buffered so evidence-boundary labels are applied
+        # before any project-specific example becomes visible to the student.
         yield f"data: {json.dumps({'type': 'token', 'content': clean_reply})}\n\n"
 
     new_scores = None
